@@ -1,22 +1,23 @@
 <template>
-  <div class="service">
+  <div class="Admin">
+    <navbar></navbar>
     <h1>{{ msg }}</h1>
     <h2>REST service call results</h2>
-
     <button @click="callRestService()">CALL Spring Boot REST backend service</button>
-
     <h4>Backend response: {{ response }}</h4>
-
   </div>
 </template>
 
 <script>
-  import {AXIOS} from 'axios'
-  //import {AXIOS} from './http-common'
+  //import {AXIOS} from 'axios'
+  import {AXIOS} from './../../http-common'
+  import navbar from './../../widget-components/navbar'
 
   export default {
     name: 'admin',
-
+    components: {
+      'navbar':navbar
+   },
     data () {
       return {
         msg: 'HowTo call REST-Services:',
@@ -27,7 +28,7 @@
     methods: {
       // Fetches posts when the component is created.
       callRestService () {
-        AXIOS.post(`/api/is_session_active`,{})
+        AXIOS.post('/is_session_active',{})
           .then(response => {
             // JSON responses are automatically parsed.
             this.response = response.data

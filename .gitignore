@@ -19,9 +19,16 @@
 *.tar.gz
 *.rar
 
-# Ignore backend target #
+# Ignore some backend 
 /backend/target/*
 backend/target/*
+
+backend/src/main/resources/public/static/*
+/backend/src/main/resources/public/static/*
+
+#Ignore some frontend
+frontend/target/*
+/frontend/target/*
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

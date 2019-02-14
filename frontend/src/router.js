@@ -1,10 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
-import Service from '@/components/Service'
-import Bootstrap from '@/components/Bootstrap'
-import User from '@/components/User'
-import Admin from '@/components/Admin/Admin'
+import Hello from '@/components/Pages/User/Hello'
+import Admin from '@/components/Pages/Admin/Admin'
 
 Vue.use(Router)
 
@@ -14,21 +11,6 @@ export default new Router({
       path: '/',
       name: 'Hello',
       component: Hello
-    },
-    {
-      path: '/callservice',
-      name: 'Service',
-      component: Service
-    },
-    {
-      path: '/bootstrap',
-      name: 'Bootstrap',
-      component: Bootstrap
-    },
-    {
-      path: '/user',
-      name: 'User',
-      component: User
     },
     {
       path: '/admin',
