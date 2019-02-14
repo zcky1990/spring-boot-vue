@@ -1,8 +1,8 @@
-/home/zcky/Documents/personal project/spring-boot-vuejs-master/backend/src/main/java/com/projects/springboot/models/Users.java
-/home/zcky/Documents/personal project/spring-boot-vuejs-master/backend/src/main/java/com/projects/springboot/controller/AdminController.java
-/home/zcky/Documents/personal project/spring-boot-vuejs-master/backend/src/main/java/com/projects/springboot/environtment/Environtment.java
-/home/zcky/Documents/personal project/spring-boot-vuejs-master/backend/src/main/java/com/projects/springboot/models/Person.java
-/home/zcky/Documents/personal project/spring-boot-vuejs-master/backend/src/main/java/com/projects/springboot/SpringBootVuejsApplication.java
-/home/zcky/Documents/personal project/spring-boot-vuejs-master/backend/src/main/java/com/projects/springboot/models/UserSession.java
-/home/zcky/Documents/personal project/spring-boot-vuejs-master/backend/src/main/java/com/projects/springboot/controller/BaseController.java
-/home/zcky/Documents/personal project/spring-boot-vuejs-master/backend/src/main/java/com/projects/springboot/constants/Constants.java
+/home/zcky/Documents/projects/spring-boot-vue/backend/src/main/java/com/projects/springboot/models/Person.java
+/home/zcky/Documents/projects/spring-boot-vue/backend/src/main/java/com/projects/springboot/SpringBootVuejsApplication.java
+/home/zcky/Documents/projects/spring-boot-vue/backend/src/main/java/com/projects/springboot/environtment/Environtment.java
+/home/zcky/Documents/projects/spring-boot-vue/backend/src/main/java/com/projects/springboot/constants/Constants.java
+/home/zcky/Documents/projects/spring-boot-vue/backend/src/main/java/com/projects/springboot/models/Users.java
+/home/zcky/Documents/projects/spring-boot-vue/backend/src/main/java/com/projects/springboot/models/UserSession.java
+/home/zcky/Documents/projects/spring-boot-vue/backend/src/main/java/com/projects/springboot/controller/AdminController.java
+/home/zcky/Documents/projects/spring-boot-vue/backend/src/main/java/com/projects/springboot/controller/BaseController.java

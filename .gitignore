@@ -19,6 +19,8 @@
 *.tar.gz
 *.rar
 
+*.lst
+
 # Ignore some backend 
 /backend/target/*
 backend/target/*
