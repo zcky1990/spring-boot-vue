@@ -1,9 +1,6 @@
 <template>
-  <div id="main-container">
     <router-view></router-view>
-  </div>
 </template>
-
 <script>
 /**
  * This page is work as container of the application

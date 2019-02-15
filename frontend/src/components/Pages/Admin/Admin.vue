@@ -1,6 +1,6 @@
 <template>
   <div class="Admin">
-    <navbar></navbar>
+    <navbar-robot></navbar-robot>
     <h1>{{ msg }}</h1>
     <h2>REST service call results</h2>
     <button @click="callRestService()">CALL Spring Boot REST backend service</button>
@@ -11,12 +11,12 @@
 <script>
   //import {AXIOS} from 'axios'
   import {AXIOS} from './../../http-common'
-  import navbar from './../../widget-components/navbar'
+  import navbar from './../../widget-components/navbar-robot'
 
   export default {
     name: 'admin',
     components: {
-      'navbar':navbar
+      'navbar-robot':navbar
    },
     data () {
       return {

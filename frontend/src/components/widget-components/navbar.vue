@@ -15,15 +15,15 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style>
 #navbar {
   padding: 30px;
-  a {
+}
+#navbar.a {
     font-weight: bold;
     color: #2c3e50;
-    &.router-link-exact-active {
+}
+#navbar.router-link-exact-active {
      color: #42b983;
-    }
-  }
 }
 </style>
