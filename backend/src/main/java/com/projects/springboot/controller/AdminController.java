@@ -35,15 +35,9 @@ public class AdminController extends BaseController{
 	@RequestMapping(value="/get_comments", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<String> getComment(@RequestHeader MultiValueMap<String,String> headers){
 		UserComment userreply = new UserComment();
-		userreply.setImageUrl("https://bulma.io/images/bulma-type-white.png");
+		userreply.setImageUrl("https://bulma.io/images/placeholders/96x96.png");
 		userreply.setUserId("2");
 		userreply.setUserName("test 2");
-		
-		UserComment usercomment = new UserComment();
-		userreply.setImageUrl("https://bulma.io/images/bulma-type-white.png");
-		userreply.setUserId("1");
-		userreply.setUserName("test 1");
-		
 		
 		Reply reply = new Reply();
 		reply.setUser(userreply);
@@ -57,6 +51,10 @@ public class AdminController extends BaseController{
 		reply2.setReplyId("2");
 		reply2.setReply("ini adalah reply contoh 2");
 		
+		UserComment usercomment = new UserComment();
+		usercomment.setImageUrl("https://bulma.io/images/placeholders/96x96.png");
+		usercomment.setUserId("1");
+		usercomment.setUserName("test 1");
 		
 		Comment comment = new Comment();
 		comment.setUser(usercomment);
@@ -64,7 +62,7 @@ public class AdminController extends BaseController{
 		comment.setPostId("post-1");
 		comment.setComment("contoh comment 1");
 		
-		ArrayList<Reply> replyList = new ArrayList();
+		ArrayList<Reply> replyList = new ArrayList<Reply> ();
 		replyList.add(reply);
 		replyList.add(reply2);
 		
@@ -77,9 +75,10 @@ public class AdminController extends BaseController{
 		comment2.setComment("contoh comment 2");
 		
 		Comments commentList = new Comments();
-		ArrayList<Comment> commentListExample = new ArrayList();
+		ArrayList<Comment> commentListExample = new ArrayList<Comment>();
 		commentListExample.add(comment);
-		commentListExample.add(comment2);	
+		commentListExample.add(comment2);
+		
 		commentList.setCommentList(commentListExample);
 		
 		Response response = new Response();

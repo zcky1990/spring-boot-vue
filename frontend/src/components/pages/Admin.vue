@@ -1,23 +1,51 @@
     <template>
     <div class="admin">
-    <nav-bar> </nav-bar>
-    <login-form></login-form>
+        <nav-bar> </nav-bar>
+        <login-form></login-form>
+    <div class="container">
+    <div class="notification">
+        <comment v-for="usercomment in commentResponses" 
+        v-bind:key="usercomment.commentId"
+        :userComment="usercomment">
+        </comment>
+    </div>
+    </div>
+
+
     </div>
     </template>
 
     <script>
+    import {AXIOS} from './../http-common'
     import Navbar from '../widget/Navbar'
     import Loginform from '../widget/Loginform'
+    import Comment from '../widget/Comment'
 
     export default   {
-    name: 'admin',
-    props: {
-        msg: String
-    },
-    components: {
-                'nav-bar': Navbar,
-                'login-form' : Loginform
-    }
+        name: 'admin',
+        props: {
+            msg: String,
+            commentResponses:[]
+        },
+        components: {
+                    'nav-bar': Navbar,
+                    'login-form' : Loginform,
+                    'comment':Comment
+        },
+        created() {
+        console.log("created");
+            var self= this;
+            AXIOS.get('/get_comments')
+            .then(response => {
+                    var response = JSON.parse(response.data.response);
+                    self.commentResponses = response.commentList;
+                    console.log(self.commentResponses)
+                })
+            .catch(e => {
+                self.errors.push(e)
+            })
+        
+        }
     }
     </script>
 
