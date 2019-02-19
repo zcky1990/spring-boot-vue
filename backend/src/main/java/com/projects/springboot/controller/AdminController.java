@@ -52,7 +52,7 @@ public class AdminController extends BaseController{
 		reply2.setReply("ini adalah reply contoh 2");
 		
 		UserComment usercomment = new UserComment();
-		usercomment.setImageUrl("https://bulma.io/images/placeholders/96x96.png");
+		usercomment.setImageUrl("https://bulma.io/images/placeholders/96x96.png	");
 		usercomment.setUserId("1");
 		usercomment.setUserName("test 1");
 		
