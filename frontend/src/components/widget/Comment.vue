@@ -32,18 +32,19 @@
     import Reply from './Reply'
     export default {
     name: 'comment',
-    props: ['userComment','replyList'], 
+    props: ['userComment'], 
     methods: {
         
     },
     components: {
                     'reply-comment': Reply
     },
-    created() {
-         console.log(this.userComment)
-         this.replyList = this.userComment.replyList;
-     }
+    computed:{
+        replyList: function(){
+            return this.userComment.replyList;
 
+        }
+    }
     }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

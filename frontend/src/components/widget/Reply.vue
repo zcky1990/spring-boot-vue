@@ -25,7 +25,6 @@
     name: 'reply',
     props: ['reply'],
     created(){
-        console.log(this.reply)
     }
     }
 </script>

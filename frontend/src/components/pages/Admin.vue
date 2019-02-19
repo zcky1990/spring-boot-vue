@@ -4,7 +4,7 @@
         <login-form></login-form>
     <div class="container">
     <div class="notification">
-        <comment v-for="usercomment in commentResponses" 
+        <comment v-for="usercomment in commentList" 
         v-bind:key="usercomment.commentId"
         :userComment="usercomment">
         </comment>
@@ -32,14 +32,17 @@
                     'login-form' : Loginform,
                     'comment':Comment
         },
+        computed:{
+            commentList: function(){
+                return this.commentResponses;
+            }
+        },
         created() {
-        console.log("created");
             var self= this;
             AXIOS.get('/get_comments')
             .then(response => {
                     var response = JSON.parse(response.data.response);
                     self.commentResponses = response.commentList;
-                    console.log(self.commentResponses)
                 })
             .catch(e => {
                 self.errors.push(e)
