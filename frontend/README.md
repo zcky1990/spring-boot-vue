@@ -1,6 +1,4 @@
-# frontend
-
-> A Vue.js & Spring Boot example project
+# vue-js-app
 
 ## Project setup
 ```
@@ -17,12 +15,15 @@ npm run serve
 npm run build
 ```
 
-### Run your unit tests
+### Run your tests
 ```
-npm run test:unit
+npm run test
 ```
 
-### Run your end-to-end tests
+### Lints and fixes files
 ```
-npm run test:e2e
+npm run lint
 ```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

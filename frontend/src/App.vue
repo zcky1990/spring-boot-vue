@@ -1,10 +1,11 @@
 <template>
+  <div id="app">
     <router-view></router-view>
+  </div>
 </template>
+
 <script>
-/**
- * This page is work as container of the application
- */
+
 export default {
   name: 'app',
   data () {
@@ -14,7 +15,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
