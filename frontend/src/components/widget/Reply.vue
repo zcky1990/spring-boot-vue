@@ -12,7 +12,7 @@
             <br>
             {{reply.reply}}
             <br>
-            <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
+            <small><a>Like</a> · 2 hrs</small>
           </p>
         </div>
       </div>
