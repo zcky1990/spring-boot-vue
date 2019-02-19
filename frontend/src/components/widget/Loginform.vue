@@ -37,7 +37,7 @@
         errors: []
     },
     methods: {
-        submitLogin: function (event) {
+        submitLogin: function () {
             var username = this.$refs.username.value;
             var password = this.$refs.password.value;
 
@@ -64,8 +64,6 @@
                 self.response = response.data
                 if(self.response.errorMessage != undefined || self.response.errorMessage != ''){
                     self.setErrorMesasge(self.response.errorMessage);
-                }else{
-                    
                 }
             })
           .catch(e => {

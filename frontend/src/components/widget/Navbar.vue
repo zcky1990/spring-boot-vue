@@ -48,7 +48,7 @@
         msg: String
     },
     methods: {
-        showMenuBurger: function (event) {
+        showMenuBurger: function () {
             var element = this.$refs.menu;
             if(element.classList.contains('is-active')){
                 element.classList.remove('is-active');

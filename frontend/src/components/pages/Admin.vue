@@ -39,8 +39,8 @@
             var self= this;
             AXIOS.get('/get_comments')
             .then(response => {
-                    var response = JSON.parse(response.data.response);
-                    self.commentList = response.commentList;
+                    var responseJson = JSON.parse(response.data.response);
+                    self.commentList = responseJson.commentList;
                 })
             .catch(e => {
                 self.errors.push(e)

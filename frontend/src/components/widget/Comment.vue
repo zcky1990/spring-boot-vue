@@ -28,7 +28,7 @@
 </template>
 
 <script>
-    import {AXIOS} from './../http-common'
+    //import {AXIOS} from './../http-common'
     import Reply from './Reply'
     export default {
     name: 'comment',
