@@ -17,7 +17,6 @@
                                 </div>
                             </div>
                             <button v-on:click="submitLogin" class="button is-block is-info is-large is-fullwidth">Login</button>
-
                             <div class="field">
                                 <div class="control">
                                     <p ref="errormessage" class="error-message"></p>
@@ -30,10 +29,12 @@
 </template>
 
 <script>
+    import {AXIOS} from './../http-common'
     export default {
     name: 'login-form',
     props: {
-        msg: String
+        response: [],
+        errors: []
     },
     methods: {
         submitLogin: function (event) {
@@ -41,20 +42,40 @@
             var password = this.$refs.password.value;
 
             if(username == undefined || username == "" || password == undefined || password == ""){
-                this.$refs.errormessage.value = "Username / Password cannot be empty";
-                this.$refs.errormessage.innerHTML = "Username / Password cannot be empty";
+                this.setErrorMesasge("Username / Password cannot be empty");
             }else{
+                this.setErrorMesasge("");
+
                 var model={};
                 model.username = username;
                 model.password = password;
-                console.log(model);
+
+                this.callRestService(model);
             }
-        }
+        },
+        setErrorMesasge(errorMessage){
+                this.$refs.errormessage.value = errorMessage;
+                this.$refs.errormessage.innerHTML = errorMessage;
+        },
+        callRestService (model) {
+        var self= this;
+        AXIOS.post('/sign_up', model)
+          .then(response => {
+                self.response = response.data
+                if(self.response.errorMessage != undefined || self.response.errorMessage != ''){
+                    self.setErrorMesasge(self.response.errorMessage);
+                }else{
+                    
+                }
+            })
+          .catch(e => {
+            self.errors.push(e)
+          })
+      }
     }
     }
 </script>
-    <!-- Add "scoped" attribute to limit
-     CSS to this component only -->
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .error-message {
    text-align: center;
