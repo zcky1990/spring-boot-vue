@@ -23,26 +23,24 @@
 
     export default   {
         name: 'admin',
-        props: {
-            msg: String,
-            commentResponses:[]
+        //use data to mute
+        data(){
+            return {
+                commentList: []
+            }
         },
         components: {
                     'nav-bar': Navbar,
                     'login-form' : Loginform,
                     'comment':Comment
         },
-        computed:{
-            commentList: function(){
-                return this.commentResponses;
-            }
-        },
+        
         created() {
             var self= this;
             AXIOS.get('/get_comments')
             .then(response => {
                     var response = JSON.parse(response.data.response);
-                    self.commentResponses = response.commentList;
+                    self.commentList = response.commentList;
                 })
             .catch(e => {
                 self.errors.push(e)
