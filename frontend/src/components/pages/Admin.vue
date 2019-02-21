@@ -1,16 +1,17 @@
     <template>
     <div class="admin">
-        <nav-bar> </nav-bar>
-        <login-form></login-form>
+        <nav-bar></nav-bar>
+        <article-comp></article-comp>
+        <!--<login-form></login-form> -->
     <div class="container">
-    <div class="notification">
-        <comment v-for="usercomment in commentList" 
-        v-bind:key="usercomment.commentId"
-        :userComment="usercomment">
-        </comment>
+        <div class="notification">
+            <comment v-for="usercomment in commentList" 
+            v-bind:key="usercomment.commentId"
+            :userComment="usercomment">
+            </comment>
+        </div>
+  
     </div>
-    </div>
-
 
     </div>
     </template>
@@ -19,7 +20,8 @@
     import {AXIOS} from './../http-common'
     import Navbar from '../widget/Navbar'
     import Loginform from '../widget/Loginform'
-    import Comment from '../widget/Comment'
+    import CommentWidget from '../widget/Comment'
+    import ArticleWidget from '../widget/Article'
 
     export default   {
         name: 'admin',
@@ -32,9 +34,9 @@
         components: {
                     'nav-bar': Navbar,
                     'login-form' : Loginform,
-                    'comment':Comment
-        },
-        
+                    'comment': CommentWidget,
+                    'article-comp' : ArticleWidget
+        }, 
         created() {
             var self= this;
             AXIOS.get('/get_comments')
