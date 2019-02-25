@@ -1,6 +1,16 @@
 <template>
     <section class="section editor">
     <div class="box">  
+        <div class="field">
+            <div class="control">
+                <input ref="title" class="input is-large" type="text" placeholder="Title">
+            </div>
+            </div>
+        <div class="field">
+            <div class="control">
+                <input ref="subtitle" class="input" type="text" placeholder="Subtitle">
+            </div>
+        </div>
         <div>  
         <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
         </div>
@@ -22,6 +32,7 @@
 <script>
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
+//https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs.html
 export default {
     name: 'editor',
     data() {
@@ -29,12 +40,18 @@ export default {
                 editor:  ClassicEditor,
                 editorData: '',
                 editorConfig: {
-                    // The configuration of the rich-text editor.
+
                 }
             };
         },
     methods: {
         test: function(){
+            var title = this.$refs.title.value;
+            var subtitle = this.$refs.subtitle.value;
+
+            console.log(title)
+            console.log(subtitle)
+
             console.log(this.editorData)
         }
     }
