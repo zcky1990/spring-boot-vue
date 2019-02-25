@@ -37,10 +37,10 @@
       </div>
 
       <div class="media-content">
-        <div class="address">
-          <div class="name title is-5">Hank O'Connell</div> 
-          <div class="email subtitle is-6">Viva.Mraz2@yahoo.com</div>
-          <div class="date subtitle is-6">12-12-2019</div>
+        <div>
+          <div class="is-5"><strong>Hank O'Connell</strong></div> 
+          <div class="is-6">Viva.Mraz2@yahoo.com</div>
+          <div class="is-7">12-12-2019</div>
        </div>
       </div>
     </div>
