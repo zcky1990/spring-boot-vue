@@ -3,16 +3,16 @@
         <nav-bar></nav-bar>
         <article-comp></article-comp>
         <!--<login-form></login-form> -->
-    <div class="container">
-        <div class="notification">
-            <comment v-for="usercomment in commentList" 
-            v-bind:key="usercomment.commentId"
-            :userComment="usercomment">
-            </comment>
+        <div class="container">
+            <div class="notification">
+                <comment v-for="usercomment in commentList" 
+                v-bind:key="usercomment.commentId"
+                :userComment="usercomment">
+                </comment>
+            </div>
         </div>
-  
-    </div>
     <article-editor></article-editor>
+        
     </div>
     </template>
 
@@ -37,7 +37,8 @@
                     'login-form' : Loginform,
                     'comment': CommentWidget,
                     'article-comp' : ArticleWidget,
-                    'article-editor' : EditorArticleWidget
+                    
+                    'article-editor':EditorArticleWidget
         }, 
         created() {
             var self= this;
