@@ -54,6 +54,9 @@ import ArticlePrevWidget from './ArticlePreview'
 
 //https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/installation.html#npm
 //https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/vuejs.html
+
+
+//https://vuejsexamples.com/vue-editor-component-based-on-wangeditor2-5-11-wrapper/
 export default {
     name: 'editor',
     data() {
