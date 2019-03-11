@@ -21,7 +21,7 @@
                     <button v-on:click="previewArticle" class="button is-block is-primary">preview</button>  
                 </div>
                 <div class="level-item">
-                    <button v-on:click="test" class="button is-block is-info">Submit</button>  
+                    <button v-on:click="saveArticle" class="button is-block is-info">Submit</button>  
                 </div>
             </div>
         </div>
@@ -46,8 +46,8 @@
 </template>
 
 <script>
-//import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import BallonEditor from '@ckeditor/ckeditor5-build-balloon';
+//import BallonEditor from '@ckeditor/ckeditor5-build-balloon';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 //ckeditor5 plugins
 import ArticlePrevWidget from './ArticlePreview'
@@ -58,7 +58,7 @@ export default {
     name: 'editor',
     data() {
             return {
-                editor:  BallonEditor,
+                editor:  ClassicEditor,
                 editorConfig: {
                    
                 },
@@ -72,13 +72,12 @@ export default {
       'article-prev':ArticlePrevWidget
     },
     methods: {
-        test: function(){
-            var title = this.$refs.title.value;
-            var subtitle = this.$refs.subtitle.value;
-
-            console.log(title)
-            console.log(subtitle)
-            console.log(this.editorData)
+        saveArticle: function(){
+            //var title = this.$refs.title.value;
+            //var subtitle = this.$refs.subtitle.value;
+            //console.log(title)
+            //console.log(subtitle)
+            //console.log(this.editorData)
         },
         previewArticle : function(){
             this.title = this.$refs.title.value;
