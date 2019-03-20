@@ -1,3 +1,6 @@
+// JS fiddle : https://jsfiddle.net/eL4gvp1c/
+
+
 <article class="media content-article">
         <div class="media-content">
           <div class="content">
