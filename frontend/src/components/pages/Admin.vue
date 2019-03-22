@@ -1,6 +1,9 @@
     <template>
     <div class="admin">
         <nav-bar></nav-bar>
+        
+       	<article-home></article-home> 
+       	
         <article-comp></article-comp>
         <!--<login-form></login-form> -->
         <div class="container">
@@ -12,7 +15,7 @@
             </div>
         </div>
     <article-editor></article-editor>
-        
+       
     </div>
     </template>
 
@@ -23,6 +26,7 @@
     import CommentWidget from '../widget/Comment'
     import ArticleWidget from '../widget/Article'
     import EditorArticleWidget from '../widget/ArticleEditor'
+    import ArticleHome from '../widget/ArticleHome'
 
     export default   {
         name: 'admin',
@@ -38,7 +42,8 @@
                     'comment': CommentWidget,
                     'article-comp' : ArticleWidget,
                     
-                    'article-editor':EditorArticleWidget
+                    'article-editor':EditorArticleWidget,
+                    'article-home' : ArticleHome
         }, 
         created() {
             var self= this;
