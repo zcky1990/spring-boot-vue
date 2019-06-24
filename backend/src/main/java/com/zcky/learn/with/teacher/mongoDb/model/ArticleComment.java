@@ -13,8 +13,8 @@ public class ArticleComment {
 	
 	@DBRef
 	private Article article;
-	
 	private String content;
+	private String modified_date;
 	
 	public String getStringId() {
 		return _id.toHexString();
@@ -52,4 +52,11 @@ public class ArticleComment {
 		this.content = content;
 	}
 
+	public String getModified_date() {
+		return modified_date;
+	}
+
+	public void setModified_date(String modified_date) {
+		this.modified_date = modified_date;
+	}
 }

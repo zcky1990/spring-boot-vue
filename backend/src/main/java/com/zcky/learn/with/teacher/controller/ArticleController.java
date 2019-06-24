@@ -146,6 +146,18 @@ public class ArticleController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
+	/**
+	 * Add method to call add comment
+	 * postbody ex: {
+	 *		"articleId": "5d103c80dfb65b4ccb40e279",
+	 *		"commentContent" : "tesadasdasdasd asdasdadsadasd sadasdasdasd" 
+	 *	}
+	 * @param commentArticle
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	
 	@RequestMapping(value = "/article/add_comment", method = RequestMethod.POST)
 	public ResponseEntity<String> addComment(@Valid @RequestBody CommentArticle commentArticle, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("uid");
