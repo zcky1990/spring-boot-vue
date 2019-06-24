@@ -184,4 +184,40 @@ public class ArticleController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/article/update_article_comment", method = RequestMethod.PUT)
+	public ResponseEntity<String> updateArticlComment(@Valid @RequestBody ArticleComment article, HttpServletRequest request) throws Exception {
+		String auth = request.getHeader("uid");
+		Users user = userRepository.findBy_id(new ObjectId(auth));
+		JsonObject response;
+		if(user != null) {
+			article.setAuthor(user);
+			article.setModified_date(this.getTimeUtility().getCurrentDate("dd/MM/yyyy HH:mm:ss"));
+			try {
+				articleCommentRepository.save(article);
+				response = getSuccessResponse();
+				response.addProperty(Constant.RESPONSE,Constant.UPDATE_ARTICLE_SUCCESS_MESSAGE);
+			} catch(Exception e) {
+				response = getFailedResponse();
+				response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+			}
+		}else {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, Constant.USER_NOT_FOUND_ERROR_MESSAGE);
+		}
+		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/article/delete_article_comment/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> deleteArticleComment(@PathVariable String id, HttpServletRequest request){
+		JsonObject response;
+		try {
+			articleCommentRepository.delete(articleCommentRepository.findById(id).get());
+			response = getSuccessResponse();
+			response.addProperty(Constant.RESPONSE, Constant.DELETE_ARTICLE_SUCCESS_MESSAGE);
+		} catch(Exception e) {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+		}
+		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
+	}
 }
