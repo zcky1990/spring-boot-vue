@@ -1,6 +1,7 @@
 package com.zcky.learn.with.teacher.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -18,10 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
 import com.zcky.learn.with.teacher.constant.Constant;
+import com.zcky.learn.with.teacher.model.request.CommentArticle;
 import com.zcky.learn.with.teacher.mongoDb.model.Article;
+import com.zcky.learn.with.teacher.mongoDb.model.ArticleComment;
 import com.zcky.learn.with.teacher.mongoDb.model.Users;
+import com.zcky.learn.with.teacher.mongoDb.repository.ArticleCommentRepository;
 import com.zcky.learn.with.teacher.mongoDb.repository.ArticleRepository;
 import com.zcky.learn.with.teacher.mongoDb.repository.UsersRepository;
+import com.zcky.learn.with.teacher.mongoDb.serializer.ArticleCommentSerializer;
 import com.zcky.learn.with.teacher.mongoDb.serializer.ArticleSerializer;
 
 @RestController
@@ -32,6 +37,9 @@ public class ArticleController extends BaseController {
 
 	@Autowired
 	private UsersRepository userRepository;
+	
+	@Autowired
+	private ArticleCommentRepository articleCommentRepository;
 
 	@RequestMapping(value = "/article/add_article", method = RequestMethod.POST)
 	public ResponseEntity<String> addArticle(@Valid @RequestBody Article article, HttpServletRequest request) throws Exception {
@@ -134,6 +142,32 @@ public class ArticleController extends BaseController {
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+		}
+		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/article/add_comment", method = RequestMethod.POST)
+	public ResponseEntity<String> addComment(@Valid @RequestBody CommentArticle commentArticle, HttpServletRequest request) throws Exception {
+		String auth = request.getHeader("uid");
+		Users user = userRepository.findBy_id(new ObjectId(auth));
+		JsonObject response;
+		if(user != null) {
+			ArticleComment articleComment = new ArticleComment();
+			articleComment.setAuthor(user);
+			Optional<Article> article = articleRepository.findById(commentArticle.getArticleId());
+			articleComment.setArticle(article.get());
+			articleComment.setContent(commentArticle.getCommentContent());
+			try {
+				articleCommentRepository.save(articleComment);
+				response = getSuccessResponse();
+				response.add(Constant.RESPONSE, toJSONObjectWithSerializer(ArticleComment.class, new ArticleCommentSerializer(), articleComment)  );
+			} catch(Exception e) {
+				response = getFailedResponse();
+				response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+			}
+		}else {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, Constant.USER_NOT_FOUND_ERROR_MESSAGE);
 		}
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
