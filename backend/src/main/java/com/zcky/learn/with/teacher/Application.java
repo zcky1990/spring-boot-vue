@@ -1,12 +1,13 @@
-package com.projects.springboot;
+package com.zcky.learn.with.teacher;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringBootVuejsApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBootVuejsApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
+
 }
