@@ -101,6 +101,8 @@ public class BaseController {
 		return (JsonObject)new GsonBuilder().create().toJsonTree(src);
 	}
 
-
+	public JsonArray toJSONArray(Object src) {
+		return (JsonArray)new GsonBuilder().create().toJsonTree(src);
+	}
 
 }
