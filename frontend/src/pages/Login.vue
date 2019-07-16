@@ -5,12 +5,11 @@
     </template>
 
     <script>
-    import {AXIOS} from '@/components/http-common'
+    //import {AXIOS} from '@/components/http-common'
     import Loginform from '@/components/widget/Loginform'
 
     export default   {
         name: 'login',
-
         data(){
             return {
                 commentList: []
@@ -20,16 +19,6 @@
                     'login-form' : Loginform
         }, 
         created() {
-            var self= this;
-            AXIOS.get('/get_comments')
-            .then(response => {
-                    var responseJson = JSON.parse(response.data.response);
-                    self.commentList = responseJson.commentList;
-                })
-            .catch(e => {
-                self.errors.push(e)
-            })
-        
         }
     }
     </script>

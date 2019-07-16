@@ -4,7 +4,6 @@
                     <h3 class="title has-text-grey">Login</h3>
                     <p class="subtitle has-text-grey">Please login to proceed.</p>
                     <div class="box">
-                        <form>
                             <div class="field">
                                 <div class="control">
                                     <input ref="username" class="input is-large" type="text" placeholder="Your Username" autofocus="">
@@ -19,10 +18,9 @@
                             <button v-on:click="submitLogin" class="button is-block is-info is-large is-fullwidth">Login</button>
                             <div class="field">
                                 <div class="control">
-                                    <p ref="errormessage" class="error-message"></p>
+                                    <p ref="errormessage" class="error-message">{{errorMessage}}</p>
                                 </div>
                             </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -36,16 +34,18 @@
         response: [],
         errors: []
     },
+    data : {
+         errorMessage: String
+    },
     methods: {
         submitLogin: function () {
             var username = this.$refs.username.value;
             var password = this.$refs.password.value;
 
             if(username == undefined || username == "" || password == undefined || password == ""){
-                this.setErrorMesasge("Username / Password cannot be empty");
+                this.setErrorMessage("Username / Password cannot be empty")
             }else{
                 this.setErrorMesasge("");
-
                 var model={};
                 model.username = username;
                 model.password = password;
@@ -53,17 +53,18 @@
                 this.callRestService(model);
             }
         },
-        setErrorMesasge(errorMessage){
-                this.$refs.errormessage.value = errorMessage;
-                this.$refs.errormessage.innerHTML = errorMessage;
+
+        setErrorMessage(errorMessage){
+                this.errorMessage = errorMessage;
         },
+
         callRestService (model) {
         var self= this;
-        AXIOS.post('/sign_up', model)
+        AXIOS.post('/users/sign_in', model)
           .then(response => {
-                self.response = response.data
-                if(self.response.errorMessage != undefined || self.response.errorMessage != ''){
-                    self.setErrorMesasge(self.response.errorMessage);
+                self.response = response
+                if(self.response.error_message != undefined || self.response.error_message != ''){
+                    self.setErrorMessage(self.response.error_message);
                 }
             })
           .catch(e => {
