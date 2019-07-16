@@ -2,7 +2,7 @@
     <div class="admin">
         <nav-bar></nav-bar>
         <article-comp></article-comp>
-        <!--<login-form></login-form> -->
+        <login-form></login-form>
     <div class="container">
         <div class="notification">
             <comment v-for="usercomment in commentList" 
@@ -17,11 +17,11 @@
     </template>
 
     <script>
-    import {AXIOS} from './../http-common'
-    import Navbar from '../widget/Navbar'
-    import Loginform from '../widget/Loginform'
-    import CommentWidget from '../widget/Comment'
-    import ArticleWidget from '../widget/Article'
+    import {AXIOS} from '@/components/http-common'
+    import Navbar from '@/components/widget/Navbar'
+    import Loginform from '@/components/widget/Loginform'
+    import CommentWidget from '@/components/widget/Comment'
+    import ArticleWidget from '@/components/widget/Article'
 
     export default   {
         name: 'admin',
