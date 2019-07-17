@@ -28,10 +28,11 @@
 
 <script>
     import {AXIOS} from './../http-common'
+    import Vue from 'vue'
+
     export default {
     name: 'login-form',
     props: {
-        response: [],
         errors: []
     },
     data(){
@@ -60,13 +61,23 @@
                 this.showErrorMessage = errorMessage;
         },
         callRestService (model) {
-        var self= this;
-        AXIOS.post('/sign_up', model)
+        let self= this;
+        let router =  this.$router;
+        AXIOS.post('/users/sign_in', model)
           .then(response => {
-                self.response = response.data
-                if(self.response.errorMessage != undefined || self.response.errorMessage != ''){
-                    self.setErrorMessage(self.response.errorMessage);
+              if(response.status == 200){
+                let responseData = response.data
+                if(responseData['error_message'] != undefined ){
+                    self.setErrorMessage(responseData.errorMessage);
+                }else {
+                    self.$session.start()
+                    self.$session.set('jwt', responseData.token)
+                    self.$session.set('uid', responseData.response.id)
+                    self.$session.set('username', responseData.response.username)
+                    console.log(router);
+                    router.push('/user')
                 }
+              }
             })
           .catch(e => {
             self.errors.push(e)

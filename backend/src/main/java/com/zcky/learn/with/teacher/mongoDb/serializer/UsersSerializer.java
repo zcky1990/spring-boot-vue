@@ -17,7 +17,12 @@ public class UsersSerializer implements JsonSerializer<Users> {
 		if(jsonObj.has("_id")) {
 			jsonObj.remove("_id");
 		}
-		jsonObj.addProperty("_id", uid);
+		
+		if(jsonObj.has("password")) {
+			jsonObj.remove("password");
+		}
+		
+		jsonObj.addProperty("id", uid);
 		
 		Date time = src.get_id().getDate();
 		String createDate = util.getFormatedDate(time, "dd/MM/yyyy HH:mm:ss");
