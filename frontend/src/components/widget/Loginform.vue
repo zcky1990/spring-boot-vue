@@ -18,7 +18,7 @@
                             <button v-on:click="submitLogin" class="button is-block is-info is-large is-fullwidth">Login</button>
                             <div class="field">
                                 <div class="control">
-                                    <p ref="errormessage" class="error-message">{{errorMessage}}</p>
+                                    <p ref="errormessage" class="error-message">{{showErrorMessage}}</p>
                                 </div>
                             </div>
                     </div>
@@ -30,12 +30,22 @@
     import {AXIOS} from './../http-common'
     export default {
     name: 'login-form',
-    props: {
-        response: [],
-        errors: []
+    data: function() {
+        return {
+            response: [],
+            errors: [],
+            errorMessage: ''
+        }
     },
-    data : {
-         errorMessage: String
+    computed: {
+        showErrorMessage: {
+               get : function(){
+                   return this.errorMessage;
+               },
+               set: function(message){
+                   this.errorMessage = message
+               }
+        }
     },
     methods: {
         submitLogin: function () {
@@ -45,26 +55,23 @@
             if(username == undefined || username == "" || password == undefined || password == ""){
                 this.setErrorMessage("Username / Password cannot be empty")
             }else{
-                this.setErrorMesasge("");
+                this.setErrorMessage("");
                 var model={};
                 model.username = username;
                 model.password = password;
-
                 this.callRestService(model);
             }
         },
-
         setErrorMessage(errorMessage){
-                this.errorMessage = errorMessage;
+                this.showErrorMessage = errorMessage;
         },
-
         callRestService (model) {
-        var self= this;
+        var self = this;
         AXIOS.post('/users/sign_in', model)
           .then(response => {
-                self.response = response
+                self.response = response.data
                 if(self.response.error_message != undefined || self.response.error_message != ''){
-                    self.setErrorMessage(self.response.error_message);
+                    self.errorMessage = (self.response.error_message);
                 }
             })
           .catch(e => {
@@ -72,7 +79,7 @@
           })
       }
     }
-    }
+}
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
@@ -82,16 +89,4 @@
    color: red;
 }
 
-::-webkit-input-placeholder {
-font-size: 20px !important;
-}
-
-:-moz-placeholder {  
-font-size: 20px !important;
-}
-
-/*--for IE10 support--*/
-:-ms-input-placeholder {
-font-size: 20px !important;
-}
 </style>
