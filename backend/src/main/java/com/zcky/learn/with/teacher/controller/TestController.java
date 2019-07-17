@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
+
 @RestController
 public class TestController extends BaseController{
 	
@@ -19,5 +22,11 @@ public class TestController extends BaseController{
 		responseHeaders.add("Content-Type", "application/json; charset=utf-8");
 		responseHeaders.add("Cookie", "sadasdasdsadasdsadasd");
 		return new ResponseEntity<String>( "Greetings from Spring Boot!", getResponseHeader(), HttpStatus.OK);
+    }
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+    String uid(HttpSession session) {
+		//System.out.println(session.isNew());
+        return "test";
     }
 }

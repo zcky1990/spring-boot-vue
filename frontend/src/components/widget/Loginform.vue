@@ -37,16 +37,6 @@
             errorMessage: ''
         }
     },
-    computed: {
-        showErrorMessage: {
-               get : function(){
-                   return this.errorMessage;
-               },
-               set: function(message){
-                   this.errorMessage = message
-               }
-        }
-    },
     methods: {
         submitLogin: function () {
             var username = this.$refs.username.value;
@@ -72,12 +62,24 @@
                 self.response = response.data
                 if(self.response.error_message != undefined || self.response.error_message != ''){
                     self.errorMessage = (self.response.error_message);
+                } else {
+
                 }
             })
           .catch(e => {
             self.errors.push(e)
           })
       }
+    },
+    computed: {
+        showErrorMessage: {
+               get : function(){
+                   return this.errorMessage;
+               },
+               set: function(message){
+                   this.errorMessage = message
+               }
+        }
     }
 }
 </script>

@@ -53,7 +53,6 @@ public class UsersController extends BaseController{
 	@RequestMapping(value = "/api/users/sign_in", method = RequestMethod.POST)
 	public ResponseEntity<String> signIn(@Valid @RequestBody Users user, HttpServletResponse responseHeader) throws Exception {
 		JsonObject response;
-		System.out.println("masuk");
 		try {
 			Users userResponse = repository.signIn(user.getUsername(), user.getPassword());
 			if(userResponse != null) {
