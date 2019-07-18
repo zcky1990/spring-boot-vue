@@ -41,7 +41,7 @@ public class ArticleController extends BaseController {
 	@Autowired
 	private ArticleCommentRepository articleCommentRepository;
 
-	@RequestMapping(value = "/article/add_article", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/article/add_article", method = RequestMethod.POST)
 	public ResponseEntity<String> addArticle(@Valid @RequestBody Article article, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("uid");
 		Users user = userRepository.findBy_id(new ObjectId(auth));
@@ -63,7 +63,7 @@ public class ArticleController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/article/update_article", method = RequestMethod.PUT)
+	@RequestMapping(value = "/api/article/update_article", method = RequestMethod.PUT)
 	public ResponseEntity<String> updateArticle(@Valid @RequestBody Article article, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("uid");
 		Users user = userRepository.findBy_id(new ObjectId(auth));
@@ -86,7 +86,7 @@ public class ArticleController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/article/get_article/{slug}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/article/get_article/{slug}", method = RequestMethod.GET)
 	public ResponseEntity<String> getArticle(@PathVariable String slug, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("uid");
 		Users user = userRepository.findBy_id(new ObjectId(auth));
@@ -108,7 +108,7 @@ public class ArticleController extends BaseController {
 	}
 	
 	@SuppressWarnings("deprecation")
-	@RequestMapping(value = "/article/get_list_user_article/{page}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/article/get_list_user_article/{page}", method = RequestMethod.GET)
 	public ResponseEntity<String> getListUserArticle(@PathVariable String page, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("uid");
 		Users user = userRepository.findBy_id(new ObjectId(auth));
@@ -132,7 +132,7 @@ public class ArticleController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/article/delete_article/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/api/article/delete_article/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteArticle(@PathVariable String id, HttpServletRequest request){
 		JsonObject response;
 		try {
@@ -158,7 +158,7 @@ public class ArticleController extends BaseController {
 	 * @throws Exception
 	 */
 	
-	@RequestMapping(value = "/article/add_comment", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/article/add_comment", method = RequestMethod.POST)
 	public ResponseEntity<String> addComment(@Valid @RequestBody CommentArticle commentArticle, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("uid");
 		Users user = userRepository.findBy_id(new ObjectId(auth));
@@ -184,7 +184,7 @@ public class ArticleController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/article/update_article_comment", method = RequestMethod.PUT)
+	@RequestMapping(value = "/api/article/update_article_comment", method = RequestMethod.PUT)
 	public ResponseEntity<String> updateArticlComment(@Valid @RequestBody ArticleComment article, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("uid");
 		Users user = userRepository.findBy_id(new ObjectId(auth));
@@ -207,7 +207,7 @@ public class ArticleController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/article/delete_article_comment/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/api/article/delete_article_comment/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteArticleComment(@PathVariable String id, HttpServletRequest request){
 		JsonObject response;
 		try {
