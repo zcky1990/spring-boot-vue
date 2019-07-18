@@ -30,5 +30,21 @@ export const Util = {
     headers['Authorization'] = 'Bearer '+ session.get('jwt')
     headers['x-uid'] = session.get('uid')
     return headers
+  },
+
+  getUrlParams: function(){
+    let params = window.location.search
+    params = params.replace('?','');
+    let vars = params.split("&");
+    let paramsList = [];
+    for(let i = 0 ; i < vars.length; i++){
+      let pair = vars[i].split("=");
+      let key = decodeURIComponent(pair[0]);
+      let value = decodeURIComponent(pair[1]);
+      let data = {};
+      data[key] = value;
+      paramsList.push(data)
+    }
+    return paramsList;
   }
 }

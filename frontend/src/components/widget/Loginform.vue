@@ -67,7 +67,7 @@
               if(response.status == 200){
                 let responseData = response.data
                 if(responseData['error_message'] != undefined ){
-                    self.setErrorMessage(responseData.errorMessage);
+                    self.setErrorMessage(responseData.error_message);
                 }else {
                     self.$session.start()
                     self.$session.set('jwt', responseData.token)

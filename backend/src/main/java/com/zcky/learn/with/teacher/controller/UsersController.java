@@ -71,11 +71,24 @@ public class UsersController extends BaseController{
 		try {
 			Users userResponse = repository.signIn(user.getUsername(), user.getPassword());
 			if(userResponse != null) {
-				response = getSuccessResponse();
-				final String token = jwtTokenUtil.generateToken(this.getUserDetails(userResponse));
-				response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Users.class, new UsersSerializer(), userResponse) );
-				response.addProperty("token", token);
-				response.addProperty("exp_date", getExpiredDate());
+				if(userResponse.isValidated() && userResponse.isStatus()) {
+					response = getSuccessResponse();
+					final String token = jwtTokenUtil.generateToken(this.getUserDetails(userResponse));
+					response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Users.class, new UsersSerializer(), userResponse) );
+					response.addProperty("token", token);
+					response.addProperty("exp_date", getExpiredDate());
+				}
+				else if(!userResponse.isStatus()) {
+					response = getFailedResponse();
+					response.addProperty(Constant.ERROR_MESSAGE,Constant.USER_FOUND_BUT_INACTIVE_ERROR_MESSAGE);
+				}
+				else if(!userResponse.isValidated()){
+					response = getFailedResponse();
+					response.addProperty(Constant.ERROR_MESSAGE,Constant.USER_NOT_VALIDATED_SUCCESS_MESSAGE);
+				}else {
+					response = getFailedResponse();
+					response.addProperty(Constant.ERROR_MESSAGE,Constant.USER_NOT_FOUND_ERROR_MESSAGE);
+				}
 			}else {
 				response = getFailedResponse();
 				response.addProperty(Constant.ERROR_MESSAGE,Constant.USER_NOT_FOUND_ERROR_MESSAGE);
@@ -95,6 +108,22 @@ public class UsersController extends BaseController{
 			repository.save(user);
 			response = getSuccessResponse();
 			response.addProperty(Constant.RESPONSE,Constant.UPDATE_USER_PROFILE_SUCCESS_MESSAGE);
+		} catch(Exception e) {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+		}
+		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/users/validate/{id}", method = RequestMethod.GET)
+	public ResponseEntity<String> editUsers(@PathVariable String id, HttpServletRequest request){
+		JsonObject response;
+		try {
+			Users user = repository.findById(id).get();
+			user.setValidated(true);
+			repository.save(user);
+			response = getSuccessResponse();
+			response.addProperty(Constant.RESPONSE,Constant.SUCCESS_VALIDATED_USER_PROFILE_SUCCESS_MESSAGE);
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());

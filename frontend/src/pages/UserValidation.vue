@@ -1,6 +1,6 @@
 <template>
     <div class="hello">
-        Success Login {{userData.username}}
+        <a href="#" v-on:click="requestValidate" >Click here</a> to validate your email
     </div>
 </template>
 
@@ -9,7 +9,7 @@ import {AXIOS} from '@/components/http-common'
 import {Util} from '@/components/util'
 
 export default {
-    name: 'index',
+    name: 'userValidation',
     props: {
         msg: String
     },
@@ -19,22 +19,31 @@ export default {
             users : {}
         }
     },
-    beforeCreate: function () {
-        Util.checkUserSession(this.$session, this.$router);
-    },
     created() {
-        this.getUsersDetails();
     },
     methods: {
         getRequestHeader : function(){
             this.requestHeader = Util.getHeaders(this.$session);
             return this.requestHeader;
         },
-        getUsersDetails : function(){
-            let id = this.$session.get('uid');
+        getId : function(){
+            let params = Util.getUrlParams();
+            let id=''
+            for(let i = 0 ; i < params.length; i++){
+                let param = params[0]
+                if(param['id'] != undefined){
+                    id = param.id;
+                    break;
+                }
+            }
+            return id;
+        },
+        requestValidate: function(){
+            console.log("request fire")
+            let id = this.getId();
             let headers =  this.getRequestHeader();
             let self = this;
-            AXIOS.get('/users/get_user_detail/'+id, {headers} )
+            AXIOS.get('/users/validate/'+id)
             .then(response => {
                 if(response.status == 200){
                     let responseData = response.data

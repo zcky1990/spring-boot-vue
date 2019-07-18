@@ -16,7 +16,16 @@ public class Users {
 	private boolean status;
 	private String image_profile_url;
 	private String modified_date;
-	
+	private boolean isValidated;
+		
+	public boolean isValidated() {
+		return isValidated;
+	}
+
+	public void setValidated(boolean isValidated) {
+		this.isValidated = isValidated;
+	}
+
 	public String getStringId() {
 		return _id.toHexString();
 	}
