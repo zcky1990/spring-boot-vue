@@ -58,8 +58,8 @@ public class UsersController extends BaseController{
 				response = getFailedResponse();
 				response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
 			}
-		}else {
-			response =getFailedResponse();
+		} else {
+			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, Constant.USER_ALREDY_EXISTS_ERROR_MESSAGE);
 		}
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
@@ -122,6 +122,20 @@ public class UsersController extends BaseController{
 			repository.delete(repository.findById(id).get());
 			response = getSuccessResponse();
 			response.addProperty(Constant.RESPONSE, Constant.DELETE_USER_SUCCESS_MESSAGE);
+		} catch(Exception e) {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+		}
+		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/users/get_user_detail/{id}", method = RequestMethod.GET)
+	public ResponseEntity<String> getUserDetails(@PathVariable String id, HttpServletRequest request){
+		JsonObject response;
+		try {
+			Users user = repository.findById(id).get();
+			response = getSuccessResponse();
+			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Users.class, new UsersSerializer(), user) );
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());

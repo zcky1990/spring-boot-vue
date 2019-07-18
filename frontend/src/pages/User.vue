@@ -5,65 +5,65 @@
     </template>
 
     <script>
-    import {AXIOS} from '@/components/http-common'
+import {AXIOS} from '@/components/http-common'
 
-    export default {
+export default {
     name: 'index',
     props: {
         msg: String
     },
     data () {
         return {
-            axioHeader : {}
+            headers : {}
         }
     },
     beforeCreate: function () {
         console.log("this.$session.exists()", this.$session.exists())
         if (!this.$session.exists()) {
-            this.$router.push('/')
+            this.$router.push('/admin')
         }
         
     },
     created() {
-        /*
-        const headers = {
-        'Content-Type': 'application/json',
-        'Authotization': 'Bearer '+ this.$session.get('jwt'),
-        'x-uid' : this.$session.get('uid')
-        };
-        AXIOS.get('/users/find_all_users', {headers})
-          .then(response => {
-              if(response.status == 200){
-                let responseData = response.data
-                console.log(responseData);
-                }
-            })
-          .catch(e => {
-            self.errors.push(e)
-          }) 
-          */
+        this.getUsersDetails();
     },
     methods: {
-        setHeader: function (){
-
-        },
         logout: function () {
             this.$session.destroy()
             this.$router.push('/')
-        }
+        },
+        getRequestHeader : function(){
+            this.requestHeader = "";
+            return this.requestHeader;
+        },
+        getUsersDetails : function(){
+            let id = this.$session.get('uid');
+            let headers =  this.getRequestHeader();
+
+            AXIOS.get('/users/get_user_detail/'+id, {headers} )
+            .then(response => {
+                if(response.status == 200){
+                    let responseData = response.data
+                    console.log(responseData);
+                    }
+                })
+            .catch(e => {
+                self.errors.push(e)
+            }) 
+            }
     },
     computed: {
         requestHeader: {
                get : function(){
-                   return this.axioHeader;
+                   return this.headers;
                },
                set: function(){
-                   this.axioHeader['Authotization'] = 'Bearer '+ this.$session.get('jwt')
-                   this.axioHeader['x-uid'] = this.$session.get('uid')
+                   this.headers['Authorization'] = 'Bearer '+ this.$session.get('jwt')
+                   this.headers['x-uid'] = this.$session.get('uid')
                 }
         }
     }
-    }
+}
     </script>
 
     <!-- Add "scoped" attribute to limit CSS to this component only -->
