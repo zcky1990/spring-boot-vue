@@ -74,7 +74,7 @@
                     self.$session.set('jwt', responseData.token)
                     self.$session.set('uid', responseData.response.id)
                     self.$session.set('username', responseData.response.username)
-                    console.log(router);
+                    self.$session.set('exp_date', responseData.exp_date)
                     router.push('/user')
                 }
               }

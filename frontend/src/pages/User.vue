@@ -1,10 +1,10 @@
-    <template>
+<template>
     <div class="hello">
-        Success Login
+        Success Login {{userData.username}}
     </div>
-    </template>
+</template>
 
-    <script>
+<script>
 import {AXIOS} from '@/components/http-common'
 
 export default {
@@ -14,15 +14,21 @@ export default {
     },
     data () {
         return {
-            headers : {}
+            headers : {},
+            users : {}
         }
     },
     beforeCreate: function () {
-        console.log("this.$session.exists()", this.$session.exists())
         if (!this.$session.exists()) {
-            this.$router.push('/admin')
+            this.$router.push('/')
+        } else {
+            let expDate = new Date(this.$session.get('exp_date'))
+            let currDate = new Date();
+            if(currDate > expDate){
+                this.$session.destroy();
+                this.$router.push('/')
+            }
         }
-        
     },
     created() {
         this.getUsersDetails();
@@ -39,18 +45,19 @@ export default {
         getUsersDetails : function(){
             let id = this.$session.get('uid');
             let headers =  this.getRequestHeader();
-
+            let self = this;
             AXIOS.get('/users/get_user_detail/'+id, {headers} )
             .then(response => {
                 if(response.status == 200){
                     let responseData = response.data
-                    console.log(responseData);
+                    self.userData = responseData.response;
+                    console.log(self.userData);
                     }
                 })
             .catch(e => {
                 self.errors.push(e)
             }) 
-            }
+        }
     },
     computed: {
         requestHeader: {
@@ -61,13 +68,21 @@ export default {
                    this.headers['Authorization'] = 'Bearer '+ this.$session.get('jwt')
                    this.headers['x-uid'] = this.$session.get('uid')
                 }
+        },
+        userData : {
+            get: function(){
+                return this.users;
+            },
+            set: function (userdata){
+                this.users = userdata;
+            }
         }
     }
 }
-    </script>
+</script>
 
     <!-- Add "scoped" attribute to limit CSS to this component only -->
-    <style scoped>
+<style scoped>
     h3 {
     margin: 40px 0 0;
     }
@@ -82,4 +97,4 @@ export default {
     a {
     color: #42b983;
     }
-    </style>
+</style>

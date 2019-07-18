@@ -75,6 +75,7 @@ public class UsersController extends BaseController{
 				final String token = jwtTokenUtil.generateToken(this.getUserDetails(userResponse));
 				response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Users.class, new UsersSerializer(), userResponse) );
 				response.addProperty("token", token);
+				response.addProperty("exp_date", getExpiredDate());
 			}else {
 				response = getFailedResponse();
 				response.addProperty(Constant.ERROR_MESSAGE,Constant.USER_NOT_FOUND_ERROR_MESSAGE);

@@ -2,6 +2,10 @@ package com.zcky.learn.with.teacher.controller;
 
 
 import java.lang.reflect.Type;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -103,6 +107,16 @@ public class BaseController {
 
 	public JsonArray toJSONArray(Object src) {
 		return (JsonArray)new GsonBuilder().create().toJsonTree(src);
+	}
+	
+	public String getExpiredDate() {
+		long oneDay = 24 * 60 * 60 * 1000;
+		Date date = new Date();
+		long expDateMils = date.getTime() + oneDay;
+		Date expDate = new Date(expDateMils);
+		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+		return formatter.format(expDate);
 	}
 
 }
