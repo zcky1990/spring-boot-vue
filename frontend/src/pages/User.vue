@@ -6,6 +6,7 @@
 
 <script>
 import {AXIOS} from '@/components/http-common'
+import {Util} from '@/components/util'
 
 export default {
     name: 'index',
@@ -19,16 +20,7 @@ export default {
         }
     },
     beforeCreate: function () {
-        if (!this.$session.exists()) {
-            this.$router.push('/')
-        } else {
-            let expDate = new Date(this.$session.get('exp_date'))
-            let currDate = new Date();
-            if(currDate > expDate){
-                this.$session.destroy();
-                this.$router.push('/')
-            }
-        }
+        Util.checkUserSession(this.$session, this.$router);
     },
     created() {
         this.getUsersDetails();
@@ -51,7 +43,6 @@ export default {
                 if(response.status == 200){
                     let responseData = response.data
                     self.userData = responseData.response;
-                    console.log(self.userData);
                     }
                 })
             .catch(e => {
@@ -81,7 +72,7 @@ export default {
 }
 </script>
 
-    <!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     h3 {
     margin: 40px 0 0;
