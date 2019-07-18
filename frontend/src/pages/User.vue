@@ -31,7 +31,7 @@ export default {
             this.$router.push('/')
         },
         getRequestHeader : function(){
-            this.requestHeader = "";
+            this.requestHeader = Util.getHeaders(this.$session);
             return this.requestHeader;
         },
         getUsersDetails : function(){
@@ -55,9 +55,8 @@ export default {
                get : function(){
                    return this.headers;
                },
-               set: function(){
-                   this.headers['Authorization'] = 'Bearer '+ this.$session.get('jwt')
-                   this.headers['x-uid'] = this.$session.get('uid')
+               set: function(header){
+                   this.headers = header;
                 }
         },
         userData : {

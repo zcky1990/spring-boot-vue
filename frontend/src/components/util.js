@@ -23,5 +23,12 @@ export const Util = {
                 this.$router.push('/')
             }
         }*/
-  } 
+  } ,
+
+  getHeaders: function(session){
+    let headers = {};
+    headers['Authorization'] = 'Bearer '+ session.get('jwt')
+    headers['x-uid'] = session.get('uid')
+    return headers
+  }
 }
