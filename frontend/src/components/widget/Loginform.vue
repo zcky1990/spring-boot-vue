@@ -28,7 +28,6 @@
 
 <script>
     import {AXIOS} from './../http-common'
-    import Vue from 'vue'
 
     export default {
     name: 'login-form',
