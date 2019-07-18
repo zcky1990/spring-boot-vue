@@ -10,9 +10,6 @@ import {Util} from '@/components/util'
 
 export default {
     name: 'userValidation',
-    props: {
-        msg: String
-    },
     data () {
         return {
             headers : {},
@@ -39,7 +36,6 @@ export default {
             return id;
         },
         requestValidate: function(){
-            console.log("request fire")
             let id = this.getId();
             let headers =  this.getRequestHeader();
             let self = this;
