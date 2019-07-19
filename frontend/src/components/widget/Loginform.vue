@@ -18,7 +18,8 @@
                             <button v-on:click="submitLogin" class="button is-block is-info is-large is-fullwidth">Login</button>
                             <div class="field">
                                 <div class="control">
-                                    <p ref="errormessage" class="error-message">{{showErrorMessage}}</p>
+                                    <snack-bar ref="snackbar"
+                                    ></snack-bar>
                                 </div>
                             </div>
                     </div>
@@ -28,15 +29,21 @@
 
 <script>
     import {AXIOS} from './../http-common'
+    import SnackBar from './SnackBar'
 
     export default {
     name: 'login-form',
-    props: {
-        errors: []
-    },
+    components: {
+                    'snack-bar' : SnackBar
+        }, 
     data(){
         return {
-            messageError:''
+            messageError:'',
+            snackBarConfig: {
+                color : 'error',
+                timeout : 6000,
+                top : true
+            }
         }
     },
     methods: {
@@ -58,6 +65,8 @@
         },
         setErrorMessage(errorMessage){
                 this.showErrorMessage = errorMessage;
+                this.$refs.snackbar.setConfig(this.snackBarConfig);
+                this.$refs.snackbar.show(errorMessage);
         },
         callRestService (model) {
         let self= this;
