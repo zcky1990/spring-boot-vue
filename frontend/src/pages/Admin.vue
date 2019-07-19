@@ -1,7 +1,7 @@
     <template>
-    <div class="admin">
-        <login-form></login-form>
-    </div>
+        <div class="admin">
+                <login-form></login-form>
+        </div>
     </template>
 
     <script>
@@ -17,9 +17,6 @@
         },
         components: {
                     'login-form' : Loginform
-        }, 
-        created() {
-            
         }
     }
     </script>

@@ -27,7 +27,7 @@
     data(){
       return {
         snackbar: false,
-        closebtnColor: 'pink',
+        closebtnColor: 'white',
         textMessage:'',
         colorType:'error',
         multiLineMode: false,

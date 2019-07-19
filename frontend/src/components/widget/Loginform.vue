@@ -1,5 +1,5 @@
 <template>
-    <div class="container has-text-centered login-form">
+        <div class="container has-text-centered login-form">
                 <div class="column is-6 is-offset-3">
                     <h3 class="title has-text-grey">Login</h3>
                     <p class="subtitle has-text-grey">Please login to proceed.</p>
@@ -20,21 +20,24 @@
                                 <div class="control">
                                     <snack-bar ref="snackbar"
                                     ></snack-bar>
+                                    <alert-component ref="alert"></alert-component>
                                 </div>
                             </div>
                     </div>
                 </div>
-            </div>
+        </div>
 </template>
 
 <script>
     import {AXIOS} from './../http-common'
     import SnackBar from './SnackBar'
+    import Alert from './Alert'
 
     export default {
     name: 'login-form',
     components: {
-                    'snack-bar' : SnackBar
+                    'snack-bar' : SnackBar,
+                    'alert-component' : Alert
         }, 
     data(){
         return {
@@ -67,6 +70,8 @@
                 this.showErrorMessage = errorMessage;
                 this.$refs.snackbar.setConfig(this.snackBarConfig);
                 this.$refs.snackbar.show(errorMessage);
+
+                this.$refs.alert.setMessage(errorMessage);
         },
         callRestService (model) {
         let self= this;
