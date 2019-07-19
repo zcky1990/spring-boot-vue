@@ -12,7 +12,6 @@ export default {
     name: 'userValidation',
     data () {
         return {
-            headers : {},
             users : {}
         }
     },
@@ -37,7 +36,6 @@ export default {
         },
         requestValidate: function(){
             let id = this.getId();
-            let headers =  this.getRequestHeader();
             let self = this;
             AXIOS.get('/users/validate/'+id)
             .then(response => {
