@@ -4,6 +4,7 @@ import Index from '@/pages/Index'
 import Admin from '@/pages/Admin'
 import User from '@/pages/User'
 import UserValidation from '@/pages/UserValidation'
+import UserSignUp from '@/pages/UserSignUp'
 
 Vue.use(Router)
 export default new Router({
@@ -28,6 +29,11 @@ export default new Router({
       path: '/user/validation/',
       name: 'Validate user Sign up',
       component : UserValidation
+    },
+    {
+      path: '/sign_up/',
+      name: 'New User Page',
+      component : UserSignUp
     }
   ]
 })

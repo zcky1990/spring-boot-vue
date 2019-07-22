@@ -67,6 +67,8 @@
             valid: false,
             firstname: '',
             lastname: '',
+            password:'',
+            username:'',
             email: '',
             nameRules: [
                 v => !!v || 'Name is required',
