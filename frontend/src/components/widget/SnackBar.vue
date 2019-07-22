@@ -69,11 +69,11 @@
            this.closeBtnColor = config.close_btn_color
          }
        },
-       show:function(message){
+       showSnackbar:function(message){
          this.textMessage = message;
          this.snackbar = true;
        },
-       hide: function(){
+       hideSnackbar: function(){
          this.snackbar = false;
        }
      }

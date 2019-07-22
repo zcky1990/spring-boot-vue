@@ -9,8 +9,23 @@ export const Util = {
           session.destroy();
           router.push('/')
         }
+        return true
     }
   },  
+
+  isLoggin : function(session){
+    if (!session.exists()) {
+      return false
+    } else {
+        let expDate = new Date(session.get('exp_date'))
+        let currDate = new Date();
+        if(currDate > expDate){
+          session.destroy();
+          return false
+        }
+        return true
+    }
+  },
 
   checkAdminSession : function () {
 /*if (!this.$session.exists()) {

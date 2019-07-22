@@ -1,5 +1,5 @@
 <template>
-    <div class="hello">
+    <div class="user-validation-page">
         <a href="#" v-on:click="requestValidate" >Click here</a> to validate your email
     </div>
 </template>

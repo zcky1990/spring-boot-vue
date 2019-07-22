@@ -1,11 +1,13 @@
     <template>
-        <div class="admin">
-                <login-form></login-form>
+        <div class="admin-page">
+            <nav-menu></nav-menu>
+            <login-form></login-form>
         </div>
     </template>
 
     <script>
     import {AXIOS} from '@/components/http-common'
+    import Navbar from '@/components/widget/Navbar'
     import Loginform from '@/components/widget/Loginform'
 
     export default   {
@@ -16,6 +18,7 @@
             }
         },
         components: {
+                    'nav-menu' : Navbar,
                     'login-form' : Loginform
         }
     }

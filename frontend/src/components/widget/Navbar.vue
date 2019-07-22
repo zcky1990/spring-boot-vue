@@ -1,66 +1,260 @@
-    <template>
-    <section class="hero is-primary is-medium">
-    <!-- Hero head: will stick at the top -->
-    <div class="hero-head">
-        <nav class="navbar">
-        <div class="container">
-            <div class="navbar-brand">
-            <a class="navbar-item">
-                <img src="https://bulma.io/images/bulma-type-white.png" alt="Logo">
-            </a>
-            <span v-on:click="showMenuBurger" class="navbar-burger burger" data-target="navbarMenuHeroA">
-                <span></span>
-                <span></span>
-                <span></span>
-            </span>
-            </div>
-            <div ref="menu" id="navbarMenuHeroA" class="navbar-menu">
-            <div class="navbar-end">
-                <a class="navbar-item">
-                Home
-                </a>
-                <a class="navbar-item">
-                Examples
-                </a>
-                <a class="navbar-item">
-                Documentation
-                </a>
-                <span class="navbar-item">
-                <a class="button is-primary is-inverted">
-                    <span class="icon">
-                    <i class="fab fa-github"></i>
-                    </span>
-                    <span>Download</span>
-                </a>
-                </span>
-            </div>
+<template>
+          <div class="nav-menu">
+             <v-navigation-drawer fixed clipped v-model="drawer" app>
+               <v-subheader class="mt-3 grey--text text--darken-1">HEADER</v-subheader>
+               <v-list-tile v-for="item in items" :key="item.text">
+                 <router-link class="nav-draw-links" v-bind:to="item.url">
+                    <v-list-tile-action>
+                      <v-icon>{{ item.icon }}</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                      <v-list-tile-title>
+                        {{ item.title }}
+                      </v-list-tile-title>
+                     </v-list-tile-content>
+                   </router-link>
+              </v-list-tile>
+               <v-subheader class="mt-3 grey--text text--darken-1">HEADER 2</v-subheader>
+               <v-list-tile v-for="item in items2" :key="item.text" avatar>
+                <v-list-tile-avatar>
+                  <img :src="`https://randomuser.me/api/portraits/men/${item.picture}.jpg`" alt="">
+                </v-list-tile-avatar>
+                <v-list-tile-title v-text="item.text"></v-list-tile-title>
+              </v-list-tile>
+             </v-navigation-drawer>
+
+             <v-toolbar dense clipped-left app dark color="orange" class="nav-toolbar" >
+                <v-icon class="mx-3">fa-youtube</v-icon>
+                <v-toolbar-title class="mr-5 align-center">
+                  <span class="title">{{title}}</span>
+                </v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-toolbar-side-icon v-if="isMobile" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+                    
+                <div v-if="!isMobile" class="nav-draw-links">
+                    <div class="nav-link">
+                        <v-toolbar-items v-for="item in items" :key="item.text">
+                                <router-link class="nav-draw-links" v-bind:to="item.url">
+                                    <v-btn  flat>
+                                        {{item.title}}
+                                    </v-btn>
+                                </router-link>
+                        </v-toolbar-items>
+                    </div>
+                    <!--container user has login -->
+                    <div v-if="isLogged" class="login-container">
+                        <v-menu v-model="users" :close-on-content-click="false" :nudge-width="300" offset-x>
+                        <template v-slot:activator="{ on }">
+                            <div class="user-avatar-container">
+                                <v-chip color="green" v-on="on">
+                                    <v-avatar>
+                                    <img :src="`https://randomuser.me/api/portraits/men/1.jpg`" alt="">
+                                    </v-avatar>
+                                    si nau
+                                </v-chip> 
+                            </div>
+                        </template>
+                            <v-card>
+                                <v-list-tile>
+                                        <v-list-tile-action>
+                                            <v-icon>account_circle</v-icon>
+                                        </v-list-tile-action>
+                                        <v-list-tile-content>
+                                        <v-list-tile-title>
+                                            User Setting
+                                        </v-list-tile-title>
+                                        </v-list-tile-content>
+                                </v-list-tile>
+                                <v-btn color="warning" @click="logout">
+                                            Logout
+                                </v-btn>
+                            </v-card>
+                        </v-menu>
+                    </div> 
+
+                     <!--container user not login -->
+                    <div v-if="!isLogged" class="login-container">
+                        <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="300" offset-x>
+                        <template v-slot:activator="{ on }">
+                            <div class="user-avatar-container">
+                                <v-chip color="green" v-on="on">
+                                    <v-avatar>
+                                        <v-icon>account_circle</v-icon>
+                                    </v-avatar>
+                                    Login
+                                </v-chip> 
+                            </div>
+                        </template>
+                            <v-card>
+                                <div class="login-form-container">
+                                    <v-form ref="form" v-model="valid" lazy-validation>
+                                        <v-text-field v-model="username" label="Username" required ></v-text-field>
+                                        <v-text-field v-model="password" :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+                                                    :type="showPassword ? 'text' : 'password'" name="input-10-1" 
+                                                    label="Normal with hint text" hint="At least 8 characters" 
+                                                    counter @click:append="showPassword = !showPassword">
+                                        </v-text-field>
+                                        <v-btn color="warning" @click="submit">
+                                            Submit
+                                        </v-btn>
+                                    </v-form>             
+                                </div>
+                            </v-card>
+                        </v-menu>
+                    </div>
+                </div>
+            </v-toolbar>
+            <div class="error-message-container">
+                <snack-bar ref="navSnackbar"></snack-bar>
             </div>
         </div>
-        </nav>
-    </div>
-    </section>
-    </template>
+</template>
 
-    <script>
-    export default {
+<script>
+import {AXIOS} from './../http-common'
+import SnackBar from './SnackBar'
+import {Util} from './../util'
+
+export default {
     name: 'navbar',
-    props: {
-        msg: String
+    components: {
+        'snack-bar' : SnackBar
+    }, 
+    data () {
+        return {
+            drawer: false,
+            isMobile: false,
+            items: [
+                { title: 'Home', icon: 'dashboard' , url: '/'},
+                { title: 'About', icon: 'question_answer' , url: '/test'}
+            ],
+            items2: [
+                { picture: 28, text: 'Joseph' },
+                { picture: 38, text: 'Apple' }
+            ],
+            title:'this is example',
+            icon: {
+                type: String,
+                default: '$vuetify.icons.cancel'
+            },
+            window: {
+                width: 0,
+                height: 0
+            },
+            users: false,
+            menu: false,
+            message: false,
+            valid: true,
+            username: '',
+            password: '',
+            showPassword: false,
+            rules: {
+                required: value => !!value || 'Required.',
+                min: v => v.length >= 8 || 'Min 8 characters',
+            },
+            errorSnackBarConfig: {
+                color : 'error',
+                timeout : 6000,
+                top : true
+            },
+            successSnackBarConfig: {
+                color : 'success',
+                timeout : 6000,
+                top : true
+            },
+            isLogged: false
+        }
+    },
+    created() {
+        this.isLogged =  Util.isLoggin(this.$session);
+        window.addEventListener('resize', this.handleResize)
+        this.handleResize();
+    },
+    destroyed() {
+        window.removeEventListener('resize', this.handleResize)
     },
     methods: {
-        showMenuBurger: function () {
-            var element = this.$refs.menu;
-            if(element.classList.contains('is-active')){
-                element.classList.remove('is-active');
-            } else{
-                element.classList.add('is-active');
+        handleResize() {
+            this.window.width = window.innerWidth;
+            this.window.height = window.innerHeight;
+            this.checkRes();
+        },
+        checkRes(){
+            if(this.window.width <= 640 ){
+                this.isMobile = true;
+            }else {
+                this.isMobile = false;
+                this.drawer = false;
             }
-        }
+        },
+        submit () {
+            let model={};
+            model.username = this.username;
+            model.password = this.password;
+            this.callRestService(model)
+        },
+        callRestService (model) {
+            let self= this;
+            let router =  this.$router;
+            AXIOS.post('/users/sign_in', model)
+            .then(response => {
+                if(response.status == 200){
+                    let responseData = response.data
+                    if(responseData['error_message'] != undefined ){
+                        self.setErrorMessage(responseData.error_message);
+                    }else {
+                        self.$session.start()
+                        self.$session.set('jwt', responseData.token)
+                        self.$session.set('uid', responseData.response.id)
+                        self.$session.set('username', responseData.response.username)
+                        self.$session.set('exp_date', responseData.exp_date)
+                        self.isLogged = true
+                        self.closePopUpMenu();
+                        self.setSuccessMessage();
+                    }
+                }
+                })
+            .catch(e => {
+                self.errors.push(e)
+          })
+      },
+      closePopUpMenu(){
+            this.menu = false
+            this.users = false
+      },
+      setSuccessMessage(){
+            this.$refs.navSnackbar.setConfig(this.successSnackBarConfig);
+            this.$refs.navSnackbar.showSnackbar("Login Success");
+            this.closePopUpMenu();
+            this.$refs.form.reset();
+      },
+      setErrorMessage(errorMessage){
+            this.$refs.navSnackbar.setConfig(this.errorSnackBarConfig);
+            this.$refs.navSnackbar.showSnackbar(errorMessage);
+            this.closePopUpMenu();
+            this.$refs.form.reset();
+        },
+      logout () {
+           this.$session.destroy()
+           this.closePopUpMenu();
+           this.isLogged = false
+      }
     }
-    }
-    </script>
-
+}
+</script>
     <!-- Add "scoped" attribute to limit CSS to this component only -->
     <style scoped>
+    .nav-draw-links {
+        display: flex;
+        text-decoration: none;
+    }
 
+    .nav-link, .user-avatar-container {
+        display:flex;
+        padding: 5px;
+    }
+
+    .login-form-container {
+        padding:20px;
+    }
     </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="hello">
+    <div class="user-page">
         Success Login {{userData.username}}
     </div>
 </template>

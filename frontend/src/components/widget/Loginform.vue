@@ -18,8 +18,7 @@
                             <button v-on:click="submitLogin" class="button is-block is-info is-large is-fullwidth">Login</button>
                             <div class="field">
                                 <div class="control">
-                                    <snack-bar ref="snackbar"
-                                    ></snack-bar>
+                                    <snack-bar ref="snackbar"></snack-bar>
                                     <alert-component ref="alert"></alert-component>
                                 </div>
                             </div>
@@ -69,7 +68,7 @@
         setErrorMessage(errorMessage){
                 this.showErrorMessage = errorMessage;
                 this.$refs.snackbar.setConfig(this.snackBarConfig);
-                this.$refs.snackbar.show(errorMessage);
+                this.$refs.snackbar.showSnackbar(errorMessage);
 
                 this.$refs.alert.setMessage(errorMessage);
         },
