@@ -1,0 +1,19 @@
+<template>
+    <layout-page></layout-page>
+</template>
+
+<script>
+import Layout from '@/layout/SignUpLayout'
+
+export default {
+    name: 'user-sign-up-page',
+    components: {
+        'layout-page' : Layout
+    },
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
+</style>
