@@ -88,8 +88,8 @@
                             <v-card>
                                 <div class="login-form-container">
                                     <v-form ref="form" v-model="valid" lazy-validation>
-                                        <v-text-field v-model="username" label="Username" required ></v-text-field>
-                                        <v-text-field v-model="password" :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+                                        <v-text-field v-model="username" :rules="useranameRules" label="Username" required ></v-text-field>
+                                        <v-text-field v-model="password" :rules="passwordRules" :append-icon="showPassword ? 'visibility' : 'visibility_off'"
                                                     :type="showPassword ? 'text' : 'password'" name="input-10-1" 
                                                     label="Normal with hint text" hint="At least 8 characters" 
                                                     counter @click:append="showPassword = !showPassword">
@@ -152,6 +152,14 @@ export default {
                 required: value => !!value || 'Required.',
                 min: v => v.length >= 8 || 'Min 8 characters',
             },
+            useranameRules: [
+                v => !!v || 'Username is required',
+                v => (v && v.length >= 10) || 'Username must be more than 8 characters'
+            ],
+            passwordRules: [
+                v => !!v || 'Password is required',
+                v => (v && v.length >= 8) || 'Password must be more than 8 characters'
+            ],  
             errorSnackBarConfig: {
                 color : 'error',
                 timeout : 6000,
@@ -188,10 +196,12 @@ export default {
             }
         },
         submit () {
+            if(this.$refs.form.validate()){
             let model={};
             model.username = this.username;
             model.password = this.password;
             this.callRestService(model)
+            }
         },
         callRestService (model) {
             let self= this;
@@ -210,7 +220,7 @@ export default {
                         self.$session.set('exp_date', responseData.exp_date)
                         self.isLogged = true
                         self.closePopUpMenu();
-                        self.setSuccessMessage();
+                        self.setSuccessMessage("Success Login");
                     }
                 }
                 })
@@ -222,9 +232,9 @@ export default {
             this.menu = false
             this.users = false
       },
-      setSuccessMessage(){
+      setSuccessMessage(message){
             this.$refs.navSnackbar.setConfig(this.successSnackBarConfig);
-            this.$refs.navSnackbar.showSnackbar("Login Success");
+            this.$refs.navSnackbar.showSnackbar(message);
             this.closePopUpMenu();
             this.$refs.form.reset();
       },
