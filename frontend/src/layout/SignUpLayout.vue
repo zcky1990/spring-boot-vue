@@ -3,7 +3,7 @@
             <section class="nav-section">
                 <nav-menu></nav-menu>
             </section>
-            <section class="content-section">
+            <section class="content-section container">
                 <sign-up-form></sign-up-form>
             </section>
         </div>

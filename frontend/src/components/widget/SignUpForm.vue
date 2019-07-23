@@ -1,54 +1,58 @@
 <template>
     <v-container grid-list-xl>
-        <v-layout flex-child wrap>
-            <v-flex xs12 md8 d-flex >
-                <v-sheet class="d-flex" color="grey lighten-3"></v-sheet>
-            </v-flex>
-            <v-flex xs12 md4 d-flex >
-                <div class="form-sign-in-container">
-                    <v-form ref="form" v-model="valid">
-                            <v-text-field
-                            v-model="firstname"
-                            :rules="nameRules"
-                            :counter="10"
-                            label="First name"
-                            required
-                            ></v-text-field>
-                        
-                            <v-text-field
-                            v-model="lastname"
-                            :rules="nameRules"
-                            :counter="10"
-                            label="Last name"
-                            required
-                            ></v-text-field>
-                        
-                            <v-text-field
-                            v-model="email"
-                            :rules="emailRules"
-                            label="E-mail"
-                            required
-                            ></v-text-field>
-                        
-                            <v-text-field
-                            v-model="username"
-                            :rules="useranameRules"
-                            label="Username"
-                            required
-                            ></v-text-field>
-                        
-                            <v-text-field
-                            v-model="password"
-                            :rules="passwordRules"
-                            label="Password"
-                            hint="At least 8 characters"
-                            required
-                            ></v-text-field>
-                        <v-btn color="warning" @click="submit">
+        <v-layout align-center justify-center row fill-height>
+            <v-flex xs12 md6 d-flex >
+                <v-card class="form-sign-in-container">
+                    <v-card-title>
+                        Sign Up
+                    </v-card-title>
+                    <v-card-text>
+                        <v-form ref="form" v-model="valid">
+                                <v-text-field
+                                v-model="firstname"
+                                :rules="nameRules"
+                                :counter="10"
+                                label="First name"
+                                required
+                                ></v-text-field>
+                            
+                                <v-text-field
+                                v-model="lastname"
+                                :rules="nameRules"
+                                :counter="10"
+                                label="Last name"
+                                required
+                                ></v-text-field>
+                            
+                                <v-text-field
+                                v-model="email"
+                                :rules="emailRules"
+                                label="E-mail"
+                                required
+                                ></v-text-field>
+                            
+                                <v-text-field
+                                v-model="username"
+                                :rules="useranameRules"
+                                label="Username"
+                                required
+                                ></v-text-field>
+                            
+                                <v-text-field
+                                v-model="password"
+                                :rules="passwordRules"
+                                label="Password"
+                                hint="At least 8 characters"
+                                required
+                                ></v-text-field>
+                        </v-form>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-btn class="white--text" color="#00d1b2" @click="submit">
                             Sign In
                         </v-btn>
-                    </v-form>
-                </div>
+                    </v-card-actions>
+                </v-card>
             </v-flex>
         </v-layout>
     </v-container>

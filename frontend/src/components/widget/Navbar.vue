@@ -23,7 +23,7 @@
               </v-list-tile>
              </v-navigation-drawer>
 
-             <v-toolbar dense clipped-left app dark color="orange" class="nav-toolbar" >
+             <v-toolbar dense clipped-left app dark color="#00d1b2" class="nav-toolbar" >
                 <v-icon class="mx-3">fa-youtube</v-icon>
                 <v-toolbar-title class="mr-5 align-center">
                   <span class="title">{{title}}</span>
