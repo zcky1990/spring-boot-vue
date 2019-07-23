@@ -1,27 +1,40 @@
 <template>
-    <v-container grid-list-xl>
+    <v-container grid-list-sm>
         <v-layout align-center justify-center row fill-height>
             <v-flex xs12 md6 d-flex >
                 <v-card class="form-sign-in-container">
-                    <v-card-title>
-                        Sign Up
+                    <v-card-title justify-center>
+                        <v-container>
+                            <v-avatar
+                                size="50"
+                                color="grey lighten-4"
+                            >
+                                <img src="https://vuetifyjs.com/apple-touch-icon-180x180.png" alt="avatar">
+                            </v-avatar>
+                            <v-flex >
+                                <div class="title">Sign Up</div>
+                            </v-flex>
+                            <v-flex >
+                                <div class="desc">Make your Account</div>
+                            </v-flex>
+                        </v-container>
                     </v-card-title>
                     <v-card-text>
                         <v-form ref="form" v-model="valid">
                                 <v-text-field
                                 v-model="firstname"
                                 :rules="nameRules"
-                                :counter="10"
                                 label="First name"
                                 required
+                                outline
                                 ></v-text-field>
                             
                                 <v-text-field
                                 v-model="lastname"
                                 :rules="nameRules"
-                                :counter="10"
                                 label="Last name"
                                 required
+                                outline
                                 ></v-text-field>
                             
                                 <v-text-field
@@ -29,6 +42,7 @@
                                 :rules="emailRules"
                                 label="E-mail"
                                 required
+                                outline
                                 ></v-text-field>
                             
                                 <v-text-field
@@ -36,6 +50,7 @@
                                 :rules="useranameRules"
                                 label="Username"
                                 required
+                                outline
                                 ></v-text-field>
                             
                                 <v-text-field
@@ -44,13 +59,26 @@
                                 label="Password"
                                 hint="At least 8 characters"
                                 required
+                                outline
                                 ></v-text-field>
                         </v-form>
                     </v-card-text>
+                    <v-divider></v-divider>
                     <v-card-actions>
-                        <v-btn class="white--text" color="#00d1b2" @click="submit">
-                            Sign In
-                        </v-btn>
+                        <v-container>
+                            <v-layout align-center justify-center row fill-height>
+                                 <v-flex xs12 d-flex >
+                                     <div class="has-account" @click="goToPage">
+                                        <span >Already has Account?</span>
+                                    </div>
+                                 </v-flex>
+                                  <v-flex xs12 md4 d-flex >
+                                <v-btn class="white--text desc" color="#00d1b2" @click="submit">
+                                    Sign In
+                                </v-btn>
+                                  </v-flex>
+                            </v-layout>
+                        </v-container>
                     </v-card-actions>
                 </v-card>
             </v-flex>
@@ -76,7 +104,7 @@
             email: '',
             nameRules: [
                 v => !!v || 'Name is required',
-                v => v.length <= 10 || 'Name must be less than 10 characters'
+                //v => v.length <= 10 || 'Name must be less than 10 characters'
             ],
             emailRules: [
                 v => !!v || 'E-mail is required',
@@ -84,11 +112,11 @@
             ],
             useranameRules: [
                 v => !!v || 'Username is required',
-                v => (v && v.length >= 10) || 'Username must be more than 8 characters'
+                v => (v && v.length >= 8) || 'Username must be or more than 8 characters'
             ],
             passwordRules: [
                 v => !!v || 'Password is required',
-                v => (v && v.length >= 8) || 'Password must be more than 8 characters'
+                v => (v && v.length >= 8) || 'Password must be or more than 8 characters'
             ],
         }
     },
@@ -124,6 +152,10 @@
             this.callRestService(model)
             }
         },
+        goToPage(){
+            console.log("eqw")
+            this.$router.push("/")
+        }
     },
     computed: {
         
@@ -133,5 +165,24 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #444F60;
+}
+input, .desc {
+    color: #4a4a4a;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.has-account {
+    color: rgb(0, 209, 178);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    cursor: pointer;
+}
 
 </style>
