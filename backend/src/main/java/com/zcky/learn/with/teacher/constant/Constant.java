@@ -1,9 +1,8 @@
 package com.zcky.learn.with.teacher.constant;
 
 public class Constant {
-	public static int PRODUCTION_ENV = 0;
-	public static int STAGING_ENV = 1;
-	public static int DEV_ENV = 2;
+	public static String PRODUCTION_ENV = "prod";
+	public static String DEV_ENV = "dev";
 	
 	public static int PAGE_SIZE = 25;
 
@@ -30,5 +29,11 @@ public class Constant {
 	public static String USER_ALREDY_EXISTS_ERROR_MESSAGE = "User Already Exists";
 	public static String USER_NOT_FOUND_ERROR_MESSAGE = "User Not Found";
 	public static String USER_FOUND_BUT_INACTIVE_ERROR_MESSAGE = "User Found But the account is inactive";
+	
+	public static String MAIL_CONFIG_PATH = "json/mailconfig.json";
+	public static String MAIL_TEMPLATE_PATH = "template/verification_mail_template.txt";
+	public static String VERIFICATION_SIGN_UP_MAIL_SUBJECT = "verify your email";
+	public static String BASE_URL_DEV = "http://localhost:8088/";
+	public static String BASE_URL_PROD = "";
 
 }

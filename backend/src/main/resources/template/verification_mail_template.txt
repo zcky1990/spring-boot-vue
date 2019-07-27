@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="title" style="">
+   <h3>
+   Verify Your Email Address
+   </h3>
+  </div>
+  <div class="content">
+   <p> Hi {{username}}</p>
+   <p>In order to start using maribelaajar, please verify your email</p>
+  </div>
+  
+  <div class="link" style="background-color: #00d1b2;
+    padding: 10px;
+    width: max-content;
+    border: 1px solid #00d1b2;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 0 auto;
+    color: white;">
+   <a href="{{url}}" style="text-decoration:none;color: white;">Click to Verify</a>
+  </div>
+</div>

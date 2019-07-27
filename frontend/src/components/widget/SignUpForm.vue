@@ -149,6 +149,9 @@
             let model={};
             model.username = this.username;
             model.password = this.password;
+            model.firstname = this.firstname;
+            model.lastname = this.lastname;
+            model.email = this.email;
             this.callRestService(model)
             }
         },

@@ -29,6 +29,7 @@ import com.zcky.learn.with.teacher.mongoDb.model.Users;
 import com.zcky.learn.with.teacher.mongoDb.repository.UsersRepository;
 import com.zcky.learn.with.teacher.mongoDb.serializer.UsersSerializer;
 import com.zcky.learn.with.teacher.security.JwtTokenUtil;
+import com.zcky.learn.with.teacher.util.MailUtility;
 
 @RestController
 public class UsersController extends BaseController{
@@ -52,6 +53,12 @@ public class UsersController extends BaseController{
 				repository.save(user);
 				Optional<Users> userResponse = repository.findById(user.getStringId());
 				Users users = userResponse.get();
+				MailUtility mUtil = this.getMailUtility();
+				String template = mUtil.getEmailTemplate(Constant.MAIL_TEMPLATE_PATH);
+				String messageBody = mUtil.getVerificationMailMessageBody(template, users);
+				System.out.println("messageBody : "+ messageBody);
+				this.getMailUtility().sendMail(messageBody, "", users.getEmail(), Constant.VERIFICATION_SIGN_UP_MAIL_SUBJECT);
+				System.out.println("sendmail ");
 				response = getSuccessResponse();
 				response.add(Constant.RESPONSE, toJSONObject(users));
 			} catch(Exception e) {

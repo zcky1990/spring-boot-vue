@@ -19,15 +19,21 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.zcky.learn.with.teacher.constant.Constant;
 import com.zcky.learn.with.teacher.model.response.ResponseModel;
+import com.zcky.learn.with.teacher.util.MailUtility;
 import com.zcky.learn.with.teacher.util.TimeUtility;
 
 @RestController
 public class BaseController {
 	private Gson gson = new Gson();
 	private TimeUtility util = new TimeUtility();
+	private MailUtility mailutil = new MailUtility();
 	
 	public TimeUtility getTimeUtility() {
 		return util;
+	}
+	
+	public MailUtility getMailUtility() {
+		return mailutil;
 	}
 
 	public HttpHeaders getResponseHeader() {
