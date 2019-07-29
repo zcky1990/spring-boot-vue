@@ -1,30 +1,41 @@
 <template>
-        <div class="container has-text-centered login-form">
-                <div class="column is-6 is-offset-3">
-                    <h3 class="title has-text-grey">Login</h3>
-                    <p class="subtitle has-text-grey">Please login to proceed.</p>
-                    <div class="box">
-                            <div class="field">
-                                <div class="control">
-                                    <input ref="username" class="input is-large" type="text" placeholder="Your Username" autofocus="">
-                                </div>
-                            </div>
+<v-container grid-list-sm>
+        <v-layout align-center justify-center row fill-height>
+            <v-flex xs12 md6 d-flex >
+                  <v-form ref="form" v-model="valid">
+                                <v-text-field
+                                v-model="username"
+                                :rules="useranameRules"
+                                label="Username"
+                                required
+                                outline
+                                ></v-text-field>
+                            
+                                <v-text-field
+                                v-model="password"
+                                :rules="passwordRules"
+                                :type="show1 ? 'text' : 'password'"
+                                @click:append="show1 = !show1"
+                                :append-icon="show1 ? 'visibility' : 'visibility_off'"
+                                label="Password"
+                                hint="At least 8 characters"
+                                required
+                                rounded
+                                outline
+                                ></v-text-field>
 
-                            <div class="field">
-                                <div class="control">
-                                    <input ref="password" class="input is-large" type="password" placeholder="Your Password">
-                                </div>
-                            </div>
-                            <button v-on:click="submitLogin" class="button is-block is-info is-large is-fullwidth">Login</button>
-                            <div class="field">
-                                <div class="control">
-                                    <snack-bar ref="snackbar"></snack-bar>
-                                    <alert-component ref="alert"></alert-component>
-                                </div>
-                            </div>
-                    </div>
-                </div>
-        </div>
+                                <v-flex xs12 d-flex >
+                                <v-btn class="white--text desc" color="#00d1b2" @click="submitLogin">
+                                    Login
+                                </v-btn>
+                                 </v-flex>
+                    </v-form>
+                    <v-flex xs12 md6 d-flex >
+                        <snack-bar ref="snackbar"></snack-bar>
+                    </v-flex>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
@@ -40,28 +51,34 @@
         }, 
     data(){
         return {
+            valid: false,
+            username: '',
+            password: '',
+            show1: false,
             messageError:'',
             snackBarConfig: {
                 color : 'error',
                 timeout : 6000,
                 top : true
-            }
+            },
+            useranameRules: [
+                v => !!v || 'Username is required',
+                v => (v && v.length >= 8) || 'Username must be or more than 8 characters'
+            ],
+            passwordRules: [
+                v => !!v || 'Password is required',
+                v => (v && v.length >= 8) || 'Password must be or more than 8 characters'
+            ],
         }
     },
     methods: {
         submitLogin: function () {
-            var username = this.$refs.username.value;
-            var password = this.$refs.password.value;
-
-            if(username == undefined || username == "" || password == undefined || password == ""){
-                this.setErrorMessage("Username / Password cannot be empty");
-            }else{
-                this.setErrorMessage("");
-
+            if (this.$refs.form.validate()) {
+                var username = this.username;
+                var password = this.password;
                 var model={};
                 model.username = username;
                 model.password = password;
-
                 this.callRestService(model);
             }
         },
@@ -69,7 +86,6 @@
                 this.showErrorMessage = errorMessage;
                 this.$refs.snackbar.setConfig(this.snackBarConfig);
                 this.$refs.snackbar.showSnackbar(errorMessage);
-
                 this.$refs.alert.setMessage(errorMessage);
         },
         callRestService (model) {
@@ -79,6 +95,7 @@
           .then(response => {
               if(response.status == 200){
                 let responseData = response.data
+                 console.log(responseData)
                 if(responseData['error_message'] != undefined ){
                     self.setErrorMessage(responseData.error_message);
                 }else {
@@ -110,22 +127,5 @@
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.error-message {
-   text-align: center;
-   padding: 10px;
-   color: red;
-}
 
-::-webkit-input-placeholder {
-font-size: 20px !important;
-}
-
-:-moz-placeholder {  
-font-size: 20px !important;
-}
-
-/*--for IE10 support--*/
-:-ms-input-placeholder {
-font-size: 20px !important;
-}
 </style>

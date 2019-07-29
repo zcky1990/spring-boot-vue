@@ -58,6 +58,9 @@
                                 :rules="passwordRules"
                                 label="Password"
                                 hint="At least 8 characters"
+                                :type="show1 ? 'text' : 'password'"
+                                @click:append="show1 = !show1"
+                                :append-icon="show1 ? 'visibility' : 'visibility_off'"
                                 required
                                 outline
                                 ></v-text-field>
@@ -97,6 +100,7 @@
     data(){
         return {
             valid: false,
+            show1: false,
             firstname: '',
             lastname: '',
             password:'',
