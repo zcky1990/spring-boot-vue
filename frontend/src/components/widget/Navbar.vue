@@ -88,15 +88,24 @@
                             <v-card>
                                 <div class="login-form-container">
                                     <v-form ref="form" v-model="valid" lazy-validation>
-                                        <v-text-field v-model="username" :rules="useranameRules" label="Username" required ></v-text-field>
-                                        <v-text-field v-model="password" :rules="passwordRules" :append-icon="showPassword ? 'visibility' : 'visibility_off'"
-                                                    :type="showPassword ? 'text' : 'password'" name="input-10-1" 
-                                                    label="Normal with hint text" hint="At least 8 characters" 
-                                                    counter @click:append="showPassword = !showPassword">
-                                        </v-text-field>
-                                        <v-btn color="warning" @click="submit">
-                                            Submit
-                                        </v-btn>
+                                                <v-text-field 
+                                                v-model="username" 
+                                                :rules="useranameRules" 
+                                                label="Username" 
+                                                outlined required ></v-text-field>
+
+                                                <v-text-field 
+                                                v-model="password" 
+                                                :rules="passwordRules" 
+                                                :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+                                                :type="showPassword ? 'text' : 'password'" name="input-10-1" 
+                                                label="Normal with hint text" hint="At least 8 characters" 
+                                                outlined
+                                                counter @click:append="showPassword = !showPassword">
+                                                </v-text-field>
+                                                <v-btn color="warning" @click="submit">
+                                                    Submit
+                                                </v-btn>
                                     </v-form>             
                                 </div>
                             </v-card>

@@ -20,7 +20,6 @@
                                 label="Password"
                                 hint="At least 8 characters"
                                 required
-                                rounded
                                 outline
                                 ></v-text-field>
 
