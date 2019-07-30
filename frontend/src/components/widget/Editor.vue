@@ -1,5 +1,6 @@
 <template>
-        <v-layout align-center justify-center fill-height>
+      <v-container d-flex fluid grid-list-xs>
+        <v-layout align-baseline wrap>
             <v-flex xs12 d-flex >
                 <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
             </v-flex>
@@ -9,6 +10,7 @@
               </v-btn>
             </v-flex>
         </v-layout>
+      </v-container>
 </template>
 <script>
 // ⚠️ NOTE: We don't use @ckeditor/ckeditor5-build-classic any more!
