@@ -2,6 +2,9 @@
   <v-container d-flex fluid grid-list-xs>
     <v-layout align-baseline wrap>
       <v-flex xs12 d-flex>
+        <alert-component ref="alert"></alert-component>
+      </v-flex>
+      <v-flex xs12 d-flex>
         <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
       </v-flex>
       <v-flex xs12 d-flex>
@@ -32,6 +35,7 @@ import Paragraph from "@ckeditor/ckeditor5-paragraph/src/paragraph";
 import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 
 import { AXIOS } from "./../http-common";
+import Alert from "@/components/widget/Alert";
 
 export default {
   name: "editor-component",
@@ -88,15 +92,30 @@ export default {
             "imageStyle:side"
           ]
         }
-      }
+      },
     };
+  },
+  components: {
+    "alert-component": Alert
   },
   methods: {
     submit: function() {
-      console.log(this.editorData);
-      console.log(this.url);
+      this.showSuccessAlert("success input");
     },
-    callRestService(model) {
+    hideAlert:function(){
+      this.$refs.alert.hide();
+    },
+    showSuccessAlert: function(message) {
+      this.$refs.alert.setConfig({ type: "success" });
+      this.$refs.alert.setMessage(message);
+      this.$refs.alert.show();
+    },
+    showErrorAlert: function(message) {
+      this.$refs.alert.setConfig({ type: "error" });
+      this.$refs.alert.setMessage(message);
+      this.$refs.alert.show();
+    },
+    callRestService: function (model) {
       let self = this;
       let router = this.$router;
       AXIOS.post(url, model)
