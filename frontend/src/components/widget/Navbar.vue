@@ -214,7 +214,6 @@ export default {
         },
         callRestService (model) {
             let self= this;
-            let router =  this.$router;
             AXIOS.post('/users/sign_in', model)
             .then(response => {
                 if(response.status == 200){

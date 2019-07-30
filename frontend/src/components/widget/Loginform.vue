@@ -40,13 +40,11 @@
 <script>
     import {AXIOS} from './../http-common'
     import SnackBar from './SnackBar'
-    import Alert from './Alert'
 
     export default {
     name: 'login-form',
     components: {
-                    'snack-bar' : SnackBar,
-                    'alert-component' : Alert
+                    'snack-bar' : SnackBar
         }, 
     data(){
         return {

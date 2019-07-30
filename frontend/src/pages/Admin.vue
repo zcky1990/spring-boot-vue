@@ -2,13 +2,15 @@
         <div class="admin-page">
             <nav-menu></nav-menu>
             <login-form></login-form>
+            <editor-component></editor-component>
         </div>
     </template>
 
     <script>
-    import {AXIOS} from '@/components/http-common'
+    //import {AXIOS} from '@/components/http-common'
     import Navbar from '@/components/widget/Navbar'
     import Loginform from '@/components/widget/Loginform'
+    import Editor from '@/components/widget/Editor'
 
     export default   {
         name: 'admin',
@@ -19,7 +21,8 @@
         },
         components: {
                     'nav-menu' : Navbar,
-                    'login-form' : Loginform
+                    'login-form' : Loginform,
+                    'editor-component' : Editor
         }
     }
     </script>
