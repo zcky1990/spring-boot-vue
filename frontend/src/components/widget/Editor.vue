@@ -13,10 +13,8 @@
       </v-container>
 </template>
 <script>
-// ⚠️ NOTE: We don't use @ckeditor/ckeditor5-build-classic any more!
-// Since we're building CKEditor from source, we use the source version of ClassicEditor.
-import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 
+import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
 import UploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter';
 import Base64Uploader from '@ckeditor/ckeditor5-upload/src/base64uploadadapter';
@@ -34,12 +32,13 @@ import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
 import Link from '@ckeditor/ckeditor5-link/src/link';
 import List from '@ckeditor/ckeditor5-list/src/list';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
 
+import {AXIOS} from './../http-common'
     
     export default {
     name: 'editor-component',
+    props:['url'],
     data(){
       return {
         editor: ClassicEditor,
@@ -68,11 +67,12 @@ import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
 
                     toolbar: {
                         items: [
-                            'heading','paragraph','|',
+                            'heading','|',
                             'alignment','|',
                             'bold','italic','|',
                             'link','|',
                             'undo','redo','|',
+                            'bulletedList','numberedList','|',
                             'imageUpload',
                             'imageTextAlternative', '|', 
                             'imageStyle:full', 
@@ -87,7 +87,27 @@ import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
      methods: {
        submit: function(){
          console.log(this.editorData)
-       }
+         console.log(this.url);
+       },
+       callRestService (model) {
+        let self= this;
+        let router =  this.$router;
+        AXIOS.post(url, model)
+          .then(response => {
+              if(response.status == 200){
+                let responseData = response.data
+
+                if(responseData['error_message'] != undefined ){
+
+                }else {
+                    
+                }
+              }
+            })
+          .catch(e => {
+            self.errors.push(e)
+          })
+      }
        
      }
     }

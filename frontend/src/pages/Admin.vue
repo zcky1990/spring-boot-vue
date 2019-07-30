@@ -2,7 +2,9 @@
         <div class="admin-page">
             <nav-menu></nav-menu>
             <login-form></login-form>
-            <editor-component></editor-component>
+            <editor-component 
+                v-bind:key="id" 
+                v-bind:url="url"></editor-component>
         </div>
     </template>
 
@@ -16,6 +18,8 @@
         name: 'admin',
         data(){
             return {
+                id: 1,
+                url: "asdasdasdasdadasdas"
 
             }
         },
