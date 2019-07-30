@@ -36,12 +36,14 @@ import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 
 import { AXIOS } from "./../http-common";
 import Alert from "@/components/widget/Alert";
+import { Util } from "@/components/util";
 
 export default {
   name: "editor-component",
   props: ["url"],
   data() {
     return {
+      data:{},
       editor: ClassicEditor,
       editorData: "<p></p>",
       editorConfig: {
@@ -92,7 +94,7 @@ export default {
             "imageStyle:side"
           ]
         }
-      },
+      }
     };
   },
   components: {
@@ -100,9 +102,13 @@ export default {
   },
   methods: {
     submit: function() {
-      this.callRestService({})
+      this.callRestService({});
     },
-    hideAlert:function(){
+    getRequestHeader: function() {
+      this.requestHeader = Util.getHeaders(this.$session);
+      return this.requestHeader;
+    },
+    hideAlert: function() {
       this.$refs.alert.hide();
     },
     showSuccessAlert: function(message) {
@@ -115,22 +121,22 @@ export default {
       this.$refs.alert.setMessage(message);
       this.$refs.alert.show();
     },
-    callRestService: function (model) {
+    callRestService: function(model) {
       let self = this;
-      let router = this.$router;
-      AXIOS.post(this.url, model)
+      let headers = this.getRequestHeader();
+      AXIOS.post(this.url, model, { headers })
         .then(response => {
           if (response.status == 200) {
             let responseData = response.data;
             if (responseData["error_message"] != undefined) {
-                self.showErrorAlert(responseData["error_message"] )
+              self.showErrorAlert(responseData["error_message"]);
             } else {
-                self.showSuccessAlert("success add/edit document")
+              self.showSuccessAlert("success add/edit document");
             }
           }
         })
         .catch(e => {
-          self.showErrorAlert(e)
+          self.showErrorAlert(e);
         });
     }
   }
