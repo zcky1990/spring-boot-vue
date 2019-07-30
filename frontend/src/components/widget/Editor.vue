@@ -100,7 +100,7 @@ export default {
   },
   methods: {
     submit: function() {
-      this.showSuccessAlert("success input");
+      this.callRestService({})
     },
     hideAlert:function(){
       this.$refs.alert.hide();
@@ -118,18 +118,19 @@ export default {
     callRestService: function (model) {
       let self = this;
       let router = this.$router;
-      AXIOS.post(url, model)
+      AXIOS.post(this.url, model)
         .then(response => {
           if (response.status == 200) {
             let responseData = response.data;
-
             if (responseData["error_message"] != undefined) {
+                self.showErrorAlert(responseData["error_message"] )
             } else {
+                self.showSuccessAlert("success add/edit document")
             }
           }
         })
         .catch(e => {
-          self.errors.push(e);
+          self.showErrorAlert(e)
         });
     }
   }
