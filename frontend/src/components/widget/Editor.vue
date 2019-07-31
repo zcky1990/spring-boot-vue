@@ -16,7 +16,7 @@
 <script>
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials";
-import UploadAdapter from "@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter";
+//import UploadAdapter from "@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter";
 import Base64Uploader from "@ckeditor/ckeditor5-upload/src/base64uploadadapter";
 //import CKFinder from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter';
 import Autoformat from "@ckeditor/ckeditor5-autoformat/src/autoformat";
@@ -39,98 +39,45 @@ import { AXIOS } from "./../http-common";
 import Alert from "@/components/widget/Alert";
 import { Util } from "@/components/util";
 
-class MyUploadAdapter {
-    constructor( loader ) {
-        this.loader = loader;
-    }
+class UploadAdapter {
+        constructor(loader) {
+            this.loader = loader;
+        }
+        upload() {
+            return new Promise((resolve, reject) => {
+                const data = new FormData();
+                data.append('file', this.loader.file);
 
-    upload() {
-        return this.loader.file
-            .then( file => new Promise( ( resolve, reject ) => {
-                this._initRequest();
-                this._initListeners( resolve, reject, file );
-                this._sendRequest( file );
-            } ) );
-    }
+                AXIOS({
+                    url: 'http://localhost:8088/api/upload_image',
+                    method: 'post',
+                    data,
+                    headers: {
+                        'Content-Type': 'multipart/form-data;'
+                    },
+                    withCredentials: false
+                }).then(response => {
+                    if (response.data.result == 'success') {
+                        resolve({
+                            default: response.data.url
+                        });
+                    } else {
+                        reject(response.data.message);
+                    }
+                }).catch(response => {
+                    reject ( 'Upload failed');
+                });
 
-    abort() {
-        if ( this.xhr ) {
-            this.xhr.abort();
+            });
+        }
+
+        abort() {
         }
     }
-
-    _initRequest() {
-        const xhr = this.xhr = new XMLHttpRequest();
-        xhr.open( 'POST', 'http://localhost:8088/api/upload_image', true );
-        xhr.responseType = 'json';
-    }
-
-    // Initializes XMLHttpRequest listeners.
-    _initListeners( resolve, reject, file ) {
-        const xhr = this.xhr;
-        const loader = this.loader;
-        const genericErrorText = `Couldn't upload file: ${ file.name }.`;
-
-        xhr.addEventListener( 'error', () => reject( genericErrorText ) );
-        xhr.addEventListener( 'abort', () => reject() );
-        xhr.addEventListener( 'load', () => {
-            const response = xhr.response;
-
-            if ( !response || response.error ) {
-                return reject( response && response.error ? response.error.message : genericErrorText );
-            }
-
-            resolve( {
-                default: response.url
-            } );
-        } );
-
-        if ( xhr.upload ) {
-            xhr.upload.addEventListener( 'progress', evt => {
-                if ( evt.lengthComputable ) {
-                    loader.uploadTotal = evt.total;
-                    loader.uploaded = evt.loaded;
-                }
-            } );
-        }
-    }
-
-    _sendRequest( file ) {
-        const data = new FormData();
-        data.append( 'upload', file );
-        this.xhr.send( data );
-    }
-}
-
-class AUploadAdapter {
-   constructor( loader ) {
-        this.loader = loader;
-    }
-          upload = () => {
-            const body = new FormData();
-            body.append('file', this.loader.file);
-            return fetch('http://localhost:8088/api/upload_image', {
-              body: body,
-              method: 'POST'
-            })
-              .then(response => response.json())
-              .then(downloadUrl => {
-                return {
-                  default: downloadUrl
-                }
-              })
-              .catch(error => {
-                console.log(error);
-              });
-          }
-          abort = () => {
-            console.log('Abort upload.')
-          }
-        }
 
 function MyCustomUploadAdapterPlugin( editor ) {
     editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
-        return new AUploadAdapter( loader );
+        return new UploadAdapter( loader );
     };
 }
 

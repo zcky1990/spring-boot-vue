@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class CloudinaryModelJson {
 	ArrayList<CloudinaryEnv> config;
 
-	public ArrayList<CloudinaryEnv> getconfig() {
+	public ArrayList<CloudinaryEnv> getArrayConfig() {
 		return config;
 	}
 

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.cloudinary.*;
 import com.cloudinary.utils.ObjectUtils;
 import com.google.gson.Gson;
@@ -32,7 +34,7 @@ public class CloudinaryUtility {
 	public void getCloudinaryConfig() {
 		String stringConfig = util.getJsonFile(Constant.CLOUDINARY_CONFIG_PATH);
 		CloudinaryModelJson cloudConfig = gson.fromJson(stringConfig, CloudinaryModelJson.class);
-		ArrayList<CloudinaryEnv> environtmentConfig = cloudConfig.getconfig();
+		ArrayList<CloudinaryEnv> environtmentConfig = cloudConfig.getArrayConfig();
 		for(int i = 0; i < environtmentConfig.size(); i++) {
 			CloudinaryEnv cloudinaryEnv = environtmentConfig.get(i);
 			if(cloudinaryEnv.getEnv().equals(env.getEnvirontment())) {
@@ -54,6 +56,19 @@ public class CloudinaryUtility {
 		JsonObject response = new JsonObject();
 		try {
 			Map uploadResult = cloudinary.uploader().upload(toUpload, ObjectUtils.emptyMap());
+			response.addProperty("url", uploadResult.get("secure_url").toString());
+			response.addProperty("status", "success");
+		} catch (IOException e) {
+			response.addProperty("error_message", e.getMessage().toString());
+			response.addProperty("status", "error");
+		}
+		return response;
+	}
+	
+	public JsonObject uploadImage(MultipartFile file) {
+		JsonObject response = new JsonObject();
+		try {
+			Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
 			response.addProperty("url", uploadResult.get("secure_url").toString());
 			response.addProperty("status", "success");
 		} catch (IOException e) {
