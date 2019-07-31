@@ -25,17 +25,7 @@ import com.zcky.learn.with.teacher.util.TimeUtility;
 @RestController
 public class BaseController {
 	private Gson gson = new Gson();
-	private TimeUtility util = new TimeUtility();
-	private MailUtility mailutil = new MailUtility();
 	
-	public TimeUtility getTimeUtility() {
-		return util;
-	}
-	
-	public MailUtility getMailUtility() {
-		return mailutil;
-	}
-
 	public HttpHeaders getResponseHeader() {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "application/json; charset=utf-8");

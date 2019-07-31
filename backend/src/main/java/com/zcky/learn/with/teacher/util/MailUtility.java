@@ -18,17 +18,22 @@ import javax.mail.internet.MimeMultipart;
 import com.google.gson.Gson;
 import com.zcky.learn.with.teacher.constant.Constant;
 import com.zcky.learn.with.teacher.environtment.Environtment;
-import com.zcky.learn.with.teacher.model.mail.Mail;
-import com.zcky.learn.with.teacher.model.mail.MailConfig;
-import com.zcky.learn.with.teacher.model.mail.MailEnvirontment;
 import com.zcky.learn.with.teacher.mongoDb.model.Users;
+
+import config.Mail;
+import config.MailConfig;
+import config.MailEnvirontment;
 
 public class MailUtility {
 	private Util util = new Util();
 	private Environtment env = new Environtment();
 	private MailConfig config;
 	private Gson gson = new Gson();
-	
+
+	public MailUtility() {
+		this.getMailConfig();
+	}
+
 	public void getMailConfig() {
 		String mailConfig = util.getJsonFile(Constant.MAIL_CONFIG_PATH);
 		Mail mailconfig = gson.fromJson(mailConfig, Mail.class);
@@ -41,75 +46,73 @@ public class MailUtility {
 			}
 		}
 	} 
-	
+
 	public MailConfig getConfig() {
-		getMailConfig();
 		return config;
 	}
-	
+
 
 	public Properties getProperties() {
-		getMailConfig();
 		Properties properties = new Properties();
-        properties.put("mail.smtp.host", config.getHost());
-        properties.put("mail.smtp.port", config.getPort());
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
+		properties.put("mail.smtp.host", config.getHost());
+		properties.put("mail.smtp.port", config.getPort());
+		properties.put("mail.smtp.auth", "true");
+		properties.put("mail.smtp.starttls.enable", "true");
 		return properties;
 	}
-	
+
 	public void sendMail(String messageBody, String pathAttachment, String to, String subject) {
 		Properties prop = getProperties();
-        /*Session session = Session.getInstance( prop, new Authenticator() {
+		/*Session session = Session.getInstance( prop, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(config.getUsername(), config.getPassword());
             }
         }); */
-        
-        Session session = Session.getDefaultInstance(prop);
-        try {
-                Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(config.getUsername()));
-                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-                message.setSubject(subject);
-                Multipart multipart = new MimeMultipart();
 
-                MimeBodyPart mimeBodyPart = new MimeBodyPart();
-                mimeBodyPart.setContent(messageBody, "text/html");
+		Session session = Session.getDefaultInstance(prop);
+		try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(config.getUsername()));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+			message.setSubject(subject);
+			Multipart multipart = new MimeMultipart();
 
-                if(!pathAttachment.equals("")) {
-                	MimeBodyPart attachmentBodyPart = new MimeBodyPart();
-                    attachmentBodyPart.attachFile(new File(pathAttachment));
-                    multipart.addBodyPart(attachmentBodyPart);
-                }
-                multipart.addBodyPart(mimeBodyPart);
-                message.setContent(multipart);
+			MimeBodyPart mimeBodyPart = new MimeBodyPart();
+			mimeBodyPart.setContent(messageBody, "text/html");
 
-                //Transport.send(message);
-                System.out.println("sendmail ");
-                Transport t = session.getTransport("smtp");
-                t.connect(config.getUsername(), config.getPassword());
-                t.sendMessage(message, message.getAllRecipients());
-                t.close();
-                System.out.println("success-send-mail ");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-	
+			if(!pathAttachment.equals("")) {
+				MimeBodyPart attachmentBodyPart = new MimeBodyPart();
+				attachmentBodyPart.attachFile(new File(pathAttachment));
+				multipart.addBodyPart(attachmentBodyPart);
+			}
+			multipart.addBodyPart(mimeBodyPart);
+			message.setContent(multipart);
+
+			//Transport.send(message);
+			System.out.println("sendmail ");
+			Transport t = session.getTransport("smtp");
+			t.connect(config.getUsername(), config.getPassword());
+			t.sendMessage(message, message.getAllRecipients());
+			t.close();
+			System.out.println("success-send-mail ");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public String getEmailTemplate(String url) {
 		String mailBody = util.getJsonFile(url);
 		return mailBody;
 	}
-	
+
 	public String getVerificationMailMessageBody(String template, Users users) {
 		template = template.replace("{{username}}", users.getUsername());
 		String verificationUrl = getBaseUrl()+"api/users/validate/"+ users.getStringId();
 		template = template.replace("{{url}}", verificationUrl);
 		return template;
 	}
-	
+
 	public String getBaseUrl() {
 		if(env.getEnvirontment().equals(Constant.DEV_ENV)){
 			return Constant.BASE_URL_DEV;

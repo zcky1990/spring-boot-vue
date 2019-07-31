@@ -41,7 +41,6 @@ export default {
       this.message = textMessage;
     },
     show: function() {
-      let self = this;
       this.alert = true;
     },
     hide: function() {

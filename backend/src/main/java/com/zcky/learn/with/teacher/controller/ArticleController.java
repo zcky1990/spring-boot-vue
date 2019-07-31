@@ -28,6 +28,7 @@ import com.zcky.learn.with.teacher.mongoDb.repository.ArticleRepository;
 import com.zcky.learn.with.teacher.mongoDb.repository.UsersRepository;
 import com.zcky.learn.with.teacher.mongoDb.serializer.ArticleCommentSerializer;
 import com.zcky.learn.with.teacher.mongoDb.serializer.ArticleSerializer;
+import com.zcky.learn.with.teacher.util.TimeUtility;
 
 @RestController
 public class ArticleController extends BaseController {
@@ -66,11 +67,12 @@ public class ArticleController extends BaseController {
 	@RequestMapping(value = "/api/article/update_article", method = RequestMethod.PUT)
 	public ResponseEntity<String> updateArticle(@Valid @RequestBody Article article, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("uid");
+		TimeUtility util = new TimeUtility();
 		Users user = userRepository.findBy_id(new ObjectId(auth));
 		JsonObject response;
 		if(user != null) {
 			article.setAuthor(user);
-			article.setModified_date(this.getTimeUtility().getCurrentDate("dd/MM/yyyy HH:mm:ss"));
+			article.setModified_date(util.getCurrentDate("dd/MM/yyyy HH:mm:ss"));
 			try {
 				articleRepository.save(article);
 				response = getSuccessResponse();
@@ -187,11 +189,12 @@ public class ArticleController extends BaseController {
 	@RequestMapping(value = "/api/article/update_article_comment", method = RequestMethod.PUT)
 	public ResponseEntity<String> updateArticlComment(@Valid @RequestBody ArticleComment article, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("uid");
+		TimeUtility util = new TimeUtility();
 		Users user = userRepository.findBy_id(new ObjectId(auth));
 		JsonObject response;
 		if(user != null) {
 			article.setAuthor(user);
-			article.setModified_date(this.getTimeUtility().getCurrentDate("dd/MM/yyyy HH:mm:ss"));
+			article.setModified_date(util.getCurrentDate("dd/MM/yyyy HH:mm:ss"));
 			try {
 				articleCommentRepository.save(article);
 				response = getSuccessResponse();

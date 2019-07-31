@@ -30,6 +30,8 @@ public class Constant {
 	public static String USER_NOT_FOUND_ERROR_MESSAGE = "User Not Found";
 	public static String USER_FOUND_BUT_INACTIVE_ERROR_MESSAGE = "User Found But the account is inactive";
 	
+	public static String CLOUDINARY_CONFIG_PATH = "json/cloudinary_config.json";
+	
 	public static String MAIL_CONFIG_PATH = "json/mailconfig.json";
 	public static String MAIL_TEMPLATE_PATH = "template/verification_mail_template.txt";
 	public static String VERIFICATION_SIGN_UP_MAIL_SUBJECT = "verify your email";

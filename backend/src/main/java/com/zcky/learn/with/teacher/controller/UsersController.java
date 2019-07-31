@@ -30,6 +30,7 @@ import com.zcky.learn.with.teacher.mongoDb.repository.UsersRepository;
 import com.zcky.learn.with.teacher.mongoDb.serializer.UsersSerializer;
 import com.zcky.learn.with.teacher.security.JwtTokenUtil;
 import com.zcky.learn.with.teacher.util.MailUtility;
+import com.zcky.learn.with.teacher.util.TimeUtility;
 
 @RestController
 public class UsersController extends BaseController{
@@ -53,12 +54,10 @@ public class UsersController extends BaseController{
 				repository.save(user);
 				Optional<Users> userResponse = repository.findById(user.getStringId());
 				Users users = userResponse.get();
-				MailUtility mUtil = this.getMailUtility();
+				MailUtility mUtil = new MailUtility();
 				String template = mUtil.getEmailTemplate(Constant.MAIL_TEMPLATE_PATH);
 				String messageBody = mUtil.getVerificationMailMessageBody(template, users);
-				System.out.println("messageBody : "+ messageBody);
-				this.getMailUtility().sendMail(messageBody, "", users.getEmail(), Constant.VERIFICATION_SIGN_UP_MAIL_SUBJECT);
-				System.out.println("sendmail ");
+				mUtil.sendMail(messageBody, "", users.getEmail(), Constant.VERIFICATION_SIGN_UP_MAIL_SUBJECT);
 				response = getSuccessResponse();
 				response.add(Constant.RESPONSE, toJSONObject(users));
 			} catch(Exception e) {
@@ -111,7 +110,8 @@ public class UsersController extends BaseController{
 	public ResponseEntity<String> editUsers(@Valid @RequestBody Users user, HttpServletRequest request){
 		JsonObject response;
 		try {
-			user.setModified_date(this.getTimeUtility().getCurrentDate("dd/MM/yyyy HH:mm:ss"));
+			TimeUtility util = new TimeUtility();
+			user.setModified_date(util.getCurrentDate("dd/MM/yyyy HH:mm:ss"));
 			repository.save(user);
 			response = getSuccessResponse();
 			response.addProperty(Constant.RESPONSE,Constant.UPDATE_USER_PROFILE_SUCCESS_MESSAGE);

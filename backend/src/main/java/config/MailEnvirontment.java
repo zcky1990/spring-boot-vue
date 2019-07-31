@@ -1,4 +1,4 @@
-package com.zcky.learn.with.teacher.model.mail;
+package config;
 
 public class MailEnvirontment {
 	String env;
