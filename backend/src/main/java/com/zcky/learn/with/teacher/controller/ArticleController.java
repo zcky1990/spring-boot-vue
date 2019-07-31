@@ -44,7 +44,7 @@ public class ArticleController extends BaseController {
 
 	@RequestMapping(value = "/api/article/add_article", method = RequestMethod.POST)
 	public ResponseEntity<String> addArticle(@Valid @RequestBody Article article, HttpServletRequest request) throws Exception {
-		String auth = request.getHeader("uid");
+		String auth = request.getHeader("x-uid");
 		Users user = userRepository.findBy_id(new ObjectId(auth));
 		JsonObject response;
 		if(user != null) {
@@ -66,7 +66,7 @@ public class ArticleController extends BaseController {
 	
 	@RequestMapping(value = "/api/article/update_article", method = RequestMethod.PUT)
 	public ResponseEntity<String> updateArticle(@Valid @RequestBody Article article, HttpServletRequest request) throws Exception {
-		String auth = request.getHeader("uid");
+		String auth = request.getHeader("x-uid");
 		TimeUtility util = new TimeUtility();
 		Users user = userRepository.findBy_id(new ObjectId(auth));
 		JsonObject response;
@@ -90,7 +90,7 @@ public class ArticleController extends BaseController {
 	
 	@RequestMapping(value = "/api/article/get_article/{slug}", method = RequestMethod.GET)
 	public ResponseEntity<String> getArticle(@PathVariable String slug, HttpServletRequest request) throws Exception {
-		String auth = request.getHeader("uid");
+		String auth = request.getHeader("x-uid");
 		Users user = userRepository.findBy_id(new ObjectId(auth));
 		JsonObject response;
 		if(user != null) {
@@ -112,7 +112,7 @@ public class ArticleController extends BaseController {
 	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "/api/article/get_list_user_article/{page}", method = RequestMethod.GET)
 	public ResponseEntity<String> getListUserArticle(@PathVariable String page, HttpServletRequest request) throws Exception {
-		String auth = request.getHeader("uid");
+		String auth = request.getHeader("x-uid");
 		Users user = userRepository.findBy_id(new ObjectId(auth));
 		JsonObject response;
 		int pages = Integer.parseInt(page);

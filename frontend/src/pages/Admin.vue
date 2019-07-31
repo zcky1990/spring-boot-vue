@@ -2,7 +2,7 @@
   <div class="admin-page">
     <nav-menu></nav-menu>
     <login-form></login-form>
-    <editor-component v-bind:key="id" v-bind:url="url"></editor-component>
+    <editor-component v-bind:key="id" v-bind:addUrl="addUrl" v-bind:updateUrl="updateUrl"></editor-component>
   </div>
 </template>
 
@@ -17,7 +17,8 @@ export default {
   data() {
     return {
       id: 1,
-      url: "asdasdasdasdadasdas"
+      addUrl: "article/add_article",
+      updateUrl: "article/update_article",
     };
   },
   components: {

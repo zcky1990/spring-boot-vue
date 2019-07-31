@@ -1,6 +1,7 @@
 $material-design-icons-font-path: '~material-design-icons-iconfont/dist/fonts/';
  
 @import '~material-design-icons-iconfont/src/material-design-icons';
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400&display=swap');
 
 @font-face {
     font-family: 'Material Icons';
@@ -12,6 +13,12 @@ $material-design-icons-font-path: '~material-design-icons-iconfont/dist/fonts/';
       url(./fonts/MaterialIcons-Regular.woff2) format('woff2'),
       url(./fonts/MaterialIcons-Regular.woff) format('woff'),
       url(./fonts/MaterialIcons-Regular.ttf) format('truetype');
+  }
+
+
+  @font-face {
+    font-family: 'Lato', sans-serif;
+    font-style: normal;
   }
 
   .material-icons {

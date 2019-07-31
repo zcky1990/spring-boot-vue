@@ -153,7 +153,7 @@ export default {
       },
       useranameRules: [
         v => !!v || "Username is required",
-        v => (v && v.length >= 10) || "Username must be more than 8 characters"
+        v => (v && v.length >= 8) || "Username must be more than 8 characters"
       ],
       passwordRules: [
         v => !!v || "Password is required",

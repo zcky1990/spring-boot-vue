@@ -1,5 +1,5 @@
 <template>
-  <v-container d-flex fluid grid-list-xs>
+  <v-container d-flex fluid grid-list-xs class="lato-fonts">
     <v-layout align-baseline wrap>
       <v-flex xs12 d-flex>
         <alert-component ref="alert"></alert-component>
@@ -8,7 +8,7 @@
         <ckeditor :editor="editor" v-model="editorData" :config="editorConfig" ></ckeditor>
       </v-flex>
       <v-flex xs12 d-flex>
-        <v-btn class="white--text desc" color="#00d1b2" @click="submit">Submit</v-btn>
+        <v-btn class="white--text desc submit-btn" color="#00d1b2" @click="submit">Save</v-btn>
       </v-flex>
     </v-layout>
   </v-container>
@@ -16,14 +16,11 @@
 <script>
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials";
-//import UploadAdapter from "@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter";
 import Base64Uploader from "@ckeditor/ckeditor5-upload/src/base64uploadadapter";
-//import CKFinder from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter';
 import Autoformat from "@ckeditor/ckeditor5-autoformat/src/autoformat";
 import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold";
 import Italic from "@ckeditor/ckeditor5-basic-styles/src/italic";
 import BlockQuote from "@ckeditor/ckeditor5-block-quote/src/blockquote";
-//import EasyImage from "@ckeditor/ckeditor5-easy-image/src/easyimage";
 import Heading from "@ckeditor/ckeditor5-heading/src/heading";
 import Image from "@ckeditor/ckeditor5-image/src/image";
 import ImageCaption from "@ckeditor/ckeditor5-image/src/imagecaption";
@@ -48,26 +45,21 @@ class UploadAdapter {
                 const data = new FormData();
                 data.append('file', this.loader.file);
 
-                AXIOS({
-                    url: 'http://localhost:8088/api/upload_image',
-                    method: 'post',
-                    data,
-                    headers: {
-                        'Content-Type': 'multipart/form-data;'
-                    },
-                    withCredentials: false
-                }).then(response => {
-                    if (response.data.result == 'success') {
+                AXIOS.post("upload_image", data ,  {
+                        'content-type': 'multipart/form-data'
+                    },)
+                .then(response => {
+                  if (response.data.result == 'success') {
                         resolve({
                             default: response.data.url
                         });
                     } else {
                         reject(response.data.message);
                     }
-                }).catch(response => {
-                    reject ( 'Upload failed');
+                })
+                .catch(e => {
+                  reject ( 'Upload failed');
                 });
-
             });
         }
 
@@ -83,10 +75,11 @@ function MyCustomUploadAdapterPlugin( editor ) {
 
 export default {
   name: "editor-component",
-  props: ["url"],
+  props: ["addUrl", "updateUrl"],
   data() {
     return {
       data:{},
+      articleId: '',
       editor: ClassicEditor,
       editorData: "<p></p>",
       editorConfig: {
@@ -94,13 +87,10 @@ export default {
         plugins: [
           Essentials,
           //Base64Uploader,
-          //UploadAdapter,
-         // CKFinder,
           Autoformat,
           Bold,
           Italic,
           BlockQuote,
-          //EasyImage,
           Heading,
           Image,
           ImageCaption,
@@ -148,7 +138,15 @@ export default {
   },
   methods: {
     submit: function() {
-      this.callRestService({});
+    this.data.article_content = this.editorData;
+    if( ('_id' in this.data) && this.data._id != ""){
+        this.callUpdateRestService(this.data, this.updateUrl);
+    }else {
+      if(this.editorData != ""){
+            this.callAddRestService(this.data, this.addUrl);
+      }
+    }
+   
     },
     getRequestHeader: function() {
       this.requestHeader = Util.getHeaders(this.$session);
@@ -167,17 +165,38 @@ export default {
       this.$refs.alert.setMessage(message);
       this.$refs.alert.show();
     },
-    callRestService: function(model) {
+    callAddRestService: function(model, url) {
       let self = this;
       let headers = this.getRequestHeader();
-      AXIOS.post(this.url, model, { headers })
+      console.log(headers)
+      AXIOS.post(url, model, { headers })
         .then(response => {
           if (response.status == 200) {
-            let responseData = response.data;
+            let responseData = response.data.response;
+            self.data._id = responseData._id;
             if (responseData["error_message"] != undefined) {
               self.showErrorAlert(responseData["error_message"]);
             } else {
-              self.showSuccessAlert("success add/edit document");
+              self.showSuccessAlert("success add document");
+            }
+          }
+        })
+        .catch(e => {
+          self.showErrorAlert(e);
+        });
+    },
+    callUpdateRestService: function(model, url) {
+      let self = this;
+      let headers = this.getRequestHeader();
+      console.log(headers)
+      AXIOS.put(url, model, { headers })
+        .then(response => {
+          if (response.status == 200) {
+            let responseData = response.data.response;
+            if (responseData["error_message"] != undefined) {
+              self.showErrorAlert(responseData["error_message"]);
+            } else {
+              self.showSuccessAlert("success edit document");
             }
           }
         })
