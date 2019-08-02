@@ -13,6 +13,22 @@
         </router-link>
       </v-list-tile>
       <v-subheader class="mt-3 grey--text text--darken-1">HEADER 2</v-subheader>
+      
+      <v-list-tile v-if="!isLogged" >
+        <router-link class="nav-draw-links" to="/sign_in">
+        <v-list-tile-avatar>
+          <v-icon>account_circle</v-icon>
+        </v-list-tile-avatar>
+        <v-list-tile>Login</v-list-tile>
+        </router-link>
+      </v-list-tile>
+      <v-list-tile v-if="isLogged" @click="logout">
+        <v-list-tile-avatar>
+          <v-icon>account_circle</v-icon>
+        </v-list-tile-avatar>
+        <v-list-tile>Logout</v-list-tile>
+      </v-list-tile>
+
       <v-list-tile v-for="item in items2" :key="item.text" avatar>
         <v-list-tile-avatar>
           <img :src="`https://randomuser.me/api/portraits/men/${item.picture}.jpg`" alt />
@@ -255,6 +271,12 @@ export default {
 .nav-draw-links {
   display: flex;
   text-decoration: none;
+}
+
+a.v-list__tile.v-list__tile--link.theme--light {
+    border: 1px solid red;
+    margin: 5px;
+    border-radius: 40px;
 }
 
 .nav-link,
