@@ -1,4 +1,5 @@
 <template>
+<v-container>
   <v-card>
     <v-card-title>
       {{title}}
@@ -11,14 +12,30 @@
         <tr>
         <td v-for="value in props.item" :key="value" class="text-xs-right">{{ value }}</td>
         <td>
-          <v-btn class="ma-2" tile outlined color="success" @click="showAlert(props.item)">
-            <v-icon left>mdi-pencil</v-icon>Edit
-          </v-btn>
+          <v-layout align-center justify-space-around>
+          <v-icon @click="editData(props.item)">fas fa-edit</v-icon>
+          <v-icon @click="deleteData(props.item)">fas fa-edit</v-icon>
+          </v-layout>
         </td>
         </tr>
       </template>
     </v-data-table>
+    <v-card-text></v-card-text>
+    <v-card-text style="height: 100px; position: relative">
+            <v-btn
+              absolute
+              dark
+              fab
+              top
+              right
+              color="rgb(0, 209, 178)"
+              @click="addData"
+            >
+              <v-icon>add</v-icon>
+            </v-btn>
+    </v-card-text>
   </v-card>
+</v-container>
 </template>
 
 <script>
@@ -43,17 +60,23 @@ export default {
       singleSelect: true
     };
   },
-  created() {
-    console.log(this.dataList);
-  },
   methods: {
-    callRestService(model, url) {
+    callRestService(type, model, url) {
       let self = this;
       AXIOS.post(url, model)
         .then(response => {})
         .catch(e => {
           self.errors.push(e);
         });
+    },
+    editData(a){
+alert('Alert! \n' + a.name);
+    },
+    addData(){
+alert('Alert! \n' + a.name);
+    },
+    deleteData(a){
+alert('Alert! \n' + a.name);
     },
     showAlert(a){
       if (event.target.classList.contains('btn__content')) return;

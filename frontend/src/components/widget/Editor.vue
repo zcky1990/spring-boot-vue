@@ -1,19 +1,46 @@
 <template>
-  <v-container d-flex fluid grid-list-xs class="lato-fonts">
+  <v-container d-flex fluid grid-list-xs @change="validBtn">
     <v-layout align-baseline wrap>
+      <v-flex xs12 d-felx>
+       <v-text-field
+          v-model="data.articleId"   
+          style="display:none;"     
+      ></v-text-field>
+        <v-text-field
+          v-model="data.titleArticle"
+          label="Title"
+          placeholder="The Great me"
+          outlined
+      ></v-text-field>
+        <v-text-field
+          v-model="data.categoryArticle"
+          label="category"
+          placeholder="Fantasy"
+          outlined
+      ></v-text-field>
+      </v-flex>
       <v-flex xs12 d-flex>
         <alert-component ref="alert"></alert-component>
       </v-flex>
       <v-flex xs12 d-flex>
-        <ckeditor :editor="editor" v-model="editorData" :config="editorConfig" ></ckeditor>
+        <ckeditor
+        :editor="editor" 
+        v-model="data.editorData" 
+        :config="editorConfig"
+        @input="validBtn"
+        ></ckeditor>
       </v-flex>
       <v-flex xs12 d-flex>
-        <v-btn class="white--text desc submit-btn" color="#00d1b2" @click="submit">Save</v-btn>
+        <v-btn 
+        v-bind="btnOptions"
+        class="white--text desc submit-btn" 
+        @click="submit">Save</v-btn>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 <script>
+
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials";
 import Base64Uploader from "@ckeditor/ckeditor5-upload/src/base64uploadadapter";
@@ -78,10 +105,14 @@ export default {
   props: ["addUrl", "updateUrl"],
   data() {
     return {
-      data:{},
-      articleId: '',
+      btnDisabled: true,
+      data:{
+        articleId:"asdasdasd",
+        categoryArticle:"",
+        editorData: "",
+        titleArticle: ""
+      },
       editor: ClassicEditor,
-      editorData: "<p></p>",
       editorConfig: {
         extraPlugins: [ MyCustomUploadAdapterPlugin ],
         plugins: [
@@ -137,16 +168,22 @@ export default {
     "alert-component": Alert
   },
   methods: {
-    submit: function() {
-    this.data.article_content = this.editorData;
-    if( ('_id' in this.data) && this.data._id != ""){
-        this.callUpdateRestService(this.data, this.updateUrl);
-    }else {
-      if(this.editorData != ""){
-            this.callAddRestService(this.data, this.addUrl);
+    validBtn: function(){
+      if( this.data.editorData.length > 0 && this.data.titleArticle.length > 0 && this.data.categoryArticle.length > 0){
+        this.btnDisabled = false
+      }else {
+        this.btnDisabled = true
       }
-    }
-   
+    },
+    submit: function() {
+      this.data.article_content = this.editorData;
+      if( ('_id' in this.data) && this.data._id != ""){
+          this.callUpdateRestService(this.data, this.updateUrl);
+      }else {
+        if(this.editorData != ""){
+              this.callAddRestService(this.data, this.addUrl);
+        }
+      }
     },
     getRequestHeader: function() {
       this.requestHeader = Util.getHeaders(this.$session);
@@ -168,7 +205,6 @@ export default {
     callAddRestService: function(model, url) {
       let self = this;
       let headers = this.getRequestHeader();
-      console.log(headers)
       AXIOS.post(url, model, { headers })
         .then(response => {
           if (response.status == 200) {
@@ -188,7 +224,6 @@ export default {
     callUpdateRestService: function(model, url) {
       let self = this;
       let headers = this.getRequestHeader();
-      console.log(headers)
       AXIOS.put(url, model, { headers })
         .then(response => {
           if (response.status == 200) {
@@ -204,6 +239,15 @@ export default {
           self.showErrorAlert(e);
         });
     }
+  },
+  computed: {
+     btnOptions () {
+        const options = {
+          disabled: this.btnDisabled,
+          color : "#00d1b2"
+        }
+        return options
+     }
   }
 };
 </script>

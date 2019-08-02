@@ -11,8 +11,7 @@ public class Article {
 	@DBRef
 	private Users author;
 	private String article_title;
-	private String article_sub_title;
-	private String slug;
+	private String article_permalink;
 	private String article_content;
 	private String type;
 	private String status;
@@ -39,18 +38,6 @@ public class Article {
 	public void setArticle_title(String article_title) {
 		this.article_title = article_title;
 	}
-	public String getArticle_sub_title() {
-		return article_sub_title;
-	}
-	public void setArticle_sub_title(String article_sub_title) {
-		this.article_sub_title = article_sub_title;
-	}
-	public String getSlug() {
-		return slug;
-	}
-	public void setSlug(String slug) {
-		this.slug = slug;
-	}
 	public String getArticle_content() {
 		return article_content;
 	}
@@ -74,5 +61,11 @@ public class Article {
 	}
 	public void setModified_date(String modified_date) {
 		this.modified_date = modified_date;
+	}
+	public String getArticle_permalink() {
+		return article_permalink;
+	}
+	public void setArticle_permalink(String article_permalink) {
+		this.article_permalink = article_permalink;
 	}
 }
