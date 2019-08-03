@@ -3,11 +3,11 @@
     <v-layout align-baseline wrap>
       <v-flex xs12 d-felx>
        <v-text-field
-          v-model="data.articleId"   
+          v-model="data._id"   
           style="display:none;"     
       ></v-text-field>
         <v-text-field
-          v-model="data.titleArticle"
+          v-model="data.article_title"
           label="Title"
           placeholder="The Great me"
           outlined
@@ -24,9 +24,9 @@
       </v-flex>
       <v-flex xs12 d-flex>
         <ckeditor
-        :editor="editor" 
-        v-model="data.editorData" 
-        :config="editorConfig"
+        :editor="configEditor.editor" 
+        v-model="data.article_content" 
+        :config="configEditor.editorConfig"
         @input="validBtn"
         ></ckeditor>
       </v-flex>
@@ -105,62 +105,38 @@ export default {
   props: ["addUrl", "updateUrl"],
   data() {
     return {
-      btnDisabled: true,
       data:{
+        _id:"",
         articleId:"asdasdasd",
         categoryArticle:"",
-        editorData: "",
-        titleArticle: ""
+        article_content:"",
+        article_title: ""
       },
-      editor: ClassicEditor,
-      editorConfig: {
+      configEditor:{
+        editor: ClassicEditor,
+        editorConfig: {
         extraPlugins: [ MyCustomUploadAdapterPlugin ],
         plugins: [
-          Essentials,
           //Base64Uploader,
-          Autoformat,
-          Bold,
-          Italic,
-          BlockQuote,
-          Heading,
-          Image,
-          ImageCaption,
-          ImageStyle,
-          ImageToolbar,
-          ImageUpload,
-          Link,
-          List,
-          Paragraph,
-          Alignment,
-          Image,
-          ImageToolbar,
-          ImageCaption,
+          Essentials,
+          Autoformat,Bold,Italic,BlockQuote,Heading,
+          Image,ImageCaption,ImageStyle,ImageToolbar,
+          ImageUpload,Link,List,Paragraph,
+          Alignment,Image,ImageToolbar,ImageCaption,
           ImageStyle
         ],
         toolbar: {
           items: [
-            "heading",
-            "|",
-            "alignment",
-            "|",
-            "bold",
-            "italic",
-            "|",
-            "link",
-            "|",
-            "undo",
-            "redo",
-            "|",
-            "bulletedList",
-            "numberedList",
-            "|",
-            "imageUpload",
-            "imageTextAlternative",
-            "|",
-            "imageStyle:full",
-            "imageStyle:side"
+            "heading","alignment","|",
+            "bold","italic","|",
+            "link","|",
+            "undo","redo","|",
+            "bulletedList","numberedList","|",
+            "imageUpload","imageTextAlternative","|",
+            "imageStyle:full","imageStyle:side"
           ]
         }
+      }
       }
     };
   },
@@ -169,20 +145,18 @@ export default {
   },
   methods: {
     validBtn: function(){
-      if( this.data.editorData.length > 0 && this.data.titleArticle.length > 0 && this.data.categoryArticle.length > 0){
+      if( this.data.article_content.length > 0 && this.data.article_title.length > 0 && this.data.categoryArticle.length > 0){
         this.btnDisabled = false
       }else {
         this.btnDisabled = true
       }
     },
     submit: function() {
-      this.data.article_content = this.editorData;
       if( ('_id' in this.data) && this.data._id != ""){
-          this.callUpdateRestService(this.data, this.updateUrl);
+        this.callUpdateRestService(this.data, this.updateUrl);
       }else {
-        if(this.editorData != ""){
-              this.callAddRestService(this.data, this.addUrl);
-        }
+        delete this.data['_id']
+        this.callAddRestService(this.data, this.addUrl);
       }
     },
     getRequestHeader: function() {
