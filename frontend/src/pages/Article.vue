@@ -1,6 +1,6 @@
     <template>
   <div class="article-detail-page">
-      <article-layout :article="id"></article-layout>
+      <article-layout :slug="slug"></article-layout>
   </div>
 </template>
 
@@ -14,15 +14,14 @@ export default {
   },
   data() {
     return {
-      id:''
+      slug:''
     };
   },
   components: {
    'article-layout' : ArticleLayout,
   },
   created(){
-    console.log(this.$route.params.title)
-    this.id = this.$route.params.title
+    this.slug = this.$route.params.slug
   }
 };
 </script>

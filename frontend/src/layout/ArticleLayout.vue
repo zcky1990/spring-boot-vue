@@ -6,40 +6,11 @@
             <section class="content-section container">
                 <v-content>
       <v-container fill-height>
-        <v-layout wrap>
-             <v-flex class="left-content-container"
-        shrink
-        pa-1
-      >
-        <v-card
-          dark
-          color="green darken-3"
-        >
-          <v-card-text>I'm a Flex that will NOT grow</v-card-text>
-        </v-card>
-      </v-flex>
       <v-flex class="main-content-container"
         pa-1
       >
-        <v-card
-          dark
-          color="green darken-4"
-        >
-          <v-card-text>I'm a Flex that will grow and shrink (default behavior)</v-card-text>
-        </v-card>
+       <article-content :slug="slug"></article-content>
       </v-flex>
-      <v-flex class="right-content-container"
-        shrink
-        pa-1
-      >
-        <v-card
-          dark
-          color="green darken-3"
-        >
-          <v-card-text>I'm a Flex that will NOT grow</v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
       </v-container>
     </v-content>
             </section>
@@ -49,10 +20,11 @@
     <script>
 
     import Navbar from '@/components/widget/UserNavbar'
+    import Article from '@/components/widget/Article'
 
     export default   {
         name: 'article-page-layout',
-        props:["article"],
+        props:["slug"],
         data(){
             return {
 
@@ -60,9 +32,7 @@
         },
         components: {
                     'user-nav-menu' : Navbar,
-        },
-        created(){
-            console.log(this.article);
+                    'article-content' : Article
         }
     }
     </script>
