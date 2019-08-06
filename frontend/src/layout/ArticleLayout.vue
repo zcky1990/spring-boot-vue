@@ -6,10 +6,12 @@
             <section class="content-section container">
                 <v-content>
       <v-container fill-height>
-      <v-flex class="main-content-container"
-        pa-1
-      >
+      <v-flex class="left-content" d-flex xs4>
+      </v-flex>
+      <v-flex class="main-content-container">
        <article-content :slug="slug"></article-content>
+      </v-flex>
+      <v-flex class="right-content" d-flex xs4>
       </v-flex>
       </v-container>
     </v-content>

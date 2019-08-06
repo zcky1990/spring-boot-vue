@@ -1,6 +1,6 @@
     <template>
   <div class="article-detail-page">
-      <article-layout :slug="slug"></article-layout>
+    <article-layout :slug="slug"></article-layout>
   </div>
 </template>
 
@@ -9,19 +9,19 @@ import ArticleLayout from "@/layout/ArticleLayout";
 
 export default {
   name: "article-detail-page",
-  props:{
-    title:''
+  props: {
+    title: ""
   },
   data() {
     return {
-      slug:''
+      slug: ""
     };
   },
   components: {
-   'article-layout' : ArticleLayout,
+    "article-layout": ArticleLayout
   },
-  created(){
-    this.slug = this.$route.params.slug
+  created() {
+    this.slug = this.$route.params.slug;
   }
 };
 </script>
