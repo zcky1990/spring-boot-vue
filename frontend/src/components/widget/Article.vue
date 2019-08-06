@@ -1,24 +1,22 @@
 <template>
   <section class="section article">
-    <v-container
-    id="grid"
-    fluid
-    grid-list-sm
-    tag="section"
-  >
-    <v-layout wrap>
-      <v-flex tag="h1" class="headline">{{article.article_title}}</v-flex>
-      <v-flex d-flex xs12 order-xs5>
-        <v-layout column>
-          <v-flex>
-            <v-card flat>
-              <div v-html="article.article_content"></div>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-    </v-layout>
-  </v-container>
+    <v-container id="grid" fluid grid-list-sm tag="section">
+      <v-layout wrap>
+        <v-flex d-flex xs12>
+          
+        </v-flex>
+        <v-flex tag="h1" class="headline">{{article.article_title}}</v-flex>
+        <v-flex d-flex xs12 order-xs5>
+          <v-layout column>
+            <v-flex>
+              <v-card flat>
+                <div v-html="article.article_content"></div>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </section>
 </template>
 
