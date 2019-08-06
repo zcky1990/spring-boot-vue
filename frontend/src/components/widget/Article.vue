@@ -41,9 +41,9 @@
         <v-flex d-flex xs12 order-xs5 class="content">
           <v-layout column>
             <v-flex>
-              <v-card flat>
+          
                 <div v-html="article.article_content"></div>
-              </v-card>
+              
             </v-flex>
           </v-layout>
         </v-flex>
@@ -110,10 +110,10 @@ export default {
 }
 
 .headline {
-  font-size: 40px !important;
+  font-size: 2rem !important;
 }
 .content {
   margin-top: 1.95em;
-  font-size: 20px;
+  font-size: 1em;
 }
 </style>

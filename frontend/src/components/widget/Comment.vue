@@ -1,30 +1,44 @@
 <template>
-    <div class="container comment">
-        <article class="media">
-        <figure class="media-left">
-            <p class="image is-48x48">
-            <img v-bind:src="userComment.User.imageUrl">
-            </p>
-        </figure>
-        <div class="media-content">
-            <div class="content">
-            <p>
-                <strong>{{userComment.User.userName}}</strong>
-                <br>
-                <!--{{userComment}} -->
-                    {{userComment.comment}}
-                <br>
-                <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
-            </p>
-            </div>
-        </div>
-        </article>
-      <reply-comment 
-      v-for="reply in replyList" 
-      v-bind:key="reply.replyId"
-      v-bind:reply="reply"
-      ></reply-comment>
-    </div>
+    <v-container
+      class="pa-2"
+      fluid
+      grid-list-md
+    >
+      <v-layout column>
+        <v-flex>
+          <v-container>
+            <v-layout>
+              <div class="image image-comment">
+                <v-img
+                  src="https://picsum.photos/500/300?image=12"
+                  lazy-src="https://picsum.photos/10/6?image=12"
+                  aspect-ratio="1"
+                  class="grey lighten-2"
+                >
+                  <template v-slot:placeholder>
+                    <v-layout
+                      fill-height
+                      align-center
+                      justify-center
+                      ma-0
+                    >
+                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                    </v-layout>
+                  </template>
+                </v-img>
+
+              </div>
+              <v-flex>
+                <div class="author">
+                  <div class="authors-name">asdasdsad</div>
+                  <div class="article-create-date">sadsadsad</div>
+                </div>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-flex>
+      </v-layout>
+    </v-container>
 </template>
 
 <script>
@@ -32,16 +46,16 @@
     import Reply from './Reply'
     export default {
     name: 'comment',
-    props: ['userComment'], 
+    //props: ['userComment'], 
     methods: {
         
     },
     components: {
-                    'reply-comment': Reply
+    //                'reply-comment': Reply
     },
     computed:{
         replyList: function(){
-            return this.userComment.replyList;
+           // return this.userComment.replyList;
 
         }
     }
@@ -53,6 +67,11 @@
    text-align: center;
    padding: 10px;
    color: red;
+}
+
+.image-comment{
+    width: 64px;
+    height: 64px;
 }
 
 ::-webkit-input-placeholder {
