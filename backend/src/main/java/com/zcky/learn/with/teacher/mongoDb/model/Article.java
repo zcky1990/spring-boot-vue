@@ -15,6 +15,7 @@ public class Article {
 	private String article_content;
 	private String type;
 	private String status;
+	private String slug;
 	private String modified_date;
 	
 	public String getStringId() {
@@ -68,4 +69,11 @@ public class Article {
 	public void setArticle_permalink(String article_permalink) {
 		this.article_permalink = article_permalink;
 	}
+	public String getSlug() {
+		return slug;
+	}
+	public void setSlug(String slug) {
+		this.slug = slug;
+	}
+	
 }

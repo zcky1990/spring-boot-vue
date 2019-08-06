@@ -10,6 +10,7 @@
           v-model="data.article_title"
           label="Title"
           placeholder="The Great me"
+          v-on:input="setSlug()"
           outlined
       ></v-text-field>
         <v-text-field
@@ -110,7 +111,8 @@ export default {
         articleId:"asdasdasd",
         categoryArticle:"",
         article_content:"",
-        article_title: ""
+        article_title: "",
+        slug:""
       },
       configEditor:{
         editor: ClassicEditor,
@@ -144,6 +146,23 @@ export default {
     "alert-component": Alert
   },
   methods: {
+    setSlug (){
+      this.data.slug = this.slugify(this.data.article_title);
+    },
+    slugify (text, ampersand = 'and') {
+      const a = 'àáäâèéëêìíïîòóöôùúüûñçßÿỳýœæŕśńṕẃǵǹḿǘẍźḧ'
+      const b = 'aaaaeeeeiiiioooouuuuncsyyyoarsnpwgnmuxzh'
+      const p = new RegExp(a.split('').join('|'), 'g')
+
+      return text.toString().toLowerCase()
+        .replace(/[\s_]+/g, '-')
+        .replace(p, c =>
+          b.charAt(a.indexOf(c)))
+        .replace(/&/g, `-${ampersand}-`)
+        .replace(/[^\w-]+/g, '')
+        .replace(/--+/g, '-')
+        .replace(/^-+|-+$/g, '')
+    },   
     validBtn: function(){
       if( this.data.article_content.length > 0 && this.data.article_title.length > 0 && this.data.categoryArticle.length > 0){
         this.btnDisabled = false
