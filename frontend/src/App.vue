@@ -26,6 +26,6 @@ export default {
   color: #2c3e50;
 }
 .app-container {
-  background-color: #fff;
+  background-color: #fff !important;
 }
 </style>

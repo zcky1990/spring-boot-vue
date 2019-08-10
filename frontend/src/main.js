@@ -1,9 +1,9 @@
 import Vue from 'vue'
+import Vuetify from 'vuetify'
+import VueSession from 'vue-session'
+import 'vuetify/dist/vuetify.min.css' 
 import App from './App.vue'
 import router from './router'
-import VueSession from 'vue-session'
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css' 
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import '@fortawesome/fontawesome-free/css/all.css' 
 
