@@ -40,19 +40,19 @@
             
             <v-divider></v-divider>
 
-           <v-flex xs-12>
+           <v-flex>
                     <v-card elevation="0">
-                      <v-container fluid grid-list-sm>
-                        <v-layout justify-space-between wrap class="article-content">
-                          <v-flex v-for="i in 4" :key="i" class="article-content-card">
+                      <v-container fluid grid-list-md class="no-container">
+                        <v-layout wrap align-center justify-space-between>
+                          <v-flex v-for="i in 4" :key="i">
                             <v-card
                               class="mx-auto"
-                              max-width="350"
+                              max-width="340"
                             >
                               <v-img
                                 class="white--text"
-                                height="200px"
                                 src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                                height="170"
                               >
                                 <v-card-title class="align-end fill-height">Top 10 Australian beaches</v-card-title>
                               </v-img>
@@ -96,8 +96,11 @@ export default {
 };
 </script>
 <style scoped>
-.article-content {
-  flex-direction: row !important;
+.no-container {
+  padding-left:0px !important;
+  padding-right:0px !important;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
 }
 
 .article-content-card {
@@ -109,9 +112,7 @@ export default {
     padding:5px !important;
 }
 @media only screen and (max-width: 600px) {
- .article-content {
-  flex-direction: column !important;
-  }
+ 
 }
 
 .btn-no-shadow {
