@@ -2,8 +2,6 @@
 const path = require( 'path' );
 const CKEditorWebpackPlugin = require( '@ckeditor/ckeditor5-dev-webpack-plugin' );
 const { styles } = require( '@ckeditor/ckeditor5-dev-utils' );
-const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
-
 
 
 module.exports = {
@@ -16,7 +14,6 @@ module.exports = {
 
 configureWebpack: {
   plugins: [
-      new VuetifyLoaderPlugin(),
       // CKEditor needs its own plugin to be built using webpack.
       new CKEditorWebpackPlugin( {
           // See https://ckeditor.com/docs/ckeditor5/latest/features/ui-language.html
