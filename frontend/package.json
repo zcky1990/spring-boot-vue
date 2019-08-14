@@ -31,7 +31,7 @@
     "vue": "^2.6.10",
     "vue-router": "^3.1.2",
     "vue-session": "^1.0.0",
-    "vuetify": "^1.5.16"
+    "vuetify": "^1.5.17"
   },
   "devDependencies": {
     "@ckeditor/ckeditor5-adapter-ckfinder": "^11.0.4",
