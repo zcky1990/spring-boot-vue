@@ -5,9 +5,6 @@
         <v-card class="form-sign-in-container">
           <v-card-title align-center justify-center>
             <div class="center">
-              <v-avatar size="50" color="grey lighten-4">
-                <img src="https://vuetifyjs.com/apple-touch-icon-180x180.png" alt="avatar" />
-              </v-avatar>
               <v-flex>
                 <div class="title bulma-color">Sign Up</div>
               </v-flex>
@@ -204,15 +201,5 @@ input,
 .bulma-color {
    color: rgb(0, 209, 178);
 }
-
-@media only screen and (max-width: 600px) {
-  .form-sign-in-container {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
-  }
-}
-
 
 </style>
