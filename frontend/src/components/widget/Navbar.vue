@@ -1,17 +1,21 @@
 <template>
   <div class="nav-menu">
     <v-navigation-drawer fixed clipped v-model="drawer" app>
-      <v-subheader class="mt-3 grey--text text--darken-1">HEADER</v-subheader>
-      <v-list-tile v-for="item in items" :key="item.text">
+      <v-divider></v-divider>
+      <v-subheader class="mt-3 grey--text text--darken-1">Menu</v-subheader>
+      <v-list-tile class="menu-btn-link" v-for="item in items" :key="item.text">
         <router-link class="nav-draw-links" v-bind:to="item.url">
           <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon class="menu-links-icon">{{ item.icon }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
           </v-list-tile-content>
         </router-link>
       </v-list-tile>
+
+       <v-divider></v-divider>
+
       <v-subheader class="mt-3 grey--text text--darken-1">HEADER 2</v-subheader>
       
       <v-list-tile v-if="!isLogged" >
@@ -37,28 +41,21 @@
       </v-list-tile>
     </v-navigation-drawer>
 
-    <v-toolbar dense clipped-left app dark color="#00d1b2" class="nav-toolbar">
-      <v-icon class="mx-3">fa-youtube</v-icon>
+    <v-toolbar dense clipped-left dark fixed flat class="nav-toolbar">
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-icon>book</v-icon>
       <v-toolbar-title class="mr-5 align-center">
         <span class="title">{{title}}</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-side-icon v-if="isMobile" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-
+      
       <div v-if="!isMobile" class="nav-draw-links">
-        <div class="nav-link">
-          <v-toolbar-items v-for="item in items" :key="item.text">
-            <router-link class="nav-draw-links" v-bind:to="item.url">
-              <v-btn flat>{{item.title}}</v-btn>
-            </router-link>
-          </v-toolbar-items>
-        </div>
         <!--container user has login -->
         <div v-if="isLogged" class="login-container">
           <v-menu v-model="users" :close-on-content-click="false" :nudge-width="300" offset-x>
             <template v-slot:activator="{ on }">
               <div class="user-avatar-container">
-                <v-chip color="green" v-on="on">
+                <v-chip class="button-login" v-on="on">
                   <v-avatar>
                     <img :src="`https://randomuser.me/api/portraits/men/1.jpg`" alt />
                   </v-avatar>si nau
@@ -84,7 +81,7 @@
           <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="300" offset-x>
             <template v-slot:activator="{ on }">
               <div class="user-avatar-container">
-                <v-chip color="green" v-on="on">
+                <v-chip class="button-login" v-on="on">
                   <v-avatar>
                     <v-icon>account_circle</v-icon>
                   </v-avatar>Login
@@ -143,7 +140,7 @@ export default {
       drawer: false,
       isMobile: false,
       items: [
-        { title: "Home", icon: "dashboard", url: "/" },
+        { title: "Home", icon: "home", url: "./" },
         { title: "About", icon: "question_answer", url: "/test" }
       ],
       items2: [{ picture: 28, text: "Joseph" }, { picture: 38, text: "Apple" }],
@@ -207,7 +204,6 @@ export default {
         this.isMobile = true;
       } else {
         this.isMobile = false;
-        this.drawer = false;
       }
     },
     submit() {
@@ -271,8 +267,26 @@ export default {
 .nav-draw-links {
   display: flex;
   text-decoration: none;
+  color: #323232;
+  font-weight: 400;
+  font-size:1em;
 }
-
+.nav-toolbar {
+  background-color: #00d1b2 !important;
+}
+.menu-links-icon {
+  color:#00d1b2;
+}
+.button-login {
+  background: white;
+  color: #00d1b2;
+}
+.title {
+  color: white;
+}
+.menu-btn-link:hover{
+  color: #00d1b2;
+}
 a.v-list__tile.v-list__tile--link.theme--light {
     border: 1px solid red;
     margin: 5px;

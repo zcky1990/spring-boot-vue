@@ -75,6 +75,8 @@
                   <v-btn 
                   :loading="isLoadMoreOnProgress"
                   :disabled ="isDisable"
+                  elevation = "0"
+                  depressed
                   class="load-more-btn" @click="loadMore">Selanjutnya</v-btn>
               </div>
             </v-flex>

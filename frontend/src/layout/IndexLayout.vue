@@ -1,6 +1,8 @@
     <template>
     <div class="index-page-container">
-    <section class="nav-section"></section>
+    <section class="nav-section">
+        <nav-bar></nav-bar>
+    </section>
     <section class="content-section">
       <v-content>
         <v-container fill-height>
@@ -23,6 +25,7 @@
     </template>
 
     <script>
+    import NavbarComponents from "@/components/widget/Navbar";
     import listArticleComponents from "@/components/widget/ListArticle";
 
     export default   {
@@ -32,6 +35,7 @@
             }
         },
         components: {
+            'nav-bar' : NavbarComponents,
             'list-article': listArticleComponents
         }
     }
@@ -44,6 +48,9 @@
             -ms-flex-positive: 0;
             flex-grow: 0;
             max-width: 66.66666666666666%;
+        }
+        .content-section {
+            margin-top: 1.7em;
         }
         .right-content {
                 -ms-flex-preferred-size: 33.33333333333333%;
