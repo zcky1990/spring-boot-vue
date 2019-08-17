@@ -1,7 +1,14 @@
 <template>
+<div class="login-form-container">
   <v-container grid-list-sm>
-    <v-layout align-center justify-center row fill-height>
-      <v-flex xs12 md6 d-flex>
+    <v-layout align-center justify-center column fill-height>
+      <v-flex xs12 md6 class="form-container">
+        <div class="title bulma-color">
+          Login
+        </div>
+      </v-flex>
+      <v-divider></v-divider>
+      <v-flex class="form-container">
         <v-form ref="form" v-model="valid">
           <v-text-field
             v-model="username"
@@ -22,17 +29,31 @@
             required
             outline
           ></v-text-field>
-
-          <v-flex xs12 d-flex>
-            <v-btn class="white--text desc" color="#00d1b2" @click="submitLogin">Login</v-btn>
+          <v-flex align-center justify-center>
+            <div class="submit-btn-container">
+              <div class="link-not-sign-up">
+                <router-link class="sign-up-link" to="/sign_up">
+                  <v-btn text flat class="link-btn">Belum terdaftar ?</v-btn>
+                </router-link>
+              </div>
+              <div class="sign-in-btn-container">
+                <v-btn class="white--text desc" color="#00d1b2" @click="submitLogin">Login</v-btn>
+              </div>
+            </div>
           </v-flex>
         </v-form>
-        <v-flex xs12 md6 d-flex>
-          <snack-bar ref="snackbar"></snack-bar>
-        </v-flex>
+       
       </v-flex>
     </v-layout>
   </v-container>
+  <v-container>
+    <v-layout>
+       <v-flex xs12 md6 d-flex>
+          <snack-bar ref="snackbar"></snack-bar>
+        </v-flex>
+    </v-layout>
+  </v-container>
+</div>
 </template>
 
 <script>
@@ -124,4 +145,35 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.form-container {
+  width: 100%;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #444f60;
+  text-align: center;
+  padding-bottom: 16px;
+}
+.bulma-color {
+   color: rgb(0, 209, 178);
+}
+.submit-btn-container {
+    display: flex;
+    flex-direction: row;
+}
+.link-not-sign-up {
+    flex-grow: 1;
+}
+.sign-up-link {
+  text-decoration: none;
+}
+.link-btn {
+  color: rgb(0, 209, 178);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  cursor: pointer;
+}
 </style>

@@ -20,7 +20,7 @@
       
       <v-list-tile v-if="!isLogged" >
         <router-link class="nav-draw-links" to="/sign_in">
-        <v-list-tile-avatar>
+        <v-list-tile-avatar class="button-login">
           <v-icon>account_circle</v-icon>
         </v-list-tile-avatar>
         <v-list-tile>Login</v-list-tile>
@@ -78,44 +78,15 @@
 
         <!--container user not login -->
         <div v-if="!isLogged" class="login-container">
-          <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="300" offset-x>
-            <template v-slot:activator="{ on }">
-              <div class="user-avatar-container">
+          <div class="user-avatar-container">
+            <router-link class="link-login" to="/login">
                 <v-chip class="button-login" v-on="on">
                   <v-avatar>
                     <v-icon>account_circle</v-icon>
                   </v-avatar>Login
                 </v-chip>
-              </div>
-            </template>
-            <v-card>
-              <div class="login-form-container">
-                <v-form ref="form" v-model="valid" lazy-validation>
-                  <v-text-field
-                    v-model="username"
-                    :rules="useranameRules"
-                    label="Username"
-                    outlined
-                    required
-                  ></v-text-field>
-
-                  <v-text-field
-                    v-model="password"
-                    :rules="passwordRules"
-                    :append-icon="showPassword ? 'visibility' : 'visibility_off'"
-                    :type="showPassword ? 'text' : 'password'"
-                    name="input-10-1"
-                    label="Normal with hint text"
-                    hint="At least 8 characters"
-                    outlined
-                    counter
-                    @click:append="showPassword = !showPassword"
-                  ></v-text-field>
-                  <v-btn color="warning" @click="submit">Submit</v-btn>
-                </v-form>
-              </div>
-            </v-card>
-          </v-menu>
+            </router-link>
+          </div>
         </div>
       </div>
     </v-toolbar>
@@ -283,6 +254,9 @@ export default {
 }
 .title {
   color: white;
+}
+.link-login {
+  text-decoration: none;
 }
 .menu-btn-link:hover{
   color: #00d1b2;

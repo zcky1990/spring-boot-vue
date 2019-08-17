@@ -3,19 +3,20 @@
     <v-layout align-center justify-center row fill-height>
       <v-flex xs12 md6 d-flex>
         <v-card class="form-sign-in-container">
-          <v-card-title justify-center>
-            <v-container>
+          <v-card-title align-center justify-center>
+            <div class="center">
               <v-avatar size="50" color="grey lighten-4">
                 <img src="https://vuetifyjs.com/apple-touch-icon-180x180.png" alt="avatar" />
               </v-avatar>
               <v-flex>
-                <div class="title">Sign Up</div>
+                <div class="title bulma-color">Sign Up</div>
               </v-flex>
               <v-flex>
-                <div class="desc">Make your Account</div>
+                <div class="desc bulma-color">Make your Account</div>
               </v-flex>
-            </v-container>
+            </div>
           </v-card-title>
+          <v-divider></v-divider>
           <v-card-text>
             <v-form ref="form" v-model="valid">
               <v-text-field
@@ -23,7 +24,9 @@
                 :rules="nameRules"
                 label="First name"
                 required
-                outline
+                outline 
+                flat
+                color="#00d1b2"
               ></v-text-field>
 
               <v-text-field
@@ -31,17 +34,30 @@
                 :rules="nameRules"
                 label="Last name"
                 required
-                outline
+                outline 
+                flat
+                color="#00d1b2"
               ></v-text-field>
 
-              <v-text-field v-model="email" :rules="emailRules" label="E-mail" required outline></v-text-field>
+              <v-text-field 
+              v-model="email" 
+              :rules="emailRules" 
+              label="E-mail" 
+              required 
+              outline 
+              flat
+              color="#00d1b2"
+              ></v-text-field>
 
               <v-text-field
                 v-model="username"
                 :rules="useranameRules"
                 label="Username"
                 required
-                outline
+                outline 
+                flat
+                rounded
+                color="#00d1b2"
               ></v-text-field>
 
               <v-text-field
@@ -53,7 +69,9 @@
                 @click:append="show1 = !show1"
                 :append-icon="show1 ? 'visibility' : 'visibility_off'"
                 required
-                outline
+                outline 
+                flat
+                color="#00d1b2"
               ></v-text-field>
             </v-form>
           </v-card-text>
@@ -63,11 +81,11 @@
               <v-layout align-center justify-center row fill-height>
                 <v-flex xs12 d-flex>
                   <div class="has-account" @click="goToPage">
-                    <span>Already has Account?</span>
+                    <span>Sudah punya Akun?</span>
                   </div>
                 </v-flex>
                 <v-flex xs12 md4 d-flex>
-                  <v-btn class="white--text desc" color="#00d1b2" @click="submit">Sign In</v-btn>
+                  <v-btn class="white--text desc" color="#00d1b2" @click="submit">Daftar</v-btn>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -149,8 +167,7 @@ export default {
       }
     },
     goToPage() {
-      console.log("eqw");
-      this.$router.push("/");
+      this.$router.push("/login");
     }
   },
   computed: {}
@@ -159,6 +176,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.center {
+  text-align: center;
+  width: 100%;
+}
 .title {
   font-size: 1.2rem;
   font-weight: 600;
@@ -179,4 +200,19 @@ input,
   line-height: 1.5;
   cursor: pointer;
 }
+
+.bulma-color {
+   color: rgb(0, 209, 178);
+}
+
+@media only screen and (max-width: 600px) {
+  .form-sign-in-container {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+}
+
+
 </style>

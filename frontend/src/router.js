@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/pages/Index'
+import Login from '@/pages/Login'
 import Admin from '@/pages/Admin'
 import User from '@/pages/User'
 import UserValidation from '@/pages/UserValidation'
@@ -15,6 +16,11 @@ export default new Router({
       path: '/',
       name: 'Index',
       component: Index
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     },
     {
       path: '/admin',

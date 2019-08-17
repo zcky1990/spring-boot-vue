@@ -23,7 +23,6 @@
     </section>
   </div>
     </template>
-
     <script>
     import NavbarComponents from "@/components/widget/Navbar";
     import listArticleComponents from "@/components/widget/ListArticle";
