@@ -5,9 +5,9 @@
          <v-layout column>
            <v-flex>
               <div class="article">
-              <v-img
-                  :src="data.image_url"
-                  :lazy-src="data.image_placeholder"
+                <v-img
+                  :src="data[0].image_url"
+                  :lazy-src="data[0].image_placeholder"
                   aspect-ratio="1"
                   class="grey lighten-2 rounded"
                   max-width="auto"
@@ -24,22 +24,22 @@
                     </v-layout>
                   </template>
                 </v-img>
-              <div class="article-headline">{{data.title}}</div>
+                  <div class="article-headline">{{data[0].title}}</div>
                   <div class="article-list-desc">
-                    {{data.desc}}
+                    {{data[0].desc}}
                   </div>
-                  <router-link class="read-more-links" :to="getUrl(data.slug)">
+                  <router-link class="read-more-links" :to="getUrl(data[0].slug)">
                     Selengkapnya
                   </router-link>
               </div>
            </v-flex>
             <v-divider></v-divider>
-            <v-flex class="article-list-container" v-for="item in dataList" :key="item.id">
+            <v-flex class="article-list-container" v-for="index in listCount" :key="index">
               <div class="article-list">
                   <div class="image-article-list">
                     <v-img
-                      :src="item.image_url"
-                      :lazy-src="item.image_placeholder"
+                      :src="data[index].image_url"
+                      :lazy-src="data[index].image_placeholder"
                       aspect-ratio="1"
                       class="grey lighten-2 rounded"
                       width='300'
@@ -58,11 +58,11 @@
                     </v-img>
                   </div>
                   <div class="desc-article-list">
-                       <div class="article-list-headline">{{item.title}}</div>
+                       <div class="article-list-headline">{{data[index].title}}</div>
                         <div class="article-list-desc">
-                         {{item.desc}}
+                         {{data[index].desc}}
                          </div>
-                        <router-link class="read-more-links" :to="getUrl(item.slug)">
+                        <router-link class="read-more-links" :to="getUrl(data[index].slug)">
                         Selengkapnya
                         </router-link>
               
@@ -94,21 +94,25 @@ export default {
   data() {
     return {
       page : 1,
+      index : 1,
+      listCount: 0,
       articleUrl: "",
       loadMoreUrl : "",
       isLoadMoreOnProgress : false,
       isDisable : false, 
-      data : {
-          "id":"dasd",
+      data : [
+        {
+          "id":"asdasd",
+          "category" : "ilmu pengetahuan alam",
           "slug" : "test-drive",
           "title" : "Ketahui Ragam Cara Menjaga Tulang yang Sehat",
           "desc" : "Untuk memiliki tulang yang sehat, Anda harus memelihara kesehatan  sadsa sad sadsa sa dasdasdasd tulang sejak dini. Cara menjaga tulang agar tetap sehat antara lain dengan menjaga pola makan dan menerapkan gaya hidup sehat, termasuk aktif bergerak. ",
           "image_url" : "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
           "image_placeholder" : "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-      },
-      dataList : [
+        },
         {
           "id":"asdasd",
+          "category" : "ilmu pengetahuan sosial",
           "slug" : "test-drive",
           "title" : "Ketahui Ragam Cara Menjaga Tulang yang Sehat",
           "desc" : "Untuk memiliki tulang yang sehat, Anda harus memelihara kesehatan  sadsa sad sadsa sa dasdasdasd tulang sejak dini. Cara menjaga tulang agar tetap sehat antara lain dengan menjaga pola makan dan menerapkan gaya hidup sehat, termasuk aktif bergerak. ",
@@ -117,6 +121,9 @@ export default {
         }
       ]
     };
+  },
+  created(){
+   this.setListCount();
   },
   methods: {
     getUrl: function (slug) {
@@ -152,7 +159,7 @@ export default {
           self.addData(asd)
         })
         .catch(e => {
-         
+          self.addData(asd)
           this.disableEnableLoadMoreBtn(false);
         });
     },
@@ -161,8 +168,12 @@ export default {
       this.getLoadMoreService()
     },
     addData: function (response){
-      this.dataList = this.dataList.concat(response)
+      this.data = this.data.concat(response);
       this.disableEnableLoadMoreBtn(false);
+      this.setListCount();
+    },
+    setListCount : function (){
+      this.listCount = this.data.length - 1;
     }
   }
 };
@@ -176,6 +187,9 @@ export default {
 }
 .article {
   margin-bottom: 0.7em;
+}
+.img-article_container {
+  position: relative;
 }
 .article-content-card {
   flex-basis: 33.33333333333333%;
