@@ -1,21 +1,20 @@
 <template>
-<div class="login-form-container">
-  <v-container grid-list-sm>
-    <v-layout align-center justify-center column fill-height>
-      <v-flex xs12 md6 class="form-container">
-        <div class="title bulma-color">
-          Login
-        </div>
-      </v-flex>
-      <v-divider></v-divider>
-      <v-flex class="form-container">
-        <v-form ref="form" v-model="valid">
+<v-container>
+    <v-layout class="sign-up-container" align-center justify-center flex fill-height>
+      <div class="title-container">
+                <div class="title bulma-color">Login</div>
+                <div class="desc bulma-color">Masuk ke Akun Anda</div>
+      </div>
+      <div class="form-container">
+        <v-form ref="form" v-model="valid" width="300">
           <v-text-field
             v-model="username"
             :rules="useranameRules"
             label="Username"
             required
-            outline
+            outline 
+            flat
+            color="rgb(0, 209, 178)"
           ></v-text-field>
 
           <v-text-field
@@ -27,33 +26,27 @@
             label="Password"
             hint="At least 8 characters"
             required
-            outline
+            outline 
+            flat
+            color="rgb(0, 209, 178)"
           ></v-text-field>
+
           <v-flex align-center justify-center>
             <div class="submit-btn-container">
               <div class="link-not-sign-up">
-                <router-link class="sign-up-link" to="/sign_up">
+               <router-link class="sign-up-link" to="/sign_up">
                   <v-btn text flat class="link-btn">Belum terdaftar ?</v-btn>
                 </router-link>
               </div>
               <div class="sign-in-btn-container">
-                <v-btn class="white--text desc" color="#00d1b2" @click="submitLogin">Login</v-btn>
+               <v-btn class="white--text desc" color="#00d1b2" @click="submitLogin">Login</v-btn>
               </div>
             </div>
           </v-flex>
         </v-form>
-       
-      </v-flex>
+        </div>
     </v-layout>
   </v-container>
-  <v-container>
-    <v-layout>
-       <v-flex xs12 md6 d-flex>
-          <snack-bar ref="snackbar"></snack-bar>
-        </v-flex>
-    </v-layout>
-  </v-container>
-</div>
 </template>
 
 <script>
@@ -145,8 +138,35 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@media only screen and (max-width: 600px) {
+  .sign-up-container {
+    flex-direction: column !important;
+  }
+}
+
+.title-container {
+    flex-grow: 1;
+    text-align: center;
+    margin-bottom: 16px;
+}
 .form-container {
-  width: 100%;
+    flex-grow: 0;
+    width: 320px;
+}
+.sign-up-container {
+  flex-direction: row;
+  justify-content: space-between;
+}
+.submit-btn-container {
+    display: flex;
+    flex-direction: row;
+}
+.link-not-sign-up {
+    flex-grow: 1;
+    z-index: 1;
+}
+.sign-up-link {
+  text-decoration: none;
 }
 
 .title {

@@ -1,22 +1,13 @@
 <template>
-  <v-container grid-list-sm>
-    <v-layout align-center justify-center row fill-height>
-      <v-flex xs12 md6 d-flex>
-        <v-card class="form-sign-in-container">
-          <v-card-title align-center justify-center>
-            <div class="center">
-              <v-flex>
+  <v-container>
+    <v-layout class="sign-up-container" align-center justify-center flex fill-height>
+      <div class="title-container">
                 <div class="title bulma-color">Sign Up</div>
-              </v-flex>
-              <v-flex>
                 <div class="desc bulma-color">Make your Account</div>
-              </v-flex>
-            </div>
-          </v-card-title>
-          <v-divider></v-divider>
-          <v-card-text>
-            <v-form ref="form" v-model="valid">
-              <v-text-field
+      </div>
+      <div class="form-container">
+        <v-form ref="form" v-model="valid" width="300">
+          <v-text-field
                 v-model="firstname"
                 :rules="nameRules"
                 label="First name"
@@ -70,25 +61,20 @@
                 flat
                 color="#00d1b2"
               ></v-text-field>
-            </v-form>
-          </v-card-text>
-          <v-divider></v-divider>
-          <v-card-actions>
-            <v-container>
-              <v-layout align-center justify-center row fill-height>
-                <v-flex xs12 d-flex>
-                  <div class="has-account" @click="goToPage">
+          <v-flex align-center justify-center>
+            <div class="submit-btn-container">
+              <div class="link-not-sign-up">
+                <div class="has-account" @click="goToPage">
                     <span>Sudah punya Akun?</span>
                   </div>
-                </v-flex>
-                <v-flex xs12 md4 d-flex>
-                  <v-btn class="white--text desc" color="#00d1b2" @click="submit">Daftar</v-btn>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-card-actions>
-        </v-card>
-      </v-flex>
+              </div>
+              <div class="sign-in-btn-container">
+                <v-btn class="white--text desc" color="#00d1b2" @click="submit">Daftar</v-btn>
+              </div>
+            </div>
+          </v-flex>
+        </v-form>
+        </div>
     </v-layout>
   </v-container>
 </template>
@@ -173,6 +159,36 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@media only screen and (max-width: 600px) {
+  .sign-up-container {
+    flex-direction: column !important;
+  }
+}
+
+.title-container {
+    flex-grow: 1;
+    text-align: center;
+}
+.form-container {
+    flex-grow: 0;
+    width: 320px;
+}
+.sign-up-container {
+  flex-direction: row;
+  justify-content: space-between;
+}
+.submit-btn-container {
+    display: flex;
+    flex-direction: row;
+}
+.link-not-sign-up {
+    flex-grow: 1;
+    z-index: 1;
+}
+.sign-up-link {
+  text-decoration: none;
+}
+
 .center {
   text-align: center;
   width: 100%;
@@ -191,6 +207,7 @@ input,
 }
 
 .has-account {
+  padding-top: 15px;
   color: rgb(0, 209, 178);
   font-size: 1rem;
   font-weight: 400;

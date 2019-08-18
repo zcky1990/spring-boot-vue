@@ -14,18 +14,8 @@
                     <li></li>
                 </ul>
             </div >
-            <v-container align-center justify-center row fill-height>
-                <v-row>
-                    <v-col cols="12">
-                        <v-row>
-                            <v-card
-                            >
-                            <login-form></login-form>
-                            </v-card>
-                        </v-row>
-                    </v-col>
-                </v-row>
-                
+             <v-container align-center justify-center row fill-height>
+                <login-form></login-form>
             </v-container>
         </div>
     </template>
