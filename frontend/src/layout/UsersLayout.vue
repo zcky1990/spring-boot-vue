@@ -3,24 +3,18 @@
             <section class="nav-section">
                 <user-nav-menu></user-nav-menu>
             </section>
-            <section class="content-section container">
-                <v-content>
-      <v-container fill-height>
-        <v-layout
-          justify-center
-          align-center
-        >
-          asdasdasdsaad
-        </v-layout>
-      </v-container>
-    </v-content>
+            <section class="content-section">
+                <v-container fill-height align-center justify-center>
+                    <user-profile></user-profile>
+                </v-container>
             </section>
         </div>
     </template>
 
     <script>
 
-    import Navbar from '@/components/widget/UserNavbar'
+    import Navbar from '@/components/widget/Navbar'
+    import ProfileComponents from '@/components/widget/Profile'
 
     export default   {
         name: 'user-page-layout',
@@ -31,6 +25,7 @@
         },
         components: {
                     'user-nav-menu' : Navbar,
+                    "user-profile" : ProfileComponents
         }
     }
     </script>
