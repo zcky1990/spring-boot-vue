@@ -157,7 +157,7 @@
 
 <script>
 import { AXIOS } from "./../http-common";
-import { Util } from "@/components/util";
+
 
 export default {
   name: "profile-component",
