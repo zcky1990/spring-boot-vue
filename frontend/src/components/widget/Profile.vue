@@ -35,7 +35,7 @@
                   <div class="account-desc">
                     Account Details
                   </div>
-
+                  <input v-model="data.id" type="text" name="id" disabled hidden>
                   <div class="detail-container">
                     <div class="detail-item">
                         <div class="detail-title">Display Name</div>
@@ -147,7 +147,7 @@
           <v-btn small minWidth="100"  class="white--text btn" color="#00d1b2" @click="editField">{{labelBtn}}</v-btn>
         </div>
         <div class="submit-btn">
-          <v-btn small minWidth="100" class="white--text btn" color="#00d1b2" @click="submit">Save</v-btn>
+          <v-btn small minWidth="100" class="white--text btn" color="#00d1b2" @click="submit" :disabled="isSaveBtnDisable">Save</v-btn>
           </div>
       </div>
 
@@ -164,6 +164,7 @@ export default {
   data() {
     return {
       data: {
+        id:"asdasdasd",
         display_name : "Aqil Aulia Sidqi",
         image_url : "https://randomuser.me/api/portraits/men/1.jpg",
         firstname : "Aqil",
@@ -182,7 +183,7 @@ export default {
       item: ["Laki-laki", "Perempuan"],
       isDisable : true,
       labelBtn : "Edit",
-     
+      isSaveBtnDisable: true
     }
   },
   created() {
@@ -190,12 +191,12 @@ export default {
   methods: {
     editField: function (){
       this.isDisable = !this.isDisable;
+      this.isSaveBtnDisable = !this.isSaveBtnDisable;
       if(this.isDisable){
         this.labelBtn = "Edit"
       }else {
         this.labelBtn = "Cancel"
       }
-      console.log(this.isDisable)
     },
     submit : function () {
       console.log(this.data)

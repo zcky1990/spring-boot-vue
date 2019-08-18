@@ -80,7 +80,7 @@
         <div v-if="!isLogged" class="login-container">
           <div class="user-avatar-container">
             <router-link class="link-login" to="/login">
-                <v-chip class="button-login" v-on="on">
+                <v-chip class="button-login">
                   <v-avatar>
                     <v-icon>account_circle</v-icon>
                   </v-avatar>Login
@@ -229,6 +229,7 @@ export default {
       this.$session.destroy();
       this.closePopUpMenu();
       this.isLogged = false;
+      this.$router.push("/");
     }
   }
 };
