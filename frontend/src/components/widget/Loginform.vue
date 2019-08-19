@@ -1,6 +1,9 @@
 <template>
 <v-container>
     <v-layout class="sign-up-container" align-center justify-center flex fill-height>
+      <div class="snack-bar-container">
+        <snack-bar ref="snackbar"></snack-bar>
+      </div>
       <div class="title-container">
                 <div class="title bulma-color">Login</div>
                 <div class="sub-title bulma-color">Masuk ke Akun Anda</div>
@@ -93,11 +96,14 @@ export default {
         this.callRestService(model);
       }
     },
-    setErrorMessage(errorMessage) {
-      this.showErrorMessage = errorMessage;
+    setMessage(message, type) {
+      if(type == 0){
+        this.snackBarConfig.color = "success"
+      }else{
+        this.snackBarConfig.color = "error"
+      }
       this.$refs.snackbar.setConfig(this.snackBarConfig);
-      this.$refs.snackbar.showSnackbar(errorMessage);
-      this.$refs.alert.setMessage(errorMessage);
+      this.$refs.snackbar.showSnackbar(message);
     },
     callRestService(model) {
       let self = this;
@@ -108,7 +114,7 @@ export default {
             let responseData = response.data;
             console.log(responseData);
             if (responseData["error_message"] != undefined) {
-              self.setErrorMessage(responseData.error_message);
+              self.setMessage(responseData.error_message, 1);
             } else {
               self.$session.start();
               self.$session.set("jwt", responseData.token);
@@ -120,23 +126,12 @@ export default {
           }
         })
         .catch(e => {
-          self.errors.push(e);
+          self.setMessage(e, 1);
         });
-    }
-  },
-  computed: {
-    showErrorMessage: {
-      get: function() {
-        return this.messageError;
-      },
-      set: function(message) {
-        this.messageError = message;
-      }
     }
   }
 };
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @media only screen and (max-width: 600px) {
   .sign-up-container {
@@ -150,7 +145,6 @@ export default {
   padding-bottom: 16px;
   }
 }
-
 .title-container {
     flex-grow: 1;
     text-align: center;
@@ -175,7 +169,6 @@ export default {
 .sign-up-link {
   text-decoration: none;
 }
-
 .title {
   font-size: 2.8rem !important;
   font-weight: 600;

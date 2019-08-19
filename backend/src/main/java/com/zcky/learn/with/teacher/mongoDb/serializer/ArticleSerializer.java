@@ -32,7 +32,7 @@ public class ArticleSerializer implements JsonSerializer<Article> {
 		userJson.addProperty("email", user.getEmail());
 		userJson.addProperty("username", user.getUsername());
 		userJson.addProperty("name", user.getName());
-		userJson.addProperty("image_profile_url", user.getImage_profile_url());
+		userJson.addProperty("image_profile_url", user.getImageUrl());
 		
 		jsonObj.add("author", userJson);
 		

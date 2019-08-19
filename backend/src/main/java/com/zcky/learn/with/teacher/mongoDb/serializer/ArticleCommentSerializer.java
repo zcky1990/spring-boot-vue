@@ -38,7 +38,7 @@ public class ArticleCommentSerializer implements JsonSerializer<ArticleComment> 
 		userJson.addProperty("email", user.getEmail());
 		userJson.addProperty("username", user.getUsername());
 		userJson.addProperty("name", user.getName());
-		userJson.addProperty("image_profile_url", user.getImage_profile_url());
+		userJson.addProperty("image_profile_url", user.getImage_url());
 		
 		jsonObj.add("users", userJson);
 		jsonObj.addProperty("article_id", article.getStringId());

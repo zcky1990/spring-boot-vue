@@ -14,9 +14,15 @@ public class Users {
 	private String lastname;
 	private String birthday;
 	private boolean status;
-	private String image_profile_url;
+	private String image_url;
 	private String modified_date;
 	private boolean isValidated;
+	private String phonenumber;
+	private String address;
+	private String description;
+	private String display_name;
+	private String city;
+	private String zipcode;
 		
 	public boolean isValidated() {
 		return isValidated;
@@ -102,12 +108,12 @@ public class Users {
 		this.status = status;
 	}
 
-	public String getImage_profile_url() {
-		return image_profile_url;
+	public String getImageUrl() {
+		return image_url;
 	}
 
-	public void setImage_profile_url(String image_profile_url) {
-		this.image_profile_url = image_profile_url;
+	public void setImageUrl(String image_profile_url) {
+		this.image_url = image_profile_url;
 	}
 
 	public String getModified_date() {
@@ -117,7 +123,61 @@ public class Users {
 	public void setModified_date(String modified_date) {
 		this.modified_date = modified_date;
 	}
-	
-	
-	
+
+	public String getImage_url() {
+		return image_url;
+	}
+
+	public void setImage_url(String image_url) {
+		this.image_url = image_url;
+	}
+
+	public String getPhonenumber() {
+		return phonenumber;
+	}
+
+	public void setPhonenumber(String phonenumber) {
+		this.phonenumber = phonenumber;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getDisplay_name() {
+		return display_name;
+	}
+
+	public void setDisplay_name(String display_name) {
+		this.display_name = display_name;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+		
 }

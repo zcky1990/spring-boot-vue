@@ -1,5 +1,8 @@
 <template>
   <section class="section profile">
+    <div class="snack-bar-container">
+       <snack-bar ref="snackbar"></snack-bar>
+    </div>
     <div class="profile-container">
       <div class="page-title">
         <div class="overview">Overview</div>
@@ -111,7 +114,7 @@
                             <div class="detail-list">
                               <div class="detail-title">Zip Code</div>
                               <div class="detail-form">
-                                <input v-model="data.zip" type="text" name="zipcode" :disabled="isDisable">
+                                <input v-model="data.zipcode" type="text" name="zipcode" :disabled="isDisable">
                               </div>
                             </div>
                         </div>
@@ -130,7 +133,7 @@
                   <div class="detail-container">
                     <div class="detail-item">
                         <v-textarea
-                          v-model="data.desc"
+                          v-model="data.description"
                           outlined
                           label="Description"
                           :disabled="isDisable"
@@ -147,7 +150,7 @@
           <v-btn small minWidth="100"  class="white--text btn" color="#00d1b2" @click="editField">{{labelBtn}}</v-btn>
         </div>
         <div class="submit-btn">
-          <v-btn small minWidth="100" class="white--text btn" color="#00d1b2" @click="submit" :disabled="isSaveBtnDisable">Save</v-btn>
+          <v-btn small minWidth="100" class="white--text btn" color="#00d1b2" @click="saveUserProfile" :disabled="isSaveBtnDisable">Save</v-btn>
           </div>
       </div>
 
@@ -157,36 +160,51 @@
 
 <script>
 import { AXIOS } from "./../http-common";
-
+import { Util } from "@/components/util";
+import SnackBar from "./SnackBar";
 
 export default {
   name: "profile-component",
+  components: {
+    "snack-bar": SnackBar
+  },
   data() {
     return {
       data: {
-        id:"asdasdasd",
-        display_name : "Aqil Aulia Sidqi",
-        image_url : "https://randomuser.me/api/portraits/men/1.jpg",
-        firstname : "Aqil",
-        lastname : "Aulia Sidqi",
-        gender : "Laki-laki",
-        city: "Jakarta",
-        zip: "17530",
-        email : "zcky1990@gmail.com",
-        password : "selamatpagi",
-        address : "jl.kaliurang km.5 rt 05/w 05",
-        phonenumber : "081282870150",
-        postal_code : "17530" ,
-        birthday: "1990-01-15",
-        desc :"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+        _id:"",
+        display_name : "",
+        image_url : "",
+        firstname : "",
+        lastname : "",
+        gender : "",
+        city: "",
+        zipcode: "",
+        email : "",
+        password : "",
+        address : "",
+        phonenumber : "",
+        postal_code : "" ,
+        birthday: "",
+        isValidated: false,
+        status: false,
+        description :"",
       },
+      snackBarConfig: {
+        color: "error",
+        timeout: 6000,
+        top: true
+      },
+      messageError:"",
       item: ["Laki-laki", "Perempuan"],
       isDisable : true,
       labelBtn : "Edit",
-      isSaveBtnDisable: true
+      isSaveBtnDisable: true,
+      getUserProfileUrl : "/users/get_user_detail/",
+      saveUserProfileUrl : "/users/edit_user"
     }
   },
   created() {
+    this.getUsers();
   },
   methods: {
     editField: function (){
@@ -198,10 +216,43 @@ export default {
         this.labelBtn = "Cancel"
       }
     },
-    submit : function () {
-      console.log(this.data)
-    }
-   
+    getUsers: function() {
+      let self = this;
+      let headers = Util.getHeaders(this.$session);
+      let id = this.$session.get('uid')
+      AXIOS.get(this.getUserProfileUrl + id, { headers })
+        .then(response => {
+          if (response.status == 200) {
+            let responseData = response.data.response;
+            self.data = responseData;
+          }
+        })
+        .catch(e => {
+          self.setMessage(e, 1)
+        });
+    },
+    saveUserProfile: function() {
+      let self = this;
+      let headers = Util.getHeaders(this.$session);
+      AXIOS.put(this.saveUserProfileUrl, this.data , { headers })
+        .then(response => {
+          if (response.status == 200) {
+           self.setMessage(response.data.response, 0) 
+          }
+        })
+        .catch(e => {
+            self.setMessage(e, 1)
+        });
+    },
+    setMessage(message, type) {
+      if(type == 0){
+        this.snackBarConfig.color = "success"
+      }else{
+        this.snackBarConfig.color = "error"
+      }
+      this.$refs.snackbar.setConfig(this.snackBarConfig);
+      this.$refs.snackbar.showSnackbar(message);
+    },
   },
   computed: {
    

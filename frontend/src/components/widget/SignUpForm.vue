@@ -1,6 +1,9 @@
 <template>
   <v-container>
     <v-layout class="sign-up-container" align-center justify-center flex fill-height>
+      <div class="snack-bar-container">
+        <snack-bar ref="snackbar"></snack-bar>
+      </div>
       <div class="title-container">
                 <div class="title bulma-color">Sign Up</div>
                 <div class="sub-title bulma-color">Make your Account</div>
@@ -84,7 +87,9 @@ import { AXIOS } from "./../http-common";
 
 export default {
   name: "user-sign-up-form",
-  components: {},
+  components: {
+    "snack-bar": SnackBar
+  },
   data() {
     return {
       valid: false,
@@ -111,7 +116,12 @@ export default {
         v => !!v || "Password is required",
         v =>
           (v && v.length >= 8) || "Password must be or more than 8 characters"
-      ]
+      ],
+      snackBarConfig: {
+        color: "error",
+        timeout: 6000,
+        top: true
+      },
     };
   },
   methods: {
@@ -123,7 +133,7 @@ export default {
           if (response.status == 200) {
             let responseData = response.data;
             if (responseData["error_message"] != undefined) {
-              self.setErrorMessage(responseData.error_message);
+              self.setMessage(responseData.error_message, 1);
             } else {
               self.$session.start();
               self.$session.set("jwt", responseData.token);
@@ -135,8 +145,17 @@ export default {
           }
         })
         .catch(e => {
-          self.errors.push(e);
+          self.setMessage(e, 1);
         });
+    },
+    setMessage(message, type) {
+      if(type == 0){
+        this.snackBarConfig.color = "success"
+      }else{
+        this.snackBarConfig.color = "error"
+      }
+      this.$refs.snackbar.setConfig(this.snackBarConfig);
+      this.$refs.snackbar.showSnackbar(message);
     },
     submit() {
       if (this.$refs.form.validate()) {
@@ -152,12 +171,10 @@ export default {
     goToPage() {
       this.$router.push("/login");
     }
-  },
-  computed: {}
+  }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @media only screen and (max-width: 600px) {
   .sign-up-container {
