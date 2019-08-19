@@ -30,7 +30,7 @@
                   Description :
                 </div>
                 <div class="desc-content">
-                  {{data.desc}}
+                  {{data.description}}
                 </div>
                 </v-container>
                 <v-divider></v-divider>

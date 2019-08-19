@@ -84,6 +84,7 @@
 
 <script>
 import { AXIOS } from "./../http-common";
+import SnackBar from "./SnackBar";
 
 export default {
   name: "user-sign-up-form",
