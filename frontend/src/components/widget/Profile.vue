@@ -12,17 +12,38 @@
           <div class="left-profile">
             <div class="profile-container">
               <v-card
-              class="user-profile"
+                class="user-profile"
               >
               <v-card-text>
               <v-avatar
                 size="150"
               >
-                    <img :src="data.image_url" alt />
+                <v-img
+                  v-if="isHasImage == true"
+                  alt="Avatar"
+                  :src="data.image_url"
+                  cover
+                ></v-img>
+                <v-icon
+                  v-else
+                >
+                  account_circle
+                </v-icon>
               </v-avatar>
+               
               </v-card-text>
                 <div class="user-name">
                  {{data.display_name}}
+                </div>
+                <div class="upload-file">
+                  <div v-if="isDisable === false">
+                  <input 
+                    type="file" 
+                    name="displayname"
+                    accept="image/*" 
+                    @change="onFilePicked"
+                    >
+                  </div>
                 </div>
                 <v-divider></v-divider>
                 <v-container>
@@ -244,7 +265,7 @@ export default {
             self.setMessage(e, 1)
         });
     },
-    setMessage(message, type) {
+    setMessage: function (message, type) {
       if(type == 0){
         this.snackBarConfig.color = "success"
       }else{
@@ -253,9 +274,56 @@ export default {
       this.$refs.snackbar.setConfig(this.snackBarConfig);
       this.$refs.snackbar.showSnackbar(message);
     },
+    isImageExists: function() {
+      if(this.data.image_url == "" || this.data.image_url == undefined){
+        console.log("return false")
+        return false;
+      }else {
+        console.log("return true")
+        return true;
+      }
+    },
+    onFilePicked (e) {
+      let self = this;
+      const files = e.target.files
+			if(files[0] !== undefined) {
+				let imageName = files[0].name
+				if(imageName.lastIndexOf('.') <= 0) {
+					return
+				}
+				const fr = new FileReader ()
+				fr.readAsDataURL(files[0])
+				fr.addEventListener('load', () => {
+					let imageUrl = fr.result
+          let imageFile = files[0] 
+          self.uploadImage(imageFile)
+				})
+			}
+    },
+    uploadImage(imageFile){
+      let self = this
+      let data = new FormData();
+      data.append('file', imageFile);
+      AXIOS.post("upload_image", data ,  {
+                        'content-type': 'multipart/form-data'
+                    },)
+                .then(response => {
+                  console.log(response)
+                  if(response.data.status == "success"){
+                    self.data.image_url = response.data.url;
+                  }else {
+                    self.setMessage('Upload image failed', 1) 
+                  }
+                })
+                .catch(e => {
+                  self.setMessage('Upload image failed', 1) 
+                });
+    }
   },
   computed: {
-   
+      isHasImage() {
+        return this.isImageExists()
+      }
     },
 };
 </script>
@@ -274,6 +342,10 @@ export default {
 .date-picker {
     align-items: center;
     text-align: center;
+}
+
+.upload-file {
+    padding: 20px;
 }
 
 .profile-container {
