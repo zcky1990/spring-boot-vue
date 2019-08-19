@@ -3,7 +3,7 @@
     <v-layout class="sign-up-container" align-center justify-center flex fill-height>
       <div class="title-container">
                 <div class="title bulma-color">Sign Up</div>
-                <div class="desc bulma-color">Make your Account</div>
+                <div class="sub-title bulma-color">Make your Account</div>
       </div>
       <div class="form-container">
         <v-form ref="form" v-model="valid" width="300">
@@ -163,6 +163,13 @@ export default {
   .sign-up-container {
     flex-direction: column !important;
   }
+  .title {
+  font-size: 1.4rem !important;
+  font-weight: 600;
+  color: #444f60;
+  text-align: center;
+  padding-bottom: 16px;
+  }
 }
 
 .title-container {
@@ -188,15 +195,21 @@ export default {
 .sign-up-link {
   text-decoration: none;
 }
-
 .center {
   text-align: center;
   width: 100%;
 }
 .title {
-  font-size: 1.2rem;
+  font-size: 2.8rem !important;
   font-weight: 600;
   color: #444f60;
+  text-align: center;
+  padding-bottom: 16px;
+}
+.sub-title {
+  font-size: 1.4rem !important;
+  color: #444f60;
+  text-align: center;
 }
 input,
 .desc {
@@ -205,7 +218,6 @@ input,
   font-weight: 400;
   line-height: 1.5;
 }
-
 .has-account {
   padding-top: 15px;
   color: rgb(0, 209, 178);
@@ -214,7 +226,6 @@ input,
   line-height: 1.5;
   cursor: pointer;
 }
-
 .bulma-color {
    color: rgb(0, 209, 178);
 }
