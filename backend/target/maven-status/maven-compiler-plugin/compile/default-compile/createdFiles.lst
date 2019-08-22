@@ -16,6 +16,7 @@ com/zcky/learn/with/teacher/mongoDb/model/ArticleComment.class
 com/zcky/learn/with/teacher/security/JwtUserDetailsService.class
 com/zcky/learn/with/teacher/security/JwtTokenUtil.class
 com/zcky/learn/with/teacher/controller/ArticleController.class
+com/zcky/learn/with/teacher/model/UploadImage.class
 com/zcky/learn/with/teacher/controller/UsersController.class
 com/zcky/learn/with/teacher/model/request/CommentArticle.class
 com/zcky/learn/with/teacher/model/request/JwtRequest.class

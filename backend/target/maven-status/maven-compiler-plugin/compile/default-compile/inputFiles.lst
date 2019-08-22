@@ -18,6 +18,7 @@
 /Users/zcky/Documents/Project/SpringbootVue/backend/src/main/java/com/zcky/learn/with/teacher/mongoDb/serializer/ArticleSerializer.java
 /Users/zcky/Documents/Project/SpringbootVue/backend/src/main/java/com/zcky/learn/with/teacher/controller/UsersController.java
 /Users/zcky/Documents/Project/SpringbootVue/backend/src/main/java/com/zcky/learn/with/teacher/mongoDb/serializer/ArticleCommentSerializer.java
+/Users/zcky/Documents/Project/SpringbootVue/backend/src/main/java/com/zcky/learn/with/teacher/model/UploadImage.java
 /Users/zcky/Documents/Project/SpringbootVue/backend/src/main/java/com/zcky/learn/with/teacher/mongoDb/model/ArticleComment.java
 /Users/zcky/Documents/Project/SpringbootVue/backend/src/main/java/com/zcky/learn/with/teacher/security/JwtUserDetailsService.java
 /Users/zcky/Documents/Project/SpringbootVue/backend/src/main/java/com/zcky/learn/with/teacher/model/response/JwtResponse.java

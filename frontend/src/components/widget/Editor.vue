@@ -69,15 +69,12 @@ class UploadAdapter {
             this.loader = loader;
         }
         upload() {
+          let self = this;
             return new Promise((resolve, reject) => {
-                const data = new FormData();
-                data.append('file', this.loader.file);
-
-                AXIOS.post("upload_image", data ,  {
-                        'content-type': 'multipart/form-data'
-                    },)
+              let stringImage = self.loader._reader._reader.result
+                AXIOS.post("upload_image_string", {'image':stringImage} )
                 .then(response => {
-                  if (response.data.result == 'success') {
+                  if (response.data.status == 'success') {
                         resolve({
                             default: response.data.url
                         });
@@ -86,11 +83,10 @@ class UploadAdapter {
                     }
                 })
                 .catch(e => {
-                  reject ( 'Upload failed');
+                  reject (e);
                 });
             });
         }
-
         abort() {
         }
     }
