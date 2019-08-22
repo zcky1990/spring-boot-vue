@@ -37,10 +37,10 @@
             </v-layout>
           </v-container>
         </v-flex>
-
+asdasdas
         <v-flex d-flex xs12 order-xs5 class="content">
           <v-layout column>
-            <v-flex>
+            <v-flex class="article-content">
           
                 <div v-html="article.article_content"></div>
               
@@ -87,7 +87,20 @@ export default {
           }
         })
         .catch(e => {});
+    },
+    setCssSideImage: function(){
+      let elm = document.querySelectorAll('.image-style-side')
+      if(elm.length > 0){
+        for(let i = 0 ; i < elm.length; i++){
+          let el = elm[i];
+          el.style.float = 'right';
+          el.style.padding ='15px';
+        }
+      }
     }
+  },
+  updated(){
+    this.setCssSideImage();
   }
 };
 </script>
@@ -116,4 +129,8 @@ export default {
   margin-top: 1.95em;
   font-size: 1em;
 }
+.article-content {
+    display: table;
+}
+
 </style>
