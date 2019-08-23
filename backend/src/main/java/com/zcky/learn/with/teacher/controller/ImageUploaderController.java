@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
 import com.zcky.learn.with.teacher.model.UploadImage;
-import com.zcky.learn.with.teacher.mongoDb.model.Users;
 import com.zcky.learn.with.teacher.util.CloudinaryUtility;
 
 @RestController
@@ -32,7 +31,11 @@ public class ImageUploaderController extends BaseController{
 	public ResponseEntity<String>  uploadImageFileString(@RequestBody UploadImage image, HttpServletRequest request) throws Exception {
 		JsonObject response = new JsonObject();
 		CloudinaryUtility util= new CloudinaryUtility();
-		response= util.uploadBase64ImageString(image.getImage());
+		if(image.getContent().isEmpty()) {
+			response= util.uploadBase64ImageString(image.getImage());
+		}else {
+			response= util.uploadBase64ImageString(image.getImage(), image.getContent());
+		}
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 

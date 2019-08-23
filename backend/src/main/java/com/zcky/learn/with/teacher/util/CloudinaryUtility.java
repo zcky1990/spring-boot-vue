@@ -3,6 +3,7 @@ package com.zcky.learn.with.teacher.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -69,6 +70,21 @@ public class CloudinaryUtility {
 		JsonObject response = new JsonObject();
 		try {
 			Map uploadResult = cloudinary.uploader().upload(data, ObjectUtils.emptyMap());
+			response.addProperty("url", uploadResult.get("secure_url").toString());
+			response.addProperty("status", "success");
+		} catch (IOException e) {
+			response.addProperty("error_message", e.getMessage().toString());
+			response.addProperty("status", "error");
+		}
+		return response;
+	}
+	
+	public JsonObject uploadBase64ImageString(String data, String folder) {
+		JsonObject response = new JsonObject();
+		try {
+			Map options = ObjectUtils.asMap(
+				    "folder", folder);
+			Map uploadResult = cloudinary.uploader().upload(data, options);
 			response.addProperty("url", uploadResult.get("secure_url").toString());
 			response.addProperty("status", "success");
 		} catch (IOException e) {
