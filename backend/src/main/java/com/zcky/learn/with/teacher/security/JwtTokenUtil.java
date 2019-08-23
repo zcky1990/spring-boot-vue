@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.zcky.learn.with.teacher.constant.Constant;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -66,10 +68,25 @@ public class JwtTokenUtil implements Serializable {
 				.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
 				.signWith(SignatureAlgorithm.HS512, secret).compact();
 	}
+	
+	public String generateAdminToken(String username) {
+		Map<String, Object> claims = new HashMap<>();
+		return doGenerateTokenWithoutExpDate(claims, username);
+	}
+	
+	private String doGenerateTokenWithoutExpDate(Map<String, Object> claims, String subject) {
+		return Jwts.builder().setClaims(claims).setSubject(subject)
+				.signWith(SignatureAlgorithm.HS512, secret).compact();
+	}
 
 	//validate token
 	public Boolean validateToken(String token, UserDetails userDetails) {
 		final String username = getUsernameFromToken(token);
-		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+		//check if user using admin account as bearer so we skip expire validation
+		if(username.equals(Constant.ADMIN_ACCOUNT_USERNAME)) {
+			return (username.equals(userDetails.getUsername()));
+		}else {
+			return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+		}
 	}
 }

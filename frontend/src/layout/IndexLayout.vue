@@ -26,6 +26,8 @@
     <script>
     import NavbarComponents from "@/components/widget/Navbar";
     import listArticleComponents from "@/components/widget/ListArticle";
+    import {Util} from "../components/util";
+    import { AXIOS } from "../components/http-common";
 
     export default   {
         name: 'index-page-layout',
@@ -33,10 +35,40 @@
             return {
             }
         },
+        created() {
+
+        },
         components: {
             'nav-bar' : NavbarComponents,
             'list-article': listArticleComponents
-        }
+        },
+         methods: {
+            getArticleList(token) {
+                let self = this;
+                headers = Util.getDefaultHeaders(Util.getMeta("token"))
+                AXIOS.get("/article", model)
+                    .then(response => {
+                    if (response.status == 200) {
+                        let responseData = response.data;
+                        if (responseData["error_message"] != undefined) {
+                        self.setErrorMessage(responseData.error_message);
+                        } else {
+                        self.$session.start();
+                        self.$session.set("jwt", responseData.token);
+                        self.$session.set("uid", responseData.response.id);
+                        self.$session.set("username", responseData.response.username);
+                        self.$session.set("exp_date", responseData.exp_date);
+                        self.isLogged = true;
+                        self.closePopUpMenu();
+                        self.setSuccessMessage("Success Login");
+                        }
+                    }
+                    })
+                    .catch(e => {
+                    self.errors.push(e);
+                    });
+    },
+         }
     }
     </script>
 

@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.zcky.learn.with.teacher.constant.Constant;
 import com.zcky.learn.with.teacher.mongoDb.model.Users;
 import com.zcky.learn.with.teacher.mongoDb.repository.UsersRepository;
 
@@ -25,8 +26,8 @@ public class JwtUserDetailsService implements UserDetailsService {
 			return new User(user.getUsername(), user.getPassword(),
 					new ArrayList<>());
 		}else {
-			if ("maribelajarbersama".equals(username)) {
-				return new User("maribelajarbersama", "$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6",
+			if (Constant.ADMIN_ACCOUNT_USERNAME.equals(username)) {
+				return new User(Constant.ADMIN_ACCOUNT_USERNAME, Constant.ADMIN_ACCOUNT_PASSWORD,
 						new ArrayList<>());
 			} else {
 				throw new UsernameNotFoundException("User not found with username: " + username);

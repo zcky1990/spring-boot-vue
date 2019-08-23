@@ -55,6 +55,7 @@
 <script>
 import { AXIOS } from "./../http-common";
 import SnackBar from "./SnackBar";
+import { Util } from "./../util";
 
 export default {
   name: "login-form",
@@ -108,11 +109,11 @@ export default {
     callRestService(model) {
       let self = this;
       let router = this.$router;
-      AXIOS.post("/users/sign_in", model)
+      let headers = Util.getDefaultHeaders(Util.getMeta("token"))
+      AXIOS.post("/users/sign_in", model, { headers })
         .then(response => {
           if (response.status == 200) {
             let responseData = response.data;
-            console.log(responseData);
             if (responseData["error_message"] != undefined) {
               self.setMessage(responseData.error_message, 1);
             } else {

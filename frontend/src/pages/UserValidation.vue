@@ -17,10 +17,6 @@ export default {
   },
   created() {},
   methods: {
-    getRequestHeader: function() {
-      this.requestHeader = Util.getHeaders(this.$session);
-      return this.requestHeader;
-    },
     getId: function() {
       let params = Util.getUrlParams();
       let id = "";
@@ -36,7 +32,8 @@ export default {
     requestValidate: function() {
       let id = this.getId();
       let self = this;
-      AXIOS.get("/users/validate/" + id)
+      let headers = Util.getDefaultHeaders(Util.getMeta("token"))
+      AXIOS.get("/users/validate/" + id, { headers })
         .then(response => {
           if (response.status == 200) {
             let responseData = response.data;

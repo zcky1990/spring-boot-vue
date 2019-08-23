@@ -71,8 +71,13 @@ class UploadAdapter {
         upload() {
           let self = this;
             return new Promise((resolve, reject) => {
+              let headers = Util.getDefaultHeaders(Util.getMeta("token"))
               let stringImage = self.loader._reader._reader.result
-                AXIOS.post("upload_image_string", {'image':stringImage} )
+              let postBody = {
+                  'image':stringImage,
+                  'content' : 'article'
+              }
+                AXIOS.post("upload_image_string", postBody, { headers })
                 .then(response => {
                   if (response.data.status == 'success') {
                         resolve({

@@ -95,6 +95,7 @@ export default {
           let el = elm[i];
           el.style.float = 'right';
           el.style.padding ='15px';
+          el.style.textAlign = 'center';
         }
       }
     }

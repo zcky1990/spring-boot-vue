@@ -259,6 +259,7 @@ export default {
         .then(response => {
           if (response.status == 200) {
            self.setMessage(response.data.response, 0) 
+           self.editField();
           }
         })
         .catch(e => {
@@ -276,10 +277,8 @@ export default {
     },
     isImageExists: function() {
       if(this.data.image_url == "" || this.data.image_url == undefined){
-        console.log("return false")
         return false;
       }else {
-        console.log("return true")
         return true;
       }
     },
@@ -302,22 +301,21 @@ export default {
     },
     uploadImage(imageFile){
       let self = this
+      let headers = Util.getDefaultHeaders(Util.getMeta("token"))
+      headers['content-type'] = 'multipart/form-data';
       let data = new FormData();
       data.append('file', imageFile);
-      AXIOS.post("upload_image", data ,  {
-                        'content-type': 'multipart/form-data'
-                    },)
-                .then(response => {
-                  console.log(response)
-                  if(response.data.status == "success"){
-                    self.data.image_url = response.data.url;
-                  }else {
-                    self.setMessage('Upload image failed', 1) 
-                  }
-                })
-                .catch(e => {
-                  self.setMessage('Upload image failed', 1) 
-                });
+      AXIOS.post("upload_image", data ,  { headers },)
+        .then(response => {
+          if(response.data.status == "success"){
+            self.data.image_url = response.data.url;
+          }else {
+            self.setMessage('Upload image failed', 1) 
+          }
+         })
+         .catch(e => {
+             self.setMessage('Upload image failed', 1) 
+        });
     }
   },
   computed: {
@@ -327,9 +325,7 @@ export default {
     },
 };
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .profile {
   width: 70%;
 }
@@ -338,16 +334,13 @@ export default {
     width: 100%;
   }
 }
-
 .date-picker {
     align-items: center;
     text-align: center;
 }
-
 .upload-file {
     padding: 20px;
 }
-
 .profile-container {
   font-family: lato;
     display: flex;
@@ -397,12 +390,10 @@ export default {
     justify-content: space-around;
     text-align: left
 }
-
 .detail-item {
     flex-grow: 1;
     padding: 10px;
 }
-
 input[type="text"],input[type="password"],input[type="email"] {
     width: 100%;
     border: 1px solid rgba(0,0,0,.12);
@@ -412,7 +403,6 @@ input[type="text"],input[type="password"],input[type="email"] {
 input[type="text"]:disabled ,input[type="password"]:disabled ,input[type="email"]:disabled {
   color: grey;
 }
-
 .detail-list {
     margin-bottom: 15px;
 }
@@ -422,12 +412,10 @@ input[type="text"]:disabled ,input[type="password"]:disabled ,input[type="email"
     justify-content: flex-end;
     
 }
-
 .btn {
 font-size: 1em;
     line-height: 1.2;
     margin-bottom: 5px;
     margin-top: 12px;
 }
-
 </style>

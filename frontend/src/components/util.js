@@ -47,6 +47,12 @@ export const Util = {
     return headers
   },
 
+  getDefaultHeaders: function(token){
+    let headers = {};
+    headers['Authorization'] = 'Bearer '+ token
+    return headers
+  },
+
   getUrlParams: function(){
     let params = window.location.search
     params = params.replace('?','');
@@ -61,5 +67,16 @@ export const Util = {
       paramsList.push(data)
     }
     return paramsList;
+  },
+
+  getMeta: function(metaName) {
+    const metas = document.getElementsByTagName('meta');
+    for (let i = 0; i < metas.length; i++) {
+      if (metas[i].getAttribute('name') === metaName) {
+        return metas[i].getAttribute('content');
+      }
+    }
+    return '';
   }
+  
 }
