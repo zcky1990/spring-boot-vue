@@ -2,9 +2,11 @@
   <section class="section article">
     <v-container id="grid" fluid grid-list-sm tag="section">
       <v-layout wrap>
-        
-        <v-flex tag="h1" class="headline">{{content.article_title}}</v-flex>
-
+        <v-container>
+            <v-layout>
+              <v-flex tag="h1" class="headline">{{content.article_title}}</v-flex>
+            </v-layout>
+        </v-container>
         <v-flex d-flex xs12>
           <v-container>
             <v-layout>
@@ -39,11 +41,13 @@
         </v-flex>
 
         <v-flex d-flex xs12 order-xs5 class="content">
-          <v-layout column>
-            <v-flex class="article-content">
-                <div v-html="content.article_content"></div>
-            </v-flex>
-          </v-layout>
+           <v-container>
+            <v-layout column>
+              <v-flex class="article-content">
+                  <div v-html="content.article_content"></div>
+              </v-flex>
+            </v-layout>
+           </v-container>
         </v-flex>
       </v-layout>
     </v-container>
@@ -100,10 +104,11 @@ export default {
   color: grey;
 }
 .headline {
-  font-size: 2rem !important;
+    font-size: 2.3rem !important;
+    font-weight: 600;
+    line-height: 1 !important;
 }
 .content {
-  margin-top: 1.95em;
   font-size: 1em;
 }
 .article-content {

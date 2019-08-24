@@ -106,7 +106,7 @@ export default {
   flex-direction: row;
 }
 .left-content,.right-content {
-  min-width: 25%;
+  min-width: 15%;
 }
 @media only screen and (max-width: 959px){
   .content-layout{

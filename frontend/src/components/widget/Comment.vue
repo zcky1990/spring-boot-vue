@@ -7,14 +7,17 @@
     >
       <v-layout column>
         <v-flex>
-          <v-container class="message" v-for="item in messageList" :key="item.id" >
-            <v-layout>
-              <div class="image image-comment">
+          <div class="comment-title">
+            Komentar <v-avatar><v-icon color="rgb(0, 209, 178)">chat</v-icon></v-avatar>
+          </div>
+          <div class="message" v-for="item in messageList" :key="item.id" >
+              <div class="image-comment">
                 <v-img
                   :src="item.users.image_profile_url"
                   :lazy-src="item.users.image_placeHolder"
                   aspect-ratio="1"
-                  class="grey lighten-2"
+                  cover
+                  class="grey lighten-2 circle"
                 >
                   <template v-slot:placeholder>
                     <v-layout
@@ -27,22 +30,20 @@
                     </v-layout>
                   </template>
                 </v-img>
-
               </div>
-              <v-flex>
+              <div class="message-content">
                 <div class="author">
                   <div class="authors-name">{{item.users.firstname}} {{item.users.lastname}} <div class="alias">@{{item.users.username}}</div></div>
                   <div class="authors-comment">{{item.comment}} </div>
                   <div class="article-create-date">{{item.created_date}}</div>
                 </div>
-              </v-flex>
-            </v-layout>
-          </v-container>
+              </div>
+          </div>
         </v-flex>
       </v-layout>
     </v-container>
     <div class="submit-comment-container">
-      <v-container class="message" >
+      <v-container class="message-add-comment" >
         <div class="comment-area">
               <textarea 
               v-model="postBody.comment"
@@ -169,6 +170,16 @@
 }
 .message {
   border-top: 1px solid rgba(219,219,219,.5);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding: 10px;
+}
+.message-add-comment{
+   border-top: 1px solid rgba(219,219,219,.5);
+  display: column;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 .submit-btn{
   color:white;
@@ -177,6 +188,7 @@
     width: 64px;
     height: 64px;
     margin-top: 0.5em;
+    flex-shrink: 0;
 }
 .authors-comment{
   font-size: 14px;
@@ -190,5 +202,12 @@
   font-size:12px;
   font-weight:300;
   padding: 5px;
+}
+.comment-title {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+.circle {
+  border-radius: 40px;
 }
 </style>
