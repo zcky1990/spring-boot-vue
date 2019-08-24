@@ -1,4 +1,5 @@
 <template>
+<div class="message-article">
     <v-container
       class="pa-2"
       fluid
@@ -6,12 +7,12 @@
     >
       <v-layout column>
         <v-flex>
-          <v-container class="message" v-for="item in messageList" >
+          <v-container class="message" v-for="item in messageList" :key="item.id" >
             <v-layout>
               <div class="image image-comment">
                 <v-img
-                  :src="item.user.image_url"
-                  :lazy-src="item.user.image_placeHolder"
+                  :src="item.users.image_profile_url"
+                  :lazy-src="item.users.image_placeHolder"
                   aspect-ratio="1"
                   class="grey lighten-2"
                 >
@@ -30,48 +31,9 @@
               </div>
               <v-flex>
                 <div class="author">
-                  <div class="authors-name">{{item.user.name}}</div>
-                  <div class="authors-comment">{{item.message}} </div>
-                  <div class="article-create-date">{{item.created_at}}</div>
-                </div>
-              </v-flex>
-            </v-layout>
-          </v-container>
-          <v-container class="message" >
-            <v-layout>
-              <div class="image image-comment">
-                <v-img
-                  :src="user.image_url"
-                  :lazy-src="user.image_placeHolder"
-                  aspect-ratio="1"
-                  class="grey lighten-2"
-                >
-                  <template v-slot:placeholder>
-                    <v-layout
-                      fill-height
-                      align-center
-                      justify-center
-                      ma-0
-                    >
-                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                    </v-layout>
-                  </template>
-                </v-img>
-
-              </div>
-              <v-flex>
-                <div class="author">
-                    <v-textarea
-                      v-model="postBody.comment"
-                      label="comment"
-                      auto-grow
-                      outlined
-                      rows="3"
-                      row-height="25"
-                    ></v-textarea>
-                  <v-flex xs12 right class="submit-container">
-                    <v-btn color="#00d1b2" dark @click="submit">Submit</v-btn>
-                  </v-flex>
+                  <div class="authors-name">{{item.users.firstname}} {{item.users.lastname}} <div class="alias">@{{item.users.username}}</div></div>
+                  <div class="authors-comment">{{item.comment}} </div>
+                  <div class="article-create-date">{{item.created_date}}</div>
                 </div>
               </v-flex>
             </v-layout>
@@ -79,80 +41,138 @@
         </v-flex>
       </v-layout>
     </v-container>
+    <div class="submit-comment-container">
+      <v-container class="message" >
+        <div class="comment-area">
+              <textarea 
+              v-model="postBody.comment"
+              class="textarea" placeholder="Add a comment..."
+               v-on:keyup="validate"
+              ></textarea>
+
+        </div>
+        <div class="submit-container">
+            <v-btn color="#00d1b2" :disabled="isDisable" @click="submit" class="submit-btn" >Submit</v-btn>
+       </div>
+       </v-container>
+    </div>
+</div>
 </template>
 
 <script>
-    //import {AXIOS} from './../http-common'
+    import {AXIOS} from './../http-common'
     import Reply from './Reply'
+    import { Util } from "./../util";
+
     export default {
     name: 'comment',
-    //props: ['userComment'], 
+    props: {
+      articleId: String
+    },
     data() {
       return {
+          getCommentUrl: "article/get_comment",
+          addCommentUrl: "article/add_comment",
+          page: 0,
           postBody: {
+            articleId: "",
             comment: ""
           },
-          user: {
-                id:"saddasda",
-                name :"Barbara Middleton",
-                image_url : "https://picsum.photos/500/300?image=12",
-                image_placeHolder : "https://picsum.photos/10/6?image=12"
-          },
-          messageList: [
-            { id:"sadsadaswqe21321321",
-              user : {
-                id:"saddasda",
-                name :"Barbara Middleton",
-                image_url : "https://picsum.photos/500/300?image=12",
-                image_placeHolder : "https://picsum.photos/10/6?image=12"
-              },
-              message : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis. ",
-              created_at: "11/15/2019"
-            },
-            { id:"sadaq21312321321321",
-              user : {
-                id:"saddasadsda",
-                name :"Sarah Middleton",
-                image_url : "https://picsum.photos/500/300?image=12",
-                image_placeHolder : "https://picsum.photos/10/6?image=12"
-              },
-              message : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis. ",
-              created_at: "11/15/2019"
-            }
-          ]
+          isDisable: true,
+          messageList: []
       }
     },
     methods: {
         submit(){
-          console.log(this.postBody)
+          this.postBody.articleId = this.articleId;
+          this.addCommentService(this.postBody)
+        },
+        getCommentListService: function() {
+          let self = this;
+          let headers = Util.getHeaders(this.$session);
+          AXIOS.get(this.getCommentUrl +"/"+this.articleId+"?page="+this.page , { headers })
+            .then(response => {
+              if (response.status == 200) {
+                let responseData = response.data.response;
+                self.messageList = responseData;
+              }
+            })
+            .catch(e => {
+              self.setMessage(e, 1)
+            });
+        },
+        addCommentService: function(data) {
+          let self = this;
+          let headers = Util.getHeaders(this.$session);
+          AXIOS.post(this.addCommentUrl, data, { headers })
+            .then(response => {
+              if (response.status == 200) {
+                let responseData = response.data.response;
+                self.messageList.push(responseData);
+                self.postBody.comment= "";
+                self.validate();
+              }
+            })
+            .catch(e => {
+              self.setMessage(e, 1)
+            });
+        },
+        validate: function(){
+          if (this.postBody.comment.length > 0){
+            this.isDisable = false;
+          }else{
+            this.isDisable = true;
+          }
         }
     },
-    components: {
-    //                'reply-comment': Reply
-    },
-    computed:{
-        replyList: function(){
-           // return this.userComment.replyList;
-
+    watch: { 
+      	articleId: function(newVal, oldVal) {
+          //console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+          this.getCommentListService();
         }
-    }
+      }
     }
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.error-message {
-   text-align: center;
-   padding: 10px;
-   color: red;
+.comment-area {
+    background-color: #fff;
+    border-color: #dbdbdb;
+    color: #363636;
+    border-radius: 10px;
+    box-shadow: inset 0 1px 2px rgba(10,10,10,.1);
+    border:1px solid rgba(219,219,219,.5);
 }
-
+.textarea {
+    width: 100%;
+    min-height: 80px;
+    display: block;
+    max-width: 100%;
+    min-width: 100%;
+    padding: .625em;
+    resize: vertical;
+    font-size:14px;
+}
+::-webkit-input-placeholder {
+  font-size: 14px;
+}
+::-moz-placeholder {
+  font-size: 14px;
+}
+:-ms-input-placeholder {
+  font-size: 14px;
+}
+::placeholder {
+  font-size: 14px;
+}
 .author {
     margin-left: 10px;
 }
 .message {
   border-top: 1px solid rgba(219,219,219,.5);
 }
-
+.submit-btn{
+  color:white;
+}
 .image-comment{
     width: 64px;
     height: 64px;
@@ -161,22 +181,14 @@
 .authors-comment{
   font-size: 14px;
 }
-
 .authors-name {
     font-size: 16px;
     font-weight: 600;
+    display: flex;
 }
-
-::-webkit-input-placeholder {
-    font-size: 20px !important;
-}
-
-:-moz-placeholder {  
-    font-size: 20px !important;
-}
-
-/*--for IE10 support--*/
-:-ms-input-placeholder {
-    font-size: 20px !important;
+.alias {
+  font-size:12px;
+  font-weight:300;
+  padding: 5px;
 }
 </style>

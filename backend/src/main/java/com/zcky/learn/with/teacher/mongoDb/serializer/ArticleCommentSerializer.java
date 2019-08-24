@@ -19,7 +19,7 @@ public class ArticleCommentSerializer implements JsonSerializer<ArticleComment> 
 		if(jsonObj.has("_id")) {
 			jsonObj.remove("_id");
 		}
-		jsonObj.addProperty("_id", id);
+		jsonObj.addProperty("id", id);
 		
 		Users user = src.getAuthor();
 		if(jsonObj.has("user")) {
@@ -32,7 +32,7 @@ public class ArticleCommentSerializer implements JsonSerializer<ArticleComment> 
 		}
 				
 		JsonObject userJson = new JsonObject();
-		userJson.addProperty("_id", user.getStringId());
+		userJson.addProperty("id", user.getStringId());
 		userJson.addProperty("firstname", user.getFirstname());
 		userJson.addProperty("lastname", user.getLastname());
 		userJson.addProperty("email", user.getEmail());

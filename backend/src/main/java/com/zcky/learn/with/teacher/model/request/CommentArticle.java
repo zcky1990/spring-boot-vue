@@ -2,7 +2,7 @@ package com.zcky.learn.with.teacher.model.request;
 
 public class CommentArticle {
 	private String articleId;
-	private String commentContent;
+	private String comment;
 	
 	public String getArticleId() {
 		return articleId;
@@ -10,10 +10,10 @@ public class CommentArticle {
 	public void setArticleId(String articleId) {
 		this.articleId = articleId;
 	}
-	public String getCommentContent() {
-		return commentContent;
+	public String getComment() {
+		return comment;
 	}
-	public void setCommentContent(String commentContent) {
-		this.commentContent = commentContent;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 }

@@ -13,8 +13,8 @@ public interface ArticleCommentRepository extends MongoRepository<ArticleComment
 	ArticleComment findBy_id(ObjectId _id);
 
 	@Query(value = "{'user' : {'$ref' : 'users' , '$id' : ?0} }")
-	List<ArticleComment> findAllCommentArticleByArticleId(ObjectId uid, Pageable pageable);
+	List<ArticleComment> findAllArticleByUser(ObjectId uid, Pageable pageable);
 	
 	@Query(value = "{'article' : {'$ref' : 'article' , '$id' : ?0} }")
-	List<ArticleComment> findAllArticleByUser(ObjectId uid);
+	List<ArticleComment> findAllCommentArticleByArticleId(ObjectId articleId, Pageable pageable);
 }

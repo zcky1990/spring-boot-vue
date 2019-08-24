@@ -129,7 +129,7 @@ export default {
     },
     getLoadMoreService: function() {
       let self = this;
-      let headers = Util.getHeaders(this.$session);
+      let headers = Util.getDefaultHeaders(Util.getMeta("token"))
       this.disableEnableLoadMoreBtn(true);
       AXIOS.get(this.articleUrl + "?page="+this.page, { headers })
         .then(response => {

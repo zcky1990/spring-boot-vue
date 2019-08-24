@@ -3,14 +3,14 @@
     <v-container id="grid" fluid grid-list-sm tag="section">
       <v-layout wrap>
         
-        <v-flex tag="h1" class="headline">{{article.article_title}}</v-flex>
+        <v-flex tag="h1" class="headline">{{content.article_title}}</v-flex>
 
         <v-flex d-flex xs12>
           <v-container>
             <v-layout>
-              <div class="image">
+              <div class="image" v-if="content.author.image_profile_url">
                 <v-img
-                  src="https://picsum.photos/500/300?image=11"
+                  :src="content.author.image_profile_url"
                   lazy-src="https://picsum.photos/10/6?image=11"
                   aspect-ratio="1"
                   class="grey lighten-2 rounded"
@@ -30,20 +30,18 @@
               </div>
               <v-flex>
                 <div class="author">
-                  <div class="authors-name">{{article.author.name}}</div>
-                  <div class="article-create-date">{{article.created_date}}</div>
+                  <div class="authors-name">{{content.author.firstname}} {{content.author.lastname}}</div>
+                  <div class="article-create-date">{{content.created_date}}</div>
                 </div>
               </v-flex>
             </v-layout>
           </v-container>
         </v-flex>
-asdasdas
+
         <v-flex d-flex xs12 order-xs5 class="content">
           <v-layout column>
             <v-flex class="article-content">
-          
-                <div v-html="article.article_content"></div>
-              
+                <div v-html="content.article_content"></div>
             </v-flex>
           </v-layout>
         </v-flex>
@@ -53,41 +51,18 @@ asdasdas
 </template>
 
 <script>
-import { AXIOS } from "./../http-common";
-import { Util } from "@/components/util";
+
 
 export default {
   name: "article-component",
-  props: ["slug"],
+  props: {
+    content : Object
+  },
   data() {
     return {
-      getArticleUrl: "/article/get_article/",
-      article: {
-        _id: "",
-        article_title: "",
-        article_content: "",
-        author: {},
-        created_date: "",
-        slug: ""
       }
-    };
-  },
-  created() {
-    this.getArticleService();
   },
   methods: {
-    getArticleService: function() {
-      let self = this;
-      let headers = Util.getHeaders(this.$session);
-      AXIOS.get(this.getArticleUrl + this.slug, { headers })
-        .then(response => {
-          if (response.status == 200) {
-            let responseData = response.data.response;
-            self.article = responseData;
-          }
-        })
-        .catch(e => {});
-    },
     setCssSideImage: function(){
       let elm = document.querySelectorAll('.image-style-side')
       if(elm.length > 0){
@@ -117,7 +92,9 @@ export default {
     height: 64px;
 }
 .authors-name {
-    font-size: 1.2em;
+    font-size: 1.5em;
+    font-weight: 600;
+    line-height: 1.5;
 }
 .article-create-date {
   color: grey;

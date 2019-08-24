@@ -13,7 +13,7 @@ public class ArticleComment {
 	
 	@DBRef
 	private Article article;
-	private String content;
+	private String comment;
 	private String modified_date;
 	
 	public String getStringId() {
@@ -44,12 +44,12 @@ public class ArticleComment {
 		this.article = article;
 	}
 
-	public String getContent() {
-		return content;
+	public String getComment() {
+		return comment;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	public String getModified_date() {

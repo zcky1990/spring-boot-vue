@@ -2,14 +2,21 @@
   <div class="article-page-container">
     <section class="nav-section"></section>
     <section class="content-section container">
+      <div class="snack-bar-container">
+        <snack-bar ref="snackbar"></snack-bar>
+      </div>
       <v-content>
         <v-container fill-height>
           <v-layout class="content-layout">
             <v-flex class="left-content" >
             </v-flex>
             <v-flex class="main-content-container">
-              <article-content :slug="slug"></article-content>
-              <article-comment></article-comment>
+              <article-content 
+                v-bind:content="article">
+              </article-content>
+              <article-comment 
+                v-bind:article-id="article._id">
+              </article-comment>
             </v-flex>
             <v-flex class="right-content" >
             </v-flex>
@@ -24,17 +31,64 @@
 import Navbar from "@/components/widget/UserNavbar";
 import Article from "@/components/widget/Article";
 import Comment from "@/components/widget/Comment"
+import SnackBar from "@/components/widget/SnackBar";
+import { Util } from "@/components/util";
+import { AXIOS } from "@/components/http-common";
 
 export default {
   name: "article-page-layout",
   props: ["slug"],
   data() {
-    return {};
+    return {
+      getArticleUrl: "/article/get_article/",
+      article: {
+        _id: "",
+        article_title: "",
+        article_content: "",
+        author: {},
+        created_date: "",
+        slug: ""
+      },
+      snackBarConfig: {
+        color: "error",
+        timeout: 6000,
+        top: true
+      },
+    };
   },
   components: {
     "user-nav-menu": Navbar,
     "article-content": Article,
-    "article-comment": Comment
+    "article-comment": Comment,
+    "snack-bar": SnackBar
+  },
+  methods: {
+     getArticleService: function() {
+      let self = this;
+      let headers = Util.getDefaultHeaders(Util.getMeta("token"))
+      AXIOS.get(this.getArticleUrl + this.slug, { headers })
+        .then(response => {
+          if (response.status == 200) {
+            let responseData = response.data.response;
+            self.article = responseData;
+          }
+        })
+        .catch(e => {
+          self.setMessage(e, 1)
+        });
+    },
+    setMessage(message, type) {
+      if(type == 0){
+        this.snackBarConfig.color = "success"
+      }else{
+        this.snackBarConfig.color = "error"
+      }
+      this.$refs.snackbar.setConfig(this.snackBarConfig);
+      this.$refs.snackbar.showSnackbar(message);
+    },
+  },
+  created() {
+    this.getArticleService();
   }
 };
 </script>

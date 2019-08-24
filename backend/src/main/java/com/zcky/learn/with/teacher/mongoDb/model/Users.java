@@ -23,7 +23,7 @@ public class Users {
 	private String display_name;
 	private String city;
 	private String zipcode;
-		
+	
 	public boolean isValidated() {
 		return isValidated;
 	}
