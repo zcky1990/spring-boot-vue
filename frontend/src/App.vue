@@ -19,8 +19,6 @@ export default {
 </script>
 <style lang="scss">
 #app {
-  font-family: 'Lato';
-  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
