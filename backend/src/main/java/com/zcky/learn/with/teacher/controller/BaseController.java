@@ -23,7 +23,7 @@ import com.zcky.learn.with.teacher.model.response.ResponseModel;
 
 @RestController
 public class BaseController {
-	private Gson gson = new Gson();
+	protected Gson gson = new Gson();
 	
 	public HttpHeaders getResponseHeader() {
 		HttpHeaders responseHeaders = new HttpHeaders();

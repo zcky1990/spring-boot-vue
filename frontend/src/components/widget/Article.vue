@@ -122,7 +122,6 @@ export default {
 .article-create-date {
   color: grey;
 }
-
 .headline {
   font-size: 2rem !important;
 }
@@ -133,5 +132,4 @@ export default {
 .article-content {
     display: table;
 }
-
 </style>

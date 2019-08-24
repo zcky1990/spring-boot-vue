@@ -8,17 +8,22 @@ import javax.validation.Valid;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
 import com.zcky.learn.with.teacher.constant.Constant;
+import com.zcky.learn.with.teacher.model.ArticleList;
 import com.zcky.learn.with.teacher.model.request.CommentArticle;
 import com.zcky.learn.with.teacher.mongoDb.model.Article;
 import com.zcky.learn.with.teacher.mongoDb.model.ArticleComment;
@@ -28,6 +33,7 @@ import com.zcky.learn.with.teacher.mongoDb.repository.ArticleRepository;
 import com.zcky.learn.with.teacher.mongoDb.repository.UsersRepository;
 import com.zcky.learn.with.teacher.mongoDb.serializer.ArticleCommentSerializer;
 import com.zcky.learn.with.teacher.mongoDb.serializer.ArticleSerializer;
+import com.zcky.learn.with.teacher.mongoDb.serializer.PageArticleSerializer;
 import com.zcky.learn.with.teacher.util.TimeUtility;
 
 @RestController
@@ -41,6 +47,22 @@ public class ArticleController extends BaseController {
 	
 	@Autowired
 	private ArticleCommentRepository articleCommentRepository;
+	
+	@RequestMapping(value = "/api/article/get_article_list", method = RequestMethod.GET)
+	public ResponseEntity<String> getArticleList(@RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
+		JsonObject response;
+		try {
+			Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").ascending());
+			Page<Article> articleList = articleRepository.findAll(pageableRequest);
+			response = getSuccessResponse();
+			ArticleList article = gson.fromJson(ObjectToJSON(articleList), ArticleList.class);
+			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(ArticleList.class, new PageArticleSerializer(), article)  );
+		} catch(Exception e) {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+		}
+		return new ResponseEntity<String>( response.toString() , getResponseHeader(), HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/api/article/add_article", method = RequestMethod.POST)
 	public ResponseEntity<String> addArticle(@Valid @RequestBody Article article, HttpServletRequest request) throws Exception {

@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// don't authenticate this particular request
 				.authorizeRequests()
 				//exception to API to skip JWT validation
-				.antMatchers()
+				.antMatchers("/api/article/get_article_list")
 				//.antMatchers("/api/users/validate/*")
 				.permitAll().
 

@@ -3,6 +3,7 @@ package com.zcky.learn.with.teacher.mongoDb.repository;
 import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -20,4 +21,6 @@ public interface ArticleRepository extends MongoRepository<Article, String> {
 	
 	@Query(value = "{'author' : {'$ref' : 'users' , '$id' : ?0} }")
 	List<Article> findAllArticleByUser(ObjectId uid);
+	
+	Page<Article> findAll(Pageable pageable);
 }
