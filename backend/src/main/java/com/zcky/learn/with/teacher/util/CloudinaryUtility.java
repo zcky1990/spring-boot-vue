@@ -105,5 +105,21 @@ public class CloudinaryUtility {
 		}
 		return response;
 	}
+	
+	public JsonObject uploadImage(MultipartFile file, String folder) {
+		JsonObject response = new JsonObject();
+		Map options = ObjectUtils.asMap(
+			    "folder", folder);
+		
+		try {
+			Map uploadResult = cloudinary.uploader().upload(file.getBytes(), options);
+			response.addProperty("url", uploadResult.get("secure_url").toString());
+			response.addProperty("status", "success");
+		} catch (IOException e) {
+			response.addProperty("error_message", e.getMessage().toString());
+			response.addProperty("status", "error");
+		}
+		return response;
+	}
 
 }

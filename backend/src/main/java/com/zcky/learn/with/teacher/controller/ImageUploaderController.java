@@ -20,10 +20,10 @@ import com.zcky.learn.with.teacher.util.CloudinaryUtility;
 public class ImageUploaderController extends BaseController{
 	
 	@RequestMapping(value = "/api/upload_image", method = RequestMethod.POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-	public ResponseEntity<String>  uploadFile(@RequestParam(value = "file") MultipartFile file, HttpServletRequest request) throws Exception {
+	public ResponseEntity<String>  uploadFile(@RequestParam(value = "file") MultipartFile file, @RequestParam(value = "content") String content, HttpServletRequest request) throws Exception {
 		JsonObject response = new JsonObject();
 		CloudinaryUtility util= new CloudinaryUtility();
-		response= util.uploadImage(file);
+		response= util.uploadImage(file, content);
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	

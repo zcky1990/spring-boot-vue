@@ -305,6 +305,7 @@ export default {
       headers['content-type'] = 'multipart/form-data';
       let data = new FormData();
       data.append('file', imageFile);
+      data.append('content', "userProfile");
       AXIOS.post("upload_image", data ,  { headers },)
         .then(response => {
           if(response.data.status == "success"){
