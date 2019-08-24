@@ -118,6 +118,7 @@ export default {
               self.setMessage(responseData.error_message, 1);
             } else {
               self.$session.start();
+              self.$session.set("users", responseData.response);
               self.$session.set("jwt", responseData.token);
               self.$session.set("uid", responseData.response.id);
               self.$session.set("username", responseData.response.username);

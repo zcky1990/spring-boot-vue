@@ -109,7 +109,7 @@
             .then(response => {
               if (response.status == 200) {
                 let responseData = response.data.response;
-                self.messageList.push(responseData);
+                self.messageList.unshift(responseData);
                 self.postBody.comment= "";
                 self.validate();
               }
