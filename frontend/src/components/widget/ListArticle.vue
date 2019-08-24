@@ -3,11 +3,11 @@
      <div class="article-image-container">
        <v-container grid-list-xs>
          <v-layout column>
-           <v-flex>
+           <!--<v-flex>
               <div class="article">
                 <v-img
-                  :src="data[0].image_url"
-                  :lazy-src="data[0].image_placeholder"
+                  :src="data[0].imageHeader"
+                  :lazy-src="data[0].imageHeaderLazy"
                   aspect-ratio="1"
                   class="grey lighten-2 rounded"
                   max-width="auto"
@@ -24,22 +24,22 @@
                     </v-layout>
                   </template>
                 </v-img>
-                  <div class="article-headline">{{data[0].title}}</div>
+                  <div class="article-headline">{{data[0].article_title}}</div>
                   <div class="article-list-desc">
-                    {{data[0].desc}}
+                    {{data[0].article_content}}
                   </div>
                   <router-link class="read-more-links" :to="getUrl(data[0].slug)">
                     Selengkapnya
                   </router-link>
               </div>
-           </v-flex>
+           </v-flex> -->
             <v-divider></v-divider>
-            <v-flex class="article-list-container" v-for="index in listCount" :key="index">
+            <v-flex class="article-list-container" v-for="item in data" :key="item.id">
               <div class="article-list">
                   <div class="image-article-list">
                     <v-img
-                      :src="data[index].image_url"
-                      :lazy-src="data[index].image_placeholder"
+                      :src="item.imageHeader"
+                      :lazy-src="item.imageHeaderLazy"
                       aspect-ratio="1"
                       class="grey lighten-2 rounded"
                       width='300'
@@ -58,11 +58,11 @@
                     </v-img>
                   </div>
                   <div class="desc-article-list">
-                       <div class="article-list-headline">{{data[index].title}}</div>
+                       <div class="article-list-headline">{{item.article_title}}</div>
                         <div class="article-list-desc">
-                         {{data[index].desc}}
+                          <div v-html="item.article_content"></div>
                          </div>
-                        <router-link class="read-more-links" :to="getUrl(data[index].slug)">
+                        <router-link class="read-more-links" :to="getUrl(item.slug)">
                         Selengkapnya
                         </router-link>
               
@@ -91,39 +91,20 @@ import { Util } from "@/components/util";
 
 export default {
   name: "list-article-component",
+  props: ["articleList"],
   data() {
     return {
-      page : 1,
-      index : 1,
+      page : 0,
+      index : 0,
       listCount: 0,
-      articleUrl: "",
-      loadMoreUrl : "",
+      articleUrl: "/article/get_article_list",
       isLoadMoreOnProgress : false,
       isDisable : false, 
-      data : [
-        {
-          "id":"asdasd",
-          "category" : "ilmu pengetahuan alam",
-          "slug" : "test-drive",
-          "title" : "Ketahui Ragam Cara Menjaga Tulang yang Sehat",
-          "desc" : "Untuk memiliki tulang yang sehat, Anda harus memelihara kesehatan  sadsa sad sadsa sa dasdasdasd tulang sejak dini. Cara menjaga tulang agar tetap sehat antara lain dengan menjaga pola makan dan menerapkan gaya hidup sehat, termasuk aktif bergerak. ",
-          "image_url" : "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
-          "image_placeholder" : "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-        },
-        {
-          "id":"asdasd",
-          "category" : "ilmu pengetahuan sosial",
-          "slug" : "test-drive",
-          "title" : "Ketahui Ragam Cara Menjaga Tulang yang Sehat",
-          "desc" : "Untuk memiliki tulang yang sehat, Anda harus memelihara kesehatan  sadsa sad sadsa sa dasdasdasd tulang sejak dini. Cara menjaga tulang agar tetap sehat antara lain dengan menjaga pola makan dan menerapkan gaya hidup sehat, termasuk aktif bergerak. ",
-          "image_url" : "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
-          "image_placeholder" : "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-        }
-      ]
+      data : []
     };
   },
   created(){
-   this.setListCount();
+    this.getArticle();
   },
   methods: {
     getUrl: function (slug) {
@@ -135,8 +116,13 @@ export default {
       this.isDisable = value;
     },
     getArticle : function(){
+      let self = this;
+      let headers = Util.getDefaultHeaders(Util.getMeta("token"))
         AXIOS.get(this.articleUrl + "?page="+this.page, { headers })
         .then(response => {
+          if(response.status == 200){
+            self.data = response.data.response.content
+          }         
         })
         .catch(e => {
         });
@@ -144,22 +130,13 @@ export default {
     getLoadMoreService: function() {
       let self = this;
       let headers = Util.getHeaders(this.$session);
-      let asd = {
-            "id":"sadasdasdsad",
-            "slug" : "test-asdsadsad",
-            "title" : "Ketahui Cara main dota yang benar",
-            "desc" : "Untuk memiliki tulang yang sehat, Anda harus memelihara kesehatan  sadsa sad sadsa sa dasdasdasd tulang sejak dini. Cara menjaga tulang agar tetap sehat antara lain dengan menjaga pola makan dan menerapkan gaya hidup sehat, termasuk aktif bergerak. ",
-            "image_url" : "https://cdn.vuetifyjs.com/images/cards/docks.jpg",
-            "image_placeholder" : "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-      }
       this.disableEnableLoadMoreBtn(true);
-      AXIOS.get(this.loadMoreUrl + "?page="+this.page, { headers })
+      AXIOS.get(this.articleUrl + "?page="+this.page, { headers })
         .then(response => {
-          
-          self.addData(asd)
+           let newData = response.data.response.content
+          self.addData(newData)
         })
         .catch(e => {
-          self.addData(asd)
           this.disableEnableLoadMoreBtn(false);
         });
     },

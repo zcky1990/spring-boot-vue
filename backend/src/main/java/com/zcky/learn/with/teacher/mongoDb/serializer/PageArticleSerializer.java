@@ -13,7 +13,8 @@ public class PageArticleSerializer implements JsonSerializer<ArticleList> {
 		for(int i = 0 ; i < content.size(); i++) {
 			JsonObject article = content.get(i).getAsJsonObject();
 			String id = src.getContent().get(i).getStringId();
-			article.addProperty("_id", id);
+			article.remove("_id");
+			article.addProperty("id", id);
 			if(article.has("author")) {
 				article.remove("author");
 			}
@@ -37,6 +38,15 @@ public class PageArticleSerializer implements JsonSerializer<ArticleList> {
 				String lazyImage = imgSrc.replace("/upload/", "/upload/f_auto,q_auto,e_blur:300/");
 				article.addProperty("imageHeaderLazy", lazyImage);
 			}
+			
+			if(articleContent.length() > 200) {
+				articleContent = articleContent.substring(0, 200)+"...";
+			}
+			
+			if(articleContent.contains("<strong>")) {
+				articleContent.replaceAll("<strong>", "");
+				articleContent.replaceAll("</strong>", "");
+			}
 
 			if(articleContent.contains("<h2")) {
 				int start = articleContent.indexOf("<h2");
@@ -45,9 +55,7 @@ public class PageArticleSerializer implements JsonSerializer<ArticleList> {
 				articleContent = articleContent.replace(subtitle, "");
 			}
 
-			if(articleContent.length() > 200) {
-				articleContent = articleContent.substring(0, 200)+"...";
-			}
+			
 			article.remove("article_content");
 
 			if(!articleContent.isEmpty()) {
