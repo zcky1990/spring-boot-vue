@@ -30,7 +30,6 @@ public class CloudinaryUtility {
 		this.setProperties();
 	}
 	
-	
 	public void getCloudinaryConfig() {
 		String stringConfig = util.getJsonFile(Constant.CLOUDINARY_CONFIG_PATH);
 		CloudinaryModelJson cloudConfig = gson.fromJson(stringConfig, CloudinaryModelJson.class);

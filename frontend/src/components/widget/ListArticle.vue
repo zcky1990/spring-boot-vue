@@ -34,7 +34,7 @@
               </div>
            </v-flex> -->
             <v-divider></v-divider>
-            <v-flex class="article-list-container" v-for="item in data" :key="item.id">
+            <v-flex class="article-list-container" v-for="item in data" :key="item.slug">
               <div class="article-list">
                   <div class="image-article-list">
                     <v-img

@@ -50,13 +50,13 @@ public class ArticleController extends BaseController {
 	
 	@RequestMapping(value = "/api/article/get_article_list", method = RequestMethod.GET)
 	public ResponseEntity<String> getArticleList(@RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
-		JsonObject response;
+		JsonObject response = new JsonObject();
 		try {
-			Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").ascending());
+			Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").descending());
 			Page<Article> articleList = articleRepository.findAll(pageableRequest);
 			response = getSuccessResponse();
 			ArticleList article = gson.fromJson(ObjectToJSON(articleList), ArticleList.class);
-			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(ArticleList.class, new PageArticleSerializer(), article)  );
+			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(ArticleList.class, new PageArticleSerializer(), article));
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());

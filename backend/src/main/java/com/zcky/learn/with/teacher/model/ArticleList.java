@@ -2,8 +2,6 @@ package com.zcky.learn.with.teacher.model;
 
 import java.util.List;
 
-import com.zcky.learn.with.teacher.mongoDb.model.Article;
-
 public class ArticleList {
 	private Integer total;
 	private List<Article> content;

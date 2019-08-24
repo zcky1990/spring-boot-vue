@@ -12,12 +12,7 @@ public class PageArticleSerializer implements JsonSerializer<ArticleList> {
 		JsonArray content = jsonObj.getAsJsonArray("content");
 		for(int i = 0 ; i < content.size(); i++) {
 			JsonObject article = content.get(i).getAsJsonObject();
-			String id = src.getContent().get(i).getStringId();
-			article.remove("_id");
-			article.addProperty("id", id);
-			if(article.has("author")) {
-				article.remove("author");
-			}
+	
 			String articleContent = article.get("article_content").getAsString();
 			String image = "";
 			if(articleContent.contains("<figure")) {
@@ -54,10 +49,7 @@ public class PageArticleSerializer implements JsonSerializer<ArticleList> {
 				String subtitle = articleContent.substring(start, end);
 				articleContent = articleContent.replace(subtitle, "");
 			}
-
-			
 			article.remove("article_content");
-
 			if(!articleContent.isEmpty()) {
 				article.addProperty("article_content", articleContent);
 			}
