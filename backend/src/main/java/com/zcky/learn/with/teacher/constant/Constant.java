@@ -25,8 +25,10 @@ public class Constant {
 	public static String DELETE_USER_SUCCESS_MESSAGE = "Success Delete User";
 	public static String UPDATE_ARTICLE_SUCCESS_MESSAGE = "Success Update Article";
 	public static String UPDATE_CATEGORY_SUCCESS_MESSAGE = "Success Update Category";
+	public static String UPDATE_ROLES_SUCCESS_MESSAGE = "Success Update Roles";
 	public static String DELETE_ARTICLE_SUCCESS_MESSAGE = "Success Delete Article";
 	public static String DELETE_CATEGORY_SUCCESS_MESSAGE = "Success Delete Category";
+	public static String DELETE_ROLES_SUCCESS_MESSAGE = "Success Delete Roles";
 	
 	//Error Message
 	public static String USER_NOT_VALIDATED_SUCCESS_MESSAGE = "User not validated please check your mail";

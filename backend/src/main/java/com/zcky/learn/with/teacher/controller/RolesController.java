@@ -23,21 +23,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.JsonObject;
 import com.zcky.learn.with.teacher.constant.Constant;
 import com.zcky.learn.with.teacher.mongoDb.model.Category;
-import com.zcky.learn.with.teacher.mongoDb.repository.CategoryRepository;
-import com.zcky.learn.with.teacher.mongoDb.serializer.CategorySerializer;
+import com.zcky.learn.with.teacher.mongoDb.model.Roles;
+import com.zcky.learn.with.teacher.mongoDb.repository.RolesRepository;
+import com.zcky.learn.with.teacher.mongoDb.serializer.RolesSerializer;
 
 @RestController
-public class CategoryController extends BaseController {
+public class RolesController extends BaseController {
 	@Autowired
-	private CategoryRepository repository;
+	private RolesRepository repository;
 
-	@RequestMapping(value = "/api/category/create", method = RequestMethod.POST)
-	public ResponseEntity<String> create(@Valid @RequestBody Category category, HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/api/roles/create", method = RequestMethod.POST)
+	public ResponseEntity<String> create(@Valid @RequestBody Roles roles, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
-			repository.save(category);
+			repository.save(roles);
 			response = getSuccessResponse();
-			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Category.class, new CategorySerializer(), category)  );
+			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Roles.class, new RolesSerializer(), roles)  );
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
@@ -45,13 +46,13 @@ public class CategoryController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/api/category/edit", method = RequestMethod.PUT)
-	public ResponseEntity<String> edit(@Valid @RequestBody Category category, HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/api/roles/edit", method = RequestMethod.PUT)
+	public ResponseEntity<String> edit(@Valid @RequestBody Roles roles, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
-			repository.save(category);
+			repository.save(roles);
 			response = getSuccessResponse();
-			response.addProperty(Constant.RESPONSE,Constant.UPDATE_CATEGORY_SUCCESS_MESSAGE);
+			response.addProperty(Constant.RESPONSE,Constant.UPDATE_ROLES_SUCCESS_MESSAGE);
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
@@ -59,14 +60,14 @@ public class CategoryController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/category/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/roles/{id}", method = RequestMethod.GET)
 	public ResponseEntity<String> edit(@PathVariable String id, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
-			Optional<Category> responseCategory = repository.findById(id);
-			Category category = responseCategory.get();
+			Optional<Roles> responseRoles = repository.findById(id);
+			Roles roles = responseRoles.get();
 			response = getSuccessResponse();
-			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Category.class, new CategorySerializer(), category)  );
+			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Roles.class, new RolesSerializer(), roles)  );
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
@@ -74,13 +75,13 @@ public class CategoryController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/category/delete/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/api/roles/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> delete(@PathVariable String id, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
 			repository.delete(repository.findById(id).get());
 			response = getSuccessResponse();
-			response.addProperty(Constant.RESPONSE, Constant.DELETE_CATEGORY_SUCCESS_MESSAGE);
+			response.addProperty(Constant.RESPONSE, Constant.DELETE_ROLES_SUCCESS_MESSAGE);
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
@@ -89,19 +90,19 @@ public class CategoryController extends BaseController {
 	}
 
 	
-	@RequestMapping(value = "/api/category/get_category_list", method = RequestMethod.GET)
-	public ResponseEntity<String> getCategoryList(@RequestParam(value="type", required=true) String type,@RequestParam(value="status", required=true) Boolean status, @RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/api/roles/get_roles_list", method = RequestMethod.GET)
+	public ResponseEntity<String> getRolesList(@RequestParam(value="status", required=true) Boolean status, @RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
-			List<Category> categories  = new ArrayList<>();
+			List<Roles> roles  = new ArrayList<>();
 			if(page!= null) {
 				Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").descending());
-				categories = repository.findAllByTypeAndStatus(type, status, pageableRequest);
+				roles = repository.findAllByStatus( status, pageableRequest);
 			}else {
-				categories = repository.findAllByTypeAndStatus(type, status);
+				roles = repository.findAllByStatus(status);
 			}
 			response = getSuccessResponse();
-			response.add(Constant.RESPONSE, toJSONArrayWithSerializer(Category.class, new CategorySerializer(), categories)  );
+			response.add(Constant.RESPONSE, toJSONArrayWithSerializer(Category.class, new RolesSerializer(), roles)  );
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
