@@ -5,9 +5,6 @@
 </template>
 
 <script>
-import { AXIOS } from "@/components/http-common";
-import { Util } from "@/components/util";
-
 export default {
   name: "userValidation",
   data() {
@@ -18,7 +15,7 @@ export default {
   created() {},
   methods: {
     getId: function() {
-      let params = Util.getUrlParams();
+      let params = this.getUrlParams();
       let id = "";
       for (let i = 0; i < params.length; i++) {
         let param = params[0];
