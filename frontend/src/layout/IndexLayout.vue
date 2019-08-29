@@ -26,8 +26,6 @@
     <script>
     import NavbarComponents from "@/components/widget/Navbar";
     import listArticleComponents from "@/components/widget/ListArticle";
-    import {Util} from "../components/util";
-    import { AXIOS } from "../components/http-common";
 
     export default   {
         name: 'index-page-layout',

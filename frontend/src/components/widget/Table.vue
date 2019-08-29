@@ -63,14 +63,6 @@ export default {
     };
   },
   methods: {
-    callRestService(type, model, url) {
-      let self = this;
-      AXIOS.post(url, model)
-        .then(response => {})
-        .catch(e => {
-          self.errors.push(e);
-        });
-    },
     editData(a){
       alert('Alert! \n' + a.name);
     },

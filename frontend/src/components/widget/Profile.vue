@@ -180,8 +180,6 @@
 </template>
 
 <script>
-import { AXIOS } from "./../http-common";
-import { Util } from "@/components/util";
 import SnackBar from "./SnackBar";
 
 export default {
@@ -239,32 +237,32 @@ export default {
     },
     getUsers: function() {
       let self = this;
-      let headers = Util.getHeaders(this.$session);
+      let headers = this.getHeaders(this.$session);
       let id = this.$session.get('uid')
-      AXIOS.get(this.getUserProfileUrl + id, { headers })
-        .then(response => {
+      this.get(this.getUserProfileUrl + id,  headers, 
+       function(response) {
           if (response.status == 200) {
             let responseData = response.data.response;
             self.data = responseData;
           }
-        })
-        .catch(e => {
+        },
+        function(e){
           self.setMessage(e, 1)
         });
     },
     saveUserProfile: function() {
       let self = this;
-      let headers = Util.getHeaders(this.$session);
-      AXIOS.put(this.saveUserProfileUrl, this.data , { headers })
-        .then(response => {
+      let headers = this.getHeaders(this.$session);
+      this.put(this.saveUserProfileUrl, this.data ,  headers,
+      function(response) {
           if (response.status == 200) {
            self.setMessage(response.data.response, 0) 
            self.editField();
           }
-        })
-        .catch(e => {
+      },
+      function(e) {
             self.setMessage(e, 1)
-        });
+      });
     },
     setMessage: function (message, type) {
       if(type == 0){
@@ -301,22 +299,22 @@ export default {
     },
     uploadImage(imageFile){
       let self = this
-      let headers = Util.getDefaultHeaders(Util.getMeta("token"))
+      let headers = this.getDefaultHeaders(this.getMeta("token"))
       headers['content-type'] = 'multipart/form-data';
       let data = new FormData();
       data.append('file', imageFile);
       data.append('content', "userProfile");
-      AXIOS.post("upload_image", data ,  { headers },)
-        .then(response => {
+      this.post("upload_image", data , headers,
+      function(response) {
           if(response.data.status == "success"){
             self.data.image_url = response.data.url;
           }else {
             self.setMessage('Upload image failed', 1) 
           }
-         })
-         .catch(e => {
+      },
+      function(e) {
              self.setMessage('Upload image failed', 1) 
-        });
+      });
     }
   },
   computed: {

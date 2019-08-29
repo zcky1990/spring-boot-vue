@@ -83,9 +83,7 @@
 </template>
 
 <script>
-import { AXIOS } from "./../http-common";
 import SnackBar from "./SnackBar";
-import { Util } from "./../util";
 
 export default {
   name: "user-sign-up-form",
@@ -130,9 +128,9 @@ export default {
     callRestService(model) {
       let self = this;
       let router = this.$router;
-      let headers = Util.getDefaultHeaders(Util.getMeta("token"))
-      AXIOS.post("users/sign_up", model, { headers })
-        .then(response => {
+      let headers = this.getDefaultHeaders(this.getMeta("token"))
+      this.post("users/sign_up", model,  headers,
+      function(response) {
           if (response.status == 200) {
             let responseData = response.data;
             if (responseData["error_message"] != undefined) {
@@ -146,8 +144,8 @@ export default {
               router.push("/user");
             }
           }
-        })
-        .catch(e => {
+        },
+        function(e){
           self.setMessage(e, 1);
         });
     },

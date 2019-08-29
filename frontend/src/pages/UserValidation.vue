@@ -32,15 +32,15 @@ export default {
     requestValidate: function() {
       let id = this.getId();
       let self = this;
-      let headers = Util.getDefaultHeaders(Util.getMeta("token"))
-      AXIOS.get("/users/validate/" + id, { headers })
-        .then(response => {
+      let headers = this.getDefaultHeaders(this.getMeta("token"))
+      this.get("/users/validate/" + id, headers,
+        function(response){
           if (response.status == 200) {
             let responseData = response.data;
             self.userData = responseData.response;
           }
-        })
-        .catch(e => {
+        },
+        function (e){
           self.errors.push(e);
         });
     }

@@ -15,12 +15,11 @@
 
     import Navbar from '@/components/widget/Navbar'
     import ProfileComponents from '@/components/widget/Profile'
-    import { Util } from "@/components/util";
 
     export default {
         name: 'user-page-layout',
         beforeCreate(){
-            let isLogged = Util.isLoggin(this.$session);
+            let isLogged = this.isLoggin(this.$session);
             if(!isLogged){
                 this.$router.push("/");
             }

@@ -6,7 +6,7 @@ import App from './App.vue'
 import router from './router'
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import '@fortawesome/fontawesome-free/css/all.css' 
-
+import  Util from "./util";
 
 require('./assets/sass/main.scss');
 
@@ -14,6 +14,8 @@ Vue.use(Vuetify)
 Vue.config.productionTip = false
 Vue.use(VueSession)
 Vue.use(CKEditor)
+Vue.use(Util)
+
 new Vue({
   icons: {
     iconfont: 'fa',

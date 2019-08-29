@@ -32,8 +32,6 @@ import Navbar from "@/components/widget/UserNavbar";
 import Article from "@/components/widget/Article";
 import Comment from "@/components/widget/Comment"
 import SnackBar from "@/components/widget/SnackBar";
-import { Util } from "@/components/util";
-import { AXIOS } from "@/components/http-common";
 
 export default {
   name: "article-page-layout",
@@ -65,17 +63,14 @@ export default {
   methods: {
      getArticleService: function() {
       let self = this;
-      let headers = Util.getDefaultHeaders(Util.getMeta("token"))
-      AXIOS.get(this.getArticleUrl + this.slug, { headers })
-        .then(response => {
-          if (response.status == 200) {
-            let responseData = response.data.response;
-            self.article = responseData;
-          }
-        })
-        .catch(e => {
-          self.setMessage(e, 1)
-        });
+      let headers = this.getDefaultHeaders(this.getMeta("token"))
+      this.get(this.getArticleUrl + this.slug,  headers,
+      function(response){
+        let responseData = response.data.response;
+        self.article = responseData;
+      },function (e){
+        self.setMessage(e, 1)
+      })
     },
     setMessage(message, type) {
       if(type == 0){
@@ -93,8 +88,8 @@ export default {
 };
 </script>
 
-    <!-- Add "scoped" attribute to limit CSS to this component only -->
-    <style scoped>
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
 
 .sign-up-page-container {
   background-color: white;

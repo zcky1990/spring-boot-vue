@@ -60,9 +60,7 @@ import List from "@ckeditor/ckeditor5-list/src/list";
 import Paragraph from "@ckeditor/ckeditor5-paragraph/src/paragraph";
 import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 
-import { AXIOS } from "./../http-common";
 import Alert from "@/components/widget/Alert";
-import { Util } from "@/components/util";
 
 class UploadAdapter {
         constructor(loader) {
@@ -71,14 +69,14 @@ class UploadAdapter {
         upload() {
           let self = this;
             return new Promise((resolve, reject) => {
-              let headers = Util.getDefaultHeaders(Util.getMeta("token"))
+              let headers = this.getDefaultHeaders(this.getMeta("token"))
               let stringImage = self.loader._reader._reader.result
               let postBody = {
                   'image':stringImage,
                   'content' : 'article'
               }
-                AXIOS.post("upload_image_string", postBody, { headers })
-                .then(response => {
+                this.post("upload_image_string", postBody,  headers ,
+                function(response) {
                   if (response.data.status == 'success') {
                         resolve({
                             default: response.data.url
@@ -86,8 +84,8 @@ class UploadAdapter {
                     } else {
                         reject(response.data.message);
                     }
-                })
-                .catch(e => {
+                },
+                function(e){
                   reject (e);
                 });
             });
@@ -180,7 +178,7 @@ export default {
       }
     },
     getRequestHeader: function() {
-      this.requestHeader = Util.getHeaders(this.$session);
+      this.requestHeader = this.getHeaders(this.$session);
       return this.requestHeader;
     },
     hideAlert: function() {
@@ -199,8 +197,8 @@ export default {
     callAddRestService: function(model, url) {
       let self = this;
       let headers = this.getRequestHeader();
-      AXIOS.post(url, model, { headers })
-        .then(response => {
+      this.post(url, model,  headers ,
+       function(response) {
           if (response.status == 200) {
             let responseData = response.data.response;
             self.data._id = responseData._id;
@@ -210,16 +208,16 @@ export default {
               self.showSuccessAlert("success add document");
             }
           }
-        })
-        .catch(e => {
+        },
+        function(e){
           self.showErrorAlert(e);
         });
     },
     callUpdateRestService: function(model, url) {
       let self = this;
       let headers = this.getRequestHeader();
-      AXIOS.put(url, model, { headers })
-        .then(response => {
+      this.put(url, model,  headers,
+       function(response){
           if (response.status == 200) {
             let responseData = response.data.response;
             if (responseData["error_message"] != undefined) {
@@ -228,8 +226,8 @@ export default {
               self.showSuccessAlert("success edit document");
             }
           }
-        })
-        .catch(e => {
+        },
+        function(e) {
           self.showErrorAlert(e);
         });
     }

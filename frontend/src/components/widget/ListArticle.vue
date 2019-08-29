@@ -86,8 +86,6 @@
    </div>
 </template>
 <script>
-import { AXIOS } from "./../http-common";
-import { Util } from "@/components/util";
 
 export default {
   name: "list-article-component",
@@ -117,28 +115,29 @@ export default {
     },
     getArticle : function(){
       let self = this;
-      let headers = Util.getDefaultHeaders(Util.getMeta("token"))
-        AXIOS.get(this.articleUrl + "?page="+this.page, { headers })
-        .then(response => {
+      let headers = this.getDefaultHeaders(this.getMeta("token"))
+        this.get(this.articleUrl + "?page="+this.page,  headers ,
+        function(response) {
           if(response.status == 200){
             self.data = response.data.response.content
           }         
-        })
-        .catch(e => {
+        },
+        function(e) {
+
         });
     },
     getLoadMoreService: function() {
       let self = this;
-      let headers = Util.getDefaultHeaders(Util.getMeta("token"))
+      let headers = this.getDefaultHeaders(this.getMeta("token"))
       this.disableEnableLoadMoreBtn(true);
-      AXIOS.get(this.articleUrl + "?page="+this.page, { headers })
-        .then(response => {
+      this.get(this.articleUrl + "?page="+this.page,  headers ,
+      function(response) {
            let newData = response.data.response.content
           self.addData(newData)
-        })
-        .catch(e => {
+        },
+      function (e){
           this.disableEnableLoadMoreBtn(false);
-        });
+      });
     },
     loadMore: function (){
       this.page++;

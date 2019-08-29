@@ -19,7 +19,7 @@
       <v-subheader class="mt-3 grey--text text--darken-1">HEADER 2</v-subheader>
       
       <v-list-tile v-if="!isLogged" >
-        <router-link class="nav-draw-links" to="/sign_in">
+        <router-link class="nav-draw-links" to="/login">
         <v-list-tile-avatar class="button-login">
           <v-icon>account_circle</v-icon>
         </v-list-tile-avatar>
@@ -97,9 +97,7 @@
 </template>
 
 <script>
-import { AXIOS } from "./../http-common";
 import SnackBar from "./SnackBar";
-import { Util } from "./../util";
 
 export default {
   name: "navbar",
@@ -157,7 +155,7 @@ export default {
     };
   },
   created() {
-    this.isLogged = Util.isLoggin(this.$session);
+    this.isLogged = this.isLoggin(this.$session);
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },
@@ -176,38 +174,6 @@ export default {
       } else {
         this.isMobile = false;
       }
-    },
-    submit() {
-      if (this.$refs.form.validate()) {
-        let model = {};
-        model.username = this.username;
-        model.password = this.password;
-        this.callRestService(model);
-      }
-    },
-    callRestService(model) {
-      let self = this;
-      AXIOS.post("/users/sign_in", model)
-        .then(response => {
-          if (response.status == 200) {
-            let responseData = response.data;
-            if (responseData["error_message"] != undefined) {
-              self.setErrorMessage(responseData.error_message);
-            } else {
-              self.$session.start();
-              self.$session.set("jwt", responseData.token);
-              self.$session.set("uid", responseData.response.id);
-              self.$session.set("username", responseData.response.username);
-              self.$session.set("exp_date", responseData.exp_date);
-              self.isLogged = true;
-              self.closePopUpMenu();
-              self.setSuccessMessage("Success Login");
-            }
-          }
-        })
-        .catch(e => {
-          self.errors.push(e);
-        });
     },
     closePopUpMenu() {
       this.menu = false;
@@ -235,7 +201,7 @@ export default {
 };
 </script>
     <!-- Add "scoped" attribute to limit CSS to this component only -->
-    <style scoped>
+<style scoped>
 .nav-draw-links {
   display: flex;
   text-decoration: none;

@@ -1,8 +1,6 @@
     <template>
   <div class="admin-page">
     <nav-menu></nav-menu>
-    <login-form></login-form>
-    <list-article></list-article>
     <editor-component v-bind:key="id" v-bind:addUrl="addUrl" v-bind:updateUrl="updateUrl"></editor-component>
     <table-component :title="title" :tableHeaderList="tableHeaderList" :dataList="dataList"></table-component>
   </div>
@@ -11,10 +9,8 @@
     <script>
 //import {AXIOS} from '@/components/http-common'
 import Navbar from "@/components/widget/Navbar";
-import Loginform from "@/components/widget/Loginform";
 import Editor from "@/components/widget/Editor";
 import TableComponent from "@/components/widget/Table";
-import listArticleComponents from "@/components/widget/ListArticle";
 
 export default {
   name: "admin",
@@ -123,10 +119,8 @@ export default {
   },
   components: {
     "nav-menu": Navbar,
-    "login-form": Loginform,
     "editor-component": Editor,
-    "table-component": TableComponent,
-    'list-article': listArticleComponents
+    "table-component": TableComponent
   }
 };
 </script>

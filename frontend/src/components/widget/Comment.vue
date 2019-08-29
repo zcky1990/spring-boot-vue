@@ -61,11 +61,7 @@
 </template>
 
 <script>
-    import {AXIOS} from './../http-common'
-    import Reply from './Reply'
-    import { Util } from "./../util";
-
-    export default {
+export default {
     name: 'comment',
     props: {
       articleId: String
@@ -90,31 +86,31 @@
         },
         getCommentListService: function() {
           let self = this;
-          let headers = Util.getHeaders(this.$session);
-          AXIOS.get(this.getCommentUrl +"/"+this.articleId+"?page="+this.page , { headers })
-            .then(response => {
+          let headers = this.getHeaders(this.$session);
+          this.get(this.getCommentUrl +"/"+this.articleId+"?page="+this.page ,  headers, 
+            function(response){
               if (response.status == 200) {
                 let responseData = response.data.response;
                 self.messageList = responseData;
               }
-            })
-            .catch(e => {
+            },
+            function(e) {
               self.setMessage(e, 1)
             });
         },
         addCommentService: function(data) {
           let self = this;
-          let headers = Util.getHeaders(this.$session);
-          AXIOS.post(this.addCommentUrl, data, { headers })
-            .then(response => {
+          let headers = this.getHeaders(this.$session);
+          this.post(this.addCommentUrl, data, headers ,
+          function(response) {
               if (response.status == 200) {
                 let responseData = response.data.response;
                 self.messageList.unshift(responseData);
                 self.postBody.comment= "";
                 self.validate();
               }
-            })
-            .catch(e => {
+            },
+         function(e) {
               self.setMessage(e, 1)
             });
         },
