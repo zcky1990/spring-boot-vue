@@ -12,11 +12,12 @@
                     <v-icon>add</v-icon>
                   </v-btn>
               </div>
-              <v-card-title >
+              <v-card-title class="table-title">
                 {{title}}
               </v-card-title>
               <v-card-title>
-                <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
+                <v-spacer></v-spacer>
+                  <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
               </v-card-title>
               <v-data-table class="table-container" :headers="tableHeaderList" :items="dataTableList" :search="search">
                 <template v-slot:items="props">
@@ -29,7 +30,7 @@
                   <td>
                     <v-layout align-center justify-space-around>
                     <v-icon @click="editData(props.item.id)">fas fa-edit</v-icon>
-                    <v-icon @click="deleteData(props.item.id)">fas fa-edit</v-icon>
+                    <v-icon @click="deleteData(props.item.id)">fas fa-trash</v-icon>
                     </v-layout>
                   </td>
                   </tr>
@@ -91,8 +92,9 @@
     </v-layout>
   </v-container>
 </template>
-
 <script>
+
+import { EventBus } from './../../../EventBus.js';
 
 export default {
   name: "Roles-form",
@@ -151,7 +153,7 @@ export default {
       }
     },
     resetData: function(){
-      let data = {};
+      this.data = {};
     },
     createRoles: function(model) {
       let self = this;
@@ -160,11 +162,13 @@ export default {
       this.post(this.urlData.createRoleUrl, model, headers,
       function(response){
         if (response.status == 200) {
+           self.dataTableList.push(response.data.response)
            self.resetData();
+           self.dialog = false;
           }
       },
       function(e){
-          submitForm
+          self.setMessage(e,1)
       });
     },
     getRoleList: function(){
@@ -178,7 +182,7 @@ export default {
         }
       },
       function(e){
-
+        self.setMessage(e,1)
       })
     },
     deleteRole: function(id){
@@ -196,7 +200,7 @@ export default {
         }
       },
       function(e){
-
+        self.setMessage(e,1)
       })
     },
     getRole: function(id){
@@ -212,7 +216,7 @@ export default {
         }
       },
       function(e){
-
+        self.setMessage(e,1)
       })
     },
     updateRoles: function(model) {
@@ -226,7 +230,7 @@ export default {
           }
       },
       function(e){
-          
+        self.setMessage(e,1)
       });
     },
     addData: function(){
@@ -240,11 +244,20 @@ export default {
     },
     deleteData: function(id){
       this.deleteRole(id);
+    },
+    setMessage: function(message, type){
+                let data={}
+                data.message = message
+                data.type = type
+                    EventBus.$emit('SNACKBAR_TRIGGERED', data)
     }
   }
 };
 </script>
 <style scoped>
+.table-title {
+  font-size: 2em;
+}
 .title{
   padding-bottom: 0.5em;
 }
@@ -261,5 +274,4 @@ export default {
     margin: 0 auto;
     text-align: end;
 }
-
 </style>
