@@ -12,7 +12,7 @@
 import Navbar from "@/components/widget/Navbar";
 import Editor from "@/components/widget/Editor";
 import TableComponent from "@/components/widget/Table";
-import RolesForm from "@/components/widget/RolesForm"
+import RolesForm from "@/components/widget/admin/RolesForm"
 
 export default {
   name: "admin",
