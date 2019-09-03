@@ -1,6 +1,7 @@
     <template>
   <div class="admin-page">
-    <nav-menu></nav-menu>
+    
+    <role-form></role-form>
     <editor-component v-bind:key="id" v-bind:addUrl="addUrl" v-bind:updateUrl="updateUrl"></editor-component>
     <table-component :title="title" :tableHeaderList="tableHeaderList" :dataList="dataList"></table-component>
   </div>
@@ -11,6 +12,7 @@
 import Navbar from "@/components/widget/Navbar";
 import Editor from "@/components/widget/Editor";
 import TableComponent from "@/components/widget/Table";
+import RolesForm from "@/components/widget/RolesForm"
 
 export default {
   name: "admin",
@@ -120,7 +122,8 @@ export default {
   components: {
     "nav-menu": Navbar,
     "editor-component": Editor,
-    "table-component": TableComponent
+    "table-component": TableComponent,
+    "role-form": RolesForm
   }
 };
 </script>

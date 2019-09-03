@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
 import com.zcky.learn.with.teacher.constant.Constant;
+import com.zcky.learn.with.teacher.model.request.RolesRequest;
 import com.zcky.learn.with.teacher.mongoDb.model.Category;
 import com.zcky.learn.with.teacher.mongoDb.model.Roles;
 import com.zcky.learn.with.teacher.mongoDb.repository.RolesRepository;
@@ -47,10 +49,15 @@ public class RolesController extends BaseController {
 	}
 
 	@RequestMapping(value = "/api/roles/edit", method = RequestMethod.PUT)
-	public ResponseEntity<String> edit(@Valid @RequestBody Roles roles, HttpServletRequest request) throws Exception {
+	public ResponseEntity<String> edit(@Valid @RequestBody RolesRequest roles, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
-			repository.save(roles);
+			Roles updateRoles = new Roles();
+			updateRoles.set_id(new ObjectId(roles.getId()));
+			updateRoles.setStatus(roles.getStatus());
+			updateRoles.setType(roles.getType());
+			updateRoles.setName(roles.getName());
+			repository.save(updateRoles);
 			response = getSuccessResponse();
 			response.addProperty(Constant.RESPONSE,Constant.UPDATE_ROLES_SUCCESS_MESSAGE);
 		} catch(Exception e) {
@@ -102,7 +109,7 @@ public class RolesController extends BaseController {
 				roles = repository.findAllByStatus(status);
 			}
 			response = getSuccessResponse();
-			response.add(Constant.RESPONSE, toJSONArrayWithSerializer(Category.class, new RolesSerializer(), roles)  );
+			response.add(Constant.RESPONSE, toJSONArrayWithSerializer(Roles.class, new RolesSerializer(), roles)  );
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());

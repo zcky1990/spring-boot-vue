@@ -8,6 +8,7 @@ public class Roles {
 	private ObjectId _id;
 	
 	private String name;
+	private String type;
 	private Boolean status;
 	
 	public String getStringId() {
@@ -18,6 +19,12 @@ public class Roles {
 	}
 	public void set_id(ObjectId _id) {
 		this._id = _id;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	public String getName() {
 		return name;
