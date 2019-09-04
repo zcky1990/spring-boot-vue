@@ -7,7 +7,6 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.JsonObject;
 import com.zcky.learn.with.teacher.constant.Constant;
 import com.zcky.learn.with.teacher.model.request.RolesRequest;
-import com.zcky.learn.with.teacher.mongoDb.model.Category;
 import com.zcky.learn.with.teacher.mongoDb.model.Roles;
 import com.zcky.learn.with.teacher.mongoDb.repository.RolesRepository;
 import com.zcky.learn.with.teacher.mongoDb.serializer.RolesSerializer;
@@ -35,12 +33,14 @@ public class RolesController extends BaseController {
 	private RolesRepository repository;
 
 	@RequestMapping(value = "/api/roles/create", method = RequestMethod.POST)
-	public ResponseEntity<String> create(@Valid @RequestBody Roles roles, HttpServletRequest request) throws Exception {
+	public ResponseEntity<String> create(@Valid @RequestBody RolesRequest rolesRequest, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
-			repository.save(roles);
+			Roles role = new Roles();
+			role.fromObject(rolesRequest);
+			repository.save(role);
 			response = getSuccessResponse();
-			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Roles.class, new RolesSerializer(), roles)  );
+			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Roles.class, new RolesSerializer(), role)  );
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());

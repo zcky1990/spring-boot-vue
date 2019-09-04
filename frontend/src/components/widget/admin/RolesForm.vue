@@ -72,6 +72,15 @@
               flat
               color="rgb(0, 209, 178)"
             ></v-text-field>
+            <v-select
+              :items="dataDropdownList"
+              v-model="data.access_level"
+              label="Access Level"
+              outlined
+              item-text="level"
+              return-object
+              color="rgb(0, 209, 178)"
+            ></v-select>
             <v-select v-model="data.status" :items="status" label="Status"></v-select>
             <v-flex align-center justify-center>
                 <div class="form-bttm-container">
@@ -107,14 +116,20 @@ export default {
         editUrl: "/roles/edit",
         getUrl: "/roles/",
         deleteUrl: "/roles/delete/",
-        getListUrl: "/roles/get_roles_list"
+        getListUrl: "/roles/get_roles_list",
+        getListDropdown: "/access_level/get_access_level_list"
       },
       isFormShow: true,
       data: {
-        id:"",
-        type: "",
-        name: "",
+        id :"",
+        type : "",
+        name : "",
         status: false,
+        access_level:{
+          id : "",
+          level : "",
+          description : ""
+        }
       },
       tableHeaderList:[
         { text: "Id", value: "id" },
@@ -125,6 +140,7 @@ export default {
         { text: "Action", value: "action" }
       ],
       dataTableList:[],
+      dataDropdownList:[],
       status:[true,false],
       roleTypeRules: [
         v => !!v || "Role type is required",
@@ -136,6 +152,7 @@ export default {
   },
   created(){
     this.getDataList();
+    this.getDataAccessList();
   },
   methods: {
     submitForm: function() {
@@ -152,7 +169,6 @@ export default {
     },
     createData: function(model) {
       let self = this;
-      let router = this.$router;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
       this.post(this.urlData.createUrl, model, headers,
       function(response){
@@ -174,6 +190,19 @@ export default {
         if(response.status == 200){
           self.dataTableList = response.data.response
           self.page++;
+        }
+      },
+      function(e){
+        self.setMessage(e,1)
+      })
+    },
+    getDataAccessList: function(){
+      let self = this;
+      let headers = this.getDefaultHeaders(this.getMeta("token"))
+      this.get(this.urlData.getListDropdown, headers,
+      function(response){
+        if(response.status == 200){
+          self.dataDropdownList = response.data.response
         }
       },
       function(e){

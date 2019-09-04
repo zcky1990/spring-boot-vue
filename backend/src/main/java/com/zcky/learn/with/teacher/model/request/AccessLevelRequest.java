@@ -5,7 +5,6 @@ public class AccessLevelRequest {
 	private String id;
 	private Integer level;
 	private String description;
-	private String role_id;
 	public String getId() {
 		return id;
 	}
@@ -23,11 +22,5 @@ public class AccessLevelRequest {
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public String getRole_id() {
-		return role_id;
-	}
-	public void setRole_id(String role_id) {
-		this.role_id = role_id;
 	}
 }

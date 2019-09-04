@@ -20,15 +20,13 @@
               <v-data-table class="table-container" :headers="tableHeaderList" :items="dataTableList" :search="search">
                 <template v-slot:items="props">
                   <tr>
-                    <td class="text-xs-left">{{ props.item.id }}</td>
-                    <td class="text-xs-left">{{ props.item.type }}</td>
-                    <td class="text-xs-left">{{ props.item.name }}</td>
-                    <td class="text-xs-left">{{ props.item.status }}</td>
-                    <td class="text-xs-left">{{ props.item.created_date }}</td>
+                    <td class="text-xs-left" hidden>{{ props.item.id }}</td>
+                    <td class="text-xs-left">{{ props.item.level }}</td>
+                    <td class="text-xs-left">{{ props.item.description }}</td>
                   <td>
                     <v-layout align-center justify-space-around>
-                    <v-icon @click="editData(props.item.id)">fas fa-edit</v-icon>
-                    <v-icon @click="deleteData(props.item.id)">fas fa-trash</v-icon>
+                    <v-icon @click="editListener(props.item.id)">fas fa-edit</v-icon>
+                    <v-icon @click="deleteListener(props.item.id)">fas fa-trash</v-icon>
                     </v-layout>
                   </td>
                   </tr>
@@ -55,24 +53,24 @@
               class="hidden"
             ></v-text-field>
             <v-text-field
-              v-model="data.type"
-              :rules="roleTypeRules"
-              label="Type"
+              v-model="data.level"
+              :rules="Rules1"
+              label="Level"
               required
               outline 
+              type="number"
               flat
               color="rgb(0, 209, 178)"
             ></v-text-field>
             <v-text-field
-              v-model="data.name"
-              :rules="roleNameRules"
-              label="Name"
+              v-model="data.description"
+              :rules="Rules2"
+              label="Desrciption"
               required
               outline 
               flat
               color="rgb(0, 209, 178)"
             ></v-text-field>
-            <v-select v-model="data.status" :items="status" label="Status"></v-select>
             <v-flex align-center justify-center>
                 <div class="form-bttm-container">
                   <div class="btn-container">
@@ -108,36 +106,30 @@ export default {
         getUrl: "/access_level/",
         deleteUrl: "/access_level/delete/",
         getListUrl: "/access_level/get_access_level_list",
-        getListDropdown: "/roles/get_roles_list"
       },
       isFormShow: true,
       data: {
         id:"",
-        type: "",
-        name: "",
-        status: false,
+        level: "",
+        description: ""
       },
       tableHeaderList:[
-        { text: "Id", value: "id" },
-        { text: "Type", value: "type" },
-        { text: "Name", value: "name" },
-        { text: "Status", value: "status" },
-        { text: "Created Date", value: "created_date" },
+        { text: "Level", value: "level" },
+        { text: "Description", value: "description" },
         { text: "Action", value: "action" }
       ],
       dataTableList:[],
       status:[true,false],
-      roleTypeRules: [
-        v => !!v || "Role type is required",
+      Rules1: [
+        v => !!v || "Level is required",
       ],
-      roleNameRules: [
-        v => !!v || "Role Name is required",
+      Rules2: [
+        v => !!v || "Description is required",
       ]
     };
   },
   created(){
     this.getDataList();
-    this.getDropdownDataList();
   },
   methods: {
     submitForm: function() {
@@ -149,27 +141,11 @@ export default {
         }
       }
     },
-    getDropdownDataList: function(){
-      let self = this;
-      let headers = this.getDefaultHeaders(this.getMeta("token"))
-      this.get(this.urlData.getListDropdown+"?status=true", headers,
-      function(response){
-        if(response.status == 200){
-          self.dataTableList = response.data.response
-          self.page++;
-        }
-      },
-      function(e){
-        self.setMessage(e,1)
-      })
-    },
-
     resetData: function(){
       this.data = {};
     },
     createData: function(model) {
       let self = this;
-      let router = this.$router;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
       this.post(this.urlData.createUrl, model, headers,
       function(response){
@@ -186,7 +162,7 @@ export default {
     getDataList: function(){
       let self = this;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
-      this.get(this.urlData.getListUrl+"?status=true&page="+this.page, headers,
+      this.get(this.urlData.getListUrl+"?page="+this.page, headers,
       function(response){
         if(response.status == 200){
           self.dataTableList = response.data.response
@@ -232,7 +208,6 @@ export default {
     },
     updateData: function(model) {
       let self = this;
-      let router = this.$router;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
       this.put(this.urlData.editUrl, model, headers,
       function(response){
@@ -250,10 +225,10 @@ export default {
       this.mode = 'new'
       this.resetData();
     },
-    editData: function(id){
+    editListener: function(id){
       this.getData(id);
     },
-    deleteData: function(id){
+    deleteListener: function(id){
       this.deleteData(id);
     },
     setMessage: function(message, type){

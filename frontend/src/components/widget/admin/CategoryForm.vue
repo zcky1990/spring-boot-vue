@@ -152,7 +152,6 @@ export default {
     },
     createData: function(model) {
       let self = this;
-      let router = this.$router;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
       this.post(this.urlData.createUrl, model, headers,
       function(response){
@@ -216,7 +215,6 @@ export default {
     },
     updateData: function(model) {
       let self = this;
-      let router = this.$router;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
       this.put(this.urlData.editUrl, model, headers,
       function(response){

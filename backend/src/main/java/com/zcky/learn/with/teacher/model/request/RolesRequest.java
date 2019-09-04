@@ -5,6 +5,7 @@ public class RolesRequest {
 	private String name;
 	private String type;
 	private Boolean status;
+	private AccessLevelRequest access_level;
 	
 	public String getId() {
 		return id;
@@ -29,5 +30,11 @@ public class RolesRequest {
 	}
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+	public AccessLevelRequest getAccess_level() {
+		return access_level;
+	}
+	public void setAccess_level(AccessLevelRequest access_level) {
+		this.access_level = access_level;
 	}
 }

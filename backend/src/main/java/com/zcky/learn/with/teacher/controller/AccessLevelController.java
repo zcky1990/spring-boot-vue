@@ -95,18 +95,14 @@ public class AccessLevelController extends BaseController {
 
 	
 	@RequestMapping(value = "/api/access_level/get_access_level_list", method = RequestMethod.GET)
-	public ResponseEntity<String> getRolesList(@RequestParam(value="roleId", required=false) String roleId, @RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
+	public ResponseEntity<String> getRolesList(@RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
 			List<AccessLevel> accessLevel  = new ArrayList<>();
 			if(page!= null) {
 				Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").descending());
-				if(roleId != null) {
-					accessLevel = repository.findAllAccessLevelByRoleId(new ObjectId(roleId), pageableRequest);
-				}else {
-					Page<AccessLevel> pages = repository.findAll(pageableRequest);
-					accessLevel = pages.getContent();
-				}
+				Page<AccessLevel> pages = repository.findAll(pageableRequest);
+				accessLevel = pages.getContent();
 			}else {
 				accessLevel = repository.findAll();
 			}

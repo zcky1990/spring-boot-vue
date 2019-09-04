@@ -18,9 +18,6 @@ public class AccessLevelSerializer implements JsonSerializer<AccessLevel> {
 			jsonObj.remove("_id");
 		}
 		jsonObj.addProperty("id", id);
-		Date time = src.get_id().getDate();
-		String createDate = util.getFormatedDate(time, "dd/MM/yyyy HH:mm:ss");
-		jsonObj.addProperty("created_date", createDate);
 		return jsonObj;
 	}
 }
