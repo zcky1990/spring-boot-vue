@@ -1,7 +1,5 @@
 <template>
 <v-container>
-    <v-layout align-center justify-center flex fill-height>
-        <v-container>
             <v-card>
               <div class="btn-add">
                   <v-btn absolute dark fab top
@@ -37,7 +35,6 @@
                 </template>
               </v-data-table>
             </v-card>
-        </v-container>
         <v-dialog
           v-model="dialog"
           persistent
@@ -89,7 +86,6 @@
           </v-container>
         </v-card>
         </v-dialog>
-    </v-layout>
   </v-container>
 </template>
 <script>
