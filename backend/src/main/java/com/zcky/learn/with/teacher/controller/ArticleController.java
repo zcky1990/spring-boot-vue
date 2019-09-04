@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.JsonObject;
 import com.zcky.learn.with.teacher.constant.Constant;
 import com.zcky.learn.with.teacher.model.ArticleList;
+import com.zcky.learn.with.teacher.model.request.ArticleRequest;
 import com.zcky.learn.with.teacher.mongoDb.model.Article;
 import com.zcky.learn.with.teacher.mongoDb.model.Users;
 import com.zcky.learn.with.teacher.mongoDb.repository.ArticleRepository;
@@ -58,11 +59,13 @@ public class ArticleController extends BaseController {
 	}
 
 	@RequestMapping(value = "/api/article/add_article", method = RequestMethod.POST)
-	public ResponseEntity<String> addArticle(@Valid @RequestBody Article article, HttpServletRequest request) throws Exception {
+	public ResponseEntity<String> addArticle(@Valid @RequestBody ArticleRequest articleRequest, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("x-uid");
 		Users user = userRepository.findBy_id(new ObjectId(auth));
 		JsonObject response;
 		if(user != null) {
+			Article article = new Article();
+			article.fromObject(articleRequest);
 			article.setAuthor(user);
 			try {
 				articleRepository.save(article);

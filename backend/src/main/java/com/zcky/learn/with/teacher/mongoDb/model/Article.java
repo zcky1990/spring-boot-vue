@@ -4,12 +4,16 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import com.zcky.learn.with.teacher.model.request.ArticleRequest;
+
 public class Article {
 	@Id
 	private ObjectId _id;
 	
 	@DBRef
 	private Users author;
+	@DBRef
+	private Category categoryArticle;
 	private String article_title;
 	private String article_permalink;
 	private String article_content;
@@ -75,5 +79,27 @@ public class Article {
 	public void setSlug(String slug) {
 		this.slug = slug;
 	}
-	
+	public Category getCategoryArticle() {
+		return categoryArticle;
+	}
+	public void setCategoryArticle(Category categoryArticle) {
+		this.categoryArticle = categoryArticle;
+	}
+	public void fromObject(ArticleRequest request) {
+		if(request.getId() != null) {
+			this.set_id(new ObjectId(request.getId()));
+		}
+		this.setArticle_content(request.getArticle_content());
+		this.setArticle_permalink(request.getArticle_permalink());
+		this.setArticle_title(request.getArticle_title());
+		
+		Category category = new Category();
+		category.set_id(new ObjectId(request.getCategoryArticle().getId()));
+		this.setCategoryArticle(category);
+		
+		this.setSlug(request.getSlug());
+		this.setStatus(request.getStatus());
+		this.setType(request.getType());
+		
+	}
 }

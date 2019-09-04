@@ -13,12 +13,15 @@
           v-on:input="setSlug()"
           outlined
       ></v-text-field>
-        <v-text-field
-          v-model="data.categoryArticle"
-          label="category"
-          placeholder="Fantasy"
-          outlined
-      ></v-text-field>
+        <v-select
+              :items="categoryDropdown"
+              v-model="data.categoryArticle"
+              label="Category"
+              outlined
+              item-text="name"
+              return-object
+              color="rgb(0, 209, 178)"
+            ></v-select>
       </v-flex>
       <v-flex xs12 d-flex>
         <alert-component ref="alert"></alert-component>
@@ -108,11 +111,15 @@ export default {
       data:{
         _id:"",
         articleId:"asdasdasd",
-        categoryArticle:"",
+        categoryArticle:{},
         article_content:"",
         article_title: "",
         slug:""
       },
+      urlData : {
+        getListUrl: "/category/get_category_list"
+      },
+      categoryDropdown: [],
       configEditor:{
         editor: ClassicEditor,
         editorConfig: {
@@ -230,7 +237,23 @@ export default {
         function(e) {
           self.showErrorAlert(e);
         });
-    }
+    },
+    getDataList: function(){
+      let self = this;
+      let headers = this.getDefaultHeaders(this.getMeta("token"))
+      this.get(this.urlData.getListUrl+"?status=true", headers,
+      function(response){
+        if(response.status == 200){
+          self.categoryDropdown = response.data.response
+        }
+      },
+      function(e){
+        self.setMessage(e,1)
+      })
+    },
+  },
+  created(){
+    this.getDataList();
   },
   computed: {
      btnOptions () {
