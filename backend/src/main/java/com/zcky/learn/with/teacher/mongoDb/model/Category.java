@@ -3,6 +3,8 @@ package com.zcky.learn.with.teacher.mongoDb.model;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
+import com.zcky.learn.with.teacher.model.request.CategoryRequest;
+
 public class Category {
 	@Id
 	private ObjectId _id;
@@ -38,5 +40,12 @@ public class Category {
 	}
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+	
+	public void fromObject(CategoryRequest request) {
+		this.set_id(new ObjectId(request.getId()));
+		this.setName(request.getName());
+		this.setType(request.getType());
+		this.setStatus(request.getStatus());
 	}
 }

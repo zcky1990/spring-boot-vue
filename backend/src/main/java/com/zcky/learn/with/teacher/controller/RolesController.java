@@ -53,10 +53,7 @@ public class RolesController extends BaseController {
 		JsonObject response;
 		try {
 			Roles updateRoles = new Roles();
-			updateRoles.set_id(new ObjectId(roles.getId()));
-			updateRoles.setStatus(roles.getStatus());
-			updateRoles.setType(roles.getType());
-			updateRoles.setName(roles.getName());
+			updateRoles.fromObject(roles);
 			repository.save(updateRoles);
 			response = getSuccessResponse();
 			response.addProperty(Constant.RESPONSE,Constant.UPDATE_ROLES_SUCCESS_MESSAGE);

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
 import com.zcky.learn.with.teacher.constant.Constant;
+import com.zcky.learn.with.teacher.model.request.CategoryRequest;
 import com.zcky.learn.with.teacher.mongoDb.model.Category;
 import com.zcky.learn.with.teacher.mongoDb.repository.CategoryRepository;
 import com.zcky.learn.with.teacher.mongoDb.serializer.CategorySerializer;
@@ -46,9 +47,11 @@ public class CategoryController extends BaseController {
 	}
 
 	@RequestMapping(value = "/api/category/edit", method = RequestMethod.PUT)
-	public ResponseEntity<String> edit(@Valid @RequestBody Category category, HttpServletRequest request) throws Exception {
+	public ResponseEntity<String> edit(@Valid @RequestBody CategoryRequest categoryReq, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
+			Category category = new Category();
+			category.fromObject(categoryReq);
 			repository.save(category);
 			response = getSuccessResponse();
 			response.addProperty(Constant.RESPONSE,Constant.UPDATE_CATEGORY_SUCCESS_MESSAGE);
@@ -90,15 +93,24 @@ public class CategoryController extends BaseController {
 
 	
 	@RequestMapping(value = "/api/category/get_category_list", method = RequestMethod.GET)
-	public ResponseEntity<String> getCategoryList(@RequestParam(value="type", required=true) String type,@RequestParam(value="status", required=true) Boolean status, @RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
+	public ResponseEntity<String> getCategoryList(@RequestParam(value="type", required=false) String type,@RequestParam(value="status", required=true) Boolean status, @RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
 			List<Category> categories  = new ArrayList<>();
 			if(page!= null) {
 				Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").descending());
-				categories = repository.findAllByTypeAndStatus(type, status, pageableRequest);
+				
+				if(type != null) {
+					categories = repository.findAllByTypeAndStatus(type, status, pageableRequest);
+				}else{
+					categories = repository.findAllByStatus(status, pageableRequest);
+				}
 			}else {
-				categories = repository.findAllByTypeAndStatus(type, status);
+				if(type != null) {
+					categories = repository.findAllByTypeAndStatus(type, status);
+				}else {
+					categories = repository.findAllByStatus(status);
+				}
 			}
 			response = getSuccessResponse();
 			response.add(Constant.RESPONSE, toJSONArrayWithSerializer(Category.class, new CategorySerializer(), categories)  );

@@ -97,21 +97,21 @@
 import { EventBus } from './../../../EventBus.js';
 
 export default {
-  name: "Roles-form",
+  name: "category-form",
   data() {
     return {
       valid: false,
       page : 0,
       dialog: false,
       mode: 'new',
-      title: "Table Role List",
+      title: "Table Category List",
       search: "",
       urlData : {
-        createRoleUrl: "/roles/create",
-        editRoleUrl: "/roles/edit",
-        getRoleUrl: "/roles/",
-        deleteRoleUrl: "/roles/delete/",
-        getRoleListUrl: "/roles/get_roles_list"
+        createRoleUrl: "/category/create",
+        editRoleUrl: "/category/edit",
+        getRoleUrl: "/category/",
+        deleteRoleUrl: "/category/delete/",
+        getRoleListUrl: "/category/get_category_list"
       },
       isFormShow: true,
       data: {
@@ -131,10 +131,10 @@ export default {
       dataTableList:[],
       status:[true,false],
       roleTypeRules: [
-        v => !!v || "Role type is required",
+        v => !!v || "Category type is required",
       ],
       roleNameRules: [
-        v => !!v || "Role Name is required",
+        v => !!v || "Category Name is required",
       ]
     };
   },
@@ -164,6 +164,7 @@ export default {
            self.dataTableList.push(response.data.response)
            self.resetData();
            self.dialog = false;
+           
           }
       },
       function(e){
@@ -253,9 +254,9 @@ export default {
   computed:{
     titleForm:function(){
       if(this.mode == "new"){
-        return "Add new Role";
+        return "Add new Category";
       }else{
-        return "Edit Role"
+        return "Edit Category"
       }
     }
   }

@@ -18,6 +18,12 @@ public interface CategoryRepository extends MongoRepository<Category, String> {
 	@Query(value = "{'type' : ?0, 'status': ?1}")
 	List<Category> findAllByTypeAndStatus(String type, Boolean status);
 	
+	@Query(value = "{'status': ?0}")
+	List<Category> findAllByStatus( Boolean status);
+	
+	@Query(value = "{'status': ?0}")
+	List<Category> findAllByStatus( Boolean status, Pageable pageable);
+	
 	@Query(value = "{'name' : ?0 }")
 	Category findByName(String name);
 }
