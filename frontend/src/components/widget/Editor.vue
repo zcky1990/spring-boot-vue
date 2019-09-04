@@ -44,7 +44,7 @@
 
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials";
-import Base64Uploader from "@ckeditor/ckeditor5-upload/src/base64uploadadapter";
+//import Base64Uploader from "@ckeditor/ckeditor5-upload/src/base64uploadadapter";
 import Autoformat from "@ckeditor/ckeditor5-autoformat/src/autoformat";
 import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold";
 import Italic from "@ckeditor/ckeditor5-basic-styles/src/italic";
@@ -243,5 +243,8 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style>
+.ck-editor__editable {
+    min-height: 300px;
+}
 </style>
