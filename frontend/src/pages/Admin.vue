@@ -1,5 +1,6 @@
     <template>
   <div class="admin-page">
+    <acess-level-form></acess-level-form>
     <category-form></category-form>
     <role-form></role-form>
     <editor-component v-bind:key="id" v-bind:addUrl="addUrl" v-bind:updateUrl="updateUrl"></editor-component>
@@ -14,6 +15,7 @@ import Editor from "@/components/widget/Editor";
 import TableComponent from "@/components/widget/Table";
 import RolesForm from "@/components/widget/admin/RolesForm"
 import CategoryForm from "@/components/widget/admin/CategoryForm"
+import AccessLevelForm from "@/components/widget/admin/AccessLevelForm"
 
 export default {
   name: "admin",
@@ -125,7 +127,8 @@ export default {
     "editor-component": Editor,
     "table-component": TableComponent,
     "role-form": RolesForm,
-    "category-form": CategoryForm
+    "category-form": CategoryForm,
+    "acess-level-form":AccessLevelForm
   }
 };
 </script>

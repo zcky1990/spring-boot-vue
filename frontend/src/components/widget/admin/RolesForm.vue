@@ -27,8 +27,8 @@
                     <td class="text-xs-left">{{ props.item.created_date }}</td>
                   <td>
                     <v-layout align-center justify-space-around>
-                    <v-icon @click="editData(props.item.id)">fas fa-edit</v-icon>
-                    <v-icon @click="deleteData(props.item.id)">fas fa-trash</v-icon>
+                    <v-icon @click="editListener(props.item.id)">fas fa-edit</v-icon>
+                    <v-icon @click="deleteListener(props.item.id)">fas fa-trash</v-icon>
                     </v-layout>
                   </td>
                   </tr>
@@ -103,11 +103,11 @@ export default {
       title: "Table Role List",
       search: "",
       urlData : {
-        createRoleUrl: "/roles/create",
-        editRoleUrl: "/roles/edit",
-        getRoleUrl: "/roles/",
-        deleteRoleUrl: "/roles/delete/",
-        getRoleListUrl: "/roles/get_roles_list"
+        createUrl: "/roles/create",
+        editUrl: "/roles/edit",
+        getUrl: "/roles/",
+        deleteUrl: "/roles/delete/",
+        getListUrl: "/roles/get_roles_list"
       },
       isFormShow: true,
       data: {
@@ -135,26 +135,26 @@ export default {
     };
   },
   created(){
-    this.getRoleList();
+    this.getList();
   },
   methods: {
     submitForm: function() {
       if (this.$refs.form.validate()) {
         if(this.mode == 'new'){
-            this.createRoles(this.data);
+            this.createData(this.data);
         }else{
-            this.updateRoles(this.data);
+            this.updateData(this.data);
         }
       }
     },
     resetData: function(){
       this.data = {};
     },
-    createRoles: function(model) {
+    createData: function(model) {
       let self = this;
       let router = this.$router;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
-      this.post(this.urlData.createRoleUrl, model, headers,
+      this.post(this.urlData.createUrl, model, headers,
       function(response){
         if (response.status == 200) {
            self.dataTableList.push(response.data.response)
@@ -166,10 +166,10 @@ export default {
           self.setMessage(e,1)
       });
     },
-    getRoleList: function(){
+    getList: function(){
       let self = this;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
-      this.get(this.urlData.getRoleListUrl+"?status=true&page="+this.page, headers,
+      this.get(this.urlData.getListUrl+"?status=true&page="+this.page, headers,
       function(response){
         if(response.status == 200){
           self.dataTableList = response.data.response
@@ -180,10 +180,10 @@ export default {
         self.setMessage(e,1)
       })
     },
-    deleteRole: function(id){
+    deleteData: function(id){
       let self = this;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
-      this.delete(this.urlData.deleteRoleUrl+id, headers,
+      this.delete(this.urlData.deleteUrl+id, headers,
       function(response){
         if(response.status == 200){
           for( let i = 0; i < self.dataTableList.length; i++){ 
@@ -198,10 +198,10 @@ export default {
         self.setMessage(e,1)
       })
     },
-    getRole: function(id){
+    getData: function(id){
       let self = this;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
-      this.get(this.urlData.getRoleUrl+id, headers,
+      this.get(this.urlData.getUrl+id, headers,
       function(response){
         if(response.status == 200){
           self.dialog = true;
@@ -213,11 +213,11 @@ export default {
         self.setMessage(e,1)
       })
     },
-    updateRoles: function(model) {
+    updateData: function(model) {
       let self = this;
       let router = this.$router;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
-      this.put(this.urlData.editRoleUrl, model, headers,
+      this.put(this.urlData.editUrl, model, headers,
       function(response){
         if (response.status == 200) {
            self.resetData();
@@ -233,11 +233,11 @@ export default {
       this.mode = 'new'
       this.resetData();
     },
-    editData: function(id){
-      this.getRole(id);
+    editListener: function(id){
+      this.getData(id);
     },
-    deleteData: function(id){
-      this.deleteRole(id);
+    deleteListener: function(id){
+      this.deleteData(id);
     },
     setMessage: function(message, type){
                 let data={}
