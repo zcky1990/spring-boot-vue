@@ -244,7 +244,6 @@ export default {
     },
     updateData: function(model) {
       let self = this;
-      let router = this.$router;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
       this.put(this.urlData.editUrl, model, headers,
       function(response){

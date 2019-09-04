@@ -10,7 +10,7 @@
 
     <script>
 //import {AXIOS} from '@/components/http-common'
-import Navbar from "@/components/widget/Navbar";
+//import Navbar from "@/components/widget/Navbar";
 import Editor from "@/components/widget/Editor";
 import TableComponent from "@/components/widget/Table";
 import RolesForm from "@/components/widget/admin/RolesForm"
@@ -123,7 +123,6 @@ export default {
     };
   },
   components: {
-    "nav-menu": Navbar,
     "editor-component": Editor,
     "table-component": TableComponent,
     "role-form": RolesForm,
