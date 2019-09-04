@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -103,7 +104,8 @@ public class AccessLevelController extends BaseController {
 				if(roleId != null) {
 					accessLevel = repository.findAllAccessLevelByRoleId(new ObjectId(roleId), pageableRequest);
 				}else {
-					accessLevel = repository.findAllAccessLevel(pageableRequest);
+					Page<AccessLevel> pages = repository.findAll(pageableRequest);
+					accessLevel = pages.getContent();
 				}
 			}else {
 				accessLevel = repository.findAll();
