@@ -135,7 +135,7 @@ export default {
     };
   },
   created(){
-    this.getList();
+    this.getDataList();
   },
   methods: {
     submitForm: function() {
@@ -167,7 +167,7 @@ export default {
           self.setMessage(e,1)
       });
     },
-    getList: function(){
+    getDataList: function(){
       let self = this;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
       this.get(this.urlData.getListUrl+"?status=true&page="+this.page, headers,
