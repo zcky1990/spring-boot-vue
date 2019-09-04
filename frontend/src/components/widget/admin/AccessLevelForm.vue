@@ -107,7 +107,8 @@ export default {
         editUrl: "/access_level/edit",
         getUrl: "/access_level/",
         deleteUrl: "/access_level/delete/",
-        getListUrl: "/access_level/get_access_level_list"
+        getListUrl: "/access_level/get_access_level_list",
+        getListDropdown: "/roles/get_roles_list"
       },
       isFormShow: true,
       data: {
@@ -136,6 +137,7 @@ export default {
   },
   created(){
     this.getDataList();
+    this.getDropdownDataList();
   },
   methods: {
     submitForm: function() {
@@ -147,6 +149,21 @@ export default {
         }
       }
     },
+    getDropdownDataList: function(){
+      let self = this;
+      let headers = this.getDefaultHeaders(this.getMeta("token"))
+      this.get(this.urlData.getListDropdown+"?status=true", headers,
+      function(response){
+        if(response.status == 200){
+          self.dataTableList = response.data.response
+          self.page++;
+        }
+      },
+      function(e){
+        self.setMessage(e,1)
+      })
+    },
+
     resetData: function(){
       this.data = {};
     },
