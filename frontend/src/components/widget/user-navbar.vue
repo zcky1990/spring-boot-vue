@@ -26,20 +26,14 @@
       <v-toolbar-side-icon v-if="isMobile" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
        
       </v-toolbar>
-    <div class="error-message-container">
-      <snack-bar ref="navSnackbar"></snack-bar>
-    </div>
   </div>
 </template>
 
 <script>
-import SnackBar from "./SnackBar";
+import { EventBus } from './../../EventBus.js';
 
 export default {
   name: "user-navbar",
-  components: {
-    "snack-bar": SnackBar
-  },
   data() {
     return {
       drawer: true,
@@ -77,16 +71,6 @@ export default {
         v => !!v || "Password is required",
         v => (v && v.length >= 8) || "Password must be more than 8 characters"
       ],
-      errorSnackBarConfig: {
-        color: "error",
-        timeout: 6000,
-        top: true
-      },
-      successSnackBarConfig: {
-        color: "success",
-        timeout: 6000,
-        top: true
-      },
       isLogged: false
     };
   },
@@ -116,15 +100,11 @@ export default {
       this.menu = false;
       this.users = false;
     },
-    setSuccessMessage(message) {
-      this.$refs.navSnackbar.setConfig(this.successSnackBarConfig);
-      this.$refs.navSnackbar.showSnackbar(message);
-      this.closePopUpMenu();
-      this.$refs.form.reset();
-    },
-    setErrorMessage(errorMessage) {
-      this.$refs.navSnackbar.setConfig(this.errorSnackBarConfig);
-      this.$refs.navSnackbar.showSnackbar(errorMessage);
+    setMessage(message, type) {
+      let data={}
+                data.message = message
+                data.type = type
+      EventBus.$emit('SNACKBAR_TRIGGERED', data)
       this.closePopUpMenu();
       this.$refs.form.reset();
     },

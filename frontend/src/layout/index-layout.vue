@@ -24,8 +24,8 @@
   </div>
     </template>
     <script>
-    import NavbarComponents from "@/components/widget/Navbar";
-    import listArticleComponents from "@/components/widget/ListArticle";
+    import NavbarComponents from "@/components/widget/navbar";
+    import listArticleComponents from "@/components/widget/list-article";
 
     export default   {
         name: 'index-page-layout',

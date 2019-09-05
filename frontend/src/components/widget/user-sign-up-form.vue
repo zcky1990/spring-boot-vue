@@ -83,13 +83,11 @@
 </template>
 
 <script>
-import SnackBar from "./SnackBar";
+
+import { EventBus } from './../../EventBus.js';
 
 export default {
   name: "user-sign-up-form",
-  components: {
-    "snack-bar": SnackBar
-  },
   data() {
     return {
       valid: false,
@@ -116,12 +114,7 @@ export default {
         v => !!v || "Password is required",
         v =>
           (v && v.length >= 8) || "Password must be or more than 8 characters"
-      ],
-      snackBarConfig: {
-        color: "error",
-        timeout: 6000,
-        top: true
-      },
+      ]
     };
   },
   methods: {
@@ -150,13 +143,10 @@ export default {
         });
     },
     setMessage(message, type) {
-      if(type == 0){
-        this.snackBarConfig.color = "success"
-      }else{
-        this.snackBarConfig.color = "error"
-      }
-      this.$refs.snackbar.setConfig(this.snackBarConfig);
-      this.$refs.snackbar.showSnackbar(message);
+      let data={}
+                data.message = message
+                data.type = type
+      EventBus.$emit('SNACKBAR_TRIGGERED', data)
     },
     submit() {
       if (this.$refs.form.validate()) {

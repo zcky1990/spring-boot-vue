@@ -58,7 +58,7 @@
 
 
 export default {
-  name: "article-component",
+  name: "article",
   props: {
     content : Object
   },

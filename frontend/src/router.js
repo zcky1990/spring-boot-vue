@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from '@/pages/Index'
-import Login from '@/pages/Login'
-import Admin from '@/pages/Admin'
-import User from '@/pages/User'
-import UserValidation from '@/pages/UserValidation'
-import UserSignUp from '@/pages/UserSignUp'
-import Article from '@/pages/Article'
+import Index from '@/pages/index'
+import Login from '@/pages/login'
+import Admin from '@/pages/admin'
+import User from '@/pages/user'
+import UserValidation from '@/pages/user-validation'
+import UserSignUp from '@/pages/user-sign-up'
+import Article from '@/pages/article'
 
 Vue.use(Router)
 export default new Router({

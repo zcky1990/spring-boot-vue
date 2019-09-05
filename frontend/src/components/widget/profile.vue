@@ -1,8 +1,5 @@
 <template>
   <section class="section profile">
-    <div class="snack-bar-container">
-       <snack-bar ref="snackbar"></snack-bar>
-    </div>
     <div class="profile-container">
       <div class="page-title">
         <div class="overview">Overview</div>
@@ -180,13 +177,10 @@
 </template>
 
 <script>
-import SnackBar from "./SnackBar";
+import { EventBus } from './../../EventBus.js';
 
 export default {
   name: "profile-component",
-  components: {
-    "snack-bar": SnackBar
-  },
   data() {
     return {
       data: {
@@ -256,22 +250,13 @@ export default {
       this.put(this.saveUserProfileUrl, this.data ,  headers,
       function(response) {
           if (response.status == 200) {
-           self.setMessage(response.data.response, 0) 
+           //self.setMessage(response.data.response, 0) 
            self.editField();
           }
       },
       function(e) {
-            self.setMessage(e, 1)
+            //self.setMessage(e, 1)
       });
-    },
-    setMessage: function (message, type) {
-      if(type == 0){
-        this.snackBarConfig.color = "success"
-      }else{
-        this.snackBarConfig.color = "error"
-      }
-      this.$refs.snackbar.setConfig(this.snackBarConfig);
-      this.$refs.snackbar.showSnackbar(message);
     },
     isImageExists: function() {
       if(this.data.image_url == "" || this.data.image_url == undefined){
@@ -315,6 +300,12 @@ export default {
       function(e) {
              self.setMessage('Upload image failed', 1) 
       });
+    },
+    setMessage(message, type){
+      let data={}
+                data.message = message
+                data.type = type
+      EventBus.$emit('SNACKBAR_TRIGGERED', data)
     }
   },
   computed: {

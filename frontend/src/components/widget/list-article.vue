@@ -87,8 +87,10 @@
 </template>
 <script>
 
+import { EventBus } from './../../EventBus.js';
+
 export default {
-  name: "list-article-component",
+  name: "list-article",
   props: ["articleList"],
   data() {
     return {
@@ -123,7 +125,7 @@ export default {
           }         
         },
         function(e) {
-
+          this.setMessage(e,1);
         });
     },
     getLoadMoreService: function() {
@@ -137,6 +139,7 @@ export default {
         },
       function (e){
           this.disableEnableLoadMoreBtn(false);
+          this.setMessage(e,1);
       });
     },
     loadMore: function (){
@@ -150,6 +153,12 @@ export default {
     },
     setListCount : function (){
       this.listCount = this.data.length - 1;
+    },
+    setMessage(message, type){
+      let data={}
+                data.message = message
+                data.type = type
+      EventBus.$emit('SNACKBAR_TRIGGERED', data)
     }
   }
 };

@@ -3,7 +3,7 @@
     </template>
 
     <script>
-    import Layout from '@/layout/IndexLayout'
+    import Layout from '@/layout/index-layout'
     import { EventBus } from './../EventBus.js';
 
     export default {

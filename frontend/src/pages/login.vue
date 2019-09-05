@@ -3,7 +3,7 @@
     </template>
 
     <script>
-    import LoginLayout from '@/layout/LoginLayout'
+    import LoginLayout from '@/layout/login-layout'
 
     export default {
     name: 'login',

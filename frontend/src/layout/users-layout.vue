@@ -13,8 +13,8 @@
 
     <script>
 
-    import Navbar from '@/components/widget/Navbar'
-    import ProfileComponents from '@/components/widget/Profile'
+    import Navbar from '@/components/widget/navbar'
+    import ProfileComponents from '@/components/widget/profile'
 
     export default {
         name: 'user-page-layout',

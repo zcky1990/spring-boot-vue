@@ -11,7 +11,7 @@
 <script>
 //type alert : 'success', 'info', 'error', 'warning'
 export default {
-  name: "alert-component",
+  name: "alert",
   data() {
     return {
       alert: false,

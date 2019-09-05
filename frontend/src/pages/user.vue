@@ -3,17 +3,14 @@
 </template>
 
 <script>
-import Layout from '@/layout/SignUpLayout'
+import Layout from '@/layout/users-layout'
 
 export default {
-    name: 'user-sign-up-page',
+    name: 'user-page',
     components: {
         'layout-page' : Layout
     },
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

@@ -61,6 +61,8 @@
 </template>
 
 <script>
+import { EventBus } from './../../EventBus.js';
+
 export default {
     name: 'comment',
     props: {
@@ -120,6 +122,12 @@ export default {
           }else{
             this.isDisable = true;
           }
+        },
+        setMessage(message, type){
+          let data={}
+                    data.message = message
+                    data.type = type
+          EventBus.$emit('SNACKBAR_TRIGGERED', data)
         }
     },
     watch: { 

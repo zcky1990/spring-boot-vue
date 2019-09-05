@@ -1,9 +1,6 @@
 <template>
 <v-container>
     <v-layout class="sign-up-container" align-center justify-center flex fill-height>
-      <div class="snack-bar-container">
-        <snack-bar ref="snackbar"></snack-bar>
-      </div>
       <div class="title-container">
                 <div class="title bulma-color">Login</div>
                 <div class="sub-title bulma-color">Masuk ke Akun Anda</div>
@@ -53,13 +50,10 @@
 </template>
 
 <script>
-import SnackBar from "./SnackBar";
+import { EventBus } from './../../EventBus.js';
 
 export default {
-  name: "login-form",
-  components: {
-    "snack-bar": SnackBar
-  },
+  name: "user-login-form",
   data() {
     return {
       valid: false,
@@ -101,15 +95,6 @@ export default {
         this.callRestService(model);
       }
     },
-    setMessage(message, type) {
-      if(type == 0){
-        this.snackBarConfig.color = "success"
-      }else{
-        this.snackBarConfig.color = "error"
-      }
-      this.$refs.snackbar.setConfig(this.snackBarConfig);
-      this.$refs.snackbar.showSnackbar(message);
-    },
     callRestService(model) {
       let self = this;
       let router = this.$router;
@@ -134,6 +119,12 @@ export default {
       function(e){
           self.setMessage(e, 1);
       });
+    },
+    setMessage(message, type){
+      let data={}
+                data.message = message
+                data.type = type
+      EventBus.$emit('SNACKBAR_TRIGGERED', data)
     }
   }
 };

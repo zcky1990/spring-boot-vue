@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import ArticleLayout from "@/layout/ArticleLayout";
+import ArticleLayout from "@/layout/article-layout";
 
 export default {
   name: "article-detail-page",

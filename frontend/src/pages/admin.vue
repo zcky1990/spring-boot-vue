@@ -11,8 +11,8 @@
     <script>
 //import {AXIOS} from '@/components/http-common'
 //import Navbar from "@/components/widget/Navbar";
-import Editor from "@/components/widget/Editor";
-import TableComponent from "@/components/widget/Table";
+import Editor from "@/components/widget/editor";
+import TableComponent from "@/components/widget/table";
 import RolesForm from "@/components/widget/admin/roles-form"
 import CategoryForm from "@/components/widget/admin/category-form"
 import AccessLevelForm from "@/components/widget/admin/access-level-form"

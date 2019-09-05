@@ -1,5 +1,5 @@
     <template>
-        <div class="login-page-container">
+        <div class="sign-up-page-container">
             <div class="area" >
                 <ul class="circles">
                     <li></li>
@@ -12,42 +12,38 @@
                     <li></li>
                     <li></li>
                     <li></li>
+                    <li></li>
+                    <li></li>
                 </ul>
             </div >
-             <v-container align-center justify-center row fill-height>
-                <login-form></login-form>
+            <v-container align-center justify-center row fill-height>
+                <sign-up-form></sign-up-form>
             </v-container>
         </div>
     </template>
 
     <script>
-    import LoginForm from '@/components/widget/Loginform'
+
+    import SignUpForm from '@/components/widget/user-sign-up-form'
 
     export default   {
-        name: 'login-page-layout',
+        name: 'sign-up-page-layout',
         data(){
             return {
-
             }
         },
         components: {
-            'login-form' : LoginForm,
+                    'sign-up-form' : SignUpForm
         }
     }
     </script>
 
+    <!-- Add "scoped" attribute to limit CSS to this component only -->
     <style scoped>
-    .login-page-container {
+        .sign-up-page-container {
             width: 100%;
             height: 100%;
-    }
-        .sign-up-page-container {
-            background-color: white;
         }
-        .content-section {
-            padding-top: 45px;
-        }
-
 
         area{
     width: 100%;

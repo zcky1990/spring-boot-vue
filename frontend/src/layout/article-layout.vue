@@ -2,9 +2,6 @@
   <div class="article-page-container">
     <section class="nav-section"></section>
     <section class="content-section container">
-      <div class="snack-bar-container">
-        <snack-bar ref="snackbar"></snack-bar>
-      </div>
       <v-content>
         <v-container fill-height>
           <v-layout class="content-layout">
@@ -28,10 +25,9 @@
 </template>
 
 <script>
-import Navbar from "@/components/widget/UserNavbar";
-import Article from "@/components/widget/Article";
-import Comment from "@/components/widget/Comment"
-import SnackBar from "@/components/widget/SnackBar";
+import Navbar from "@/components/widget/user-navbar";
+import Article from "@/components/widget/article";
+import Comment from "@/components/widget/comment"
 
 export default {
   name: "article-page-layout",
@@ -46,11 +42,6 @@ export default {
         author: {},
         created_date: "",
         slug: ""
-      },
-      snackBarConfig: {
-        color: "error",
-        timeout: 6000,
-        top: true
       },
     };
   },
@@ -69,18 +60,10 @@ export default {
         let responseData = response.data.response;
         self.article = responseData;
       },function (e){
-        self.setMessage(e, 1)
+
       })
     },
-    setMessage(message, type) {
-      if(type == 0){
-        this.snackBarConfig.color = "success"
-      }else{
-        this.snackBarConfig.color = "error"
-      }
-      this.$refs.snackbar.setConfig(this.snackBarConfig);
-      this.$refs.snackbar.showSnackbar(message);
-    },
+
   },
   created() {
     this.getArticleService();

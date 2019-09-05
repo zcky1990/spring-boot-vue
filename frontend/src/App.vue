@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import SnackBar from "@/components/widget/SnackBar";
+import SnackBar from "@/components/widget/snack-bar";
 import { EventBus } from './EventBus.js';
 
 export default {
