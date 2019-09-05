@@ -48,8 +48,7 @@ export default {
   components: {
     "user-nav-menu": Navbar,
     "article-content": Article,
-    "article-comment": Comment,
-    "snack-bar": SnackBar
+    "article-comment": Comment
   },
   methods: {
      getArticleService: function() {

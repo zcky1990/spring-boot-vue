@@ -1,5 +1,6 @@
     <template>
   <div class="admin-page">
+    <add-user-form></add-user-form>
     <acess-level-form></acess-level-form>
     <category-form></category-form>
     <role-form></role-form>
@@ -16,6 +17,7 @@ import TableComponent from "@/components/widget/table";
 import RolesForm from "@/components/widget/admin/roles-form"
 import CategoryForm from "@/components/widget/admin/category-form"
 import AccessLevelForm from "@/components/widget/admin/access-level-form"
+import AddUserForm from "@/components/widget/admin/add-user-form"
 
 export default {
   name: "admin",
@@ -127,7 +129,8 @@ export default {
     "table-component": TableComponent,
     "role-form": RolesForm,
     "category-form": CategoryForm,
-    "acess-level-form":AccessLevelForm
+    "acess-level-form":AccessLevelForm,
+    "add-user-form" : AddUserForm
   }
 };
 </script>
