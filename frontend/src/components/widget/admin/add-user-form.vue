@@ -77,7 +77,7 @@
             ></v-text-field>
             <v-text-field
               v-model="data.email"
-              :rules="roleEmailRules"
+              :rules="emailRules"
               label="Email"
               required
               outline 
@@ -188,7 +188,11 @@ export default {
         v => !!v || "Password is required",
         v =>
           (v && v.length >= 8) || "Password must be or more than 8 characters"
-      ]
+      ],
+      emailRules: [
+        v => !!v || "E-mail is required",
+        v => /.+@.+/.test(v) || "E-mail must be valid"
+      ],
     };
   },
   created(){
@@ -239,7 +243,6 @@ export default {
     },
     filterData: function(){
       this.page = 0;
-      console.log(this.dataFilter);
       if(this.dataFilter !== 'All'){
           this.getFilteredDataList();
       }else{
