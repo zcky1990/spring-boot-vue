@@ -8,7 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
@@ -17,12 +22,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
 import com.zcky.learn.with.teacher.constant.Constant;
+import com.zcky.learn.with.teacher.model.request.UsersRequest;
 import com.zcky.learn.with.teacher.mongoDb.model.Users;
 import com.zcky.learn.with.teacher.mongoDb.repository.UsersRepository;
+import com.zcky.learn.with.teacher.mongoDb.serializer.UsersAdminSerializer;
 import com.zcky.learn.with.teacher.mongoDb.serializer.UsersSerializer;
 import com.zcky.learn.with.teacher.security.JwtTokenUtil;
 import com.zcky.learn.with.teacher.util.MailUtility;
@@ -42,11 +50,13 @@ public class UsersController extends BaseController{
 	}
 	
 	@RequestMapping(value = "/api/users/sign_up", method = RequestMethod.POST)
-	public ResponseEntity<String> signUp(@Valid @RequestBody Users user, HttpServletRequest request) throws Exception {
-		Users dataUser = repository.findByUserName(user.getUsername());
+	public ResponseEntity<String> signUp(@Valid @RequestBody UsersRequest userRequest, HttpServletRequest request) throws Exception {
+		Users dataUser = repository.findByUserName(userRequest.getUsername());
 		JsonObject response;
 		if(dataUser == null) {
 			try {
+				Users user = new Users();
+				user.fromObject(userRequest);
 				repository.save(user);
 				Optional<Users> userResponse = repository.findById(user.getStringId());
 				Users users = userResponse.get();
@@ -169,6 +179,106 @@ public class UsersController extends BaseController{
 			Users user = repository.findById(id).get();
 			response = getSuccessResponse();
 			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Users.class, new UsersSerializer(), user) );
+		} catch(Exception e) {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+		}
+		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
+	}
+	
+	/* user-admin END POINT 
+	 * 
+	 */
+	@RequestMapping(value = "/api/admin/user/create", method = RequestMethod.POST)
+	public ResponseEntity<String> create(@Valid @RequestBody UsersRequest userRequest, HttpServletRequest request) throws Exception {
+		Users dataUser = repository.findByUserName(userRequest.getUsername());
+		JsonObject response;
+		if(dataUser == null) {
+			try {
+				Users user = new Users();
+				user.fromObject(userRequest);
+				repository.save(user);
+				response = getSuccessResponse();
+				response.add(Constant.RESPONSE, toJSONObject(user));
+			} catch(Exception e) {
+				response = getFailedResponse();
+				response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+			}
+		} else {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, Constant.USER_ALREDY_EXISTS_ERROR_MESSAGE);
+		}
+		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/admin/user/edit", method = RequestMethod.PUT)
+	public ResponseEntity<String> editAdminUsers(@Valid @RequestBody UsersRequest userRequest, HttpServletRequest request){
+		JsonObject response;
+		try {
+			TimeUtility util = new TimeUtility();
+			Users user = new Users();
+			user.fromObject(userRequest);
+			user.setModified_date(util.getCurrentDate("dd/MM/yyyy HH:mm:ss"));
+			repository.save(user);
+			response = getSuccessResponse();
+			response.addProperty(Constant.RESPONSE,Constant.UPDATE_USER_PROFILE_SUCCESS_MESSAGE);
+		} catch(Exception e) {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+		}
+		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/admin/user/delete/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> deleteUserAdmin(@PathVariable String id, HttpServletRequest request){
+		JsonObject response;
+		try {
+			repository.delete(repository.findById(id).get());
+			response = getSuccessResponse();
+			response.addProperty(Constant.RESPONSE, Constant.DELETE_USER_SUCCESS_MESSAGE);
+		} catch(Exception e) {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+		}
+		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/admin/user/find_all", method = RequestMethod.GET)
+	public ResponseEntity<String> finddAllUsersAdmin(@RequestParam(value="roleId", required=false) String roleId, @RequestParam(value="page", required=false) String page,HttpServletRequest request){
+		JsonObject response;
+		try {
+			List<Users> users = new ArrayList<>();
+			if(page!= null) {
+				Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").descending());
+				if(roleId != null) {
+					users = repository.findByRoleId( new ObjectId(roleId), pageableRequest);
+				}else {
+					Page<Users> pageUsers = repository.findAll(pageableRequest);
+					users = pageUsers.getContent();
+				}
+			}else {
+				if(roleId != null) {
+					users = repository.findByRoleId( new ObjectId(roleId));
+				}else {
+					users = repository.findAll();
+				}
+			}
+			response = getSuccessResponse();
+			response.add(Constant.RESPONSE, toJSONArrayWithSerializer(Users.class, new UsersAdminSerializer(), users) );
+		} catch(Exception e) {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+		}
+		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/admin/user/detail/{id}", method = RequestMethod.GET)
+	public ResponseEntity<String> getUserDetailsAdmin(@PathVariable String id, HttpServletRequest request){
+		JsonObject response;
+		try {
+			Users user = repository.findById(id).get();
+			response = getSuccessResponse();
+			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Users.class, new UsersAdminSerializer(), user) );
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());

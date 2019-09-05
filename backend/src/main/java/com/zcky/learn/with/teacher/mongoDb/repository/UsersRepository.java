@@ -1,6 +1,9 @@
 package com.zcky.learn.with.teacher.mongoDb.repository;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
@@ -14,4 +17,10 @@ public interface UsersRepository extends MongoRepository<Users, String> {
 
 	@Query(value = "{'username' : ?0 ,'password' : ?1}")
 	Users signIn(String username, String password);
+	
+	@Query(value = "{'roles' : {'$ref' : 'roles' , '$id' : ?0} }")
+	List<Users> findByRoleId(ObjectId roleId);
+	
+	@Query(value = "{'roles' : {'$ref' : 'roles' , '$id' : ?0} }")
+	List<Users> findByRoleId(ObjectId roleId, Pageable pageable);
 }

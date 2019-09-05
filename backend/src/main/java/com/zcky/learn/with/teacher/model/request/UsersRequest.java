@@ -1,17 +1,8 @@
-package com.zcky.learn.with.teacher.mongoDb.model;
+package com.zcky.learn.with.teacher.model.request;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-
-import com.zcky.learn.with.teacher.model.request.UsersRequest;
-
-public class Users {
-	@Id
-	private ObjectId _id;
-	@DBRef
-	private Roles roles;
-	
+public class UsersRequest {
+	private String id;
+	private RolesRequest roles;
 	private String name;
 	private String email;
 	private String username;
@@ -29,189 +20,119 @@ public class Users {
 	private String display_name;
 	private String city;
 	private String zipcode;
-	
-	public boolean isValidated() {
-		return isValidated;
+	public String getId() {
+		return id;
 	}
-
-	public void setValidated(boolean isValidated) {
-		this.isValidated = isValidated;
+	public void setId(String id) {
+		this.id = id;
 	}
-
-	public String getStringId() {
-		return _id.toHexString();
+	public RolesRequest getRoles() {
+		return roles;
 	}
-	
-	public ObjectId get_id() {
-		return _id;
+	public void setRoles(RolesRequest roles) {
+		this.roles = roles;
 	}
-	
-	public void set_id(ObjectId _id) {
-		this._id = _id;
-	}
-	
 	public String getName() {
 		return name;
 	}
-	
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 	public String getEmail() {
 		return email;
 	}
-	
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 	public String getUsername() {
 		return username;
 	}
-	
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 	public String getFirstname() {
 		return firstname;
 	}
-
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
-
 	public String getLastname() {
 		return lastname;
 	}
-
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-
 	public String getBirthday() {
 		return birthday;
 	}
-
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
-
 	public boolean isStatus() {
 		return status;
 	}
-
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-
-	public String getImageUrl() {
+	public String getImage_url() {
 		return image_url;
 	}
-
-	public void setImageUrl(String image_profile_url) {
-		this.image_url = image_profile_url;
+	public void setImage_url(String image_url) {
+		this.image_url = image_url;
 	}
-
 	public String getModified_date() {
 		return modified_date;
 	}
-
 	public void setModified_date(String modified_date) {
 		this.modified_date = modified_date;
 	}
-
+	public boolean isValidated() {
+		return isValidated;
+	}
+	public void setValidated(boolean isValidated) {
+		this.isValidated = isValidated;
+	}
 	public String getPhonenumber() {
 		return phonenumber;
 	}
-
 	public void setPhonenumber(String phonenumber) {
 		this.phonenumber = phonenumber;
 	}
-
 	public String getAddress() {
 		return address;
 	}
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 	public String getDisplay_name() {
 		return display_name;
 	}
-
 	public void setDisplay_name(String display_name) {
 		this.display_name = display_name;
 	}
-
 	public String getCity() {
 		return city;
 	}
-
 	public void setCity(String city) {
 		this.city = city;
 	}
-
 	public String getZipcode() {
 		return zipcode;
 	}
-
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
-	}
-
-	public Roles getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Roles roles) {
-		this.roles = roles;
-	}
-	
-	public void fromObject(UsersRequest request) {
-		if(request.getId() != null) {
-			this.set_id(new ObjectId(request.getId()));
-		}
-		if(request.getRoles().getId() != null) {
-			Roles role = new Roles();
-			role.set_id(new ObjectId(request.getRoles().getId()));
-			this.setRoles(role);
-		}
-		this.setAddress(request.getAddress());
-		this.setBirthday(request.getBirthday());
-		this.setCity(request.getCity());
-		this.setDescription(request.getDescription());
-		this.setDisplay_name(request.getDisplay_name());
-		this.setEmail(request.getEmail());
-		this.setFirstname(request.getFirstname());
-		this.setImageUrl(request.getImage_url());
-		this.setLastname(request.getLastname());
-		this.setModified_date(request.getModified_date());
-		this.setName(request.getName());
-		this.setPassword(request.getPassword());
-		this.setPhonenumber(request.getPhonenumber());
-		this.setStatus(request.isStatus());
-		this.setUsername(request.getUsername());
-		this.setValidated(request.isValidated());
-		this.setZipcode(request.getZipcode());
 	}
 		
 }

@@ -14,15 +14,27 @@
                 {{title}}
               </v-card-title>
               <v-card-title>
+                <v-select
+                :items="filterDropDownList"
+                v-model="dataFilter"
+                label="Role"
+                outlined
+                item-text="name"
+                item-value="id"
+                color="rgb(0, 209, 178)"
+                @change="filterData"
+                ></v-select>
+
                 <v-spacer></v-spacer>
                   <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
               </v-card-title>
               <v-data-table class="table-container" :headers="tableHeaderList" :items="dataTableList" :search="search">
                 <template v-slot:items="props">
                   <tr>
-                    <td class="text-xs-left">{{ props.item.id }}</td>
-                    <td class="text-xs-left">{{ props.item.type }}</td>
+                    <td class="text-xs-left">{{ props.item.username }}</td>
                     <td class="text-xs-left">{{ props.item.name }}</td>
+                    <td class="text-xs-left">{{ props.item.email }}</td>
+                    <td class="text-xs-left">{{ props.item.isValidated }}</td>
                     <td class="text-xs-left">{{ props.item.status }}</td>
                     <td class="text-xs-left">{{ props.item.created_date }}</td>
                   <td>
@@ -55,29 +67,43 @@
               class="hidden"
             ></v-text-field>
             <v-text-field
-              v-model="data.type"
-              :rules="roleTypeRules"
-              label="Type"
+              v-model="data.username"
+              :rules="useranameRules"
+              label="Username"
               required
               outline 
               flat
               color="rgb(0, 209, 178)"
             ></v-text-field>
             <v-text-field
-              v-model="data.name"
-              :rules="roleNameRules"
-              label="Name"
+              v-model="data.email"
+              :rules="roleEmailRules"
+              label="Email"
               required
               outline 
               flat
               color="rgb(0, 209, 178)"
             ></v-text-field>
+             <v-text-field
+              v-model="data.password"
+              :rules="passwordRules"
+              :type="show1 ? 'text' : 'password'"
+              @click:append="show1 = !show1"
+              :append-icon="show1 ? 'visibility' : 'visibility_off'"
+              label="Password"
+              hint="At least 8 characters"
+              required
+              outline 
+              flat
+              color="rgb(0, 209, 178)"
+             ></v-text-field>
+
             <v-select
               :items="dataDropdownList"
-              v-model="data.access_level"
-              label="Access Level"
+              v-model="data.roles"
+              label="Role"
               outlined
-              item-text="level"
+              item-text="name"
               return-object
               color="rgb(0, 209, 178)"
             ></v-select>
@@ -105,19 +131,20 @@ export default {
   name: "add-user-form",
   data() {
     return {
+      show1: false,
       valid: false,
       page : 0,
       dialog: false,
       mode: 'new',
-      title: "Table Role List",
+      title: "Table User List",
       search: "",
       urlData : {
-        createUrl: "/roles/create",
-        editUrl: "/roles/edit",
-        getUrl: "/roles/",
-        deleteUrl: "/roles/delete/",
-        getListUrl: "/roles/get_roles_list",
-        getListDropdown: "/access_level/get_access_level_list"
+        createUrl: "/admin/user/create",
+        editUrl: "/admin/user/edit",
+        getUrl: "/xadmin/user/detail/",
+        deleteUrl: "/admin/user/delete/",
+        getListUrl: "/admin/user/find_all",
+        getListDropdown: "/roles/get_roles_list",
       },
       isFormShow: true,
       data: {
@@ -132,27 +159,41 @@ export default {
         }
       },
       tableHeaderList:[
-        { text: "Id", value: "id" },
-        { text: "Type", value: "type" },
+        { text: "Username", value: "username" },
         { text: "Name", value: "name" },
+        { text: "Email", value: "email" },
+        { text: "IsValidated", value: "isValidated" },
         { text: "Status", value: "status" },
-        { text: "Created Date", value: "created_date" },
+        { text: "Join Date", value: "joinDate" },
         { text: "Action", value: "action" }
       ],
       dataTableList:[],
-      dataDropdownList:[],
-      status:[true,false],
-      roleTypeRules: [
-        v => !!v || "Role type is required",
+      filterDropDownList: [ 
+          { 
+          id: "All",
+          name: "All Member",
+          status: true,
+          type: "member"
+          }
       ],
-      roleNameRules: [
-        v => !!v || "Role Name is required",
+      dataDropdownList:[],
+      dataFilter:"",
+      status:[true,false],
+      useranameRules: [
+        v => !!v || "Username is required",
+        v =>
+          (v && v.length >= 8) || "Username must be or more than 8 characters"
+      ],
+      passwordRules: [
+        v => !!v || "Password is required",
+        v =>
+          (v && v.length >= 8) || "Password must be or more than 8 characters"
       ]
     };
   },
   created(){
+    this.getDataRoleList()
     this.getDataList();
-    this.getDataAccessList();
   },
   methods: {
     submitForm: function() {
@@ -185,7 +226,7 @@ export default {
     getDataList: function(){
       let self = this;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
-      this.get(this.urlData.getListUrl+"?status=true&page="+this.page, headers,
+      this.get(this.urlData.getListUrl+"?page="+this.page, headers,
       function(response){
         if(response.status == 200){
           self.dataTableList = response.data.response
@@ -196,13 +237,39 @@ export default {
         self.setMessage(e,1)
       })
     },
-    getDataAccessList: function(){
+    filterData: function(){
+      this.page = 0;
+      console.log(this.dataFilter);
+      if(this.dataFilter !== 'All'){
+          this.getFilteredDataList();
+      }else{
+          this.getDataList();
+      }
+    },
+    getFilteredDataList: function(){
       let self = this;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
-      this.get(this.urlData.getListDropdown, headers,
+      this.get(this.urlData.getListUrl+"?roleId="+this.dataFilter+"&page="+this.page, headers,
+      function(response){
+        if(response.status == 200){
+          self.dataTableList = response.data.response
+          self.page++;
+        }
+      },
+      function(e){
+        self.setMessage(e,1)
+      })
+    },
+    getDataRoleList: function(){
+      let self = this;
+      let headers = this.getDefaultHeaders(this.getMeta("token"))
+      this.get(this.urlData.getListDropdown+"?status=true", headers,
       function(response){
         if(response.status == 200){
           self.dataDropdownList = response.data.response
+          for(let i = 0; i< response.data.response.length; i++){
+            self.filterDropDownList.push(response.data.response[i]);
+          }
         }
       },
       function(e){
@@ -277,9 +344,9 @@ export default {
   computed:{
     titleForm:function(){
       if(this.mode == "new"){
-        return "Add new Role";
+        return "Add new User";
       }else{
-        return "Edit Role"
+        return "Edit User"
       }
     }
   }
