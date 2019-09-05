@@ -102,7 +102,7 @@
 import { EventBus } from './../../../EventBus.js';
 
 export default {
-  name: "Roles-form",
+  name: "roles-form",
   data() {
     return {
       valid: false,
