@@ -1,5 +1,7 @@
 package com.zcky.learn.with.teacher.model.request;
 
+import java.util.List;
+
 public class ArticleRequest {
 	private String id;
 	private String authorId;
@@ -11,6 +13,8 @@ public class ArticleRequest {
 	private String status;
 	private String slug;
 	private String modified_date;
+	private List<String> reference_list;
+	
 	public String getId() {
 		return id;
 	}
@@ -70,5 +74,11 @@ public class ArticleRequest {
 	}
 	public void setModified_date(String modified_date) {
 		this.modified_date = modified_date;
+	}
+	public List<String> getReference_list() {
+		return reference_list;
+	}
+	public void setReference_list(List<String> reference_list) {
+		this.reference_list = reference_list;
 	}
 }

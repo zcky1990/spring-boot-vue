@@ -83,12 +83,14 @@ public class ArticleController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/api/article/update_article", method = RequestMethod.PUT)
-	public ResponseEntity<String> updateArticle(@Valid @RequestBody Article article, HttpServletRequest request) throws Exception {
+	public ResponseEntity<String> updateArticle(@Valid @RequestBody ArticleRequest articleRequest, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("x-uid");
 		TimeUtility util = new TimeUtility();
 		Users user = userRepository.findBy_id(new ObjectId(auth));
 		JsonObject response;
 		if(user != null) {
+			Article article = new Article();
+			article.fromObject(articleRequest);
 			article.setAuthor(user);
 			article.setModified_date(util.getCurrentDate("dd/MM/yyyy HH:mm:ss"));
 			try {

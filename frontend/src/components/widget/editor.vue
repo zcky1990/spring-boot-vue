@@ -3,7 +3,7 @@
     <v-layout align-baseline wrap>
       <v-flex xs12 d-felx>
        <v-text-field
-          v-model="data._id"   
+          v-model="data.id"   
           style="display:none;"     
       ></v-text-field>
         <v-text-field
@@ -22,6 +22,7 @@
               return-object
               color="rgb(0, 209, 178)"
             ></v-select>
+          
       </v-flex>
       <v-flex xs12 d-flex>
         <alert-component ref="alert"></alert-component>
@@ -33,6 +34,22 @@
         :config="configEditor.editorConfig"
         @input="validBtn"
         ></ckeditor>
+      </v-flex>
+      <v-flex xs12 d-flex>
+        <div class="refs">
+          <div class="reference-title">Reference</div>
+          <div class="reference-container">
+            <div v-for="(item, index) in data.reference_list" ref="refereceContainer" class="ref-container">
+              <v-text-field
+              v-model="data.reference_list[index]"
+              label="Reference"
+              :value="item"
+              >
+                <v-icon slot="append" small color="#00d1b2" @click="addNewRefData">fa-plus</v-icon>
+              </v-text-field>
+            </div>
+          </div>
+        </div>
       </v-flex>
       <v-flex xs12 d-flex>
         <v-btn 
@@ -47,7 +64,6 @@
 
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
 import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials";
-//import Base64Uploader from "@ckeditor/ckeditor5-upload/src/base64uploadadapter";
 import Autoformat from "@ckeditor/ckeditor5-autoformat/src/autoformat";
 import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold";
 import Italic from "@ckeditor/ckeditor5-basic-styles/src/italic";
@@ -109,12 +125,13 @@ export default {
   data() {
     return {
       data:{
-        _id:"",
+        id:"",
         articleId:"asdasdasd",
         categoryArticle:{},
         article_content:"",
         article_title: "",
-        slug:""
+        slug:"",
+        reference_list:[""]
       },
       urlData : {
         getListUrl: "/category/get_category_list"
@@ -125,7 +142,6 @@ export default {
         editorConfig: {
         extraPlugins: [ MyCustomUploadAdapterPlugin ],
         plugins: [
-          //Base64Uploader,
           Essentials,
           Autoformat,Bold,Italic,BlockQuote,Heading,
           Image,ImageCaption,ImageStyle,ImageToolbar,
@@ -251,6 +267,9 @@ export default {
         self.showErrorAlert(e)
       })
     },
+    addNewRefData: function(){
+      this.data.reference_list.push("");
+    }
   },
   created(){
     this.getDataList();
@@ -269,5 +288,10 @@ export default {
 <style>
 .ck-editor__editable {
     min-height: 300px;
+}
+.reference-title {
+    padding-top: 1em;
+    font-size: 1.5em;
+    font-weight: 600;
 }
 </style>

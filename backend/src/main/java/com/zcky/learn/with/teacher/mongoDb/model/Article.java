@@ -1,5 +1,7 @@
 package com.zcky.learn.with.teacher.mongoDb.model;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -21,6 +23,7 @@ public class Article {
 	private String status;
 	private String slug;
 	private String modified_date;
+	private List<String> reference_list;
 	
 	public String getStringId() {
 		return _id.toHexString();
@@ -85,6 +88,12 @@ public class Article {
 	public void setCategoryArticle(Category categoryArticle) {
 		this.categoryArticle = categoryArticle;
 	}
+	public List<String> getReference_list() {
+		return reference_list;
+	}
+	public void setReference_list(List<String> reference_list) {
+		this.reference_list = reference_list;
+	}
 	public void fromObject(ArticleRequest request) {
 		if(request.getId() != null) {
 			this.set_id(new ObjectId(request.getId()));
@@ -92,14 +101,15 @@ public class Article {
 		this.setArticle_content(request.getArticle_content());
 		this.setArticle_permalink(request.getArticle_permalink());
 		this.setArticle_title(request.getArticle_title());
-		
-		Category category = new Category();
-		category.set_id(new ObjectId(request.getCategoryArticle().getId()));
-		this.setCategoryArticle(category);
-		
+		if(request.getCategoryArticle().getId() != null) {
+			Category category = new Category();
+			category.set_id(new ObjectId(request.getCategoryArticle().getId()));
+			this.setCategoryArticle(category);
+		}		
 		this.setSlug(request.getSlug());
 		this.setStatus(request.getStatus());
 		this.setType(request.getType());
+		this.setReference_list(request.getReference_list());
 		
 	}
 }
