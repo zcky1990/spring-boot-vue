@@ -13,10 +13,10 @@
             </div>
           </div>
           <div class="btn-container">
-            <div class="button-login" >
+            <div class="button-login rounded" >
               <router-link class="link-login nav-draw-links button-login" to="/login">
                     <v-avatar>
-                        <v-icon>account_circle</v-icon>
+                        <v-icon color="#00d1b2">account_circle</v-icon>
                     </v-avatar>Login
               </router-link>
             </div>
@@ -280,6 +280,9 @@ export default {
 .button-login {
   background: white;
   color: #00d1b2;
+}
+.rounded {
+  border-radius: 25px;
 }
 .title {
   color: white;
