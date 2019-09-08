@@ -1,95 +1,138 @@
 <template>
   <div class="nav-menu">
     <v-navigation-drawer fixed clipped v-model="drawer" app>
-      <v-divider></v-divider>
-      <v-subheader class="mt-3 grey--text text--darken-1">Menu</v-subheader>
-      <v-list-tile class="menu-btn-link" v-for="item in items" :key="item.text">
-        <router-link class="nav-draw-links" v-bind:to="item.url">
-          <v-list-tile-action>
-            <v-icon class="menu-links-icon">{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-          </v-list-tile-content>
-        </router-link>
-      </v-list-tile>
-
-       <v-divider></v-divider>
-
-      <v-subheader class="mt-3 grey--text text--darken-1">HEADER 2</v-subheader>
-      
-      <v-list-tile v-if="!isLogged" >
-        <router-link class="nav-draw-links" to="/login">
-        <v-list-tile-avatar class="button-login">
-          <v-icon>account_circle</v-icon>
-        </v-list-tile-avatar>
-        <v-list-tile>Login</v-list-tile>
-        </router-link>
-      </v-list-tile>
-      <v-list-tile v-if="isLogged" @click="logout">
-        <v-list-tile-avatar>
-          <v-icon>account_circle</v-icon>
-        </v-list-tile-avatar>
-        <v-list-tile>Logout</v-list-tile>
-      </v-list-tile>
-
-      <v-list-tile v-for="item in items2" :key="item.text" avatar>
-        <v-list-tile-avatar>
-          <img :src="`https://randomuser.me/api/portraits/men/${item.picture}.jpg`" alt />
-        </v-list-tile-avatar>
-        <v-list-tile-title v-text="item.text"></v-list-tile-title>
-      </v-list-tile>
-    </v-navigation-drawer>
-
-    <v-toolbar dense clipped-left dark fixed flat class="nav-toolbar">
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-icon>book</v-icon>
-      <v-toolbar-title class="mr-5 align-center">
-        <span class="title">{{title}}</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      
-      <div v-if="!isMobile" class="nav-draw-links">
-        <!--container user has login -->
-        <div v-if="isLogged" class="login-container">
-          <v-menu v-model="users" :close-on-content-click="false" :nudge-width="300" offset-x>
-            <template v-slot:activator="{ on }">
-              <div class="user-avatar-container">
-                <v-chip class="button-login" v-on="on">
-                  <v-avatar>
-                    <img :src="`https://randomuser.me/api/portraits/men/1.jpg`" alt />
-                  </v-avatar>si nau
-                </v-chip>
-              </div>
-            </template>
-            <v-card>
-              <v-list-tile>
-                <v-list-tile-action>
-                  <v-icon>account_circle</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                  <v-list-tile-title>User Setting</v-list-tile-title>
-                </v-list-tile-content>
-              </v-list-tile>
-              <v-btn color="warning" @click="logout">Logout</v-btn>
-            </v-card>
-          </v-menu>
+      <!--user detail drawer-->
+      <div class="user-detail-controller">
+        <div class="btn-drawer-login"  v-if="!isLogged">
+          <div class="user-title">
+            <div class="name">
+              Welcome
+            </div>
+            <div class="email">
+              please login before you continue
+            </div>
+          </div>
+          <div class="btn-container">
+            <div class="button-login" >
+              <router-link class="link-login nav-draw-links button-login" to="/login">
+                    <v-avatar>
+                        <v-icon>account_circle</v-icon>
+                    </v-avatar>Login
+              </router-link>
+            </div>
+          </div>
         </div>
 
-        <!--container user not login -->
-        <div v-if="!isLogged" class="login-container">
-          <div class="user-avatar-container">
-            <router-link class="link-login" to="/login">
-                <v-chip class="button-login">
-                  <v-avatar>
-                    <v-icon>account_circle</v-icon>
-                  </v-avatar>Login
-                </v-chip>
+
+        <div class="user-item" v-if="isLogged">
+          <div class="image-user">
+            <router-link class="link-login nav-draw-links button-login image-border" to="/user">
+                   <v-avatar size="70">
+                      <img :src="usersData.image_url" alt />
+                  </v-avatar>
             </router-link>
+          </div>
+          <div class="user-title">
+            <div class="name">
+              {{fullName}}
+            </div>
+            <div class="email">
+              {{usersData.email}}
+            </div>
           </div>
         </div>
       </div>
-    </v-toolbar>
+
+      <v-divider></v-divider>
+
+      <v-list-tile class="menu-btn-link" v-for="item in items" :key="item.text">
+        <router-link class="nav-draw-links" v-bind:to="item.url">
+          <v-list-tile-content>
+            <div class="container">
+              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            </div>
+          </v-list-tile-content>
+        </router-link>
+      </v-list-tile>
+      
+     <div class="user-controller"  v-if="isLogged">
+       <div class="user-container">
+          <v-container>
+              <div class="user-avatar-container" @click="logout">
+                <div class="logout-drawer">
+                    <div class="logout-btn logout">
+                      Logout
+                    </div>
+                </div>
+              </div>
+          </v-container>
+       </div>
+     </div>
+    </v-navigation-drawer>
+
+
+    <div class="toolbar">
+      <div class="container toolbar-title">
+        <div class="title-container">
+          {{title}}
+        </div>
+        <div v-if="isMobile">
+          <v-toolbar-side-icon @click.stop="drawer = !drawer" color="#00d1b2" class="burger-menu"></v-toolbar-side-icon>
+        </div>
+         <div v-if="!isMobile">
+          <div class="icon-container">
+            <div v-if="!isLogged" class="login-container">
+              <div class="user-avatar-container">
+                  <v-chip class="button-login">
+                    <router-link class="link-login button-login" to="/login">
+                      <v-avatar>
+                        <v-icon>account_circle</v-icon>
+                      </v-avatar>Login
+                    </router-link>
+                  </v-chip>
+              </div>
+            </div>
+            <div v-if="isLogged" >
+              <v-menu v-model="users" :close-on-content-click="false" :nudge-width="300" offset-x>
+                <template v-slot:activator="{ on }">
+                  <div class="user-avatar-container">
+                    <v-chip class="button-login" v-on="on">
+                      <v-avatar>
+                        <img :src="usersData.image_url" alt />
+                      </v-avatar>
+                      {{fullName}}
+                    </v-chip>
+                  </div>
+                </template>
+                <v-card>
+                  <v-list-tile>
+                    <v-list-tile-action>
+                      <v-icon>account_circle</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                      <v-list-tile-title>User Setting</v-list-tile-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-btn color="warning" @click="logout">Logout</v-btn>
+                </v-card>
+              </v-menu>
+            </div>
+          </div>
+         </div>
+      </div>
+
+      <div v-if="!isMobile" class="link-container">
+        <div class="container toolbar-link">
+         <div class="links">
+            <div class="menu-btn-link" v-for="item in items" :key="item.text">
+              <router-link class="nav-draw-links" v-bind:to="item.url">
+              <div class="link">{{ item.title }}</div>
+              </router-link>
+            </div>
+         </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -103,11 +146,11 @@ export default {
       drawer: false,
       isMobile: false,
       items: [
-        { title: "Home", icon: "home", url: "./" },
-        { title: "About", icon: "question_answer", url: "/test" }
+        { title: "Home", url: "./" },
+        { title: "About", url: "/test" }
       ],
       items2: [{ picture: 28, text: "Joseph" }, { picture: 38, text: "Apple" }],
-      title: "this is example",
+      title: "MariBelajar",
       icon: {
         type: String,
         default: "$vuetify.icons.cancel"
@@ -135,16 +178,23 @@ export default {
         v => !!v || "Password is required",
         v => (v && v.length >= 8) || "Password must be more than 8 characters"
       ],
-      isLogged: false
+      isLogged: false,
+      usersData:{}
     };
   },
   created() {
     this.isLogged = this.isLoggin(this.$session);
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
+    this.usersData = this.getUsers(this.$session)
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
+  },
+  computed: {
+    fullName(){
+      return this.usersData.firstname+" "+this.usersData.lastname;
+    }
   },
   methods: {
     handleResize() {
@@ -156,6 +206,7 @@ export default {
       if (this.window.width <= 640) {
         this.isMobile = true;
       } else {
+        this.drawer = false;
         this.isMobile = false;
       }
     },
@@ -180,18 +231,45 @@ export default {
 </script>
     <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.toolbar-title{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.title-container {
+    font-size: 2.5rem;
+    font-weight: 500;
+}
+.link-container{
+  border-bottom: 1px solid #efefef;
+}
+.links {
+    display: flex;
+    flex-direction: row;
+    min-width: 200px;
+    max-width: 200px;
+    justify-content: space-around;
+}
 .nav-draw-links {
-  display: flex;
-  text-decoration: none;
-  color: #323232;
+  /*color: #00d1b2 !important; */
+  text-transform: uppercase;
+  font-size: .8rem;
+  letter-spacing: .05rem;
   font-weight: 400;
-  font-size:1em;
+  display: inline-block;
+  text-decoration: none!important;
+  color: #000;
 }
 .nav-toolbar {
-  background-color: #00d1b2 !important;
+  color: #00d1b2 !important;
 }
-.menu-links-icon {
-  color:#00d1b2;
+.green-color{
+  color: #00d1b2 !important;
+}
+.login-container {
+    border: 1px solid #00d1b2;
+    border-radius: 5px;
 }
 .button-login {
   background: white;
@@ -203,22 +281,75 @@ export default {
 .link-login {
   text-decoration: none;
 }
-.menu-btn-link:hover{
-  color: #00d1b2;
-}
-a.v-list__tile.v-list__tile--link.theme--light {
-    border: 1px solid red;
-    margin: 5px;
-    border-radius: 40px;
-}
-
 .nav-link,
 .user-avatar-container {
   display: flex;
   padding: 5px;
 }
-
 .login-form-container {
   padding: 20px;
+}
+/** drawer css **/
+.user-detail-controller {
+  padding: 10px;
+  background: #00d1b2;
+  min-height: 200px;
+}
+.btn-drawer-login {
+    border: 1px solid #00d1b2;
+    width: fit-content;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+}
+.image-user {
+    margin: 0 auto;
+    align-items: center;
+    text-align: center;
+}
+.image-border{
+    border: 2px solid white;
+    border-radius: 50%;
+}
+.name {
+    text-transform: capitalize;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 2rem;
+    padding: 16px 16px 8px;
+    word-break: break-all;
+    color:#fff;
+}
+.email {
+  text-align: center;
+  color:#fff;
+  letter-spacing: normal;
+}
+.btn-container {
+    margin-top: 20px;
+}
+.user-controller{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.logout-drawer {
+  width: 100%;
+}
+.logout-btn {
+    padding: 5px;
+    color:  #00d1b2;
+    border: 1px solid  #00d1b2;
+    border-radius: 15px;
+    text-align: center;
+}
+div.logout:hover {
+    color:  white;
+    background-color: #00d1b2;
+}
+.burger-menu {
+    color: white;
 }
 </style>

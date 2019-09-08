@@ -10,17 +10,6 @@
     name: 'index',
     components: {
         'index-layout-page' : Layout
-        },
-        created(){
-           this.setMessage("asdw", 1);
-        },
-        methods: {
-            setMessage: function(message, type){
-                let data={}
-                data.message = message
-                data.type = type
-                    EventBus.$emit('SNACKBAR_TRIGGERED', data)
-            }
         }
     }
     </script>

@@ -18,15 +18,10 @@
 
     export default {
         name: 'user-page-layout',
-        beforeCreate(){
+        created(){
             let isLogged = this.isLoggin(this.$session);
             if(!isLogged){
                 this.$router.push("/");
-            }
-        },
-        data(){
-            return {
-
             }
         },
         components: {

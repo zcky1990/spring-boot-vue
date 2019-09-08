@@ -67,6 +67,10 @@ export default {
                   return true
               }
             },  
+
+            getUsers : function(session){
+              return session.get('users')
+            },
           
             isLoggin : function(session){
               if (!session.exists()) {
