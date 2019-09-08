@@ -231,6 +231,12 @@ export default {
 </script>
     <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@media only screen and (max-width: 640px) {
+  .toolbar-title{
+    border-bottom: 1px solid #efefef;
+  }
+}
+
 .toolbar-title{
     display: flex;
     flex-wrap: wrap;

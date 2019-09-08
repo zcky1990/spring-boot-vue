@@ -44,9 +44,6 @@
             flex-grow: 0;
             max-width: 66.66666666666666%;
         }
-        .content-section {
-            margin-top: 1.7em;
-        }
         .right-content {
                 -ms-flex-preferred-size: 33.33333333333333%;
                 flex-basis: 33.33333333333333%;

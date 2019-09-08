@@ -33,7 +33,6 @@
                   </router-link>
               </div>
            </v-flex> -->
-            <v-divider></v-divider>
             <v-flex class="article-list-container" v-for="item in data" :key="item.slug">
               <div class="article-list">
                   <div class="image-article-list">
@@ -68,7 +67,6 @@
               
                   </div>
               </div>
-               <v-divider></v-divider>
             </v-flex>
             <v-flex>
               <div class="center">
