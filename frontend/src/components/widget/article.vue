@@ -33,7 +33,6 @@
                 <div class="author">
                   <div class="authors-name">{{content.author.firstname}} {{content.author.lastname}}</div>
                   <div class="article-create-date">{{content.created_date}}</div>
-                  
                 </div>
               </div>
         </div>
@@ -42,7 +41,12 @@
               <div class="article-content-container">
                 <div class="bookmark-container">
                   <div class="bookmark-btn">
-                    btn
+                     <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-icon color="rgb(0, 209, 178)" v-on="on" >bookmark</v-icon>
+                      </template>
+                      <span>Bookmark this Article</span>
+                    </v-tooltip>
                   </div>
                 </div>
                 <div class="article-content">
@@ -53,9 +57,7 @@
     </div>
   </section>
 </template>
-
 <script>
-
 
 export default {
   name: "article-components",
@@ -86,14 +88,13 @@ export default {
     isCategoryExists: function(){
       if(this.content.categoryArticle != undefined){
         if(this.content.categoryArticle.name != null){
-        return true
+          return true
         }else{
           return false
         }
       }else{
         return false
       }
-      
     }
   }
 };
