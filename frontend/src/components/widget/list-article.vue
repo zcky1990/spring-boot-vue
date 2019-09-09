@@ -11,7 +11,8 @@
                       :lazy-src="item.imageHeaderLazy"
                       aspect-ratio="1"
                       class="grey lighten-2 rounded"
-                      width='296'
+                      width="auto"
+                      min-width="150"
                       height="150"
                     >
                       <template v-slot:placeholder>
