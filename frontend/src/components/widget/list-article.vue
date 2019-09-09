@@ -11,7 +11,7 @@
                       :lazy-src="item.imageHeaderLazy"
                       aspect-ratio="1"
                       class="grey lighten-2 rounded"
-                      width='150'
+                      width='296'
                       height="150"
                     >
                       <template v-slot:placeholder>
@@ -95,7 +95,6 @@ export default {
   created(){
     if(this.url != ""){
       this.articleUrl = this.url;
-      console.log(this.query);
     }
     this.getArticle();
   },
