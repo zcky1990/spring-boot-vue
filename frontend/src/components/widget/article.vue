@@ -40,10 +40,19 @@
         <div class="content">
               <div class="article-content-container">
                 <div class="bookmark-container">
-                  <div class="bookmark-btn">
+                  <div v-if="isBookmarked" class="bookmark-btn">
                      <v-tooltip bottom>
                       <template v-slot:activator="{ on }">
                         <v-icon color="rgb(0, 209, 178)" v-on="on" >bookmark</v-icon>
+                      </template>
+                      <span>Bookmark this Article</span>
+                    </v-tooltip>
+                  </div>
+
+                  <div v-if="!isBookmarked" class="bookmark-btn">
+                     <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-icon color="red" v-on="on" >bookmark</v-icon>
                       </template>
                       <span>Bookmark this Article</span>
                     </v-tooltip>
@@ -86,6 +95,18 @@ export default {
   },
   computed: {
     isCategoryExists: function(){
+      if(this.content.categoryArticle != undefined){
+        if(this.content.categoryArticle.name != null){
+          return true
+        }else{
+          return false
+        }
+      }else{
+        return false
+      }
+    },
+    //need to working
+    isBookmarked: function(){
       if(this.content.categoryArticle != undefined){
         if(this.content.categoryArticle.name != null){
           return true
