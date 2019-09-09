@@ -128,7 +128,7 @@ export default {
                     data.message = message
                     data.type = type
           EventBus.$emit('SNACKBAR_TRIGGERED', data)
-        }
+        },
     },
     watch: { 
       	articleId: function(newVal, oldVal) {

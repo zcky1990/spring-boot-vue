@@ -1,6 +1,8 @@
 <template>
   <div class="article-page-container">
-    <section class="nav-section"></section>
+    <section class="nav-section">
+      <user-nav-menu></user-nav-menu>
+    </section>
     <section class="content-section container">
       <v-content>
         <v-container fill-height>
@@ -11,7 +13,7 @@
               <article-content 
                 v-bind:content="article">
               </article-content>
-              <article-comment 
+              <article-comment v-if="!isEmpty" 
                 v-bind:article-id="article._id">
               </article-comment>
             </v-flex>
@@ -25,7 +27,7 @@
 </template>
 
 <script>
-import Navbar from "@/components/widget/user-navbar";
+import Navbar from "@/components/widget/navbar";
 import Article from "@/components/widget/article";
 import Comment from "@/components/widget/comment"
 
@@ -62,7 +64,15 @@ export default {
 
       })
     },
-
+  },
+  computed: {
+    isEmpty: function(){
+      if(Object.entries(this.article).length === 0 && this.article.constructor === Object){
+        return true
+      }else{
+        return false
+      }
+    }
   },
   created() {
     this.getArticleService();
