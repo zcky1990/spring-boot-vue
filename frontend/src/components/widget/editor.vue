@@ -80,6 +80,8 @@ import Paragraph from "@ckeditor/ckeditor5-paragraph/src/paragraph";
 import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 
 import Alert from "@/components/widget/alert";
+import {Util} from "@/components/util"
+import {AXIOS} from "@/components/http-common";
 
 class UploadAdapter {
         constructor(loader) {
@@ -88,14 +90,14 @@ class UploadAdapter {
         upload() {
           let self = this;
             return new Promise((resolve, reject) => {
-              let headers = this.getDefaultHeaders(this.getMeta("token"))
+              let headers = Util.getDefaultHeaders(Util.getMeta("token"))
               let stringImage = self.loader._reader._reader.result
               let postBody = {
                   'image':stringImage,
                   'content' : 'article'
               }
-                this.post("upload_image_string", postBody,  headers ,
-                function(response) {
+                AXIOS.post("upload_image_string", postBody,  {headers})
+                .then(response => {
                   if (response.data.status == 'success') {
                         resolve({
                             default: response.data.url
@@ -103,8 +105,8 @@ class UploadAdapter {
                     } else {
                         reject(response.data.message);
                     }
-                },
-                function(e){
+                })
+                .catch(e=> {
                   reject (e);
                 });
             });
@@ -193,10 +195,10 @@ export default {
       }
     },
     submit: function() {
-      if( ('_id' in this.data) && this.data._id != ""){
+      if( ('id' in this.data) && this.data.id != ""){
         this.callUpdateRestService(this.data, this.updateUrl);
       }else {
-        delete this.data['_id']
+        delete this.data['id']
         this.callAddRestService(this.data, this.addUrl);
       }
     },
@@ -224,7 +226,7 @@ export default {
        function(response) {
           if (response.status == 200) {
             let responseData = response.data.response;
-            self.data._id = responseData._id;
+            self.data.id = responseData.id;
             if (responseData["error_message"] != undefined) {
               self.showErrorAlert(responseData["error_message"]);
             } else {

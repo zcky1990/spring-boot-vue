@@ -2,6 +2,7 @@ package com.zcky.learn.with.teacher.mongoDb.serializer;
 
 import com.google.gson.*;
 import com.zcky.learn.with.teacher.mongoDb.model.Article;
+import com.zcky.learn.with.teacher.mongoDb.model.Category;
 import com.zcky.learn.with.teacher.mongoDb.model.Users;
 import com.zcky.learn.with.teacher.util.TimeUtility;
 
@@ -18,14 +19,14 @@ public class ArticleSerializer implements JsonSerializer<Article> {
 		if(jsonObj.has("_id")) {
 			jsonObj.remove("_id");
 		}
-		jsonObj.addProperty("_id", id);
+		jsonObj.addProperty("id", id);
 		
 		
 		if(jsonObj.has("author")) {
 			jsonObj.remove("author");
 			Users user = src.getAuthor();
 			JsonObject userJson = new JsonObject();
-			userJson.addProperty("_id", user.getStringId());
+			userJson.addProperty("id", user.getStringId());
 			userJson.addProperty("firstname", user.getFirstname());
 			userJson.addProperty("lastname", user.getLastname());
 			userJson.addProperty("email", user.getEmail());
@@ -33,6 +34,17 @@ public class ArticleSerializer implements JsonSerializer<Article> {
 			userJson.addProperty("name", user.getName());
 			userJson.addProperty("image_profile_url", user.getImageUrl());
 			jsonObj.add("author", userJson);
+		}
+		
+		if(jsonObj.has("categoryArticle")) {
+			jsonObj.remove("categoryArticle");
+			Category categoryArtilce = src.getCategoryArticle();
+			JsonObject category = new JsonObject();
+			category.addProperty("id", categoryArtilce.getStringId());
+			category.addProperty("name", categoryArtilce.getName());
+			category.addProperty("status", categoryArtilce.getStatus());
+			category.addProperty("type", categoryArtilce.getType());
+			jsonObj.add("categoryArticle", category);
 		}
 				
 		Date time = src.get_id().getDate();
