@@ -57,6 +57,7 @@
                 -ms-flex-positive: 0;
                 flex-grow: 0;
                 max-width: 33.33333333333333%;
+                background: #f8f9fa !important;
         }
         .index-content{
             flex-direction: row;
