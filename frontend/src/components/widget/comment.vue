@@ -83,22 +83,26 @@ export default {
     },
     methods: {
         submit(){
-          this.postBody.articleId = this.articleId;
-          this.addCommentService(this.postBody)
+          if(this.articleId != undefined){
+            this.postBody.articleId = this.articleId;
+            this.addCommentService(this.postBody)
+          }
         },
         getCommentListService: function() {
           let self = this;
           let headers = this.getHeaders(this.$session);
-          this.get(this.getCommentUrl +"/"+this.articleId+"?page="+this.page ,  headers, 
-            function(response){
-              if (response.status == 200) {
-                let responseData = response.data.response;
-                self.messageList = responseData;
-              }
-            },
-            function(e) {
-              self.setMessage(e, 1)
-            });
+          if(this.articleId != undefined){
+            this.get(this.getCommentUrl +"/"+this.articleId+"?page="+this.page ,  headers, 
+              function(response){
+                if (response.status == 200) {
+                  let responseData = response.data.response;
+                  self.messageList = responseData;
+                }
+              },
+              function(e) {
+                self.setMessage(e, 1)
+              });
+          }
         },
         addCommentService: function(data) {
           let self = this;
@@ -108,7 +112,7 @@ export default {
               if (response.status == 200) {
                 let responseData = response.data.response;
                 self.messageList.unshift(responseData);
-                self.postBody.comment= "";
+                self.postBody.comment="";
                 self.validate();
               }
             },
@@ -125,8 +129,8 @@ export default {
         },
         setMessage(message, type){
           let data={}
-                    data.message = message
-                    data.type = type
+          data.message = message
+          data.type = type
           EventBus.$emit('SNACKBAR_TRIGGERED', data)
         },
     },

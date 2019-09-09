@@ -5,17 +5,12 @@
           {{content.categoryArticle.name}}
       </div>
     </div>
-    <v-container id="grid" fluid grid-list-sm tag="section">
-      <v-layout wrap>
-        <v-container>
-            <v-layout>
-              <v-flex tag="h1" class="headline">{{content.article_title}}</v-flex>
-            </v-layout>
-        </v-container>
-        <v-flex d-flex xs12>
-          <v-container>
-            <v-layout>
-              <div class="image" v-if="content.author.image_profile_url">
+    <div id="grid" class="content-container" tag="section">
+        <div class="article-title">
+          <div class="headline">{{content.article_title}}</div>
+        </div>
+        <div class="article-authors">
+              <div class="image-authors" v-if="content.author.image_profile_url">
                 <v-img
                   :src="content.author.image_profile_url"
                   lazy-src="https://picsum.photos/10/6?image=11"
@@ -33,30 +28,29 @@
                     </v-layout>
                   </template>
                 </v-img>
-
               </div>
-              <v-flex>
+              <div class="author-desc">
                 <div class="author">
                   <div class="authors-name">{{content.author.firstname}} {{content.author.lastname}}</div>
                   <div class="article-create-date">{{content.created_date}}</div>
                   
                 </div>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-flex>
+              </div>
+        </div>
 
-        <v-flex d-flex xs12 order-xs5 class="content">
-           <v-container>
-            <v-layout column>
-              <v-flex class="article-content">
-                  <div v-html="content.article_content"></div>
-              </v-flex>
-            </v-layout>
-           </v-container>
-        </v-flex>
-      </v-layout>
-    </v-container>
+        <div class="content">
+              <div class="article-content-container">
+                <div class="bookmark-container">
+                  <div class="bookmark-btn">
+                    btn
+                  </div>
+                </div>
+                <div class="article-content">
+                    <div v-html="content.article_content"></div>
+                </div>
+              </div>
+        </div>
+    </div>
   </section>
 </template>
 
@@ -106,6 +100,11 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.article-authors {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
 .author {
   padding-left: 20px;
   padding-top: 7px;
@@ -126,10 +125,14 @@ export default {
 .headline {
     font-size: 2.3rem !important;
     font-weight: 600;
-    line-height: 1 !important;
+    line-height: 2 !important;
+    text-transform: capitalize;
 }
 .content {
   font-size: 1em;
+}
+.article-authors {
+    padding-bottom: 16px;
 }
 .article-content {
     display: table;
@@ -144,5 +147,17 @@ export default {
 .categories:hover {
   background: rgb(0, 209, 178);
   color: white;
+}
+.content-container {
+  padding-top: 10px;
+  padding-bottom: 16px;
+}
+.article-content-container {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+.bookmark-container {
+  width: 100px;
 }
 </style>
