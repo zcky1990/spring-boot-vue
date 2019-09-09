@@ -39,14 +39,21 @@ public class BookmarksArticleController extends BaseController {
 	@RequestMapping(value = "/api/bookmarks/get_bookmarks_article_list", method = RequestMethod.GET)
 	public ResponseEntity<String> getArticleList(@RequestParam(value="userId", required=false) String userId, @RequestParam(value="articleId", required=false) String articleId, @RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
 		JsonObject response = new JsonObject();
-		try {
-			Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").ascending());
-			List<BookmarksArticle> bookmarksList = repository.findByUserId(userId, pageableRequest);
-			response = getSuccessResponse();
-			response.add(Constant.RESPONSE, toJSONArrayWithSerializer(BookmarksArticle.class, new BookmarksArticleSerializer(), bookmarksList));
-		} catch(Exception e) {
+		String auth = request.getHeader("x-uid");
+		Users user = userRepository.findBy_id(new ObjectId(auth));
+		if(user != null) {
+			try {
+				Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").ascending());
+				List<BookmarksArticle> bookmarksList = repository.findByUserId(userId, pageableRequest);
+				response = getSuccessResponse();
+				response.add(Constant.RESPONSE, toJSONArrayWithSerializer(BookmarksArticle.class, new BookmarksArticleSerializer(), bookmarksList));
+			} catch(Exception e) {
+				response = getFailedResponse();
+				response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+			}
+		}else {
 			response = getFailedResponse();
-			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+			response.addProperty(Constant.ERROR_MESSAGE, Constant.USER_NOT_FOUND_ERROR_MESSAGE);
 		}
 		return new ResponseEntity<String>( response.toString() , getResponseHeader(), HttpStatus.OK);
 	}
