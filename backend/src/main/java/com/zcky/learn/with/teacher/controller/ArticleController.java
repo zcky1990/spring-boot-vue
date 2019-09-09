@@ -127,7 +127,7 @@ public class ArticleController extends BaseController {
 	public ResponseEntity<String> getArticle(@PathVariable String slug, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
-			Article article = articleRepository.findByUrl(slug);
+			Article article = articleRepository.findBySlug(slug);
 			response = getSuccessResponse();
 			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Article.class, new ArticleSerializer(), article)  );
 		} catch(Exception e) {
