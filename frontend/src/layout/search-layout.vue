@@ -8,12 +8,12 @@
         <v-container fill-height>
           <v-layout class="index-content">
             <v-flex class="main-content" >
-                <list-article></list-article>
+                <list-article url="/article/search" mode="search" :query="query" ></list-article>
             </v-flex>
             <v-flex class="right-content">
                 <v-container>
                     <v-layout>
-                        <search-article></search-article>   
+
                     </v-layout>
                 </v-container>
             </v-flex>
@@ -26,14 +26,18 @@
     <script>
     import NavbarComponents from "@/components/widget/navbar";
     import listArticleComponents from "@/components/widget/list-article";
-    import SearchArticleComponents from "@/components/widget/search-article";
 
     export default   {
         name: 'index-page-layout',
+        props:{
+            query: {
+                type: String,
+                default: ""
+            }
+        },
         components: {
             'nav-bar' : NavbarComponents,
-            'list-article': listArticleComponents,
-            'search-article': SearchArticleComponents
+            'list-article': listArticleComponents
         }
     }
     </script>

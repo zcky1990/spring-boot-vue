@@ -1,38 +1,8 @@
 <template>
    <div class="article-component">
-     <div class="article-image-container">
+     <div v-if="isHasData" class="article-image-container">
        <v-container grid-list-xs>
          <v-layout column>
-           <!--<v-flex>
-              <div class="article">
-                <v-img
-                  :src="data[0].imageHeader"
-                  :lazy-src="data[0].imageHeaderLazy"
-                  aspect-ratio="1"
-                  class="grey lighten-2 rounded"
-                  max-width="auto"
-                  max-height="200"
-                >
-                  <template v-slot:placeholder>
-                    <v-layout
-                      fill-height
-                      align-center
-                      justify-center
-                      ma-0
-                    >
-                      <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                    </v-layout>
-                  </template>
-                </v-img>
-                  <div class="article-headline">{{data[0].article_title}}</div>
-                  <div class="article-list-desc">
-                    {{data[0].article_content}}
-                  </div>
-                  <router-link class="read-more-links" :to="getUrl(data[0].slug)">
-                    Selengkapnya
-                  </router-link>
-              </div>
-           </v-flex> -->
             <v-flex class="article-list-container" v-for="item in data" :key="item.slug">
               <div class="article-list">
                   <div class="image-article-list">
@@ -81,6 +51,14 @@
          </v-layout>
        </v-container>
      </div>
+     <div v-if="!isHasData">
+       <div v-if="isSearch">
+         Pencarian tidak ditemukan
+       </div>
+      <div v-if="!isSearch">
+        Tidak ada Artikel
+      </div>
+     </div>
    </div>
 </template>
 <script>
@@ -89,7 +67,20 @@ import { EventBus } from './../../EventBus.js';
 
 export default {
   name: "list-article",
-  props: ["articleList"],
+  props: {
+    url: {
+      type: String,
+      default: ""
+    },
+    mode: {
+      type: String,
+      default: "article"
+    },
+    query:{
+      type: String,
+      default: ""
+    }
+  },
   data() {
     return {
       page : 0,
@@ -102,6 +93,10 @@ export default {
     };
   },
   created(){
+    if(this.url != ""){
+      this.articleUrl = this.url;
+      console.log(this.query);
+    }
     this.getArticle();
   },
   methods: {
@@ -116,7 +111,7 @@ export default {
     getArticle : function(){
       let self = this;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
-        this.get(this.articleUrl + "?page="+this.page,  headers ,
+        this.get(this.getUrlRequest() + "page="+this.page,  headers ,
         function(response) {
           if(response.status == 200){
             self.data = response.data.response.content
@@ -130,7 +125,7 @@ export default {
       let self = this;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
       this.disableEnableLoadMoreBtn(true);
-      this.get(this.articleUrl + "?page="+this.page,  headers ,
+      this.get(this.getUrlRequest() + "page="+this.page,  headers ,
       function(response) {
            let newData = response.data.response.content
           self.addData(newData)
@@ -157,6 +152,29 @@ export default {
                 data.message = message
                 data.type = type
       EventBus.$emit('SNACKBAR_TRIGGERED', data)
+    },
+    getUrlRequest: function(){
+      if(this.mode == "search"){
+        return  this.articleUrl+"?query="+this.query+"&"
+      }else{
+        return this.articleUrl+"?"
+      }
+    }
+  },
+  computed: {
+    isHasData: function(){
+      if(this.data.length > 0){
+        return true
+      }else{
+        return false
+      }
+    },
+    isSearch: function(){
+      if(this.mode == "search"){
+        return true;
+      }else{
+        return false;
+      }
     }
   }
 };

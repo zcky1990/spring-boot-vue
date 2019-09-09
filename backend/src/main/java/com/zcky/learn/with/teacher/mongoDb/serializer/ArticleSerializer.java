@@ -20,22 +20,21 @@ public class ArticleSerializer implements JsonSerializer<Article> {
 		}
 		jsonObj.addProperty("_id", id);
 		
-		Users user = src.getAuthor();
+		
 		if(jsonObj.has("author")) {
 			jsonObj.remove("author");
+			Users user = src.getAuthor();
+			JsonObject userJson = new JsonObject();
+			userJson.addProperty("_id", user.getStringId());
+			userJson.addProperty("firstname", user.getFirstname());
+			userJson.addProperty("lastname", user.getLastname());
+			userJson.addProperty("email", user.getEmail());
+			userJson.addProperty("username", user.getUsername());
+			userJson.addProperty("name", user.getName());
+			userJson.addProperty("image_profile_url", user.getImageUrl());
+			jsonObj.add("author", userJson);
 		}
 				
-		JsonObject userJson = new JsonObject();
-		userJson.addProperty("_id", user.getStringId());
-		userJson.addProperty("firstname", user.getFirstname());
-		userJson.addProperty("lastname", user.getLastname());
-		userJson.addProperty("email", user.getEmail());
-		userJson.addProperty("username", user.getUsername());
-		userJson.addProperty("name", user.getName());
-		userJson.addProperty("image_profile_url", user.getImageUrl());
-		
-		jsonObj.add("author", userJson);
-		
 		Date time = src.get_id().getDate();
 		String createDate = util.getFormatedDate(time, "dd/MM/yyyy HH:mm:ss");
 		jsonObj.addProperty("created_date", createDate);

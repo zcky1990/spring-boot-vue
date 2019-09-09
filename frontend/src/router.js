@@ -7,6 +7,7 @@ import User from '@/pages/user'
 import UserValidation from '@/pages/user-validation'
 import UserSignUp from '@/pages/user-sign-up'
 import Article from '@/pages/article'
+import Search from '@/pages/search'
 
 Vue.use(Router)
 export default new Router({
@@ -46,6 +47,11 @@ export default new Router({
       path: '/sign_up/',
       name: 'New User Page',
       component : UserSignUp
+    },
+    {
+      path: '/search/:query',
+      name: 'Search Article Page',
+      component : Search
     }
   ]
 })

@@ -1,7 +1,6 @@
 package com.zcky.learn.with.teacher.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -48,6 +47,22 @@ public class ArticleController extends BaseController {
 		try {
 			Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").descending());
 			Page<Article> articleList = articleRepository.findAll(pageableRequest);
+			response = getSuccessResponse();
+			ArticleList article = gson.fromJson(ObjectToJSON(articleList), ArticleList.class);
+			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(ArticleList.class, new PageArticleSerializer(), article));
+		} catch(Exception e) {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+		}
+		return new ResponseEntity<String>( response.toString() , getResponseHeader(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/article/search", method = RequestMethod.GET)
+	public ResponseEntity<String> getArticleList(@RequestParam(value="query", required=false) String query,@RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
+		JsonObject response = new JsonObject();
+		try {
+			Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").descending());
+			Page<Article> articleList = articleRepository.findArticleByRegexpTitleOrSlug(query,pageableRequest);
 			response = getSuccessResponse();
 			ArticleList article = gson.fromJson(ObjectToJSON(articleList), ArticleList.class);
 			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(ArticleList.class, new PageArticleSerializer(), article));
