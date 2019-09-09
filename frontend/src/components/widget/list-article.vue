@@ -11,8 +11,8 @@
                       :lazy-src="item.imageHeaderLazy"
                       aspect-ratio="1"
                       class="grey lighten-2 rounded"
-                      width='300'
-                      height="170"
+                      width='150'
+                      height="150"
                     >
                       <template v-slot:placeholder>
                         <v-layout
@@ -51,7 +51,7 @@
          </v-layout>
        </v-container>
      </div>
-     <div v-if="!isHasData">
+     <div class="not-found" v-if="!isHasData">
        <div v-if="isSearch">
          Pencarian tidak ditemukan
        </div>
@@ -218,6 +218,7 @@ export default {
 .read-more-links {
     text-decoration: none;
     font-size: 1em;
+    color: #1eafed !important;
 }
 .article-headline {
   font-size:  1.2em;
@@ -227,8 +228,10 @@ export default {
   margin-top: 0.5em;
 }
 .article-list-headline {
-    font-size:  1.2em;
+    font-size:  2.2em;
+    line-height: 1.5;
     font-weight: bold;
+    font-weight: 400;
     margin-bottom: 0.5em;
 }
 .article-list-desc{
@@ -237,6 +240,9 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;  
+  line-height: 1.8;
+  font-weight: 400;
+  color: #666666;
   overflow: hidden;
 }
 
@@ -266,6 +272,13 @@ export default {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
+}
+.not-found {
+    width: 100%;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 400;
+    line-height: 1.5;
 }
 
 @media only screen and (max-width: 600px) {
