@@ -7,8 +7,6 @@
       <v-content>
         <v-container fill-height>
           <v-layout class="content-layout">
-            <v-flex class="left-content" >
-            </v-flex>
             <v-flex class="main-content-container">
               <article-content 
                 v-bind:content="article">
@@ -28,7 +26,7 @@
 
 <script>
 import Navbar from "@/components/widget/navbar";
-import Article from "@/components/widget/article";
+import ArticleComponents from "@/components/widget/article";
 import Comment from "@/components/widget/comment"
 
 export default {
@@ -37,19 +35,12 @@ export default {
   data() {
     return {
       getArticleUrl: "/article/get_article/",
-      article: {
-        _id: "",
-        article_title: "",
-        article_content: "",
-        author: {},
-        created_date: "",
-        slug: ""
-      },
+      article: {},
     };
   },
   components: {
     "user-nav-menu": Navbar,
-    "article-content": Article,
+    "article-content": ArticleComponents,
     "article-comment": Comment
   },
   methods: {
@@ -61,16 +52,22 @@ export default {
         let responseData = response.data.response;
         self.article = responseData;
       },function (e){
-
+        self.setMessage(e,1);
       })
+    },
+    setMessage(message, type){
+      let data={}
+      data.message = message
+      data.type = type
+      EventBus.$emit('SNACKBAR_TRIGGERED', data)
     },
   },
   computed: {
     isEmpty: function(){
-      if(Object.entries(this.article).length === 0 && this.article.constructor === Object){
-        return true
-      }else{
+      if(this.article.id != undefined){
         return false
+      }else{
+        return true
       }
     }
   },
@@ -79,10 +76,7 @@ export default {
   }
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .sign-up-page-container {
   background-color: white;
 }

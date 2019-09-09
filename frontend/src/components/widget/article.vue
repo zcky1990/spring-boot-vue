@@ -1,5 +1,10 @@
 <template>
   <section class="section article">
+    <div v-if="isCategoryExists" class="categories-container">
+      <div class="categories">
+          {{content.categoryArticle.name}}
+      </div>
+    </div>
     <v-container id="grid" fluid grid-list-sm tag="section">
       <v-layout wrap>
         <v-container>
@@ -34,6 +39,7 @@
                 <div class="author">
                   <div class="authors-name">{{content.author.firstname}} {{content.author.lastname}}</div>
                   <div class="article-create-date">{{content.created_date}}</div>
+                  
                 </div>
               </v-flex>
             </v-layout>
@@ -58,7 +64,7 @@
 
 
 export default {
-  name: "article",
+  name: "article-components",
   props: {
     content : Object
   },
@@ -81,6 +87,20 @@ export default {
   },
   updated(){
     this.setCssSideImage();
+  },
+  computed: {
+    isCategoryExists: function(){
+      if(this.content.categoryArticle != undefined){
+        if(this.content.categoryArticle.name != null){
+        return true
+        }else{
+          return false
+        }
+      }else{
+        return false
+      }
+      
+    }
   }
 };
 </script>
@@ -113,5 +133,16 @@ export default {
 }
 .article-content {
     display: table;
+}
+.categories {
+    padding: 5px 15px 5px 15px;
+    border: 1px solid rgb(0, 209, 178);
+    border-radius: 15px;
+    width: max-content;
+    font-weight: 400;
+}
+.categories:hover {
+  background: rgb(0, 209, 178);
+  color: white;
 }
 </style>

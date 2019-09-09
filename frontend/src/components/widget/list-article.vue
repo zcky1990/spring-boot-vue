@@ -35,7 +35,6 @@
                         <router-link class="read-more-links" :to="getUrl(item.slug)">
                         Selengkapnya
                         </router-link>
-              
                   </div>
               </div>
             </v-flex>
