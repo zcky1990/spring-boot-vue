@@ -1,7 +1,6 @@
 package com.zcky.learn.with.teacher.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -27,7 +26,6 @@ import com.zcky.learn.with.teacher.mongoDb.model.Article;
 import com.zcky.learn.with.teacher.mongoDb.model.ArticleComment;
 import com.zcky.learn.with.teacher.mongoDb.model.Users;
 import com.zcky.learn.with.teacher.mongoDb.repository.ArticleCommentRepository;
-import com.zcky.learn.with.teacher.mongoDb.repository.ArticleRepository;
 import com.zcky.learn.with.teacher.mongoDb.repository.UsersRepository;
 import com.zcky.learn.with.teacher.mongoDb.serializer.ArticleCommentSerializer;
 import com.zcky.learn.with.teacher.util.TimeUtility;
@@ -63,8 +61,7 @@ public class ArticleCommentController extends BaseController {
 		String auth = request.getHeader("x-uid");
 		JsonObject response;
 			ArticleComment articleComment = new ArticleComment();
-			Users user = new Users();
-			user.set_id(new ObjectId(auth));
+			Users user = userRepository.findBy_id(new ObjectId(auth));
 			Article article = new Article();
 			article.set_id(new ObjectId(commentArticle.getArticleId()));
 			articleComment.setAuthor(user);

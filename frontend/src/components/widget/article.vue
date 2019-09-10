@@ -10,7 +10,7 @@
           <div class="headline">{{content.article_title}}</div>
         </div>
         <div class="article-authors">
-              <div class="image-authors" v-if="content.author.image_profile_url">
+              <div class="image-authors" v-if="isHasAuthor">
                 <v-img
                   :src="content.author.image_profile_url"
                   lazy-src="https://picsum.photos/10/6?image=11"
@@ -29,7 +29,7 @@
                   </template>
                 </v-img>
               </div>
-              <div class="author-desc">
+              <div class="author-desc" v-if="isHasAuthor">
                 <div class="author">
                   <div class="authors-name">{{content.author.firstname}} {{content.author.lastname}}</div>
                   <div class="article-create-date">{{content.created_date}}</div>
@@ -167,6 +167,17 @@ export default {
     isCategoryExists: function(){
       if(this.content.categoryArticle != undefined){
         if(this.content.categoryArticle.name != null){
+          return true
+        }else{
+          return false
+        }
+      }else{
+        return false
+      }
+    },
+    isHasAuthor: function(){
+      if(this.content.author != undefined){
+        if(this.content.author != null){
           return true
         }else{
           return false

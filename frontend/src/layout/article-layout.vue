@@ -11,8 +11,8 @@
               <article-content 
                 v-bind:content="article">
               </article-content>
-              <article-comment v-if="!isEmpty" 
-                v-bind:article-id="article._id">
+              <article-comment 
+                v-bind:article-id="article.id">
               </article-comment>
             </v-flex>
             <v-flex class="right-content" >
@@ -37,7 +37,9 @@ export default {
   data() {
     return {
       getArticleUrl: "/article/get_article/",
-      article: {},
+      article: {
+
+      },
       isUserLoggin: false
     };
   },
@@ -70,15 +72,6 @@ export default {
       data.type = type
       EventBus.$emit('SNACKBAR_TRIGGERED', data)
     },
-  },
-  computed: {
-    isEmpty: function(){
-      if(this.article.id != undefined){
-        return false
-      }else{
-        return true
-      }
-    }
   },
   created() {
     this.getArticleService();

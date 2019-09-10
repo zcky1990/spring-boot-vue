@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 export default {
-  install (Vue, options) {
+  //default install (Vue, options)
+  install (Vue) {
       Vue.mixin({
         data: function () {
           return {
@@ -140,7 +141,7 @@ export default {
                 }
               }
               return '';
-            }
+            },
           }
      })
   }

@@ -45,7 +45,7 @@
                   :disabled ="isDisable"
                   elevation = "0"
                   depressed
-                  class="load-more-btn" @click="loadMore">Selanjutnya</v-btn>
+                  class="load-more-btn" @click="loadMore">Load More Article</v-btn>
               </div>
             </v-flex>
          </v-layout>

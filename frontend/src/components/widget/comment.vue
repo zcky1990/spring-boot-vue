@@ -39,6 +39,13 @@
                 </div>
               </div>
           </div>
+          <div v-if="hasMoreComment" class="center">
+                  <v-btn 
+                  :loading="isLoadMoreCommentOnProgress"
+                  elevation = "0"
+                  depressed
+                  class="load-more-btn" @click="loadMore">Load More Comment</v-btn>
+              </div>
         </v-flex>
       </v-layout>
     </v-container>
@@ -78,11 +85,13 @@ export default {
             comment: ""
           },
           isDisable: true,
-          messageList: []
+          messageList: [],
+          hasMoreComment: true,
+          isLoadMoreCommentOnProgress: false,
       }
     },
     methods: {
-        submit(){
+        submit: function (){
           if(this.articleId != undefined){
             this.postBody.articleId = this.articleId;
             this.addCommentService(this.postBody)
@@ -102,6 +111,34 @@ export default {
               function(e) {
                 self.setMessage(e, 1)
               });
+          }
+        },
+        getMoreCommentListService: function() {
+          let self = this;
+          let headers = this.getHeaders(this.$session);
+          this.isLoadMoreCommentOnProgress=true;
+          if(this.articleId != undefined){
+            this.get(this.getCommentUrl +"/"+this.articleId+"?page="+this.page ,  headers, 
+              function(response){
+                if (response.status == 200) {
+                  let responseData = response.data.response;
+                  self.addData(responseData);
+                }
+              },
+              function(e) {
+                self.setMessage(e, 1)
+              });
+          }
+        },
+        loadMore: function (){
+          this.page++;
+          this.getMoreCommentListService();
+        },
+        addData: function (response){
+          this.messageList = this.messageList.concat(response);
+          this.isLoadMoreCommentOnProgress=false;
+          if(response.length == 0){
+            this.hasMoreComment = false
           }
         },
         addCommentService: function(data) {
@@ -127,20 +164,19 @@ export default {
             this.isDisable = true;
           }
         },
-        setMessage(message, type){
+        setMessage: function(message, type){
           let data={}
           data.message = message
           data.type = type
           EventBus.$emit('SNACKBAR_TRIGGERED', data)
         },
     },
-    watch: { 
-      	articleId: function(newVal, oldVal) {
-          //console.log('Prop changed: ', newVal, ' | was: ', oldVal)
-          this.getCommentListService();
-        }
+    watch: {
+      articleId: function() {
+        this.getCommentListService();
       }
     }
+  }
 </script>
 <style scoped>
 .comment-area {
@@ -217,5 +253,32 @@ export default {
 }
 .circle {
   border-radius: 40px;
+}
+.center {
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+}
+.load-more-btn {
+    background-color: white !important;
+    border: 1px solid #00d1b2;
+    border-radius: 25px;
+    font-weight: 700;
+    color: #00d1b2;
+    cursor: pointer;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.load-more-btn:hover {
+    background-color: #00d1b2 !important;
+    border: 1px solid #00d1b2;
+    border-radius: 25px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
 }
 </style>
