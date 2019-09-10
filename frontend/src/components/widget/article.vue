@@ -62,7 +62,15 @@
                 <div class="article-content">
                     <div v-html="content.article_content"></div>
                 </div>
+
+               
               </div>
+               <div v-if="isHaveReference" class="article-reference">
+                  <div class="reference-list">Reference</div>
+                  <div class="reference-items" v-for="items in content.reference_list" :vid-id="reference" :key="reference">
+                    {{items}}
+                  </div>
+                </div>
         </div>
     </div>
   </section>
@@ -86,7 +94,8 @@ export default {
         deleteBookmark: "bookmarks/delete/"
       },
       isBookmarked: false,
-      isUserLoggin: false
+      isUserLoggin: false,
+      isHaveReference: false
       }
   },
   created(){
@@ -148,6 +157,9 @@ export default {
     if(this.content.bookmark){
       this.data = this.content.bookmark
       this.isBookmarked = true;
+    }
+    if(this.content.reference_list){
+      this.isHaveReference = true;
     }
     this.setCssSideImage();
   },
@@ -226,5 +238,10 @@ export default {
 }
 .bookmark-container {
   width: 100px;
+}
+.reference-list {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 2;
 }
 </style>
