@@ -36,6 +36,7 @@ export default {
     return {
       getArticleUrl: "/article/get_article/",
       article: {},
+      isUserLoggin: false
     };
   },
   components: {
@@ -46,7 +47,13 @@ export default {
   methods: {
      getArticleService: function() {
       let self = this;
-      let headers = this.getDefaultHeaders(this.getMeta("token"))
+      this.isUserLoggin = this.isLoggin(this.$session)
+      let headers = {}
+      if(this.isUserLoggin){
+          headers = this.getHeaders(this.$session);
+      }else{
+         headers = this.getDefaultHeaders(this.getMeta("token"));
+      }
       this.get(this.getArticleUrl + this.slug,  headers,
       function(response){
         let responseData = response.data.response;

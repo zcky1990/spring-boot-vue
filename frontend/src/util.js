@@ -85,6 +85,10 @@ export default {
                   return true
               }
             },
+            
+            getUserId: function(session){
+              return session.get('uid')
+            },
           
             checkAdminSession : function () {
               if (!this.$session.exists()) {

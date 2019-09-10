@@ -41,9 +41,9 @@ public class BookmarksArticle {
 		if(request.getId() != null) {
 			this.set_id(new ObjectId(request.getId()));
 		}
-		if(request.getArticleID() != null) {
+		if(request.getArticleId() != null) {
 			Article article = new Article();
-			article.set_id(new ObjectId(request.getArticleID()));
+			article.set_id(new ObjectId(request.getArticleId()));
 			this.setArticle(article);
 		}
 		if(request.getUserId()!= null) {

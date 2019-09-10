@@ -24,10 +24,14 @@ import com.google.gson.JsonObject;
 import com.zcky.learn.with.teacher.constant.Constant;
 import com.zcky.learn.with.teacher.model.ArticleList;
 import com.zcky.learn.with.teacher.model.request.ArticleRequest;
+import com.zcky.learn.with.teacher.model.response.ArticleResponse;
 import com.zcky.learn.with.teacher.mongoDb.model.Article;
+import com.zcky.learn.with.teacher.mongoDb.model.BookmarksArticle;
 import com.zcky.learn.with.teacher.mongoDb.model.Users;
+import com.zcky.learn.with.teacher.mongoDb.repository.ArticleBookmarksRepository;
 import com.zcky.learn.with.teacher.mongoDb.repository.ArticleRepository;
 import com.zcky.learn.with.teacher.mongoDb.repository.UsersRepository;
+import com.zcky.learn.with.teacher.mongoDb.serializer.ArticleBookmarkSerializer;
 import com.zcky.learn.with.teacher.mongoDb.serializer.ArticleSerializer;
 import com.zcky.learn.with.teacher.mongoDb.serializer.PageArticleSerializer;
 import com.zcky.learn.with.teacher.util.TimeUtility;
@@ -40,6 +44,9 @@ public class ArticleController extends BaseController {
 
 	@Autowired
 	private UsersRepository userRepository;
+	
+	@Autowired
+	private ArticleBookmarksRepository bookmarkRepository;
 	
 	@RequestMapping(value = "/api/article/get_article_list", method = RequestMethod.GET)
 	public ResponseEntity<String> getArticleList(@RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
@@ -126,10 +133,19 @@ public class ArticleController extends BaseController {
 	@RequestMapping(value = "/api/article/get_article/{slug}", method = RequestMethod.GET)
 	public ResponseEntity<String> getArticle(@PathVariable String slug, HttpServletRequest request) throws Exception {
 		JsonObject response;
+		String auth = request.getHeader("x-uid");
 		try {
 			Article article = articleRepository.findBySlug(slug);
-			response = getSuccessResponse();
-			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Article.class, new ArticleSerializer(), article)  );
+			if(!auth.isEmpty()) {
+				BookmarksArticle articleBookmark = bookmarkRepository.findByUserIdAndArticleId(new ObjectId(auth), article.get_id());
+				ArticleResponse articleResponse = this.gson.fromJson(this.ObjectToJSON(article), ArticleResponse.class);
+				articleResponse.setBookmark(articleBookmark);
+				response = getSuccessResponse();
+				response.add(Constant.RESPONSE, toJSONObjectWithSerializer(ArticleResponse.class, new ArticleBookmarkSerializer(), articleResponse)  );
+			}else {
+				response = getSuccessResponse();
+				response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Article.class, new ArticleSerializer(), article)  );	
+			}
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());

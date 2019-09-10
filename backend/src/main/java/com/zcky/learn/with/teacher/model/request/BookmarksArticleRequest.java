@@ -4,7 +4,7 @@ package com.zcky.learn.with.teacher.model.request;
 public class BookmarksArticleRequest {
 	private String id;
 	private String userId;
-	private String articleID;
+	private String articleId;
 	public String getId() {
 		return id;
 	}
@@ -17,10 +17,10 @@ public class BookmarksArticleRequest {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getArticleID() {
-		return articleID;
+	public String getArticleId() {
+		return articleId;
 	}
-	public void setArticleID(String articleID) {
-		this.articleID = articleID;
+	public void setArticleId(String articleID) {
+		this.articleId = articleID;
 	}
 }

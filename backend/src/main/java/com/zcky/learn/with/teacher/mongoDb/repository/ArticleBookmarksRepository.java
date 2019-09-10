@@ -12,9 +12,12 @@ import com.zcky.learn.with.teacher.mongoDb.model.BookmarksArticle;
 public interface ArticleBookmarksRepository extends MongoRepository<BookmarksArticle, String> {
 	BookmarksArticle findBy_id(ObjectId _id);
 
-	@Query(value = "{'user' : {'$ref' : 'users' , '$id' : ?0} }")
+	@Query(value = "{'users' : {'$ref' : 'users' , '$id' : ?0} }")
 	List<BookmarksArticle> findByUserId(Object userId, Pageable pageable);
 
-	@Query(value = "{'user' : {'$ref' : 'users' , '$id' : ?0} }")
+	@Query(value = "{'users' : {'$ref' : 'users' , '$id' : ?0} }")
 	List<BookmarksArticle> findByUserId(Object userId);	
+	
+	@Query(value = "{'users' : {'$ref' : 'users' , '$id' : ?0} , 'article' :  {'$ref' : 'article' , '$id' : ?1} }")
+	BookmarksArticle findByUserIdAndArticleId(Object userId, Object articleId);	
 }

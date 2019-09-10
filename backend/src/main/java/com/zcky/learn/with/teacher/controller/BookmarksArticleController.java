@@ -87,7 +87,7 @@ public class BookmarksArticleController extends BaseController {
 		try {
 			repository.delete(repository.findById(id).get());
 			response = getSuccessResponse();
-			response.addProperty(Constant.RESPONSE, Constant.DELETE_ARTICLE_SUCCESS_MESSAGE);
+			response.addProperty(Constant.RESPONSE, Constant.DELETE_BOOKMARK_SUCCESS_MESSAGE);
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());

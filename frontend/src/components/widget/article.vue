@@ -39,8 +39,8 @@
 
         <div class="content">
               <div class="article-content-container">
-                <div class="bookmark-container">
-                  <div v-if="isBookmarked" class="bookmark-btn">
+                <div v-if="isUserLoggin" class="bookmark-container">
+                  <div v-if="!isBookmarked" class="bookmark-btn" @click="bookmarkArticle">
                      <v-tooltip bottom>
                       <template v-slot:activator="{ on }">
                         <v-icon color="rgb(0, 209, 178)" v-on="on" >bookmark</v-icon>
@@ -49,15 +49,16 @@
                     </v-tooltip>
                   </div>
 
-                  <div v-if="!isBookmarked" class="bookmark-btn">
+                  <div v-if="isBookmarked" class="bookmark-btn" @click="removeBookmarkArticle">
                      <v-tooltip bottom>
                       <template v-slot:activator="{ on }">
                         <v-icon color="red" v-on="on" >bookmark</v-icon>
                       </template>
-                      <span>Bookmark this Article</span>
+                      <span>Unbookmark this Article</span>
                     </v-tooltip>
                   </div>
                 </div>
+
                 <div class="article-content">
                     <div v-html="content.article_content"></div>
                 </div>
@@ -75,7 +76,24 @@ export default {
   },
   data() {
     return {
+      data: {
+          id: "",
+          userId:"",
+          articleId:""
+        },
+      bookmark: {
+        createBookmark: "bookmarks/create",
+        deleteBookmark: "bookmarks/delete/"
+      },
+      isBookmarked: false,
+      isUserLoggin: false
       }
+  },
+  created(){
+    this.isUserLoggin = this.isLoggin(this.$session)
+    if(this.isUserLoggin){
+      this.data.userId= this.getUserId(this.$session)
+    }
   },
   methods: {
     setCssSideImage: function(){
@@ -88,9 +106,49 @@ export default {
           el.style.textAlign = 'center';
         }
       }
-    }
+    },
+    bookmarkArticle : function(){
+        this.addBookmark(this.data)
+    },
+    removeBookmarkArticle: function(){
+        this.deleteBookmark(this.data.id)
+    },
+    addBookmark: function(data) {
+          let self = this;
+          delete self.data['id'];
+          let headers = this.getHeaders(this.$session);
+          this.post(this.bookmark.createBookmark, data, headers ,
+          function(response) {
+              if (response.status == 200) {
+                let responseData = response.data.response;
+                self.data.id = responseData.id;
+                self.isBookmarked = true
+              }
+            },
+         function(e) {
+              self.setMessage(e, 1)
+            });
+    },
+    deleteBookmark: function(id){
+      let self = this;
+      let headers = this.getHeaders(this.$session)
+      this.delete(this.bookmark.deleteBookmark+id, headers,
+      function(response){
+        if(response.status == 200){
+          self.isBookmarked = false
+        }
+      },
+      function(e){
+        self.setMessage(e,1)
+      })
+    },
   },
   updated(){
+    this.data.articleId = this.content.id
+    if(this.content.bookmark.id){
+      this.data = this.content.bookmark
+      this.isBookmarked = true;
+    }
     this.setCssSideImage();
   },
   computed: {
@@ -104,23 +162,10 @@ export default {
       }else{
         return false
       }
-    },
-    //need to working
-    isBookmarked: function(){
-      if(this.content.categoryArticle != undefined){
-        if(this.content.categoryArticle.name != null){
-          return true
-        }else{
-          return false
-        }
-      }else{
-        return false
-      }
     }
   }
 };
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .article-authors {
     display: flex;

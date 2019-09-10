@@ -47,6 +47,10 @@ export const Util = {
     return headers
   },
 
+  getUserId: function(session){
+    return session.get('uid')
+  },
+
   getDefaultHeaders: function(token){
     let headers = {};
     headers['Authorization'] = 'Bearer '+ token
