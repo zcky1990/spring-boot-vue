@@ -3,7 +3,7 @@
     <section class="nav-section">
       <admin-menu-navbar></admin-menu-navbar>
     </section>
-    <section class="category-layout content-section container">
+    <section class="category-layout content-section">
       <v-content>
           <category-admin-content></category-admin-content>
       </v-content>
