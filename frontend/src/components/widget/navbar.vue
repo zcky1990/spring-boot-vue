@@ -121,7 +121,19 @@
          </div>
       </div>
 
-      <div v-if="!isMobile" class="link-container">
+      <div v-if="!isMobile" ref="navLink" class="link-container">
+        <div class="container toolbar-link">
+         <div class="links">
+            <div class="menu-btn-link" v-for="item in items" :key="item.text">
+              <router-link class="nav-draw-links" v-bind:to="item.url">
+              <div class="link">{{ item.title }}</div>
+              </router-link>
+            </div>
+         </div>
+        </div>
+      </div>
+
+      <div v-if="!isMobile && isHeaderFixedShow" class="link-container fixed-menu">
         <div class="container toolbar-link">
          <div class="links">
             <div class="menu-btn-link" v-for="item in items" :key="item.text">
@@ -179,7 +191,8 @@ export default {
         v => (v && v.length >= 8) || "Password must be more than 8 characters"
       ],
       isLogged: false,
-      usersData:{}
+      usersData:{},
+      isHeaderFixedShow: false
     };
   },
   created() {
@@ -187,9 +200,11 @@ export default {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
     this.usersData = this.getUsers(this.$session)
+    window.addEventListener("scroll", this.handleFixedNavBar);
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener("scroll", this.handleFixedNavBar);
   },
   computed: {
     fullName(){
@@ -197,6 +212,21 @@ export default {
     }
   },
   methods: {
+    handleFixedNavBar() {
+      if(this.isMobile == false){
+         const left = this.$refs.navLink.getBoundingClientRect().left
+         const top = this.$refs.navLink.getBoundingClientRect().top
+
+         if(top < 0 ){
+           this.isHeaderFixedShow = true;
+         } else {
+           this.isHeaderFixedShow = false;
+         }
+      }else {
+
+      }
+         
+    },
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
@@ -360,5 +390,12 @@ div.logout:hover {
 }
 .burger-menu {
     color: white;
+}
+.fixed-menu {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 15;
 }
 </style>

@@ -82,9 +82,6 @@ export default {
 .sign-up-page-container {
   background-color: white;
 }
-.content-section {
-  padding-top: 45px;
-}
 .content-layout{
   flex-direction: row;
 }
