@@ -141,7 +141,7 @@ export default {
       urlData : {
         createUrl: "/admin/user/create",
         editUrl: "/admin/user/edit",
-        getUrl: "/xadmin/user/detail/",
+        getUrl: "/admin/user/detail/",
         deleteUrl: "/admin/user/delete/",
         getListUrl: "/admin/user/find_all",
         getListDropdown: "/roles/get_roles_list",

@@ -92,13 +92,13 @@ export default {
           
             checkAdminSession : function () {
               if (!this.$session.exists()) {
-                      this.$router.push('/')
+                      this.$router.push('/admin/login')
                   } else {
                       let expDate = new Date(this.$session.get('exp_date'))
                       let currDate = new Date();
                       if(currDate > expDate){
                           this.$session.destroy();
-                          this.$router.push('/')
+                          this.$router.push('/admin/login')
                       }
                   }
             },

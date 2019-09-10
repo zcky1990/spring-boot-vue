@@ -2,12 +2,17 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/pages/index'
 import Login from '@/pages/login'
-import Admin from '@/pages/admin'
 import User from '@/pages/user'
 import UserValidation from '@/pages/user-validation'
 import UserSignUp from '@/pages/user-sign-up'
 import Article from '@/pages/article'
 import Search from '@/pages/search'
+
+import Admin from '@/pages/admin/admin'
+import Category from '@/pages/admin/category'
+import AccessLevel from '@/pages/admin/access-list'
+import Roles from '@/pages/admin/roles'
+import UsersAdmin from '@/pages/admin/users'
 
 Vue.use(Router)
 export default new Router({
@@ -22,11 +27,6 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
-    },
-    {
-      path: '/admin',
-      name: 'Admin',
-      component: Admin
     },
     {
       path: '/user',
@@ -52,6 +52,31 @@ export default new Router({
       path: '/search/:query',
       name: 'Search Article Page',
       component : Search
-    }
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: Admin
+    },
+    {
+      path: '/admin/category',
+      name: 'AdminCategory',
+      component: Category
+    },
+    {
+      path: '/admin/access_level',
+      name: 'AdminAccessLevel',
+      component: AccessLevel
+    },
+    {
+      path: '/admin/roles',
+      name: 'AdminRoles',
+      component: Roles
+    },
+    {
+      path: '/admin/users',
+      name: 'AdminUsers',
+      component: UsersAdmin
+    },
   ]
 })
