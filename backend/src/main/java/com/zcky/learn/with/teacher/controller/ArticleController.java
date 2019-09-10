@@ -136,7 +136,7 @@ public class ArticleController extends BaseController {
 		String auth = request.getHeader("x-uid");
 		try {
 			Article article = articleRepository.findBySlug(slug);
-			if(!auth.isEmpty()) {
+			if(auth != null) {
 				BookmarksArticle articleBookmark = bookmarkRepository.findByUserIdAndArticleId(new ObjectId(auth), article.get_id());
 				ArticleResponse articleResponse = this.gson.fromJson(this.ObjectToJSON(article), ArticleResponse.class);
 				articleResponse.setBookmark(articleBookmark);

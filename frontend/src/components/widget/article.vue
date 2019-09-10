@@ -108,10 +108,10 @@ export default {
       }
     },
     bookmarkArticle : function(){
-        this.addBookmark(this.data)
+      this.addBookmark(this.data)
     },
     removeBookmarkArticle: function(){
-        this.deleteBookmark(this.data.id)
+      this.deleteBookmark(this.data.id)
     },
     addBookmark: function(data) {
           let self = this;
@@ -145,7 +145,7 @@ export default {
   },
   updated(){
     this.data.articleId = this.content.id
-    if(this.content.bookmark.id){
+    if(this.content.bookmark){
       this.data = this.content.bookmark
       this.isBookmarked = true;
     }
@@ -192,7 +192,7 @@ export default {
 .headline {
     font-size: 2.3rem !important;
     font-weight: 600;
-    line-height: 2 !important;
+    line-height: 1.5 !important;
     text-transform: capitalize;
 }
 .content {

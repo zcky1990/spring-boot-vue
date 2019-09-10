@@ -29,6 +29,8 @@ import Navbar from "@/components/widget/navbar";
 import ArticleComponents from "@/components/widget/article";
 import Comment from "@/components/widget/comment"
 
+import { EventBus } from '../EventBus.js';
+
 export default {
   name: "article-page-layout",
   props: ["slug"],
