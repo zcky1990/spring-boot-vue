@@ -82,10 +82,6 @@ export default {
         this.drawer = true;
       }
     },
-    closePopUpMenu() {
-      this.menu = false;
-      this.users = false;
-    },
     setMessage(message, type) {
       let data={}
         data.message = message
@@ -96,13 +92,11 @@ export default {
     },
     logout() {
       this.$session.destroy();
-      this.closePopUpMenu();
       this.isLogged = false;
     }
   }
 };
 </script>
-    <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .nav-draw-links {
   display: flex;
