@@ -1,6 +1,7 @@
 <template>
   <div class="nav-menu">
     <v-navigation-drawer fixed clipped v-model="drawer" app>
+      <v-subheader>Application Menu</v-subheader>
       <v-list-tile v-for="item in items" :key="item.text">
         <router-link class="nav-draw-links" v-bind:to="item.url">
           <v-list-tile-content>
@@ -52,7 +53,6 @@ export default {
         { title: "Roles", url: "/admin/roles" },
         { title: "Users", url: "/admin/users" },
       ],
-      items2: [{ picture: 28, text: "Joseph" }, { picture: 38, text: "Apple" }],
       title: "Admin",
       icon: {
         type: String,
@@ -66,21 +66,6 @@ export default {
       menu: false,
       message: false,
       valid: true,
-      username: "",
-      password: "",
-      showPassword: false,
-      rules: {
-        required: value => !!value || "Required.",
-        min: v => v.length >= 8 || "Min 8 characters"
-      },
-      useranameRules: [
-        v => !!v || "Username is required",
-        v => (v && v.length >= 8) || "Username must be more than 8 characters"
-      ],
-      passwordRules: [
-        v => !!v || "Password is required",
-        v => (v && v.length >= 8) || "Password must be more than 8 characters"
-      ],
       isLogged: false
     };
   },
@@ -112,8 +97,8 @@ export default {
     },
     setMessage(message, type) {
       let data={}
-                data.message = message
-                data.type = type
+        data.message = message
+        data.type = type
       EventBus.$emit('SNACKBAR_TRIGGERED', data)
       this.closePopUpMenu();
       this.$refs.form.reset();
