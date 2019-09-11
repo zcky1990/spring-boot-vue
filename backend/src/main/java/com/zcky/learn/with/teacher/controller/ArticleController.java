@@ -52,7 +52,7 @@ public class ArticleController extends BaseController {
 	public ResponseEntity<String> getArticleList(@RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
 		JsonObject response = new JsonObject();
 		try {
-			Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").ascending());
+			Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").descending());
 			Page<Article> articleList = articleRepository.findAll(pageableRequest);
 			response = getSuccessResponse();
 			ArticleList article = gson.fromJson(ObjectToJSON(articleList), ArticleList.class);

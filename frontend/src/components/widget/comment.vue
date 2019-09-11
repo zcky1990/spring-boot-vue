@@ -99,7 +99,7 @@ export default {
         },
         getCommentListService: function() {
           let self = this;
-          let headers = this.getHeaders(this.$session);
+          let headers = this.getDefaultHeaders(this.getMeta("token"));
           if(this.articleId != undefined){
             this.get(this.getCommentUrl +"/"+this.articleId+"?page="+this.page ,  headers, 
               function(response){
@@ -115,7 +115,7 @@ export default {
         },
         getMoreCommentListService: function() {
           let self = this;
-          let headers = this.getHeaders(this.$session);
+          let headers = this.getDefaultHeaders(this.getMeta("token"));
           this.isLoadMoreCommentOnProgress=true;
           if(this.articleId != undefined){
             this.get(this.getCommentUrl +"/"+this.articleId+"?page="+this.page ,  headers, 
