@@ -86,7 +86,7 @@ export default {
           },
           isDisable: true,
           messageList: [],
-          hasMoreComment: true,
+          hasMoreComment: false,
           isLoadMoreCommentOnProgress: false,
       }
     },

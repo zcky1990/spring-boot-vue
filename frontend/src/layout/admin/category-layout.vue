@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Navbar from "@/components/widget/navbar";
+import Navbar from "@/components/widget/admin/admin-navbar";
 import CategoryForm from "@/components/widget/admin/category-form";
 
 export default {
