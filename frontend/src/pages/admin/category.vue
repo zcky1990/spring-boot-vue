@@ -5,7 +5,6 @@
 </template>
 
     <script>
-//import Navbar from "@/components/widget/Navbar";
 import CategoryLayout from "@/layout/admin/category-layout"
 
 export default {

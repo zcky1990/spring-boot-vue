@@ -5,7 +5,7 @@
       <v-list-tile v-for="item in items" :key="item.text">
         <router-link class="nav-draw-links" v-bind:to="item.url">
           <v-list-tile-content>
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            <v-list-tile-title class="menu-link">{{ item.title }}</v-list-tile-title>
           </v-list-tile-content>
         </router-link>
       </v-list-tile>
@@ -37,7 +37,6 @@
 </template>
 
 <script>
-
 import { EventBus } from './../../../EventBus.js';
 
 export default {
@@ -47,25 +46,17 @@ export default {
       drawer: true,
       isMobile: false,
       items: [
-        { title: "Home", url: "/" },
+        { title: "Home", url: "/admin" },
         { title: "Category", url: "/admin/category" },
         { title: "Access Level", url: "/admin/access_level" },
         { title: "Roles", url: "/admin/roles" },
         { title: "Users", url: "/admin/users" },
       ],
       title: "Admin",
-      icon: {
-        type: String,
-        default: "$vuetify.icons.cancel"
-      },
       window: {
         width: 0,
         height: 0
       },
-      users: false,
-      menu: false,
-      message: false,
-      valid: true,
       isLogged: false
     };
   },
@@ -144,5 +135,8 @@ a.v-list__tile.v-list__tile--link.theme--light {
     border: 1px solid  #00d1b2;
     border-radius: 15px;
     text-align: center;
+}
+.menu-link {
+  color:  #00d1b2;
 }
 </style>
