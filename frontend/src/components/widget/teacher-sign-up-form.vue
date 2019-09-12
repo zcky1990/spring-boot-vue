@@ -3,7 +3,7 @@
     <v-layout class="sign-up-container" align-center justify-center flex fill-height>
       <div class="title-container">
                 <div class="title bulma-color">Sign Up</div>
-                <div class="sub-title bulma-color">Make your Account</div>
+                <div class="sub-title bulma-color">Make your Teacher Account</div>
       </div>
       <div class="form-container">
         <v-form ref="form" v-model="valid" width="300">
@@ -84,7 +84,7 @@
 import { EventBus } from './../../EventBus.js';
 
 export default {
-  name: "user-sign-up-form",
+  name: "teacher-sign-up-form",
   data() {
     return {
       valid: false,

@@ -8,6 +8,8 @@ import UserSignUp from '@/pages/user-sign-up'
 import Article from '@/pages/article'
 import Search from '@/pages/search'
 
+import TeacherLogin from '@/pages/teacher-login'
+
 import Admin from '@/pages/admin/admin'
 import Category from '@/pages/admin/category'
 import AccessLevel from '@/pages/admin/access-list'
@@ -52,6 +54,11 @@ export default new Router({
       path: '/search/:query',
       name: 'Search Article Page',
       component : Search
+    },
+    {
+      path: '/teacher/login',
+      name: 'Teacher Login',
+      component: TeacherLogin
     },
     {
       path: '/admin',

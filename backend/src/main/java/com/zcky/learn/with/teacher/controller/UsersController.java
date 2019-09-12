@@ -64,6 +64,7 @@ public class UsersController extends BaseController{
 				user.fromObject(userRequest);
 				Roles role = rolesRepository.findByName(userRequest.getType());
 				user.setRoles(role);
+				user.setStatus(true);
 				repository.save(user);
 				MailUtility mUtil = new MailUtility();
 				String template = mUtil.getEmailTemplate(Constant.MAIL_TEMPLATE_PATH);
