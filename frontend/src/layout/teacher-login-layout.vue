@@ -63,6 +63,7 @@ area{
     background: rgb(0, 209, 178);
     animation: animate 25s linear infinite;
     bottom: -150px;
+    border-radius: 50%;
 }
 .circles li:nth-child(1){
     left: 25%;
@@ -133,7 +134,7 @@ area{
     0%{
         transform: translateY(0) rotate(0deg);
         opacity: 1;
-        border-radius: 0;
+        border-radius: 50%;
     }
     100%{
         transform: translateY(-1000px) rotate(720deg);
