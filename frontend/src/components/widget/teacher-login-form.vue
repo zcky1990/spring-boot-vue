@@ -173,11 +173,11 @@ export default {
   text-decoration: none;
 }
 .title {
-  font-size: 2.8rem !important;
-  font-weight: 600;
-  color: white;
-  text-align: center;
-  padding-bottom: 16px;
+  font-size: 3.2rem !important;
+    font-weight: 600;
+    color:  white;
+    text-align: center;
+    line-height: 1.5 !important;
 }
 .sub-title {
   font-size: 1.4rem !important;
@@ -224,5 +224,6 @@ export default {
     margin: 0 auto;
     display: flex;
     position: relative;
+    animation: pulse 2s 0.75s cubic-bezier(.5,.5,0,1) infinite;
 }
 </style>
