@@ -3,9 +3,11 @@
     <v-layout class="sign-up-container" align-center justify-center flex fill-height>
       <div class="title-container">
         <div class="buble-container">
-            <div class="buble">
-                <div class="title">Login</div>
-                <div class="sub-title">Masuk ke Akun Anda</div>
+            <div class="buble-outer">
+              <div class="buble">
+                  <div class="title">Login</div>
+                  <div class="sub-title">Masuk ke Akun Anda</div>
+              </div>
             </div>
         </div>
       </div>
@@ -202,6 +204,10 @@ export default {
   line-height: 1.5;
   cursor: pointer;
 }
+.buble-outer {
+    border: 2px solid rgb(0, 209, 178);
+    border-radius: 50%;
+}
 .buble {
     background: rgb(0, 209, 178);
     width: 250px;
@@ -209,6 +215,7 @@ export default {
     padding: 65px;
     border-radius: 50%;
     color: white;
+    border: 5px solid white;
 }
 .buble-container {
     text-align: center;
