@@ -190,10 +190,12 @@ public class Users {
 		if(request.getId() != null) {
 			this.set_id(new ObjectId(request.getId()));
 		}
-		if(request.getRoles().getId() != null) {
-			Roles role = new Roles();
-			role.set_id(new ObjectId(request.getRoles().getId()));
-			this.setRoles(role);
+		if(request.getRoles() != null) {
+			if(request.getRoles().getId() != null) {
+				Roles role = new Roles();
+				role.set_id(new ObjectId(request.getRoles().getId()));
+				this.setRoles(role);
+			}
 		}
 		this.setAddress(request.getAddress());
 		this.setBirthday(request.getBirthday());

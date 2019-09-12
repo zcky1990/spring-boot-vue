@@ -20,6 +20,7 @@ public class UsersRequest {
 	private String display_name;
 	private String city;
 	private String zipcode;
+	private String type;
 	public String getId() {
 		return id;
 	}
@@ -134,5 +135,10 @@ public class UsersRequest {
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
 	}
-		
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}		
 }

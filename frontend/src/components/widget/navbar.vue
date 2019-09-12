@@ -27,9 +27,12 @@
         <div class="user-item" v-if="isLogged">
           <div class="image-user">
             <router-link class="link-login nav-draw-links button-login image-border" to="/user">
-                   <v-avatar size="70">
+                   <v-avatar v-if="isUserImageExits" size="70">
                       <img :src="usersData.image_url" alt />
                   </v-avatar>
+                  <v-avatar v-if="!isUserImageExits" size="70">
+                         <v-icon >account_circle</v-icon>
+                      </v-avatar>
             </router-link>
           </div>
           <div class="user-title">
@@ -97,8 +100,11 @@
                 <template v-slot:activator="{ on }">
                   <div class="user-avatar-container">
                     <v-chip class="button-login" v-on="on">
-                      <v-avatar>
-                        <img :src="usersData.image_url" alt />
+                      <v-avatar v-if="isUserImageExits">
+                        <img  :src="usersData.image_url" alt />
+                      </v-avatar>
+                      <v-avatar v-if="!isUserImageExits" >
+                         <v-icon >account_circle</v-icon>
                       </v-avatar>
                       {{fullName}}
                     </v-chip>
@@ -212,20 +218,27 @@ export default {
     }
   },
   methods: {
+    isUserImageExits(){
+      console.log("asda")
+      if(this.usersData.image_url != undefined){
+        return true
+      }else{
+        return false
+      }
+    },
     handleFixedNavBar() {
       if(this.isMobile == false){
-         const left = this.$refs.navLink.getBoundingClientRect().left
-         const top = this.$refs.navLink.getBoundingClientRect().top
+        if(this.$refs.navLink){
+          const left = this.$refs.navLink.getBoundingClientRect().left
+          const top = this.$refs.navLink.getBoundingClientRect().top
 
-         if(top < 0 ){
-           this.isHeaderFixedShow = true;
-         } else {
-           this.isHeaderFixedShow = false;
-         }
-      }else {
-
-      }
-         
+          if(top < 0 ){
+            this.isHeaderFixedShow = true;
+          } else {
+            this.isHeaderFixedShow = false;
+          }
+        }
+      }         
     },
     handleResize() {
       this.window.width = window.innerWidth;

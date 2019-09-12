@@ -6,7 +6,7 @@
                 "username": "maribelajardev@gmail.com",
                 "password": "maribelajardev123",
                 "host": "smtp.gmail.com",
-                "port": "465"
+                "port": "586"
             }
         },
         {
@@ -15,7 +15,7 @@
                 "username": "maribelajardev@gmail.com",
                 "password": "maribelajardev123",
                 "host": "smtp.gmail.com",
-                "port": "465"
+                "port": "586"
             }
         }
     ]

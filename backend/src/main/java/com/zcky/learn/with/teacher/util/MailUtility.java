@@ -52,7 +52,6 @@ public class MailUtility {
 
 	public Properties getProperties() {
 		Properties properties = new Properties();
-		properties.put("mail.smtp.host", config.getHost());
 		properties.put("mail.smtp.port", config.getPort());
 		properties.put("mail.smtp.auth", "true");
 		properties.put("mail.smtp.starttls.enable", "true");
@@ -61,14 +60,7 @@ public class MailUtility {
 
 	public void sendMail(String messageBody, String pathAttachment, String to, String subject) {
 		Properties prop = getProperties();
-		/*Session session = Session.getInstance( prop, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(config.getUsername(), config.getPassword());
-            }
-        }); */
-
-		Session session = Session.getDefaultInstance(prop);
+		Session session = Session.getDefaultInstance(prop, null);
 		try {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(config.getUsername()));
@@ -87,10 +79,9 @@ public class MailUtility {
 			multipart.addBodyPart(mimeBodyPart);
 			message.setContent(multipart);
 
-			//Transport.send(message);
 			System.out.println("sendmail ");
 			Transport t = session.getTransport("smtp");
-			t.connect(config.getUsername(), config.getPassword());
+			t.connect(config.getHost(), config.getUsername(), config.getPassword());
 			t.sendMessage(message, message.getAllRecipients());
 			t.close();
 			System.out.println("success-send-mail ");

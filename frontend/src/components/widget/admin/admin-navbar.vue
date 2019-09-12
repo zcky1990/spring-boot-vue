@@ -93,6 +93,7 @@ export default {
     logout() {
       this.$session.destroy();
       this.isLogged = false;
+      this.$route.push("/")
     }
   }
 };

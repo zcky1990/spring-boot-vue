@@ -28,7 +28,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.JsonObject;
 import com.zcky.learn.with.teacher.constant.Constant;
 import com.zcky.learn.with.teacher.model.request.UsersRequest;
+import com.zcky.learn.with.teacher.mongoDb.model.Roles;
 import com.zcky.learn.with.teacher.mongoDb.model.Users;
+import com.zcky.learn.with.teacher.mongoDb.repository.RolesRepository;
 import com.zcky.learn.with.teacher.mongoDb.repository.UsersRepository;
 import com.zcky.learn.with.teacher.mongoDb.serializer.UsersAdminSerializer;
 import com.zcky.learn.with.teacher.mongoDb.serializer.UsersSerializer;
@@ -41,6 +43,9 @@ public class UsersController extends BaseController{
 
 	@Autowired
 	private UsersRepository repository;
+	
+	@Autowired
+	private RolesRepository rolesRepository;
 	
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
@@ -57,15 +62,15 @@ public class UsersController extends BaseController{
 			try {
 				Users user = new Users();
 				user.fromObject(userRequest);
+				Roles role = rolesRepository.findByName(userRequest.getType());
+				user.setRoles(role);
 				repository.save(user);
-				Optional<Users> userResponse = repository.findById(user.getStringId());
-				Users users = userResponse.get();
 				MailUtility mUtil = new MailUtility();
 				String template = mUtil.getEmailTemplate(Constant.MAIL_TEMPLATE_PATH);
-				String messageBody = mUtil.getVerificationMailMessageBody(template, users);
-				mUtil.sendMail(messageBody, "", users.getEmail(), Constant.VERIFICATION_SIGN_UP_MAIL_SUBJECT);
+				String messageBody = mUtil.getVerificationMailMessageBody(template, user);
+				mUtil.sendMail(messageBody, "", user.getEmail(), Constant.VERIFICATION_SIGN_UP_MAIL_SUBJECT);
 				response = getSuccessResponse();
-				response.add(Constant.RESPONSE, toJSONObject(users));
+				response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Users.class, new UsersSerializer(), user));
 			} catch(Exception e) {
 				response = getFailedResponse();
 				response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());

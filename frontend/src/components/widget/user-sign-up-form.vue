@@ -1,9 +1,6 @@
 <template>
   <v-container>
     <v-layout class="sign-up-container" align-center justify-center flex fill-height>
-      <div class="snack-bar-container">
-        <snack-bar ref="snackbar"></snack-bar>
-      </div>
       <div class="title-container">
                 <div class="title bulma-color">Sign Up</div>
                 <div class="sub-title bulma-color">Make your Account</div>
@@ -129,12 +126,8 @@ export default {
             if (responseData["error_message"] != undefined) {
               self.setMessage(responseData.error_message, 1);
             } else {
-              self.$session.start();
-              self.$session.set("jwt", responseData.token);
-              self.$session.set("uid", responseData.response.id);
-              self.$session.set("username", responseData.response.username);
-              self.$session.set("exp_date", responseData.exp_date);
-              router.push("/user");
+              self.setMessage("please check your mail to verify your accounts", 0);
+              router.push("/");
             }
           }
         },
@@ -156,6 +149,7 @@ export default {
         model.firstname = this.firstname;
         model.lastname = this.lastname;
         model.email = this.email;
+        model.type = "Free Member"
         this.callRestService(model);
       }
     },
