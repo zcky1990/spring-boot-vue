@@ -1,5 +1,6 @@
 package com.zcky.learn.with.teacher.mongoDb.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -15,7 +16,7 @@ public class Article {
 	@DBRef
 	private Users author;
 	@DBRef
-	private Category categoryArticle;
+	private List<Category> categoryArticle;
 	private String article_title;
 	private String article_permalink;
 	private String article_content;
@@ -82,10 +83,10 @@ public class Article {
 	public void setSlug(String slug) {
 		this.slug = slug;
 	}
-	public Category getCategoryArticle() {
+	public List<Category> getCategoryArticle() {
 		return categoryArticle;
 	}
-	public void setCategoryArticle(Category categoryArticle) {
+	public void setCategoryArticle(List<Category> categoryArticle) {
 		this.categoryArticle = categoryArticle;
 	}
 	public List<String> getReference_list() {
@@ -101,10 +102,14 @@ public class Article {
 		this.setArticle_content(request.getArticle_content());
 		this.setArticle_permalink(request.getArticle_permalink());
 		this.setArticle_title(request.getArticle_title());
-		if(request.getCategoryArticle().getId() != null) {
-			Category category = new Category();
-			category.set_id(new ObjectId(request.getCategoryArticle().getId()));
-			this.setCategoryArticle(category);
+		if(!request.getCategoryArticle().isEmpty() ) {
+			List<Category> listCategory = new ArrayList<>();
+			for(int i = 0 ; i < request.getCategoryArticle().size(); i++) {
+				Category category = new Category();
+				category.set_id(new ObjectId(request.getCategoryArticle().get(i).getId()));
+				listCategory.add(category);
+			}
+			this.setCategoryArticle(listCategory);
 		}		
 		this.setSlug(request.getSlug());
 		this.setStatus(request.getStatus());

@@ -5,7 +5,7 @@ import java.util.List;
 public class ArticleRequest {
 	private String id;
 	private String authorId;
-	private CategoryRequest categoryArticle;
+	private List<CategoryRequest> categoryArticle;
 	private String article_title;
 	private String article_permalink;
 	private String article_content;
@@ -27,10 +27,10 @@ public class ArticleRequest {
 	public void setAuthorId(String authorId) {
 		this.authorId = authorId;
 	}
-	public CategoryRequest getCategoryArticle() {
+	public List<CategoryRequest> getCategoryArticle() {
 		return categoryArticle;
 	}
-	public void setCategoryArticle(CategoryRequest categoryArticle) {
+	public void setCategoryArticle(List<CategoryRequest> categoryArticle) {
 		this.categoryArticle = categoryArticle;
 	}
 	public String getArticle_title() {

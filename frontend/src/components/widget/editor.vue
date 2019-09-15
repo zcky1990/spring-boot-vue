@@ -18,6 +18,7 @@
               v-model="data.categoryArticle"
               label="Category"
               outlined
+              multiple
               item-text="name"
               return-object
               color="rgb(0, 209, 178)"
@@ -133,8 +134,7 @@ export default {
       default: ""
     },
     article:{
-      type: Object,
-      default: {}
+      type: Object
     }
   },
   data() {
@@ -142,7 +142,7 @@ export default {
       data:{
         id:"",
         articleId:"asdasdasd",
-        categoryArticle:{},
+        categoryArticle:[],
         article_content:"",
         article_title: "",
         slug:"",
@@ -291,14 +291,10 @@ export default {
   },
   created(){
     this.getDataList();
-    
-  },
-  updated(){
-    
   },
   watch: {
       article: function() {
-        if(this.article.hasOwnProperty('id')){
+        if(this.article.id != undefined){
           this.data = this.article;
         }
       }

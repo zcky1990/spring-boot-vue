@@ -7,6 +7,7 @@ import com.zcky.learn.with.teacher.util.TimeUtility;
 
 import java.lang.reflect.Type;
 import java.util.Date;
+import java.util.List;
 
 public class ArticleListSerializer implements JsonSerializer<Article> {
 
@@ -79,13 +80,18 @@ public class ArticleListSerializer implements JsonSerializer<Article> {
 
 		if(jsonObj.has("categoryArticle")) {
 			jsonObj.remove("categoryArticle");
-			Category categoryArtilce = src.getCategoryArticle();
-			JsonObject category = new JsonObject();
-			category.addProperty("id", categoryArtilce.getStringId());
-			category.addProperty("name", categoryArtilce.getName());
-			category.addProperty("status", categoryArtilce.getStatus());
-			category.addProperty("type", categoryArtilce.getType());
-			jsonObj.add("categoryArticle", category);
+			List<Category> list = src.getCategoryArticle();
+			JsonArray listCategory = new JsonArray();
+			for(int i = 0 ; i < list.size(); i++) {
+				Category categoryArticle = list.get(i);
+				JsonObject category = new JsonObject();
+				category.addProperty("id", categoryArticle.getStringId());
+				category.addProperty("name", categoryArticle.getName());
+				category.addProperty("status", categoryArticle.getStatus());
+				category.addProperty("type", categoryArticle.getType());
+				listCategory.add(category);
+			}
+			jsonObj.add("categoryArticle", listCategory);
 		}
 
 		if(jsonObj.has("reference_list")) {

@@ -12,7 +12,7 @@ public class ArticleResponse {
 	@Id
 	private ObjectId _id;
 	private Users author;
-	private Category categoryArticle;
+	private List<Category> categoryArticle;
 	private String article_title;
 	private String article_permalink;
 	private String article_content;
@@ -80,10 +80,10 @@ public class ArticleResponse {
 	public void setSlug(String slug) {
 		this.slug = slug;
 	}
-	public Category getCategoryArticle() {
+	public List<Category> getCategoryArticle() {
 		return categoryArticle;
 	}
-	public void setCategoryArticle(Category categoryArticle) {
+	public void setCategoryArticle(List<Category> categoryArticle) {
 		this.categoryArticle = categoryArticle;
 	}
 	public List<String> getReference_list() {
