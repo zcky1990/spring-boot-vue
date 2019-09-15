@@ -32,6 +32,7 @@ public class PageArticleSerializer implements JsonSerializer<ArticleList> {
 				article.addProperty("imageHeader", imgSrc);
 				String lazyImage = imgSrc.replace("/upload/", "/upload/f_auto,q_auto,e_blur:300/");
 				article.addProperty("imageHeaderLazy", lazyImage);
+				
 			}
 			
 			if(articleContent.length() > 200) {

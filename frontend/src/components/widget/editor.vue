@@ -123,7 +123,20 @@ function MyCustomUploadAdapterPlugin( editor ) {
 
 export default {
   name: "editor-component",
-  props: ["addUrl", "updateUrl"],
+  props: {
+    addUrl: {
+      type: String,
+      default: ""
+    },
+    updateUrl: {
+      type: String,
+      default: ""
+    },
+    article:{
+      type: Object,
+      default: {}
+    }
+  },
   data() {
     return {
       data:{
@@ -271,11 +284,25 @@ export default {
     },
     addNewRefData: function(){
       this.data.reference_list.push("");
+    },
+    resetData: function(){
+      this.data = {};
     }
   },
   created(){
     this.getDataList();
+    
   },
+  updated(){
+    
+  },
+  watch: {
+      article: function() {
+        if(this.article.hasOwnProperty('id')){
+          this.data = this.article;
+        }
+      }
+    },
   computed: {
      btnOptions () {
         const options = {

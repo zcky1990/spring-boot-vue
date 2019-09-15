@@ -229,9 +229,7 @@ export default {
     handleFixedNavBar() {
       if(this.isMobile == false){
         if(this.$refs.navLink){
-          const left = this.$refs.navLink.getBoundingClientRect().left
           const top = this.$refs.navLink.getBoundingClientRect().top
-
           if(top < 0 ){
             this.isHeaderFixedShow = true;
           } else {

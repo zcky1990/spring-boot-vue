@@ -32,6 +32,7 @@ import com.zcky.learn.with.teacher.mongoDb.repository.ArticleBookmarksRepository
 import com.zcky.learn.with.teacher.mongoDb.repository.ArticleRepository;
 import com.zcky.learn.with.teacher.mongoDb.repository.UsersRepository;
 import com.zcky.learn.with.teacher.mongoDb.serializer.ArticleBookmarkSerializer;
+import com.zcky.learn.with.teacher.mongoDb.serializer.ArticleListSerializer;
 import com.zcky.learn.with.teacher.mongoDb.serializer.ArticleSerializer;
 import com.zcky.learn.with.teacher.mongoDb.serializer.PageArticleSerializer;
 import com.zcky.learn.with.teacher.util.TimeUtility;
@@ -48,6 +49,52 @@ public class ArticleController extends BaseController {
 	@Autowired
 	private ArticleBookmarksRepository bookmarkRepository;
 	
+	/** Authors **/
+	@RequestMapping(value = "/api/article/get_list_article", method = RequestMethod.GET)
+	public ResponseEntity<String> getListArticle(@RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
+		JsonObject response = new JsonObject();
+		String auth = request.getHeader("x-uid");
+		Users user = userRepository.findBy_id(new ObjectId(auth));
+		if(user != null) {
+			try {
+				Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").descending());
+				Page<Article> articleList = articleRepository.findAllArticleByUserId(user.get_id(), pageableRequest);
+				response = getSuccessResponse();
+				List<Article> article = articleList.getContent();
+				response.add(Constant.RESPONSE, toJSONArrayWithSerializer(Article.class, new ArticleListSerializer(), article));
+			} catch(Exception e) {
+				response = getFailedResponse();
+				response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+			}
+		}else {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, Constant.USER_NOT_FOUND_ERROR_MESSAGE);
+		}
+		return new ResponseEntity<String>( response.toString() , getResponseHeader(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/article/get_article_by_id/{id}", method = RequestMethod.GET)
+	public ResponseEntity<String> getArticleDetail(@PathVariable String id, HttpServletRequest request) throws Exception {
+		JsonObject response;
+		String auth = request.getHeader("x-uid");
+		Users user = userRepository.findBy_id(new ObjectId(auth));
+		if(user != null) {
+			try {
+				Article article = articleRepository.findBy_id(new ObjectId(id));
+				response = getSuccessResponse();
+				response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Article.class, new ArticleSerializer(), article)  );	
+			} catch(Exception e) {
+				response = getFailedResponse();
+				response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+			}
+		}else {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, Constant.USER_NOT_FOUND_ERROR_MESSAGE);
+		}
+		return new ResponseEntity<String>( response.toString() , getResponseHeader(), HttpStatus.OK);
+	}
+	
+	/** Users **/
 	@RequestMapping(value = "/api/article/get_article_list", method = RequestMethod.GET)
 	public ResponseEntity<String> getArticleList(@RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
 		JsonObject response = new JsonObject();

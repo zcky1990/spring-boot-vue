@@ -276,7 +276,6 @@ export default {
 				const fr = new FileReader ()
 				fr.readAsDataURL(files[0])
 				fr.addEventListener('load', () => {
-					let imageUrl = fr.result
           let imageFile = files[0] 
           self.uploadImage(imageFile)
 				})
