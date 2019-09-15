@@ -224,18 +224,15 @@ export default {
   font-weight: bold;
   font-style: normal;
   margin-bottom: 0.5em;
-  margin-top: 0.5em;
 }
 .article-list-headline {
     font-size:  2.2em;
     line-height: 1.5;
     font-weight: bold;
     font-weight: 400;
-    margin-bottom: 0.5em;
 }
 .article-list-desc{
   font-size:  1em;
-  margin-bottom: 0.5em;
   display: -webkit-box;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;  
