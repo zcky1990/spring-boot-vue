@@ -49,7 +49,7 @@
       <v-divider></v-divider>
 
       <v-list-tile class="menu-btn-link" v-for="item in items" :key="item.text">
-        <router-link class="nav-draw-links" v-bind:to="item.url">
+        <router-link class="nav-draw-links drawer-links" v-bind:to="item.url">
           <v-list-tile-content>
             <div class="container">
               <v-list-tile-title>{{ item.title }}</v-list-tile-title>
@@ -298,7 +298,11 @@ export default {
     border-bottom: 1px solid #efefef;
   }
 }
-
+.drawer-links {
+    color: #000 !important;
+    font-weight: 500 !important;
+    font-size: 1rem ! important;
+}
 .toolbar-title{
     display: flex;
     flex-wrap: wrap;
