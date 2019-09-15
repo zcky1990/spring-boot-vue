@@ -77,7 +77,12 @@
     <div class="toolbar">
       <div class="container toolbar-title">
         <div class="title-container">
+          <div class="title-navbar">
           {{title}}
+          </div>
+        <div class="sub-title">
+          Place to Gather Knowledge
+        </div>
         </div>
         <div v-if="isMobile">
           <v-toolbar-side-icon @click.stop="drawer = !drawer" color="#00d1b2" class="burger-menu"></v-toolbar-side-icon>
@@ -301,9 +306,16 @@ export default {
     flex-direction: row;
     justify-content: space-between;
 }
-.title-container {
-    font-size: 2.5rem;
+.title-navbar {
+    line-height: 1;
+    font-size: 2rem;
     font-weight: 500;
+    margin-bottom: 4px;
+}
+.sub-title {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    line-height: 1;
 }
 .link-container{
   border-bottom: 1px solid #efefef;
