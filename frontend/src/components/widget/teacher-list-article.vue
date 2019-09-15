@@ -4,10 +4,13 @@
        <div class="title">
         My Article List
        </div>
-       <div class="btn-container">
+       <div class="title-btn-container">
+         <div class="add-btn" @click="refreshData"> 
+               <v-icon class="icon-add-btn">refresh</v-icon>
+            </div>
             <div class="add-btn" @click="addNewArticle"> 
                <v-icon class="icon-add-btn">add</v-icon>
-              </div>
+            </div>
        </div>
      </div>
      <div v-if="isHasData" class="article-image-container">
@@ -51,13 +54,13 @@
                   <div class="action">
                     <div class="btn-container">
                       <div class="edit-btn btn" @click="getArticleById(item.id)">Edit</div>
-                      <div class="delete-btn btn">Delete</div>
+                      <div class="delete-btn btn" @click="deleteData(item.id)">Delete</div>
                     </div>
                   </div>
               </div>
             </v-flex>
             <v-flex>
-              <div class="center">
+              <div v-if="isHasMoreData" class="center">
                   <v-btn 
                   :loading="isLoadMoreOnProgress"
                   :disabled ="isDisable"
@@ -127,12 +130,14 @@ export default {
       listCount: 0,
       listArticleUrl: "/article/get_list_article",
       articleUrl:"/article/get_article_by_id/",
+      delelteArticleUrl: "/article/delete_article/",
       isLoadMoreOnProgress : false,
       dialog: false,
       isDisable : false, 
       title: "",
       data : [],
-      article:{}
+      article:{},
+      isHasMoreData: true
     };
   },
   created(){
@@ -170,11 +175,15 @@ export default {
       this.get(this.getUrlRequest() + "page="+this.page,  headers ,
       function(response) {
            let newData = response.data.response
-          self.addData(newData)
+           if(newData.length > 0){
+              self.addData(newData)
+           }else{
+             self.isHasMoreData= false;
+           }
         },
       function (e){
-          this.disableEnableLoadMoreBtn(false);
-          this.setMessage(e,1);
+          self.disableEnableLoadMoreBtn(false);
+          self.setMessage(e,1);
       });
     },
     loadMore: function (){
@@ -226,7 +235,26 @@ export default {
       this.article = {};
       this.dialog =! this.dialog;
       this.$refs.editor.resetData();
-    }
+    },
+    refreshData: function(){
+      this.data=[];
+      this.getArticle();
+    },
+    deleteData: function(id){
+      let self = this;
+      let headers = this.getHeaders(this.$session);
+      this.delete(this.delelteArticleUrl+id, headers,
+      function(response){
+        if(response.status == 200){
+          self.refreshData();
+        }else{
+          self.setMessage("failed to delete",1)
+        }
+      },
+      function(e){
+        self.setMessage(e,1)
+      })
+    },
   },
   computed: {
     isHasData: function(){
@@ -323,6 +351,9 @@ export default {
   position: relative;
   text-align: center;
 }
+.title-btn-container {
+    display: flex;
+}
 .btn {
     background-color: white !important;
     border: 1px solid #00d1b2;
@@ -332,6 +363,7 @@ export default {
     text-align: center;
     padding-left: 20px;
     padding-right: 20px;
+    height: 25px;
 }
 .btn:hover {
   background-color: #00d1b2 !important;
@@ -355,6 +387,7 @@ color: #00d1b2;
     padding: 2px;
     border: 1px solid #00d1b2;
     border-radius: 50%;
+    margin: 2px;
 }
 .add-btn:hover {
     width: 30px;
@@ -404,6 +437,8 @@ color: #00d1b2;
 }
 .btn-container {
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 .add-article-btn {
   position: absolute;
@@ -427,6 +462,8 @@ color: #00d1b2;
 }
 .btn-container {
     margin-top: 5px;
+    flex-direction: row;
+    margin-bottom: 5px;
 }
 .action {
     display: flex;
