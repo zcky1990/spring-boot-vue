@@ -87,7 +87,7 @@ export default {
   created(){
     let isLogged = this.isLoggin(this.$session);
     if(isLogged){
-      this.$router.push("/");
+      this.$router.push("/teacher/profile");
     }
   },
   methods: {

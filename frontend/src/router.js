@@ -33,8 +33,8 @@ export default new Router({
       component: Login
     },
     {
-      path: '/user',
-      name: 'User',
+      path: '/user/profile',
+      name: 'User Profile',
       component: User
     },
     {

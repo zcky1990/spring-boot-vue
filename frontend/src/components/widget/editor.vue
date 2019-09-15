@@ -311,9 +311,6 @@ export default {
 };
 </script>
 <style>
-.ck-editor__editable {
-    min-height: 300px;
-}
 .reference-title {
     padding-top: 1em;
     font-size: 1.5em;

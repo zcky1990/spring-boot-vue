@@ -111,15 +111,28 @@
                   </div>
                 </template>
                 <v-card>
-                  <v-list-tile>
-                    <v-list-tile-action>
-                      <v-icon>account_circle</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                      <v-list-tile-title>User Setting</v-list-tile-title>
-                    </v-list-tile-content>
-                  </v-list-tile>
-                  <v-btn color="warning" @click="logout">Logout</v-btn>
+                  <v-container>
+                    <div class="pop-up-menu-title">
+                      User Menu
+                    </div>
+                    <v-list-tile>
+                      <router-link class="pop-up-link" to="/user/profile">
+                        <v-list-tile-action>
+                          <v-icon >account_circle</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>User Setting</v-list-tile-title>
+                        </v-list-tile-content>
+                      </router-link>
+                    </v-list-tile>
+                    <div class="user-avatar-container" @click="logout">
+                      <div class="logout-drawer">
+                          <div class="logout-btn logout">
+                            Logout
+                          </div>
+                      </div>
+                    </div>
+                  </v-container>
                 </v-card>
               </v-menu>
             </div>
@@ -214,7 +227,11 @@ export default {
   },
   computed: {
     fullName(){
-      return this.usersData.firstname+" "+this.usersData.lastname;
+      if(this.usersData.display_name != undefined){
+        return this.usersData.display_name
+      }else{
+        return this.usersData.firstname+" "+this.usersData.lastname;
+      }
     }
   },
   methods: {
@@ -321,6 +338,17 @@ export default {
 .button-login {
   background: white;
   color: #00d1b2;
+}
+.pop-up-menu-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1;
+}
+.pop-up-link {
+    text-decoration: none;
+    display: flex;
+    font-size: 1rem;
+    color: #000;
 }
 .rounded {
   border-radius: 25px;
