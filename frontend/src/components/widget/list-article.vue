@@ -217,7 +217,11 @@ export default {
 .read-more-links {
     text-decoration: none;
     font-size: 1em;
-    color: #1eafed !important;
+    color: #00d1b2 !important;
+}
+
+.article-list-desc > div > p{
+  margin-bottom: 2px !important;
 }
 .article-headline {
   font-size:  1.2em;
@@ -293,8 +297,7 @@ export default {
     background: none !important;
 }
 .link-btn {
-  color: #3670d2 !important;
-  
+  color: #00d1b2 !important;
 }
 .no-padding{
   padding: 0px;

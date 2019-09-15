@@ -8,7 +8,7 @@
       <div class="user-content">
           <div class="left-profile">
             <div class="profile-container">
-              <v-card
+              <div
                 class="user-profile"
               >
               <v-card-text>
@@ -160,7 +160,7 @@
                     </div>
                   </div>
                 </v-container>
-              </v-card>
+              </div>
             </div>
           </div>
       </div>
@@ -323,6 +323,9 @@ export default {
   .profile {
     width: 100%;
   }
+}
+.left-profile {
+    border: 1px solid #efefef;
 }
 .page-title {
     background-color: #00d1b2;
