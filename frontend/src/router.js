@@ -9,6 +9,7 @@ import Article from '@/pages/article'
 import Search from '@/pages/search'
 
 import TeacherLogin from '@/pages/teacher-login'
+import TeacherProfile from '@/pages/teacher-profile'
 
 import Admin from '@/pages/admin/admin'
 import Category from '@/pages/admin/category'
@@ -59,6 +60,11 @@ export default new Router({
       path: '/teacher/login',
       name: 'Teacher Login',
       component: TeacherLogin
+    },
+    {
+      path: '/teacher/profile',
+      name: 'Teacher Profile',
+      component: TeacherProfile
     },
     {
       path: '/admin',

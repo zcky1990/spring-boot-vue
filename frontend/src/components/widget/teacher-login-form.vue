@@ -118,7 +118,7 @@ export default {
               self.$session.set("uid", responseData.response.id);
               self.$session.set("username", responseData.response.username);
               self.$session.set("exp_date", responseData.exp_date);
-              router.push("/teacher/profile ");
+              router.push("/teacher/profile");
             }
           }
       },

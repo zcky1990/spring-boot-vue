@@ -3,7 +3,7 @@
     <div class="profile-container">
       <div class="page-title">
         <div class="overview">Overview</div>
-        <div class="title">User Profile</div>
+        <div class="title">Teacher Profile</div>
       </div>
       <div class="user-content">
           <div class="left-profile">
@@ -180,7 +180,7 @@
 import { EventBus } from './../../EventBus.js';
 
 export default {
-  name: "profile-component",
+  name: "teacher-profile-component",
   data() {
     return {
       data: {
@@ -198,7 +198,7 @@ export default {
         phonenumber : "",
         postal_code : "" ,
         birthday: "",
-        isValidated: true,
+        isValidated: false,
         status: false,
         description :"",
       },
@@ -250,8 +250,8 @@ export default {
       this.put(this.saveUserProfileUrl, this.data ,  headers,
       function(response) {
           if (response.status == 200) {
-           self.$session.set("users", self.data);
-           self.editField();
+            self.$session.set("users", self.data);
+            self.editField();
           }
       },
       function(e) {

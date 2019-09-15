@@ -34,6 +34,7 @@ import com.zcky.learn.with.teacher.mongoDb.repository.RolesRepository;
 import com.zcky.learn.with.teacher.mongoDb.repository.UsersRepository;
 import com.zcky.learn.with.teacher.mongoDb.serializer.UsersAdminSerializer;
 import com.zcky.learn.with.teacher.mongoDb.serializer.UsersSerializer;
+import com.zcky.learn.with.teacher.mongoDb.serializer.UsersWithPasswordSerializer;
 import com.zcky.learn.with.teacher.security.JwtTokenUtil;
 import com.zcky.learn.with.teacher.util.MailUtility;
 import com.zcky.learn.with.teacher.util.TimeUtility;
@@ -119,9 +120,11 @@ public class UsersController extends BaseController{
 	}
 
 	@RequestMapping(value = "/api/users/edit_user", method = RequestMethod.PUT)
-	public ResponseEntity<String> editUsers(@Valid @RequestBody Users user, HttpServletRequest request){
+	public ResponseEntity<String> editUsers(@Valid @RequestBody UsersRequest userRequest, HttpServletRequest request){
 		JsonObject response;
 		try {
+			Users user = new Users();
+			user.fromObject(userRequest);
 			TimeUtility util = new TimeUtility();
 			user.setModified_date(util.getCurrentDate("dd/MM/yyyy HH:mm:ss"));
 			repository.save(user);
@@ -184,7 +187,7 @@ public class UsersController extends BaseController{
 		try {
 			Users user = repository.findById(id).get();
 			response = getSuccessResponse();
-			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Users.class, new UsersSerializer(), user) );
+			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Users.class, new UsersWithPasswordSerializer(), user) );
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());

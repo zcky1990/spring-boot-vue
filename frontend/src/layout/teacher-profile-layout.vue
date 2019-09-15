@@ -5,7 +5,7 @@
             </section>
             <section class="content-section">
                 <v-container fill-height align-center justify-center>
-                    <user-profile></user-profile>
+                    <teacher-profile></teacher-profile>
                 </v-container>
             </section>
         </div>
@@ -14,10 +14,10 @@
     <script>
 
     import Navbar from '@/components/widget/navbar'
-    import ProfileComponents from '@/components/widget/profile'
+    import TeacherProfileComponents from '@/components/widget/teacher-profile'
 
     export default {
-        name: 'user-page-layout',
+        name: 'teacher-profile-page-layout',
         created(){
             let isLogged = this.isLoggin(this.$session);
             if(!isLogged){
@@ -26,7 +26,7 @@
         },
         components: {
                     'user-nav-menu' : Navbar,
-                    "user-profile" : ProfileComponents
+                    "teacher-profile" : TeacherProfileComponents
         }
     }
     </script>
