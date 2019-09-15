@@ -81,7 +81,7 @@
           {{title}}
           </div>
         <div class="sub-title">
-          Place to Gather Knowledge
+          Knowledge archive
         </div>
         </div>
         <div v-if="isMobile">
@@ -241,7 +241,6 @@ export default {
   },
   methods: {
     isUserImageExits(){
-      console.log("asda")
       if(this.usersData.image_url != undefined){
         return true
       }else{
@@ -313,12 +312,13 @@ export default {
     margin-bottom: 4px;
 }
 .sub-title {
-    font-size: 0.6rem;
+    font-size: 0.9rem;
     text-transform: uppercase;
     line-height: 1;
 }
 .link-container{
   border-bottom: 1px solid #efefef;
+  background: #00d1b2;
 }
 .links {
     display: flex;
@@ -329,13 +329,14 @@ export default {
 }
 .nav-draw-links {
   /*color: #00d1b2 !important; */
-  text-transform: uppercase;
-  font-size: .8rem;
-  letter-spacing: .05rem;
-  font-weight: 400;
-  display: inline-block;
-  text-decoration: none!important;
-  color: #000;
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: 0.2rem;
+    line-height: 1;
+    font-weight: 800;
+    display: inline-block;
+    text-decoration: none!important;
+    color: #fff;
 }
 .nav-toolbar {
   color: #00d1b2 !important;
@@ -446,7 +447,6 @@ div.logout:hover {
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: white;
   z-index: 15;
 }
 </style>

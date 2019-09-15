@@ -67,7 +67,7 @@
               </div>
                <div v-if="isHaveReference" class="article-reference">
                   <div class="reference-list">Reference</div>
-                  <div class="reference-items" v-for="items in content.reference_list" :vid-id="reference" :key="reference">
+                  <div class="reference-items" v-for="items in content.reference_list" :key="items">
                     {{items}}
                   </div>
                 </div>
@@ -246,6 +246,13 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
+}
+@media only screen and (max-width: 600px) {
+  .article-content-container {
+      display: flex;
+      flex-wrap: nowrap;
+      flex-direction: column;
+  }
 }
 .bookmark-container {
   width: 100px;

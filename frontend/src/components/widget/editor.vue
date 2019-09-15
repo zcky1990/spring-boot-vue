@@ -40,7 +40,7 @@
         <div class="refs">
           <div class="reference-title">Reference</div>
           <div class="reference-container">
-            <div v-for="(item, index) in data.reference_list" ref="refereceContainer" class="ref-container">
+            <div v-for="(item, index) in data.reference_list" ref="refereceContainer" class="ref-container" :key="item">
               <v-text-field
               v-model="data.reference_list[index]"
               label="Reference"
