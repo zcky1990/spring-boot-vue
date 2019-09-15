@@ -23,6 +23,7 @@
                 ></v-img>
                 <v-icon
                   v-else
+                  size="150"
                 >
                   account_circle
                 </v-icon>
