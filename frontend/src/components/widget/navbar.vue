@@ -26,7 +26,7 @@
 
         <div class="user-item" v-if="isLogged">
           <div class="image-user">
-            <router-link class="link-login nav-draw-links button-login image-border" to="/user">
+            <router-link class="link-login nav-draw-links button-login image-border" to="/user/profile">
                    <v-avatar v-if="isUserImageExits" size="70">
                       <img :src="usersData.image_url" alt />
                   </v-avatar>
