@@ -1,8 +1,10 @@
 <template>
 <div class="user-tab-container">
     <div class="page-title">
-        <div class="overview">Overview</div>
-        <div class="title">User Details Profile</div>
+        <v-container>
+          <div class="overview">Overview</div>
+          <div class="title">User Details Profile</div>
+        </v-container>
       </div>
 
     <v-tabs
@@ -25,7 +27,7 @@
         v-for="item in tabs"
         :key="item.index"
       >
-      <div color="#00d1b2" v-show="item.index == 1">
+      <div class="tab-content-container" color="#00d1b2" v-show="item.index == 1">
           <user-profile></user-profile>
       </div>
       <div v-show="item.index == 2">
@@ -65,24 +67,28 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@media only screen and (max-width: 640px) {
+  .tab-content-container {
+    padding: 0 !important;
+  }
+}
+
 .table-container {
     padding-left: 16px;
     padding-right: 16px;
 }
 .user-tab-container {
   width: 100%;
-  border: 1px solid #efefef;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
 }
+.tab-content-container {
+    padding: 24px;
+  }
 .page-title {
   background-color: #00d1b2;
-  padding: 10px;
+  padding: 24px;
   color: white;
   font-size: 1.2rem;
   font-weight: 400;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
 }
 .overview {
   font-size: 1.2em;

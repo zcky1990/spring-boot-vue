@@ -295,7 +295,7 @@ export default {
 <style scoped>
 @media only screen and (max-width: 640px) {
   .toolbar-title{
-    border-bottom: 1px solid #efefef;
+    border-bottom: 1px solid #00d1b2;
   }
 }
 .drawer-links {
@@ -321,7 +321,7 @@ export default {
     line-height: 1;
 }
 .link-container{
-  border-bottom: 1px solid #efefef;
+  border-bottom: 1px solid #00d1b2;
   background: #00d1b2;
 }
 .links {

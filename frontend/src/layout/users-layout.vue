@@ -4,9 +4,7 @@
                 <user-nav-menu></user-nav-menu>
             </section>
             <section class="content-section">
-                <v-container fill-height align-center justify-center>
-                    <tabs-component></tabs-component>
-                </v-container>
+                <tabs-component></tabs-component>
             </section>
         </div>
     </template>
