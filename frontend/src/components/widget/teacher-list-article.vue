@@ -258,8 +258,12 @@ export default {
   },
   computed: {
     isHasData: function(){
-      if(this.data.length > 0){
-        return true
+      if(this.data != undefined){
+        if(this.data.length > 0){
+                return true
+              }else{
+                return false
+              }
       }else{
         return false
       }

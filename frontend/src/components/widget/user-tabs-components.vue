@@ -106,14 +106,14 @@ export default {
   line-height: 1.5;
 }
 .title {
-  font-size: 1.7em !important;
-  line-height: 1.5 !important;
-  font-weight: 700;
+  font-size: 2em !important;
+  line-height: 1.25 !important;
+  font-weight: 600;
 }
 .tab-name {
   font-size: 1rem;
-  font-weight: 600;
-  line-height: 1;
+  font-weight: 400;
+  line-height: 1.5;
   letter-spacing: 0.05rem;
   color: #fff;
 }

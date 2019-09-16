@@ -3,7 +3,7 @@
     <div class="page-title">
         <v-container>
           <div class="overview">Overview</div>
-          <div class="title">Teacherer Details Profile</div>
+          <div class="title">User Details Profile</div>
         </v-container>
       </div>
     <v-tabs
@@ -104,18 +104,19 @@ export default {
   font-weight: 400;
 }
 .overview {
-  font-size: 1.2em;
-  line-height: 1.5;
+  font-size: 1.25em;
+  line-height: 1.25;
+  font-weight: 600;
 }
 .title {
-  font-size: 1.7em !important;
-  line-height: 1.5 !important;
-  font-weight: 700;
+  font-size: 2em !important;
+  line-height: 1.25 !important;
+  font-weight: 600;
 }
 .tab-name {
   font-size: 1rem;
-  font-weight: 600;
-  line-height: 1;
+  font-weight: 400;
+  line-height: 1.5;
   letter-spacing: 0.05rem;
   color: #fff;
 }

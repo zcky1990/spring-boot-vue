@@ -234,7 +234,7 @@ input,
   cursor: pointer;
 }
 .bulma-color {
-   color: rgb(0, 209, 178);
+  color: rgb(0, 209, 178);
 }
 
 </style>
