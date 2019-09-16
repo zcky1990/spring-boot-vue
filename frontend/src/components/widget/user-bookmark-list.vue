@@ -1,13 +1,13 @@
 <template>
 <v-container>
-  <div class="bookmark-table-title">Posts to Remember</div>
+  
   <div class="bookmark-card-container">
     <div class="bookmark" v-for="n in 4" :key="n" >
       <div class="bookmark-date">Feb 15</div>
-      <div class="bookmark-post-title">Lorem ipsum dolor sit amet consectetur adipiscing elit</div>
+      <div class="bookmark-post-title">Squarespace</div>
       <div class="marker"> </div>
       <div class="category">ipa</div>
-      <div class="post-desc">Lorem ipsum dolor sit amet consectetur adipiscing elit Lorem ipsum dolor sit amet consectetur adipiscing elit</div>
+      <div class="post-desc">With Squarespace, you can swiftly set up your own space on the internet that will accelerate your photo works and services. It is clearly a high-end, sophisticated, simply the best website builder ...</div>
     </div>
     
   </div>
@@ -94,25 +94,18 @@ export default {
   line-height:25.5px;
 }
 .post-desc{
-color:rgb(176, 176, 176);
-display:block;
-font-family:Lato;
-font-size:12px;
-font-style:normal;
-font-weight:400;
-height:84px;
-letter-spacing:1.44px;
-line-height:21.6px;
-margin-block-end:0px;
-margin-block-start:0px;
-margin-bottom:0px;
-margin-inline-end:0px;
-margin-inline-start:0px;
-margin-top:0px;
-text-decoration-color:rgb(176, 176, 176);
-text-decoration-line:none;
-text-decoration-style:solid;
-text-size-adjust:100%;
-text-transform:uppercase;
+    color: rgb(176, 176, 176);
+    font-family: Lato;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 1.44px;
+    line-height: 21.6px;
+    text-decoration-color: rgb(176, 176, 176);
+    text-decoration-line: none;
+    text-decoration-style: solid;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    text-transform: uppercase;
 }
 </style>
