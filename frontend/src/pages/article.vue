@@ -10,7 +10,7 @@ import ArticleLayout from "@/layout/article-layout";
 export default {
   name: "article-detail-page",
   props: {
-    title: ""
+    title: String
   },
   data() {
     return {

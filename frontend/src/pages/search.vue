@@ -4,7 +4,6 @@
 
     <script>
     import Layout from '@/layout/search-layout'
-    import { EventBus } from './../EventBus.js';
 
     export default {
         name: 'search',

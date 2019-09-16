@@ -17,7 +17,7 @@ export default {
     };
   },
   methods: {
-    search(a){
+    search(){
       this.$router.push("/search/"+this.query);
     }
   },
