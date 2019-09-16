@@ -3,7 +3,7 @@
     <div class="page-title">
         <v-container>
           <div class="overview">Overview</div>
-          <div class="title">User Details Profile</div>
+          <div class="title">Teacherer Details Profile</div>
         </v-container>
       </div>
     <v-tabs
@@ -31,11 +31,11 @@
         class="tab-content-container" 
         color="#00d1b2" 
         v-show="item.index == 1">
-          <user-profile></user-profile>
+          <teacher-profile></teacher-profile>
       </div>
       <div 
         v-show="item.index == 2">
-          ASD
+           <teacher-article></teacher-article>
       </div>
       </v-tab-item>
     </v-tabs-items>
@@ -43,10 +43,11 @@
 </template>
 
 <script>
-import UserProfile from './profile';
+import Profile from './teacher-profile';
+import Article from './teacher-list-article';
 
 export default {
-  name: "user-tabs-component",
+  name: "teacher-tabs-component",
   data () {
     return {
       tab: null,
@@ -57,14 +58,15 @@ export default {
         { "name":"Profil",
           "index" : "1"
         }, 
-        { "name":"Reading",
+        { "name":"Article",
           "index" : "2"
         }
       ],
     }
   },
   components: {
-    "user-profile" : UserProfile
+    "teacher-profile" : Profile,
+    "teacher-article" : Article
   }
 };
 </script>
@@ -77,7 +79,7 @@ export default {
   }
   .page-title {
     background-color: #00d1b2;
-    padding: 0 !important;
+    padding: 0px !important;
     color: white;
     font-size: 1.2rem;
     font-weight: 400;

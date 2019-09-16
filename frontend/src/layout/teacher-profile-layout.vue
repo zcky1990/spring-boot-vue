@@ -4,9 +4,7 @@
                 <user-nav-menu></user-nav-menu>
             </section>
             <section class="content-section">
-                <v-container fill-height align-center justify-center>
-                    <teacher-profile></teacher-profile>
-                </v-container>
+                <teacher-profile></teacher-profile>
             </section>
         </div>
     </template>
@@ -14,7 +12,7 @@
     <script>
 
     import Navbar from '@/components/widget/navbar'
-    import TeacherProfileComponents from '@/components/widget/teacher-profile'
+    import TeacherProfileComponents from '@/components/widget/teacher-tabs-components'
 
     export default {
         name: 'teacher-profile-page-layout',
@@ -34,6 +32,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .sign-up-page-container {
-        background-color: white;
+    background-color: white;
 }
 </style>

@@ -26,7 +26,7 @@
 
         <div class="user-item" v-if="isLogged">
           <div class="image-user">
-            <router-link class="link-login nav-draw-links button-login image-border" to="/user/profile">
+            <router-link class="link-login nav-draw-links button-login image-border" to="/user">
                    <v-avatar v-if="isUserImageExits" size="70">
                       <img :src="usersData.image_url" alt />
                   </v-avatar>
@@ -121,7 +121,7 @@
                       User Menu
                     </div>
                     <v-list-tile>
-                      <router-link class="pop-up-link" to="/user/profile">
+                      <router-link class="pop-up-link" to="/user">
                         <v-list-tile-action>
                           <v-icon >account_circle</v-icon>
                         </v-list-tile-action>

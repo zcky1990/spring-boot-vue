@@ -87,7 +87,7 @@ export default {
   created(){
     let isLogged = this.isLoggin(this.$session);
     if(isLogged){
-      this.$router.push("/teacher/profile");
+      this.$router.push("/teacher");
     }
   },
   methods: {
@@ -118,7 +118,7 @@ export default {
               self.$session.set("uid", responseData.response.id);
               self.$session.set("username", responseData.response.username);
               self.$session.set("exp_date", responseData.exp_date);
-              router.push("/teacher/profile");
+              router.push("/teacher");
             }
           }
       },
@@ -128,8 +128,8 @@ export default {
     },
     setMessage(message, type){
       let data={}
-                data.message = message
-                data.type = type
+      data.message = message
+      data.type = type
       EventBus.$emit('SNACKBAR_TRIGGERED', data)
     }
   }

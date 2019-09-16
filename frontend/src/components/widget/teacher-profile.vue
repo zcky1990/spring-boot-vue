@@ -1,10 +1,6 @@
 <template>
   <section class="section profile">
     <div class="profile-container">
-      <div class="page-title">
-        <div class="overview">Overview</div>
-        <div class="title">Teacher Profile</div>
-      </div>
       <div class="user-content">
           <div class="left-profile">
             <div class="profile-container">
@@ -323,9 +319,6 @@ export default {
   .profile {
     width: 100%;
   }
-}
-.left-profile {
-    border: 1px solid #efefef;
 }
 .page-title {
     background-color: #00d1b2;

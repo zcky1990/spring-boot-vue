@@ -143,8 +143,8 @@ export default {
     },
     setMessage(message, type) {
       let data={}
-                data.message = message
-                data.type = type
+      data.message = message
+      data.type = type
       EventBus.$emit('SNACKBAR_TRIGGERED', data)
     },
     submit() {
@@ -179,7 +179,6 @@ export default {
   padding-bottom: 16px;
   }
 }
-
 .title-container {
     flex-grow: 1;
     text-align: center;
