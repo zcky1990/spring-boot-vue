@@ -43,6 +43,22 @@ export default {
     justify-content: flex-start;
     flex-wrap: wrap;
 }
+.bookmark-table-title {
+    color: rgb(0, 0, 0);
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 1.8px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    pointer-events: auto;
+    text-decoration-color: rgb(0, 0, 0);
+    text-rendering: optimizelegibility;
+    text-size-adjust: 100%;
+    text-transform: none;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
 .bookmark {
     margin-right: 5%;
     margin-bottom: 10%;
