@@ -2,13 +2,15 @@
 <div class="user-tab-container">
     <div class="page-title">
         <div class="overview">Overview</div>
-        <div class="title">User Profile</div>
+        <div class="title">User Details Profile</div>
       </div>
 
     <v-tabs
       v-model="tab"
       background-color="transparent"
-      slider-color="#00d1b2"
+      slider-color="#fff"
+      color="#00d1b2"
+      grow
     >
       <v-tab
         v-for="item in tabs"
@@ -49,7 +51,7 @@ export default {
         { "name":"Profil",
           "index" : "1"
         }, 
-        { "name":"Reading list",
+        { "name":"Reading",
           "index" : "2"
         }
       ],
@@ -70,13 +72,17 @@ export default {
 .user-tab-container {
   width: 100%;
   border: 1px solid #efefef;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }
 .page-title {
-    background-color: #00d1b2;
-    padding: 10px;
-    color: white;
-    font-size: 1.2rem;
-    font-weight: 400;
+  background-color: #00d1b2;
+  padding: 10px;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 400;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }
 .overview {
   font-size: 1.2em;
@@ -91,6 +97,7 @@ export default {
     font-size: 1rem;
     font-weight: 600;
     line-height: 1;
-    letter-spacing: 0.1rem;
+    letter-spacing: 0.05rem;
+    color: #fff;
 }
 </style>
