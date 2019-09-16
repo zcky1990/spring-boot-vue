@@ -295,7 +295,7 @@ export default {
 <style scoped>
 @media only screen and (max-width: 640px) {
   .toolbar-title{
-    border-bottom: 1px solid #00d1b2;
+    border-bottom: 1px solid #efefef;
   }
 }
 .drawer-links {
@@ -329,7 +329,7 @@ export default {
     flex-direction: row;
     min-width: 200px;
     max-width: 200px;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 .nav-draw-links {
   /*color: #00d1b2 !important; */

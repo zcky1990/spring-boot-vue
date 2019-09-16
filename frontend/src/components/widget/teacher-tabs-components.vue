@@ -9,9 +9,9 @@
     <v-tabs
       v-model="tab"
       background-color="transparent"
-      slider-color="#fff"
-      color="#00d1b2"
+      slider-color="#00d1b2"
       grow
+      class="tabs-container"
     >
       <v-tab
         v-for="item in tabs"
@@ -78,14 +78,16 @@ export default {
     padding: 0 !important;
   }
   .page-title {
-    background-color: #00d1b2;
-    padding: 0px !important;
-    color: white;
+    padding: 0 !important;
+    color: #000;
     font-size: 1.2rem;
     font-weight: 400;
   }
 }
 
+.tabs-container {
+  border-bottom: 1px solid #dee2e6!important;
+}
 .table-container {
   padding-left: 16px;
   padding-right: 16px;
@@ -97,16 +99,14 @@ export default {
   padding: 24px;
 }
 .page-title {
-  background-color: #00d1b2;
   padding: 24px;
-  color: white;
+  color: #000;
   font-size: 1.2rem;
   font-weight: 400;
 }
 .overview {
-  font-size: 1.25em;
-  line-height: 1.25;
-  font-weight: 600;
+  font-size: 1.2em;
+  line-height: 1.5;
 }
 .title {
   font-size: 2em !important;
@@ -115,9 +115,7 @@ export default {
 }
 .tab-name {
   font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.05rem;
-  color: #fff;
+  font-weight: 600;
+  color: #000;
 }
 </style>

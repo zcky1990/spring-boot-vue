@@ -9,9 +9,9 @@
     <v-tabs
       v-model="tab"
       background-color="transparent"
-      slider-color="#fff"
-      color="#00d1b2"
+      slider-color="#00d1b2"
       grow
+      class="tabs-container"
     >
       <v-tab
         v-for="item in tabs"
@@ -29,13 +29,12 @@
       >
       <div 
         class="tab-content-container" 
-        color="#00d1b2" 
         v-show="item.index == 1">
           <user-profile></user-profile>
       </div>
       <div 
         v-show="item.index == 2">
-          ASD
+          <bookmark-list></bookmark-list>
       </div>
       </v-tab-item>
     </v-tabs-items>
@@ -43,7 +42,8 @@
 </template>
 
 <script>
-import UserProfile from './profile';
+import UserProfile from './user-profile';
+import BookmarkList from './user-bookmark-list';
 
 export default {
   name: "user-tabs-component",
@@ -64,7 +64,8 @@ export default {
     }
   },
   components: {
-    "user-profile" : UserProfile
+    "user-profile" : UserProfile,
+    "bookmark-list" : BookmarkList
   }
 };
 </script>
@@ -76,14 +77,16 @@ export default {
     padding: 0 !important;
   }
   .page-title {
-    background-color: #00d1b2;
     padding: 0 !important;
-    color: white;
+    color: #000;
     font-size: 1.2rem;
     font-weight: 400;
   }
 }
 
+.tabs-container {
+  border-bottom: 1px solid #dee2e6!important;
+}
 .table-container {
   padding-left: 16px;
   padding-right: 16px;
@@ -95,9 +98,8 @@ export default {
   padding: 24px;
 }
 .page-title {
-  background-color: #00d1b2;
   padding: 24px;
-  color: white;
+  color: #000;
   font-size: 1.2rem;
   font-weight: 400;
 }
@@ -112,9 +114,7 @@ export default {
 }
 .tab-name {
   font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.05rem;
-  color: #fff;
+  font-weight: 600;
+  color: #000;
 }
 </style>

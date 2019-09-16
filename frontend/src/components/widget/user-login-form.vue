@@ -2,8 +2,8 @@
 <v-container>
     <v-layout class="sign-up-container" align-center justify-center flex fill-height>
       <div class="title-container">
-          <div class="title bulma-color">Login</div>
-          <div class="sub-title bulma-color">Masuk ke Akun Anda</div>
+          <div class="title">Login</div>
+          <div class="sub-title">Masuk ke Akun Anda</div>
       </div>
 
       <div class="form-container">
@@ -168,16 +168,17 @@ export default {
   text-decoration: none;
 }
 .title {
-  font-size: 2.8rem !important;
-  font-weight: 600;
-  color: #444f60;
   text-align: center;
-  padding-bottom: 16px;
+  line-height: 1.5 !important;
+  font-size: 3.5rem !important;
+  color: #000;
+  font-weight: 900;
 }
 .sub-title {
-  font-size: 1.4rem !important;
-  color: #444f60;
   text-align: center;
+  color: #6c757d;
+  font-size: 1rem;
+  font-weight: 300;
 }
 .bulma-color {
    color: rgb(0, 209, 178);

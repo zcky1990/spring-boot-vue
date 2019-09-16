@@ -2,14 +2,8 @@
 <v-container>
     <v-layout class="sign-up-container" align-center justify-center flex fill-height>
       <div class="title-container">
-        <div class="buble-container">
-            <div class="buble-outer">
-              <div class="buble">
-                  <div class="title">Login</div>
-                  <div class="sub-title">Masuk ke Akun Anda</div>
-              </div>
-            </div>
-        </div>
+        <div class="title">Login</div>
+        <div class="sub-title">Masuk ke Akun Anda</div>
       </div>
       <div class="form-container">
         <v-form ref="form" v-model="valid" width="300">
@@ -173,16 +167,17 @@ export default {
   text-decoration: none;
 }
 .title {
-  font-size: 3.2rem !important;
-    font-weight: 600;
-    color:  white;
-    text-align: center;
-    line-height: 1.5 !important;
+  text-align: center;
+  line-height: 1.5 !important;
+  font-size: 3.5rem !important;
+  color: #000;
+  font-weight: 900;
 }
 .sub-title {
-  font-size: 1.4rem !important;
-  color: white;
   text-align: center;
+  color: #6c757d;
+  font-size: 1rem;
+  font-weight: 300;
 }
 .bulma-color {
    color: rgb(0, 209, 178);
@@ -203,27 +198,5 @@ export default {
   font-weight: 400;
   line-height: 1.5;
   cursor: pointer;
-}
-.buble-outer {
-    border: 2px solid rgb(0, 209, 178);
-    border-radius: 50%;
-}
-.buble {
-    background: rgb(0, 209, 178);
-    width: 250px;
-    height: 250px;
-    padding: 65px;
-    border-radius: 50%;
-    color: white;
-    border: 5px solid white;
-}
-.buble-container {
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    display: flex;
-    position: relative;
-    animation: pulse 2s 0.75s cubic-bezier(.5,.5,0,1) infinite;
 }
 </style>
