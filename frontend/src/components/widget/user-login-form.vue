@@ -1,10 +1,6 @@
 <template>
 <v-container>
     <v-layout class="sign-up-container" align-center justify-center flex fill-height>
-      <div class="title-container">
-                <div class="title bulma-color">Login</div>
-                <div class="sub-title bulma-color">Masuk ke Akun Anda</div>
-      </div>
       <div class="form-container">
         <v-form ref="form" v-model="valid" width="300">
           <v-text-field
@@ -112,7 +108,7 @@ export default {
               self.$session.set("uid", responseData.response.id);
               self.$session.set("username", responseData.response.username);
               self.$session.set("exp_date", responseData.exp_date);
-              router.push("/user");
+              router.push("/user/profile");
             }
           }
       },
@@ -122,8 +118,8 @@ export default {
     },
     setMessage(message, type){
       let data={}
-                data.message = message
-                data.type = type
+      data.message = message
+      data.type = type
       EventBus.$emit('SNACKBAR_TRIGGERED', data)
     }
   }

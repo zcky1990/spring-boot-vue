@@ -1,10 +1,6 @@
 <template>
   <section class="section profile">
     <div class="profile-container">
-      <div class="page-title">
-        <div class="overview">Overview</div>
-        <div class="title">User Profile</div>
-      </div>
       <div class="user-content">
           <div class="left-profile">
             <div class="profile-container">
@@ -324,16 +320,6 @@ export default {
     width: 100%;
   }
 }
-.left-profile {
-    border: 1px solid #efefef;
-}
-.page-title {
-    background-color: #00d1b2;
-    padding: 10px;
-    color: white;
-    font-size: 1.2rem;
-    font-weight: 400;
-}
 .date-picker {
     align-items: center;
     text-align: center;
@@ -346,15 +332,6 @@ export default {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-}
-.overview {
-  font-size: 1.2em;
-  line-height: 1.5;
-}
-.title {
-  font-size: 1.7em !important;
-  line-height: 1.5 !important;
-  font-weight: 700;
 }
 .user-profile {
   align-items: center;

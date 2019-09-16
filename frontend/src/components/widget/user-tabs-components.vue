@@ -1,34 +1,37 @@
 <template>
-<div>
-  <v-tabs
-        v-model="tab"
-        background-color="deep-purple accent-4"
-        dark
-        flat
-        :centered="centered"
+<div class="user-tab-container">
+    <div class="page-title">
+        <div class="overview">Overview</div>
+        <div class="title">User Profile</div>
+      </div>
+
+    <v-tabs
+      v-model="tab"
+      background-color="transparent"
+      slider-color="#00d1b2"
+    >
+      <v-tab
+        v-for="item in tabs"
+        :key="item.index"
       >
-        <v-tabs-slider></v-tabs-slider>
-        <v-tab
-            v-for="(item, index) in tabs"
-            :class="{active: currentTab === index}"
-            @click="currentTab = index"
-            :key="item"
-        >
-          {{ item }}
-        </v-tab>
-  
-        <v-tab-item>
-          <div>
-           <div v-if="currentTab == 0">
-             <user-profile></user-profile>
-            </div>
-            <div v-if="currentTab == 1">
-              <v-card-text>Tab1 content</v-card-text>
-            </div>
-          </div>
-        </v-tab-item>
-      </v-tabs>
-</div>
+        <div class="tab-name">{{ item.name }}</div>
+      </v-tab>
+    </v-tabs>
+
+    <v-tabs-items v-model="tab">
+      <v-tab-item
+        v-for="item in tabs"
+        :key="item.index"
+      >
+      <div color="#00d1b2" v-show="item.index == 1">
+          <user-profile></user-profile>
+      </div>
+      <div v-show="item.index == 2">
+          ASD
+      </div>
+      </v-tab-item>
+    </v-tabs-items>
+  </div>
 </template>
 
 <script>
@@ -40,8 +43,16 @@ export default {
     return {
       tab: null,
       centered: true,
+      grow: true,
       currentTab: 0,
-      tabs: [ "Profile", "Reading list"],
+      tabs: [ 
+        { "name":"Profil",
+          "index" : "1"
+        }, 
+        { "name":"Reading list",
+          "index" : "2"
+        }
+      ],
     }
   },
   components: {
@@ -55,5 +66,31 @@ export default {
 .table-container {
     padding-left: 16px;
     padding-right: 16px;
+}
+.user-tab-container {
+  width: 100%;
+  border: 1px solid #efefef;
+}
+.page-title {
+    background-color: #00d1b2;
+    padding: 10px;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+.overview {
+  font-size: 1.2em;
+  line-height: 1.5;
+}
+.title {
+  font-size: 1.7em !important;
+  line-height: 1.5 !important;
+  font-weight: 700;
+}
+.tab-name {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.1rem;
 }
 </style>
