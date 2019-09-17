@@ -7,6 +7,7 @@ import router from './router'
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import '@fortawesome/fontawesome-free/css/all.css' 
 import  Util from "./util";
+import FBSignInButton from 'vue-facebook-signin-button'
 
 require('./assets/sass/main.scss');
 
@@ -15,6 +16,7 @@ Vue.config.productionTip = false
 Vue.use(VueSession)
 Vue.use(CKEditor)
 Vue.use(Util)
+Vue.use(FBSignInButton)
 
 new Vue({
   icons: {

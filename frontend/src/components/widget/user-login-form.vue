@@ -45,6 +45,7 @@
             </div>
           </v-flex>
         </v-form>
+        <fb-btn></fb-btn>
         </div>
     </v-layout>
   </v-container>
@@ -52,9 +53,13 @@
 
 <script>
 import { EventBus } from './../../EventBus.js';
+import FBLoginButton from './fb-login-btn'
 
 export default {
   name: "user-login-form",
+  components: {
+    "fb-btn": FBLoginButton
+  },
   data() {
     return {
       valid: false,
