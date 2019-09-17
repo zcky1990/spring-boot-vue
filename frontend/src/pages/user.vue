@@ -11,6 +11,3 @@ export default {
         'layout-page' : Layout
     },
 }
-</script>
-<style scoped>
-</style>

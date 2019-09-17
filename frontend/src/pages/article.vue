@@ -1,7 +1,5 @@
-    <template>
-  <div class="article-detail-page">
+<template>
     <article-layout :slug="slug"></article-layout>
-  </div>
 </template>
 
 <script>
@@ -25,7 +23,3 @@ export default {
   }
 };
 </script>
-
- 
-<style scoped>
-</style>

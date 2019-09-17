@@ -4,14 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import javax.mail.Message;
-import javax.mail.Multipart;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+
+import java.util.Properties;
 
 import com.google.gson.Gson;
 import com.zcky.learn.with.teacher.constant.Constant;
@@ -49,20 +48,21 @@ public class MailUtility {
 		return config;
 	}
 
-
-	public Properties getProperties() {
-		Properties properties = new Properties();
-		properties.put("mail.smtp.host", config.getHost());
-		properties.put("mail.smtp.port", config.getPort());
-		properties.put("mail.smtp.auth", "true");
-		properties.put("mail.smtp.starttls.enable", "true");
-		properties.put("mail.smtp.user", config.getUsername());
-		return properties;
-	}
-
 	public void sendMail(String messageBody, String pathAttachment, String to, String subject) {
-		Properties prop = getProperties();
-		Session session = Session.getDefaultInstance(prop);
+		Properties prop = new Properties();
+		prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", config.getPort());
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.socketFactory.port", config.getPort());
+        prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        
+		Session session = Session.getInstance(prop,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(config.getUsername(), config.getPassword());
+                    }
+                });
+		
 		try {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(config.getUsername()));
@@ -80,13 +80,7 @@ public class MailUtility {
 			}
 			multipart.addBodyPart(mimeBodyPart);
 			message.setContent(multipart);
-
-			System.out.println("sendmail ");
-			Transport t = session.getTransport("smtp");
-			t.connect(config.getUsername(), config.getPassword());
-			t.sendMessage(message, message.getAllRecipients());
-			t.close();
-			System.out.println("success-send-mail ");
+			Transport.send(message);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -99,7 +93,7 @@ public class MailUtility {
 
 	public String getVerificationMailMessageBody(String template, Users users) {
 		template = template.replace("{{username}}", users.getUsername());
-		String verificationUrl = getBaseUrl()+"api/users/validate/"+ users.getStringId();
+		String verificationUrl = getBaseUrl()+"user/validation/"+ users.getStringId();
 		template = template.replace("{{url}}", verificationUrl);
 		return template;
 	}

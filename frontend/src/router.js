@@ -42,7 +42,7 @@ export default new Router({
       component: Article
     },
     {
-      path: '/user/validation/',
+      path: '/user/validation/:id',
       name: 'Validate user Sign up',
       component : UserValidation
     },

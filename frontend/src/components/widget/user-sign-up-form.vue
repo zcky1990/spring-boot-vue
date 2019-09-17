@@ -126,14 +126,8 @@ export default {
             if (responseData["error_message"] != undefined) {
               self.setMessage(responseData.error_message, 1);
             } else {
-              self.setMessage("please check your mail to verify your accounts", 0);
-              self.$session.start();
-              self.$session.set("users", responseData.response);
-              self.$session.set("jwt", responseData.token);
-              self.$session.set("uid", responseData.response.id);
-              self.$session.set("username", responseData.response.username);
-              self.$session.set("exp_date", responseData.exp_date);
-              router.push("/user");
+              self.setMessage("Please check your email to verify your accounts", 0);
+              router.push("/");
             }
           }
         },
