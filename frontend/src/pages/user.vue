@@ -1,5 +1,5 @@
 <template>
-    <layout-page></layout-page>
+    <users-page-layout></users-page-layout>
 </template>
 
 <script>
@@ -8,6 +8,7 @@ import Layout from '@/layout/users-layout'
 export default {
     name: 'user-page',
     components: {
-        'layout-page' : Layout
-    },
+        'users-page-layout' : Layout
+    }
 }
+</script>

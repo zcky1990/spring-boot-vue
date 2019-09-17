@@ -1,7 +1,12 @@
 <template>
   <div class="validation">
     <v-container>
-sadsad
+      <div v-if="status" class="validation-success">
+          sadsad
+      </div>
+      <div v-else class="validation-failed">
+          asdsad
+      </div>
     </v-container>
   </div>
 </template>
@@ -19,7 +24,7 @@ export default {
   },
   data() {
     return {
-      status:""
+      status: false
     }
   },
   created() {
@@ -33,12 +38,10 @@ export default {
         function(response){
           if (response.status == 200) {
             if(response.data.status == "success"){
-              self.status = "success"
-            }else{
-              self.status = "error"
+              self.status = true
             }
           }else{
-            self.status = "error"
+            self.status = false
           }
         },
         function (e){
