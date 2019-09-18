@@ -117,7 +117,7 @@ export default {
           }         
         },
         function(e) {
-          this.setMessage(e,1);
+          self.setMessage(e,1);
         });
     },
     getLoadMoreService: function() {
@@ -130,8 +130,8 @@ export default {
           self.addData(newData)
         },
       function (e){
-          this.disableEnableLoadMoreBtn(false);
-          this.setMessage(e,1);
+          self.disableEnableLoadMoreBtn(false);
+          self.setMessage(e,1);
       });
     },
     loadMore: function (){
