@@ -2,10 +2,25 @@
   <div class="validation">
     <v-container>
       <div v-if="status" class="validation-success">
-          sadsad
+        <div class="title-validation">
+          Selamat
+        </div>
+        <div class="sub-title-validation">
+          Akun anda telah terverifikasi, silahkan login ke account anda untuk melanjutkan
+        </div>
+        <div class="btn-container">
+          <div class="go-to-maribelajar-btn">
+            Login
+          </div>
+        </div>
       </div>
       <div v-else class="validation-failed">
-          asdsad
+          <div class="title-validation">
+          Terjadi Kesalahan
+        </div>
+        <div class="sub-title-validation">
+          Silahkan coba beberapa menit lagi
+        </div>
       </div>
     </v-container>
   </div>
