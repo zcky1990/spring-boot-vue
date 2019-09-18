@@ -114,6 +114,8 @@ export default {
       ]
     };
   },
+
+  
   methods: {
     callRestService(model) {
       let self = this;
