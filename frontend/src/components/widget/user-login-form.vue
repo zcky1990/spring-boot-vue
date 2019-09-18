@@ -2,11 +2,33 @@
 <v-container>
     <v-layout class="sign-up-container" align-center justify-center flex fill-height>
       <div class="title-container">
-          <div class="title">Login</div>
-          <div class="sub-title">Masuk ke Akun Anda</div>
+        <div class="box-1">
+          <div class="box-1">
+            <div class="box-1">
+              <div class="box-1">
+                <div class="box-1">
+                <div class="box-2">
+                  <div class="title-sub-title-container">
+                    <div class="title">Login</div>
+                    <div class="sub-title">Masuk ke Akun Anda</div>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
+      
       <div class="form-container">
+        <div class="facebook">
+          <div class="facebook-btn-container">
+            <fb-btn></fb-btn>
+          </div>
+          <div class="atau-spacer">
+           Atau
+          </div>
+        </div>
         <v-form ref="form" v-model="valid" width="300">
           <v-text-field
             v-model="username"
@@ -45,7 +67,6 @@
             </div>
           </v-flex>
         </v-form>
-        <fb-btn></fb-btn>
         </div>
     </v-layout>
   </v-container>
@@ -204,5 +225,22 @@ export default {
   font-weight: 400;
   line-height: 1.5;
   cursor: pointer;
+}
+.facebook {
+    margin-bottom: 20px;
+}
+.title-sub-title-container {
+    width: fit-content;
+    margin: 0 auto;
+}
+.box-1 {
+    width: 200px;
+    height: 200px;
+    border: 3px solid rgb(0, 209, 178);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(20deg);
 }
 </style>

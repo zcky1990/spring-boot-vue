@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.zcky.learn.with.teacher.mongoDb.model.Users;
 
 import io.jsonwebtoken.ExpiredJwtException;
 
@@ -26,6 +27,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+	
+	public static boolean isNumeric(String strNum) {
+	    try {
+	        double d = Double.parseDouble(strNum);
+	    } catch (NumberFormatException | NullPointerException nfe) {
+	        return false;
+	    }
+	    return true;
+	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -52,21 +62,29 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 		// Once we get the token validate it.
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+			//facebook login
+			if(isNumeric(username)) {
+				Users user = this.jwtUserDetailsService.loadUserByFacebookId(username);
+				if(jwtTokenUtil.validateFaceBookToken(jwtToken, user)) {
+					FacebookAutentification usersAutenticate = new FacebookAutentification();
+					usersAutenticate.setAuthenticated(true);
+					SecurityContextHolder.getContext().setAuthentication(usersAutenticate);
+				}
+			}else {
+				UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
+				// if token is valid configure Spring Security to manually set
+				// authentication
+				if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
 
-			UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
-
-			// if token is valid configure Spring Security to manually set
-			// authentication
-			if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
-
-				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-						userDetails, null, userDetails.getAuthorities());
-				usernamePasswordAuthenticationToken
-						.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-				// After setting the Authentication in the context, we specify
-				// that the current user is authenticated. So it passes the
-				// Spring Security Configurations successfully.
-				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+							userDetails, null, userDetails.getAuthorities());
+					usernamePasswordAuthenticationToken
+							.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+					// After setting the Authentication in the context, we specify
+					// that the current user is authenticated. So it passes the
+					// Spring Security Configurations successfully.
+					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+				}
 			}
 		}
 		chain.doFilter(request, response);

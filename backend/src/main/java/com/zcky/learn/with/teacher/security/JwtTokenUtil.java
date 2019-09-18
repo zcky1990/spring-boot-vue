@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.zcky.learn.with.teacher.constant.Constant;
+import com.zcky.learn.with.teacher.mongoDb.model.Users;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -57,6 +58,12 @@ public class JwtTokenUtil implements Serializable {
 		Map<String, Object> claims = new HashMap<>();
 		return doGenerateToken(claims, userDetails.getUsername());
 	}
+	//generate token for user with Facebook Account
+	public String generateTokenWithFaceBookAccounts(String facebookId) {
+			Map<String, Object> claims = new HashMap<>();
+			return doGenerateToken(claims, facebookId);
+	}
+	
 
 	//while creating the token -
 	//1. Define  claims of the token, like Issuer, Expiration, Subject, and the ID
@@ -89,4 +96,15 @@ public class JwtTokenUtil implements Serializable {
 			return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
 		}
 	}
+	
+	//validate facebook token
+		public Boolean validateFaceBookToken(String token, Users user) {
+			final String username = getUsernameFromToken(token);
+			//check if user using admin account as bearer so we skip expire validation
+			if(username.equals(user.getFacebookId()) && !isTokenExpired(token)) {
+				return true;
+			}else {
+				return false;
+			}
+		}
 }

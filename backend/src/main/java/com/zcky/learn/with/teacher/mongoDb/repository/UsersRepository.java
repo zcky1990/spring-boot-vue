@@ -23,4 +23,7 @@ public interface UsersRepository extends MongoRepository<Users, String> {
 	
 	@Query(value = "{'roles' : {'$ref' : 'roles' , '$id' : ?0} }")
 	List<Users> findByRoleId(ObjectId roleId, Pageable pageable);
+	
+	@Query(value = "{'facebookId' : ?0}")
+	Users findByFaceBookId(String string);
 }

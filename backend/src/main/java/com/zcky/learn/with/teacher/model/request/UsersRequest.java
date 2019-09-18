@@ -21,6 +21,14 @@ public class UsersRequest {
 	private String city;
 	private String zipcode;
 	private String type;
+	private String facebookId;
+	
+	public String getFacebookId() {
+		return facebookId;
+	}
+	public void setFacebookId(String facebookId) {
+		this.facebookId = facebookId;
+	}
 	public String getId() {
 		return id;
 	}

@@ -29,7 +29,24 @@ public class Users {
 	private String display_name;
 	private String city;
 	private String zipcode;
+	private String facebookId;
 	
+	public String getImage_url() {
+		return image_url;
+	}
+
+	public void setImage_url(String image_url) {
+		this.image_url = image_url;
+	}
+
+	public String getFacebookId() {
+		return facebookId;
+	}
+
+	public void setFacebookId(String facebookId) {
+		this.facebookId = facebookId;
+	}
+
 	public boolean isValidated() {
 		return isValidated;
 	}
@@ -214,6 +231,7 @@ public class Users {
 		this.setUsername(request.getUsername());
 		this.setValidated(request.isValidated());
 		this.setZipcode(request.getZipcode());
+		this.setFacebookId(request.getFacebookId());
 	}
 		
 }

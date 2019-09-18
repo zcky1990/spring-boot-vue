@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
 import com.zcky.learn.with.teacher.constant.Constant;
+import com.zcky.learn.with.teacher.model.request.UsersFacebookRequest;
 import com.zcky.learn.with.teacher.model.request.UsersRequest;
 import com.zcky.learn.with.teacher.mongoDb.model.Roles;
 import com.zcky.learn.with.teacher.mongoDb.model.Users;
@@ -111,6 +112,55 @@ public class UsersController extends BaseController{
 			}else {
 				response = getFailedResponse();
 				response.addProperty(Constant.ERROR_MESSAGE,Constant.USER_NOT_FOUND_ERROR_MESSAGE);
+			}	
+		}catch (Exception e) {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+		}
+		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/api/users/sign_in_with_facebook", method = RequestMethod.POST)
+	public ResponseEntity<String> signInFacebook(@Valid @RequestBody UsersFacebookRequest userFacebookRequest, HttpServletResponse responseHeader) throws Exception {
+		JsonObject response;
+		try {
+			Users userResponse = repository.findByFaceBookId(userFacebookRequest.getId());
+			System.out.println("masuk sini");
+			if(userResponse != null) {
+				System.out.println("masuk sini 1");
+				if(userResponse.isValidated() && userResponse.isStatus()) {
+					response = getSuccessResponse();
+					final String token = jwtTokenUtil.generateTokenWithFaceBookAccounts(userResponse.getFacebookId());
+					response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Users.class, new UsersSerializer(), userResponse) );
+					response.addProperty("token", token);
+					response.addProperty("exp_date", getExpiredDate());
+				}
+				else if(!userResponse.isStatus()) {
+					response = getFailedResponse();
+					response.addProperty(Constant.ERROR_MESSAGE,Constant.USER_FOUND_BUT_INACTIVE_ERROR_MESSAGE);
+				}
+				else if(!userResponse.isValidated()){
+					response = getFailedResponse();
+					response.addProperty(Constant.ERROR_MESSAGE,Constant.USER_NOT_VALIDATED_SUCCESS_MESSAGE);
+				}else {
+					response = getFailedResponse();
+					response.addProperty(Constant.ERROR_MESSAGE,Constant.USER_NOT_FOUND_ERROR_MESSAGE);
+				}
+			}else {
+				Users userLogin = new Users();
+				userLogin.setFirstname(userFacebookRequest.getName());
+				userLogin.setFacebookId(userFacebookRequest.getId());
+				Roles role = rolesRepository.findByName(userFacebookRequest.getType());
+				userLogin.setRoles(role);
+				userLogin.setStatus(true);
+				userLogin.setValidated(true);
+				repository.save(userLogin);
+				
+				response = getSuccessResponse();
+				final String token = jwtTokenUtil.generateTokenWithFaceBookAccounts(userLogin.getFacebookId());
+				response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Users.class, new UsersSerializer(), userLogin) );
+				response.addProperty("token", token);
+				response.addProperty("exp_date", getExpiredDate());
 			}	
 		}catch (Exception e) {
 			response = getFailedResponse();
