@@ -69,7 +69,11 @@
                   </div>
               </div>
               <div class="sign-in-btn-container">
-                <v-btn class="white--text desc" color="#00d1b2" @click="submit">Daftar</v-btn>
+                <v-btn 
+                class="white--text desc" 
+                color="#00d1b2" 
+                :loading="isLoading"
+                @click="submit">Daftar</v-btn>
               </div>
             </div>
           </v-flex>
@@ -111,12 +115,14 @@ export default {
         v => !!v || "Password is required",
         v =>
           (v && v.length >= 8) || "Password must be or more than 8 characters"
-      ]
+      ],
+      isLoading: false
     };
   },
   methods: {
     callRestService(model) {
       let self = this;
+      this.isLoading = true;
       let router = this.$router;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
       this.post("users/sign_up", model,  headers,
@@ -125,13 +131,16 @@ export default {
             let responseData = response.data;
             if (responseData["error_message"] != undefined) {
               self.setMessage(responseData.error_message, 1);
+              self.isLoading = false
             } else {
               self.setMessage("Please check your email to verify your accounts", 0);
+              self.isLoading = false
               router.push("/");
             }
           }
         },
         function(e){
+          self.isLoading = false
           self.setMessage(e, 1);
         });
     },

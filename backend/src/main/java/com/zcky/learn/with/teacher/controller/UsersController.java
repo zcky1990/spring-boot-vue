@@ -36,7 +36,7 @@ import com.zcky.learn.with.teacher.mongoDb.serializer.UsersAdminSerializer;
 import com.zcky.learn.with.teacher.mongoDb.serializer.UsersSerializer;
 import com.zcky.learn.with.teacher.mongoDb.serializer.UsersWithPasswordSerializer;
 import com.zcky.learn.with.teacher.security.JwtTokenUtil;
-import com.zcky.learn.with.teacher.util.MailUtility;
+import com.zcky.learn.with.teacher.task.AsyncService;
 import com.zcky.learn.with.teacher.util.TimeUtility;
 
 @RestController
@@ -50,6 +50,9 @@ public class UsersController extends BaseController{
 	
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+	
+	@Autowired
+    private AsyncService service;
 	
 	public UserDetails getUserDetails(Users user) {
 		return new User(user.getUsername(), user.getPassword(), new ArrayList<>());
@@ -67,10 +70,7 @@ public class UsersController extends BaseController{
 				user.setRoles(role);
 				user.setStatus(true);
 				repository.save(user);
-				MailUtility mUtil = new MailUtility();
-				String template = mUtil.getEmailTemplate(Constant.MAIL_TEMPLATE_PATH);
-				String messageBody = mUtil.getVerificationMailMessageBody(template, user);
-				mUtil.sendMail(messageBody, "", user.getEmail(), Constant.VERIFICATION_SIGN_UP_MAIL_SUBJECT);
+				service.sendSuccessSignUpMailService(user);
 				response = getSuccessResponse();
 				response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Users.class, new UsersSerializer(), user));
 			} catch(Exception e) {
