@@ -125,9 +125,7 @@ public class UsersController extends BaseController{
 		JsonObject response;
 		try {
 			Users userResponse = repository.findByFaceBookId(userFacebookRequest.getId());
-			System.out.println("masuk sini");
 			if(userResponse != null) {
-				System.out.println("masuk sini 1");
 				if(userResponse.isValidated() && userResponse.isStatus()) {
 					response = getSuccessResponse();
 					final String token = jwtTokenUtil.generateTokenWithFaceBookAccounts(userResponse.getFacebookId());
