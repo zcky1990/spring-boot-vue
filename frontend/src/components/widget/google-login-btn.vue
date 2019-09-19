@@ -3,17 +3,25 @@
     :params="googleSignInParams"
     @success="onSignInSuccess"
     @error="onSignInError">
-    Sign in with Google
+    <div class="btn-google">
+      <img :src="googleIcon">
+      <div class="title-google-btn">
+        {{title}}
+      </div>
+    </div>
   </g-signin-button>
 </template>
 
 <script>
 import { EventBus } from './../../EventBus.js';
 
+import Google from './../../assets/image/google-logo.svg'
+
 export default {
   data () {
     return {
-      title:"Sign in with Facebook",
+      googleIcon : Google,
+      title:"Sign in with Google",
       googleSignInParams: {
         client_id: "90367855693-4r8nmo9qgktatecgkvn17c7eoh5997bh.apps.googleusercontent.com"
       },
@@ -76,11 +84,24 @@ export default {
 <style>
 .g-signin-button {
   /* This is where you control how the button looks. Be creative! */
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
   display: inline-block;
-  padding: 4px 8px;
   border-radius: 3px;
-  background-color: #3c82f7;
-  color: #fff;
-  box-shadow: 0 3px 0 #0f69ff;
+  background-color: #4285F4;
+  color:#FFFFFF;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 100%;
+}
+.btn-google {
+    display: flex;
+    margin: 0 auto;
+    justify-content: left;
+    align-items: center;
+}
+.title-google-btn {
+    text-align: center;
+    margin-left: 25px;
 }
 </style>

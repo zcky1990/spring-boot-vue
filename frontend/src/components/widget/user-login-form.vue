@@ -2,31 +2,23 @@
 <v-container>
     <v-layout class="sign-up-container" align-center justify-center flex fill-height>
       <div class="title-container">
-        <div class="box-1">
-          <div class="box-1">
-            <div class="box-1">
-              <div class="box-1">
-                <div class="box-1">
-                <div class="box-2">
                   <div class="title-sub-title-container">
                     <div class="title">Login</div>
                     <div class="sub-title">Masuk ke Akun Anda</div>
                   </div>
-                </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       
       <div class="form-container">
         <div class="facebook">
           <div class="facebook-btn-container">
-            <fb-btn></fb-btn>
-            <google-btn></google-btn>
+            <div class="facebook-btn">
+              <fb-btn></fb-btn>
+            </div>
+            <div class="google-btn">
+              <google-btn></google-btn>
+            </div>
           </div>
-          <div class="atau-spacer">
+          <div class="atau-spacer link-btn">
            Atau
           </div>
         </div>
@@ -172,6 +164,11 @@ export default {
   padding-bottom: 16px;
   }
 }
+.atau-spacer {
+    text-align: center;
+    font-size: 1.25rem;
+    color: #6c757d;
+}
 .title-container {
     flex-grow: 1;
     text-align: center;
@@ -245,5 +242,8 @@ export default {
     align-items: center;
     justify-content: center;
     transform: rotate(20deg);
+}
+.facebook-btn, .google-btn {
+    margin-bottom: 10px;
 }
 </style>
