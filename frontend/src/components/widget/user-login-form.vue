@@ -18,7 +18,7 @@
               <google-btn></google-btn>
             </div>
           </div>
-          <div class="atau-spacer link-btn">
+          <div class="atau-spacer">
            Atau
           </div>
         </div>
@@ -166,8 +166,9 @@ export default {
 }
 .atau-spacer {
     text-align: center;
-    font-size: 1.25rem;
-    color: #6c757d;
+    font-size: 1rem;
+    color: rgb(0, 209, 178);
+    text-transform: uppercase;
 }
 .title-container {
     flex-grow: 1;
