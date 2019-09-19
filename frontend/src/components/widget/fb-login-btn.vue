@@ -52,6 +52,7 @@ export default {
               self.$session.set("users", responseData.response);
               self.$session.set("jwt", responseData.token);
               self.$session.set("uid", responseData.response.id);
+              self.$session.set("signIn-mode", "facebook");
               if(responseData.response.username != undefined){
                 self.$session.set("username", responseData.response.username);
               }

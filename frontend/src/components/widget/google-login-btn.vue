@@ -23,12 +23,12 @@ export default {
   methods: {
     onSignInSuccess (googleUser) {
        const profile = googleUser.getBasicProfile()
-       this.data.id = profile.Eea;
-       this.data.email = profile.U3;
-       this.data.firstname = profile.ofa;
-       this.data.lastname = profile.wea;
-       this.data.display_name = profile.ig;
-       this.data.image_url = profile.Paa;
+       this.data.id = profile.getId();
+       this.data.email = profile.getEmail();
+       this.data.firstname = profile.getGivenName();
+       this.data.lastname = profile.getFamilyName();
+       this.data.display_name = profile.getName();
+       this.data.image_url = profile.getImageUrl();
        this.data.type = "Free Member"
        this.callRestService(this.data);
     },
@@ -50,6 +50,7 @@ export default {
               self.$session.set("users", responseData.response);
               self.$session.set("jwt", responseData.token);
               self.$session.set("uid", responseData.response.id);
+              self.$session.set("signIn-mode", "google");
               if(responseData.response.username != undefined){
                 self.$session.set("username", responseData.response.username);
               }
