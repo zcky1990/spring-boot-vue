@@ -24,6 +24,7 @@
         <div class="facebook">
           <div class="facebook-btn-container">
             <fb-btn></fb-btn>
+            <google-btn></google-btn>
           </div>
           <div class="atau-spacer">
            Atau
@@ -75,11 +76,13 @@
 <script>
 import { EventBus } from './../../EventBus.js';
 import FBLoginButton from './fb-login-btn'
+import GoogleLoginButton from './google-login-btn'
 
 export default {
   name: "user-login-form",
   components: {
-    "fb-btn": FBLoginButton
+    "fb-btn": FBLoginButton,
+    "google-btn" :GoogleLoginButton
   },
   data() {
     return {

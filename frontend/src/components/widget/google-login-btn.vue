@@ -1,11 +1,10 @@
 <template>
-  <fb-signin-button
-    class="facebook-btn fb-signin-button "
-    :params="fbSignInParams"
+  <g-signin-button
+    :params="googleSignInParams"
     @success="onSignInSuccess"
     @error="onSignInError">
-    Sign in with Facebook
-  </fb-signin-button>
+    Sign in with Google
+  </g-signin-button>
 </template>
 
 <script>
@@ -15,24 +14,22 @@ export default {
   data () {
     return {
       title:"Sign in with Facebook",
-      fbSignInParams: {
-        scope: 'email,user_likes,user_birthday,public_profile',
-        return_scopes: true
+      googleSignInParams: {
+        client_id: "90367855693-4r8nmo9qgktatecgkvn17c7eoh5997bh.apps.googleusercontent.com"
       },
-      data: {
-        id:'',
-        name:''
-      }
+      data: {}
     }
   },
   methods: {
-    onSignInSuccess (response) {
-      let self = this;
-      FB.api('/me', dude => {
-        self.data = dude
-        self.data.type = "Free Member"
-        self.callRestService( self.data)
-      })
+    onSignInSuccess (googleUser) {
+      console.log(googleUser)
+       const profile = googleUser.getBasicProfile()
+       this.data.id = profile.Eea;
+       this.data.email = profile.U3;
+       this.data.firstname = profile.ofa;
+       this.data.lastname = profile.wea;
+       this.data.display_name = profile.ig;
+       this.callRestService(this.data);
     },
     onSignInError (error) {
       this.setMessage(error,1);
@@ -41,7 +38,7 @@ export default {
       let self = this;
       let router = this.$router;
       let headers = this.getDefaultHeaders(this.getMeta("token"))
-      this.post("/users/sign_in_with_facebook", model, headers,
+      this.post("/users/sign_in_with_google", model, headers,
       function(response){
         if (response.status == 200) {
             let responseData = response.data;
@@ -75,16 +72,13 @@ export default {
 </script>
 
 <style>
-.fb-signin-button {
+.g-signin-button {
   /* This is where you control how the button looks. Be creative! */
   display: inline-block;
-    padding: 10px 10px;
-    border-radius: 3px;
-    background-color: #4267b2;
-    color: #fff;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 600;
-    width: 100%;
+  padding: 4px 8px;
+  border-radius: 3px;
+  background-color: #3c82f7;
+  color: #fff;
+  box-shadow: 0 3px 0 #0f69ff;
 }
 </style>
