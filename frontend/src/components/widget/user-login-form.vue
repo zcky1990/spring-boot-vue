@@ -188,7 +188,7 @@ export default {
 .title {
   text-align: center;
   line-height: 1.5 !important;
-  font-size: 3.5rem !important;
+  font-size: 1.5rem !important;
   color: rgb(0, 209, 178);;
   font-weight: 900;
 }
