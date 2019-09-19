@@ -4,16 +4,24 @@
     :params="fbSignInParams"
     @success="onSignInSuccess"
     @error="onSignInError">
-    Sign in with Facebook
+    <div class="btn-fb">
+      <img :src="facebookIcon">
+      <div class="title-fb-btn">
+        {{title}}
+      </div>
+    </div>
   </fb-signin-button>
 </template>
 
 <script>
 import { EventBus } from './../../EventBus.js';
 
+import Facebook from './../../assets/image/iconmonstr-facebook-1.png'
+
 export default {
   data () {
     return {
+      facebookIcon : Facebook,
       title:"Sign in with Facebook",
       fbSignInParams: {
         scope: 'email,user_likes,user_birthday,public_profile',
@@ -79,7 +87,7 @@ export default {
 .fb-signin-button {
   /* This is where you control how the button looks. Be creative! */
   display: inline-block;
-    padding: 10px 10px;
+    padding: 2px;
     border-radius: 3px;
     background-color: #4267b2;
     color: #fff;
@@ -88,5 +96,15 @@ export default {
     font-weight: 600;
     width: 100%;
     box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+.btn-fb {
+    display: flex;
+    margin: 0 auto;
+    justify-content: left;
+    align-items: center;
+}
+.title-fb-btn {
+    text-align: center;
+    margin-left: 25px;
 }
 </style>

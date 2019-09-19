@@ -91,6 +91,7 @@ export default {
   color:#FFFFFF;
   text-align: center;
   font-size: 1.2rem;
+  padding: 2px;
   font-weight: 600;
   width: 100%;
 }
