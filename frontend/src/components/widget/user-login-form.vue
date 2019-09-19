@@ -159,12 +159,7 @@ export default {
   text-align: center;
   }
 }
-.atau-spacer {
-  text-align: center;
-  font-size: 1rem;
-  color: #6c757d;
-  text-transform: uppercase;
-}
+
 .title-container {
   flex-grow: 1;
   text-align: center;

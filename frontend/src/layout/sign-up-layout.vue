@@ -1,21 +1,5 @@
     <template>
         <div class="sign-up-page-container">
-            <div class="area" >
-                <ul class="circles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div >
             <v-container align-center justify-center row fill-height>
                 <sign-up-form></sign-up-form>
             </v-container>

@@ -1,10 +1,21 @@
 <template>
   <v-container>
-    <v-layout class="sign-up-container" align-center justify-center flex fill-height>
-      <div class="title-container">
+    <div class="title-container">
                 <div class="title bulma-color">Sign Up</div>
-                <div class="sub-title bulma-color">Make your Account</div>
+                <div class="sub-title">Make your Account</div>
       </div>
+    <v-layout class="sign-up-container" align-center justify-center flex>
+      <div class="facebook">
+          <div class="facebook-btn-container">
+            <div class="facebook-btn">
+              <fb-btn></fb-btn>
+            </div>
+            <div class="google-btn">
+              <google-btn></google-btn>
+            </div>
+          </div>
+        </div>
+
       <div class="form-container">
         <v-form ref="form" v-model="valid" width="300">
           <v-text-field
@@ -12,8 +23,6 @@
                 :rules="nameRules"
                 label="First name"
                 required
-                outline 
-                flat
                 color="#00d1b2"
               ></v-text-field>
 
@@ -22,8 +31,6 @@
                 :rules="nameRules"
                 label="Last name"
                 required
-                outline 
-                flat
                 color="#00d1b2"
               ></v-text-field>
 
@@ -32,8 +39,6 @@
               :rules="emailRules" 
               label="E-mail" 
               required 
-              outline 
-              flat
               color="#00d1b2"
               ></v-text-field>
 
@@ -42,9 +47,6 @@
                 :rules="useranameRules"
                 label="Username"
                 required
-                outline 
-                flat
-                rounded
                 color="#00d1b2"
               ></v-text-field>
 
@@ -57,38 +59,43 @@
                 @click:append="show1 = !show1"
                 :append-icon="show1 ? 'visibility' : 'visibility_off'"
                 required
-                outline 
-                flat
                 color="#00d1b2"
               ></v-text-field>
           <v-flex align-center justify-center>
             <div class="submit-btn-container">
               <div class="link-not-sign-up">
-                <div class="has-account" @click="goToPage">
-                    <span>Sudah punya Akun?</span>
+                <div class="has-account">
+                    <router-link class="sign-up-link" to="/login">
+                      <v-btn text flat class="link-btn">Sudah punya akun?</v-btn>
+                    </router-link>
                   </div>
               </div>
               <div class="sign-in-btn-container">
-                <v-btn 
-                class="white--text desc" 
-                color="#00d1b2" 
-                :loading="isLoading"
-                @click="submit">Daftar</v-btn>
+               <div class="sign-in-btn" @click="submit">Sign Up</div>
               </div>
             </div>
           </v-flex>
         </v-form>
         </div>
     </v-layout>
+    <div class="term-condition-container">
+      * By signing up, you agree to our Terms of Use and to receive emails & updates and acknowledge that you read our Privacy Policy.
+    </div>
   </v-container>
 </template>
 
 <script>
 
 import { EventBus } from './../../EventBus.js';
+import FBLoginButton from './fb-login-btn'
+import GoogleLoginButton from './google-login-btn'
 
 export default {
   name: "user-sign-up-form",
+  components: {
+    "fb-btn": FBLoginButton,
+    "google-btn" :GoogleLoginButton
+  },
   data() {
     return {
       valid: false,
@@ -177,22 +184,24 @@ export default {
   .title {
   font-size: 1.4rem !important;
   font-weight: 600;
-  color: #444f60;
+  color:rgb(0, 209, 178);
   text-align: center;
-  padding-bottom: 16px;
   }
 }
+
 .title-container {
-    flex-grow: 1;
-    text-align: center;
+  flex-grow: 1;
+  text-align: center;
+  margin-bottom: 16px;
 }
 .form-container {
-    flex-grow: 0;
-    width: 320px;
+  flex-grow: 0;
+  width: 320px;
+  margin-left: 2%;
+    margin-right: 2%;
 }
 .sign-up-container {
   flex-direction: row;
-  justify-content: space-between;
 }
 .submit-btn-container {
     display: flex;
@@ -205,39 +214,78 @@ export default {
 .sign-up-link {
   text-decoration: none;
 }
-.center {
-  text-align: center;
-  width: 100%;
-}
 .title {
-  font-size: 2.8rem !important;
-  font-weight: 600;
-  color: #444f60;
   text-align: center;
-  padding-bottom: 16px;
+  line-height: 1.5 !important;
+  font-size: 3.5rem !important;
+  color: rgb(0, 209, 178);;
+  font-weight: 900;
 }
 .sub-title {
-  font-size: 1.4rem !important;
-  color: #444f60;
   text-align: center;
-}
-input,
-.desc {
-  color: #4a4a4a;
+  color: #6c757d;
   font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
+  font-weight: 300;
 }
-.has-account {
-  padding-top: 15px;
-  color: rgb(0, 209, 178);
+.bulma-color {
+   color: rgb(0, 209, 178);
+}
+.submit-btn-container {
+    display: flex;
+    flex-direction: row;
+}
+.link-not-sign-up {
+  flex-grow: 1;
+  color: #00d1b2;
+}
+.sign-up-link {
+  text-decoration: none;
+}
+.link-btn {
+  color: #00d1b2;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
   cursor: pointer;
 }
-.bulma-color {
-  color: rgb(0, 209, 178);
+.facebook {
+  margin-bottom: 20px;
+  width:300px;
+  margin-left: 2%;
+  margin-right: 2%;
 }
-
+.title-sub-title-container {
+  width: fit-content;
+  margin: 0 auto;
+}
+.desc {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.facebook-btn, .google-btn {
+    margin-bottom: 10px;
+}
+.term-condition-container {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 5%;
+  line-height: 24px;
+  color: #858f96;
+}
+.sign-in-btn {
+  padding: 8px;
+  width: 110px;
+  border: 1px solid;
+  text-align: center;
+  border-radius: 15px;
+  border: 1px solid rgb(0, 209, 178);
+  color: rgb(0, 209, 178);
+  cursor:pointer;
+}
+.sign-in-btn:hover{
+  background: #00d1b2;
+  border: 1px solid rgb(0, 209, 178);
+  color: white;
+}
 </style>
