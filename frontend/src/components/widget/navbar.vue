@@ -427,7 +427,10 @@ export default {
     width: 100%;
 }
 .logout-drawer {
-  width: 100%;
+  width: 200px;
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
 }
 .logout-btn {
     padding: 5px;
