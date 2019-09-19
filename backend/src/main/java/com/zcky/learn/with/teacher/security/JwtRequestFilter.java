@@ -62,11 +62,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 		// Once we get the token validate it.
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			//facebook login
+			//facebook or google login
 			if(isNumeric(username)) {
-				Users user = this.jwtUserDetailsService.loadUserByFacebookId(username);
-				if(jwtTokenUtil.validateFaceBookToken(jwtToken, user)) {
-					FacebookAutentification usersAutenticate = new FacebookAutentification();
+				Users user = this.jwtUserDetailsService.loadUserByFacebookOrGoogleId(username);
+				if(jwtTokenUtil.validateFaceBookOrGoogleToken(jwtToken, user)) {
+					Autentification usersAutenticate = new Autentification();
 					usersAutenticate.setAuthenticated(true);
 					SecurityContextHolder.getContext().setAuthentication(usersAutenticate);
 				}

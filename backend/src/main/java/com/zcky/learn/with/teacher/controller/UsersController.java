@@ -2,7 +2,6 @@ package com.zcky.learn.with.teacher.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.JsonObject;
 import com.zcky.learn.with.teacher.constant.Constant;
 import com.zcky.learn.with.teacher.model.request.UsersFacebookRequest;
+import com.zcky.learn.with.teacher.model.request.UsersGoogleRequest;
 import com.zcky.learn.with.teacher.model.request.UsersRequest;
 import com.zcky.learn.with.teacher.mongoDb.model.Roles;
 import com.zcky.learn.with.teacher.mongoDb.model.Users;
@@ -156,6 +156,56 @@ public class UsersController extends BaseController{
 				
 				response = getSuccessResponse();
 				final String token = jwtTokenUtil.generateTokenWithFaceBookAccounts(userLogin.getFacebookId());
+				response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Users.class, new UsersSerializer(), userLogin) );
+				response.addProperty("token", token);
+				response.addProperty("exp_date", getExpiredDate());
+			}	
+		}catch (Exception e) {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+		}
+		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
+	}
+	@RequestMapping(value = "/api/users/sign_in_with_google", method = RequestMethod.POST)
+	public ResponseEntity<String> signInGoogle(@Valid @RequestBody UsersGoogleRequest userGoogleRequest, HttpServletResponse responseHeader) throws Exception {
+		JsonObject response;
+		try {
+			Users userResponse = repository.findByGoogleId(userGoogleRequest.getId());
+			if(userResponse != null) {
+				if(userResponse.isValidated() && userResponse.isStatus()) {
+					response = getSuccessResponse();
+					final String token = jwtTokenUtil.generateTokenWithGoogleAccounts(userResponse.getGoogleId());
+					response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Users.class, new UsersSerializer(), userResponse) );
+					response.addProperty("token", token);
+					response.addProperty("exp_date", getExpiredDate());
+				}
+				else if(!userResponse.isStatus()) {
+					response = getFailedResponse();
+					response.addProperty(Constant.ERROR_MESSAGE,Constant.USER_FOUND_BUT_INACTIVE_ERROR_MESSAGE);
+				}
+				else if(!userResponse.isValidated()){
+					response = getFailedResponse();
+					response.addProperty(Constant.ERROR_MESSAGE,Constant.USER_NOT_VALIDATED_SUCCESS_MESSAGE);
+				}else {
+					response = getFailedResponse();
+					response.addProperty(Constant.ERROR_MESSAGE,Constant.USER_NOT_FOUND_ERROR_MESSAGE);
+				}
+			}else {
+				Users userLogin = new Users();
+				userLogin.setFirstname(userGoogleRequest.getFirstname());
+				userLogin.setLastname(userGoogleRequest.getLastname());
+				userLogin.setDisplay_name(userGoogleRequest.getDisplay_name());
+				userLogin.setEmail(userGoogleRequest.getEmail());
+				userLogin.setGoogleId(userGoogleRequest.getId());
+				userLogin.setImageUrl(userGoogleRequest.getImage_url());
+				Roles role = rolesRepository.findByName(userGoogleRequest.getType());
+				userLogin.setRoles(role);
+				userLogin.setStatus(true);
+				userLogin.setValidated(true);
+				repository.save(userLogin);
+				
+				response = getSuccessResponse();
+				final String token = jwtTokenUtil.generateTokenWithGoogleAccounts(userLogin.getGoogleId());
 				response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Users.class, new UsersSerializer(), userLogin) );
 				response.addProperty("token", token);
 				response.addProperty("exp_date", getExpiredDate());

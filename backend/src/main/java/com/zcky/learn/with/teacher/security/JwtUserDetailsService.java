@@ -35,12 +35,18 @@ public class JwtUserDetailsService implements UserDetailsService {
 		}
 	}
 	
-	public Users loadUserByFacebookId(String id) throws UsernameNotFoundException {
+	public Users loadUserByFacebookOrGoogleId(String id) throws UsernameNotFoundException {
 		Users user = repository.findByFaceBookId(id);
 		if(user != null) {
 			return user;
 		}else {
-			throw new UsernameNotFoundException("User not found ");
+			user = repository.findByGoogleId(id);
+			if(user != null) {
+				return user;
+			}else {
+				throw new UsernameNotFoundException("User not found ");
+			}
+			
 		}
 	}
 }

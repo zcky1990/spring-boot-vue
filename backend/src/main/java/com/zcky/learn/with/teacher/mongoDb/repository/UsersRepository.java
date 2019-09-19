@@ -26,4 +26,7 @@ public interface UsersRepository extends MongoRepository<Users, String> {
 	
 	@Query(value = "{'facebookId' : ?0}")
 	Users findByFaceBookId(String string);
+	
+	@Query(value = "{'googleId' : ?0}")
+	Users findByGoogleId(String string);
 }

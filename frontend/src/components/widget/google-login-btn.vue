@@ -22,13 +22,14 @@ export default {
   },
   methods: {
     onSignInSuccess (googleUser) {
-      console.log(googleUser)
        const profile = googleUser.getBasicProfile()
        this.data.id = profile.Eea;
        this.data.email = profile.U3;
        this.data.firstname = profile.ofa;
        this.data.lastname = profile.wea;
        this.data.display_name = profile.ig;
+       this.data.image_url = profile.Paa;
+       this.data.type = "Free Member"
        this.callRestService(this.data);
     },
     onSignInError (error) {

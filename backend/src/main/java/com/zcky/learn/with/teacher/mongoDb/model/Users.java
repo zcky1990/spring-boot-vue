@@ -30,7 +30,16 @@ public class Users {
 	private String city;
 	private String zipcode;
 	private String facebookId;
+	private String googleId;
 	
+	public String getGoogleId() {
+		return googleId;
+	}
+
+	public void setGoogleId(String googleId) {
+		this.googleId = googleId;
+	}
+
 	public String getImage_url() {
 		return image_url;
 	}
@@ -232,6 +241,7 @@ public class Users {
 		this.setValidated(request.isValidated());
 		this.setZipcode(request.getZipcode());
 		this.setFacebookId(request.getFacebookId());
+		this.setGoogleId(request.getGoogleId());
 	}
 		
 }

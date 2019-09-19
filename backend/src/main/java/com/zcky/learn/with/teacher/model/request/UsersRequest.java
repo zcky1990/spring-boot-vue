@@ -22,7 +22,14 @@ public class UsersRequest {
 	private String zipcode;
 	private String type;
 	private String facebookId;
+	private String googleId;
 	
+	public String getGoogleId() {
+		return googleId;
+	}
+	public void setGoogleId(String googleId) {
+		this.googleId = googleId;
+	}
 	public String getFacebookId() {
 		return facebookId;
 	}
