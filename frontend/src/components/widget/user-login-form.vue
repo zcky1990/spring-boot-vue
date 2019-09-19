@@ -48,7 +48,7 @@
                 </router-link>
               </div>
               <div class="sign-in-btn-container">
-               <v-btn class="white--text desc" color="#00d1b2" @click="submitLogin">Login</v-btn>
+               <div class="sign-in-btn" @click="submitLogin">Sign In</div>
               </div>
             </div>
           </v-flex>
@@ -237,16 +237,6 @@ export default {
   font-size: 1.25rem;
   font-weight: 600;
 }
-.box-1 {
-    width: 200px;
-    height: 200px;
-    border: 3px solid rgb(0, 209, 178);
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: rotate(20deg);
-}
 .facebook-btn, .google-btn {
     margin-bottom: 10px;
 }
@@ -257,5 +247,20 @@ export default {
   margin-top: 5%;
   line-height: 24px;
   color: #858f96;
+}
+.sign-in-btn {
+  padding: 8px;
+  width: 110px;
+  border: 1px solid;
+  text-align: center;
+  border-radius: 15px;
+  border: 1px solid rgb(0, 209, 178);
+  color: rgb(0, 209, 178);
+  cursor:pointer;
+}
+.sign-in-btn:hover{
+  background: #00d1b2;
+  border: 1px solid rgb(0, 209, 178);
+  color: white;
 }
 </style>

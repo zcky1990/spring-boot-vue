@@ -1,12 +1,21 @@
 <template>
   <g-signin-button
     :params="googleSignInParams"
+    @click="setProgres"
     @success="onSignInSuccess"
     @error="onSignInError">
     <div class="btn-google">
       <img class="icon-btn" :src="googleIcon">
       <div class="title-google-btn">
+        <div v-if="!isOnProgres" class="desc">
         {{title}}
+        </div>
+        <div v-else class="progress">
+          <v-progress-circular
+            indeterminate
+            color="white"
+      ></v-progress-circular>
+        </div>
       </div>
     </div>
   </g-signin-button>
@@ -14,13 +23,13 @@
 
 <script>
 import { EventBus } from './../../EventBus.js';
-
 import Google from './../../assets/image/google-logo.svg'
 
 export default {
   data () {
     return {
       googleIcon : Google,
+      isOnProgres: false,
       title:"Sign in with Google",
       googleSignInParams: {
         client_id: "90367855693-4r8nmo9qgktatecgkvn17c7eoh5997bh.apps.googleusercontent.com"
@@ -42,6 +51,10 @@ export default {
     },
     onSignInError (error) {
       this.setMessage(error,1);
+      this.isOnProgres = false;
+    },
+    setProgress(){
+      this.isOnProgres = true;
     },
     callRestService(model) {
       let self = this;
@@ -53,6 +66,7 @@ export default {
             let responseData = response.data;
             if (responseData["error_message"] != undefined) {
               self.setMessage(responseData.error_message, 1);
+              self.isOnProgres = false;
             } else {
               self.$session.start();
               self.$session.set("users", responseData.response);
@@ -63,12 +77,14 @@ export default {
                 self.$session.set("username", responseData.response.username);
               }
               self.$session.set("exp_date", responseData.exp_date);
+              self.isOnProgres = false;
               router.push("/user");
             }
           }
       },
       function(e){
-          self.setMessage(e, 1);
+        self.isOnProgres = false;
+        self.setMessage(e, 1);
       });
     },
     setMessage(message, type){
