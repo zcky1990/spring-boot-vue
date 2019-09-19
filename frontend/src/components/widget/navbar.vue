@@ -278,8 +278,8 @@ export default {
     },
     setMessage(message, type){
       let data={}
-                data.message = message
-                data.type = type
+      data.message = message
+      data.type = type
       EventBus.$emit('SNACKBAR_TRIGGERED', data)
     },
     logout() {

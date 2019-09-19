@@ -5,7 +5,7 @@
     @success="onSignInSuccess"
     @error="onSignInError">
     <div class="btn-fb">
-      <img :src="facebookIcon">
+      <img class="icon-btn" :src="facebookIcon">
       <div class="title-fb-btn">
         {{title}}
       </div>
@@ -16,7 +16,7 @@
 <script>
 import { EventBus } from './../../EventBus.js';
 
-import Facebook from './../../assets/image/iconmonstr-facebook-1.png'
+import Facebook from './../../assets/image/facebook-logo.svg'
 
 export default {
   data () {
@@ -87,15 +87,19 @@ export default {
 .fb-signin-button {
   /* This is where you control how the button looks. Be creative! */
   display: inline-block;
-    padding: 2px;
-    border-radius: 3px;
-    background-color: #4267b2;
-    color: #fff;
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: 600;
-    width: 100%;
-    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  background-color: #4267b2;
+  color: #fff;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 100%;
+  cursor: pointer;
+  border:1px solid #4267b2;
+}
+.icon-btn{
+  width:46px;
+  height:46px;
+  background:#ffff;
 }
 .btn-fb {
     display: flex;

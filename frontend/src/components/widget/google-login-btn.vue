@@ -4,7 +4,7 @@
     @success="onSignInSuccess"
     @error="onSignInError">
     <div class="btn-google">
-      <img :src="googleIcon">
+      <img class="icon-btn" :src="googleIcon">
       <div class="title-google-btn">
         {{title}}
       </div>
@@ -84,16 +84,20 @@ export default {
 <style>
 .g-signin-button {
   /* This is where you control how the button looks. Be creative! */
-  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  cursor: pointer;
   display: inline-block;
-  border-radius: 3px;
   background-color: #4285F4;
   color:#FFFFFF;
   text-align: center;
   font-size: 1.2rem;
-  padding: 2px;
   font-weight: 600;
   width: 100%;
+  border:1px solid #4285F4;
+}
+.icon-btn{
+  width:46px;
+  height:46px;
+  background:#ffff;
 }
 .btn-google {
     display: flex;

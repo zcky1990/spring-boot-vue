@@ -1,14 +1,12 @@
 <template>
 <v-container>
-    <v-layout class="sign-up-container" align-center justify-center flex fill-height>
-      <div class="title-container">
-                  <div class="title-sub-title-container">
-                    <div class="title">Login</div>
-                    <div class="sub-title">Masuk ke Akun Anda</div>
-                  </div>
+    <div class="title-container">
+      <div class="title-sub-title-container">
+          <div class="title">Login</div>
+          <div class="sub-title">Masuk ke Akun Anda</div>
       </div>
-      
-      <div class="form-container">
+    </div>
+    <v-layout class="sign-up-container" align-center justify-center flex>
         <div class="facebook">
           <div class="facebook-btn-container">
             <div class="facebook-btn">
@@ -18,17 +16,14 @@
               <google-btn></google-btn>
             </div>
           </div>
-          <div class="atau-spacer">
-           Atau
-          </div>
         </div>
+      <div class="form-container">
         <v-form ref="form" v-model="valid" width="300">
           <v-text-field
             v-model="username"
             :rules="useranameRules"
             label="Username"
             required
-            outline 
             flat
             color="rgb(0, 209, 178)"
           ></v-text-field>
@@ -42,7 +37,6 @@
             label="Password"
             hint="At least 8 characters"
             required
-            outline 
             flat
             color="rgb(0, 209, 178)"
           ></v-text-field>
@@ -62,6 +56,9 @@
         </v-form>
         </div>
     </v-layout>
+    <div class="term-condition-container">
+      * By signing up, you agree to our Terms of Use and to receive Wix emails & updates and acknowledge that you read our Privacy Policy.
+    </div>
   </v-container>
 </template>
 
@@ -159,9 +156,8 @@ export default {
   .title {
   font-size: 1.4rem !important;
   font-weight: 600;
-  color: #444f60;
+  color:rgb(0, 209, 178);
   text-align: center;
-  padding-bottom: 16px;
   }
 }
 .atau-spacer {
@@ -178,10 +174,11 @@ export default {
 .form-container {
   flex-grow: 0;
   width: 320px;
+  margin-left: 2%;
+    margin-right: 2%;
 }
 .sign-up-container {
   flex-direction: row;
-  justify-content: space-between;
 }
 .submit-btn-container {
     display: flex;
@@ -198,7 +195,7 @@ export default {
   text-align: center;
   line-height: 1.5 !important;
   font-size: 3.5rem !important;
-  color: #000;
+  color: rgb(0, 209, 178);;
   font-weight: 900;
 }
 .sub-title {
@@ -215,7 +212,7 @@ export default {
     flex-direction: row;
 }
 .link-not-sign-up {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 .sign-up-link {
   text-decoration: none;
@@ -228,11 +225,18 @@ export default {
   cursor: pointer;
 }
 .facebook {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+  width:300px;
+  margin-left: 2%;
+  margin-right: 2%;
 }
 .title-sub-title-container {
-    width: fit-content;
-    margin: 0 auto;
+  width: fit-content;
+  margin: 0 auto;
+}
+.desc {
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 .box-1 {
     width: 200px;
@@ -246,5 +250,13 @@ export default {
 }
 .facebook-btn, .google-btn {
     margin-bottom: 10px;
+}
+.term-condition-container {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 5%;
+  line-height: 24px;
+  color: #858f96;
 }
 </style>
