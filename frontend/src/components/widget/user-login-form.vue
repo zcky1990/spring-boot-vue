@@ -24,7 +24,6 @@
             :rules="useranameRules"
             label="Username"
             required
-            flat
             color="rgb(0, 209, 178)"
           ></v-text-field>
 
@@ -37,7 +36,6 @@
             label="Password"
             hint="At least 8 characters"
             required
-            flat
             color="rgb(0, 209, 178)"
           ></v-text-field>
 
@@ -88,7 +86,7 @@ export default {
       useranameRules: [
         v => !!v || "Username is required",
         v =>
-          (v && v.length >= 8) || "Username must be or more than 8 characters"
+          (v && v.length >= 6) || "Username must be or more than 8 characters"
       ],
       passwordRules: [
         v => !!v || "Password is required",
