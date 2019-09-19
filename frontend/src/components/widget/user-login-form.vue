@@ -23,6 +23,7 @@
             v-model="username"
             :rules="useranameRules"
             label="Username"
+            hint="At least 6 characters"
             required
             color="rgb(0, 209, 178)"
           ></v-text-field>
@@ -55,7 +56,7 @@
         </div>
     </v-layout>
     <div class="term-condition-container">
-      * By signing up, you agree to our Terms of Use and to receive Wix emails & updates and acknowledge that you read our Privacy Policy.
+      * By signing up, you agree to our Terms of Use and to receive emails & updates and acknowledge that you read our Privacy Policy.
     </div>
   </v-container>
 </template>
@@ -216,7 +217,7 @@ export default {
   text-decoration: none;
 }
 .link-btn {
-  color: #6c757d;
+  color: #00d1b2;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
