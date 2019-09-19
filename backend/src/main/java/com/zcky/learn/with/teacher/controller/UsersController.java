@@ -146,7 +146,7 @@ public class UsersController extends BaseController{
 				}
 			}else {
 				Users userLogin = new Users();
-				userLogin.setFirstname(userFacebookRequest.getName());
+				userLogin.setDisplay_name(userFacebookRequest.getName());
 				userLogin.setFacebookId(userFacebookRequest.getId());
 				Roles role = rolesRepository.findByName(userFacebookRequest.getType());
 				userLogin.setRoles(role);

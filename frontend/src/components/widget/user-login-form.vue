@@ -165,19 +165,19 @@ export default {
   }
 }
 .atau-spacer {
-    text-align: center;
-    font-size: 1rem;
-    color: rgb(0, 209, 178);
-    text-transform: uppercase;
+  text-align: center;
+  font-size: 1rem;
+  color: #6c757d;
+  text-transform: uppercase;
 }
 .title-container {
-    flex-grow: 1;
-    text-align: center;
-    margin-bottom: 16px;
+  flex-grow: 1;
+  text-align: center;
+  margin-bottom: 16px;
 }
 .form-container {
-    flex-grow: 0;
-    width: 320px;
+  flex-grow: 0;
+  width: 320px;
 }
 .sign-up-container {
   flex-direction: row;
@@ -221,7 +221,7 @@ export default {
   text-decoration: none;
 }
 .link-btn {
-  color: rgb(0, 209, 178);
+  color: #6c757d;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
