@@ -20,6 +20,7 @@
                 <v-icon
                   v-else
                   size="150"
+                  color="#00d1b2"
                 >
                   account_circle
                 </v-icon>

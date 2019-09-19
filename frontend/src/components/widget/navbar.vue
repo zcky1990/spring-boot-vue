@@ -27,12 +27,10 @@
         <div class="user-item" v-if="isLogged">
           <div class="image-user">
             <router-link class="link-login nav-draw-links button-login image-border" to="/user">
-                   <v-avatar v-if="isUserImageExits" size="70">
-                      <img :src="usersData.image_url" alt />
+                   <v-avatar size="70">
+                      <img v-if="isUserImageExits" :src="usersData.image_url" alt />
+                      <v-icon v-else size="70" color="#00d1b2">account_circle</v-icon>
                   </v-avatar>
-                  <v-avatar v-if="!isUserImageExits" size="70">
-                         <v-icon >account_circle</v-icon>
-                      </v-avatar>
             </router-link>
           </div>
           <div class="user-title">
@@ -105,11 +103,9 @@
                 <template v-slot:activator="{ on }">
                   <div class="user-avatar-container">
                     <v-chip class="button-login" v-on="on">
-                      <v-avatar v-if="isUserImageExits">
-                        <img  :src="usersData.image_url" alt />
-                      </v-avatar>
-                      <v-avatar v-if="!isUserImageExits" >
-                         <v-icon >account_circle</v-icon>
+                      <v-avatar >
+                        <img v-if="isUserImageExits" :src="usersData.image_url" alt />
+                        <v-icon v-else >account_circle</v-icon>
                       </v-avatar>
                       {{fullName}}
                     </v-chip>
@@ -237,9 +233,7 @@ export default {
       }else{
         return this.usersData.firstname+" "+this.usersData.lastname;
       }
-    }
-  },
-  methods: {
+    },
     isUserImageExits(){
       if(this.usersData.image_url != undefined){
         return true
@@ -247,6 +241,8 @@ export default {
         return false
       }
     },
+  },
+  methods: {
     handleFixedNavBar() {
       if(this.isMobile == false){
         if(this.$refs.navLink){
