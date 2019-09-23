@@ -25,43 +25,13 @@ public class ArticleListSerializer implements JsonSerializer<Article> {
 
 		if(jsonObj.has("author")) {
 			jsonObj.remove("author");
-			/*Users user = src.getAuthor();
-			JsonObject userJson = new JsonObject();
-			userJson.addProperty("id", user.getStringId());
-			userJson.addProperty("firstname", user.getFirstname());
-			userJson.addProperty("lastname", user.getLastname());
-			userJson.addProperty("email", user.getEmail());
-			userJson.addProperty("username", user.getUsername());
-			userJson.addProperty("name", user.getName());
-			userJson.addProperty("image_profile_url", user.getImageUrl());
-			jsonObj.add("author", userJson);*/
 		}
 
-		String articleContent = src.getArticle_content();
-		String image = "";
-		if(articleContent.contains("<figure")) {
-			int start = articleContent.indexOf("<figure");
-			int end = articleContent.indexOf("</figure>")+9;
-			image = articleContent.substring(start, end);
-			articleContent = articleContent.replace(image, "");
-
-			int index = image.indexOf("src=")+5;
-			int endIndex = 0;
-			if(image.contains("<figcaption>")) {
-				endIndex = image.indexOf("<figcaption>")-2;
-			}else {
-				endIndex = image.indexOf("</figure>")-2;
-			}
-			String imgSrc =image.substring(index, endIndex);
-			jsonObj.addProperty("imageHeader", imgSrc);
-			String lazyImage = imgSrc.replace("/upload/", "/upload/f_auto,q_auto,e_blur:300/");
-			jsonObj.addProperty("imageHeaderLazy", lazyImage);
-
-		}
-
-		if(articleContent.length() > 200) {
-			articleContent = articleContent.substring(0, 200)+"...";
-		}
+		String articleContent = src.getArticle_short_content();
+		
+		String imgSrc = src.getImageHeader();
+		String lazyImage = imgSrc.replace("/upload/", "/upload/f_auto,q_auto,e_blur:300/");
+		jsonObj.addProperty("imageHeaderLazy", lazyImage);
 
 		if(articleContent.contains("<strong>")) {
 			articleContent.replaceAll("<strong>", "");
@@ -75,6 +45,7 @@ public class ArticleListSerializer implements JsonSerializer<Article> {
 			articleContent = articleContent.replace(subtitle, "");
 		}
 		jsonObj.remove("article_content");
+		jsonObj.remove("article_short_content");
 		if(!articleContent.isEmpty()) {
 			jsonObj.addProperty("article_content", articleContent);
 		}

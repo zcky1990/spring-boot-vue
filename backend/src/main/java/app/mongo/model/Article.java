@@ -20,11 +20,13 @@ public class Article {
 	private String article_title;
 	private String article_permalink;
 	private String article_content;
+	private String article_short_content;
 	private String type;
 	private String status;
 	private String slug;
 	private String modified_date;
 	private List<String> reference_list;
+	private String imageHeader;
 	
 	public String getStringId() {
 		return _id.toHexString();
@@ -95,6 +97,49 @@ public class Article {
 	public void setReference_list(List<String> reference_list) {
 		this.reference_list = reference_list;
 	}
+	public String getArticle_short_content() {
+		return article_short_content;
+	}
+	public void setArticle_short_content(String article_short_content) {
+		this.article_short_content = article_short_content;
+	}
+	public String getImageHeader() {
+		return imageHeader;
+	}
+	public void setImageHeader(String imageHeader) {
+		this.imageHeader = imageHeader;
+	}
+	
+	public void setShortContent(String content) {
+		String shortContent = "";
+		if(content.length() > 200) {
+			shortContent = content.substring(0, 200)+"...";
+		}else {
+			shortContent = content;
+		}
+		this.setShortContent(shortContent);
+	}
+	
+	public void setHeaderImageFromContent(String articleContent) {
+		String image = "";
+		if(articleContent.contains("<figure")) {
+			int start = articleContent.indexOf("<figure");
+			int end = articleContent.indexOf("</figure>")+9;
+			image = articleContent.substring(start, end);
+			articleContent = articleContent.replace(image, "");
+
+			int index = image.indexOf("src=")+5;
+			int endIndex = 0;
+			if(image.contains("<figcaption>")) {
+				endIndex = image.indexOf("<figcaption>")-2;
+			}else {
+				endIndex = image.indexOf("</figure>")-2;
+			}
+			String imgSrc =image.substring(index, endIndex);
+			this.setImageHeader(imgSrc);
+		}
+	}
+	
 	public void fromObject(ArticleRequest request) {
 		if(request.getId() != null) {
 			this.set_id(new ObjectId(request.getId()));
@@ -115,6 +160,7 @@ public class Article {
 		this.setStatus(request.getStatus());
 		this.setType(request.getType());
 		this.setReference_list(request.getReference_list());
-		
+		this.setShortContent(request.getArticle_content());
+		this.setHeaderImageFromContent(request.getArticle_content());
 	}
 }

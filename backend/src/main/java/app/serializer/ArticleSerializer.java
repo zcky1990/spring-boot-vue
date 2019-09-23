@@ -22,8 +22,7 @@ public class ArticleSerializer implements JsonSerializer<Article> {
 			jsonObj.remove("_id");
 		}
 		jsonObj.addProperty("id", id);
-		
-		
+		jsonObj.remove("article_short_content");
 		if(jsonObj.has("author")) {
 			jsonObj.remove("author");
 			Users user = src.getAuthor();
