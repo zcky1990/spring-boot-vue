@@ -51,15 +51,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable()
-				// don't authenticate this particular request
 				.authorizeRequests()
-				//exception to API to skip JWT validation
-				//.antMatchers()
-				.antMatchers("/","/favicon.ico","/index.html","/static/*/*")
-				.permitAll().
-
-				// all other requests need to be authenticated
-				anyRequest().authenticated().and().
+				.antMatchers().permitAll()
+				//only authenticate with /api
+				.antMatchers("/api/*").authenticated().and().
 				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

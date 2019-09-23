@@ -32,6 +32,7 @@ import app.serializer.ArticleCommentSerializer;
 import app.util.TimeUtility;
 
 @RestController
+@RequestMapping("/api")
 public class ArticleCommentController extends BaseController {
 	
 	@Autowired
@@ -41,7 +42,7 @@ public class ArticleCommentController extends BaseController {
 	private UsersRepository userRepository;
 	
 	
-	@RequestMapping(value = "/api/article/get_comment/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/article/get_comment/{id}", method = RequestMethod.GET)
 	public ResponseEntity<String> getListComment(@PathVariable String id,@RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
 		JsonObject response = new JsonObject();
 		Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").descending());
@@ -57,7 +58,7 @@ public class ArticleCommentController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/article/add_comment", method = RequestMethod.POST)
+	@RequestMapping(value = "/article/add_comment", method = RequestMethod.POST)
 	public ResponseEntity<String> addComment(@Valid @RequestBody CommentArticle commentArticle, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("x-uid");
 		JsonObject response;
@@ -79,7 +80,7 @@ public class ArticleCommentController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/api/article/update_article_comment", method = RequestMethod.PUT)
+	@RequestMapping(value = "/article/update_article_comment", method = RequestMethod.PUT)
 	public ResponseEntity<String> updateArticlComment(@Valid @RequestBody ArticleComment article, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("x-uid");
 		TimeUtility util = new TimeUtility();
@@ -103,7 +104,7 @@ public class ArticleCommentController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/article/delete_article_comment/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/article/delete_article_comment/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteArticleComment(@PathVariable String id, HttpServletRequest request){
 		JsonObject response;
 		try {

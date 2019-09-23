@@ -30,6 +30,7 @@ import app.repository.UsersRepository;
 import app.serializer.BookmarksArticleSerializer;
 
 @RestController
+@RequestMapping("/api")
 public class BookmarksArticleController extends BaseController {
 	@Autowired
 	private ArticleBookmarksRepository repository;
@@ -37,7 +38,7 @@ public class BookmarksArticleController extends BaseController {
 	@Autowired
 	private UsersRepository userRepository;
 
-	@RequestMapping(value = "/api/bookmarks/get_bookmarks_article_list", method = RequestMethod.GET)
+	@RequestMapping(value = "/bookmarks/get_bookmarks_article_list", method = RequestMethod.GET)
 	public ResponseEntity<String> getArticleList(@RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
 		JsonObject response = new JsonObject();
 		String auth = request.getHeader("x-uid");
@@ -59,7 +60,7 @@ public class BookmarksArticleController extends BaseController {
 		return new ResponseEntity<String>( response.toString() , getResponseHeader(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/api/bookmarks/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/bookmarks/create", method = RequestMethod.POST)
 	public ResponseEntity<String> addArticle(@Valid @RequestBody BookmarksArticleRequest bookmarkRequest, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("x-uid");
 		Users user = userRepository.findBy_id(new ObjectId(auth));
@@ -82,7 +83,7 @@ public class BookmarksArticleController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/api/bookmarks/delete/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/bookmarks/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteArticle(@PathVariable String id, HttpServletRequest request){
 		JsonObject response;
 		try {

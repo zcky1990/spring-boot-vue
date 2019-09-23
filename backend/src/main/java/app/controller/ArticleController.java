@@ -39,6 +39,7 @@ import app.serializer.PageArticleSerializer;
 import app.util.TimeUtility;
 
 @RestController
+@RequestMapping("/api")
 public class ArticleController extends BaseController {
 
 	@Autowired
@@ -51,7 +52,7 @@ public class ArticleController extends BaseController {
 	private ArticleBookmarksRepository bookmarkRepository;
 	
 	/** Authors **/
-	@RequestMapping(value = "/api/article/get_list_article", method = RequestMethod.GET)
+	@RequestMapping(value = "/article/get_list_article", method = RequestMethod.GET)
 	public ResponseEntity<String> getListArticle(@RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
 		JsonObject response = new JsonObject();
 		String auth = request.getHeader("x-uid");
@@ -74,7 +75,7 @@ public class ArticleController extends BaseController {
 		return new ResponseEntity<String>( response.toString() , getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/article/get_article_by_id/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/article/get_article_by_id/{id}", method = RequestMethod.GET)
 	public ResponseEntity<String> getArticleDetail(@PathVariable String id, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		String auth = request.getHeader("x-uid");
@@ -96,7 +97,7 @@ public class ArticleController extends BaseController {
 	}
 	
 	/** Users **/
-	@RequestMapping(value = "/api/article/get_article_list", method = RequestMethod.GET)
+	@RequestMapping(value = "/article/get_article_list", method = RequestMethod.GET)
 	public ResponseEntity<String> getArticleList(@RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
 		JsonObject response = new JsonObject();
 		try {
@@ -112,7 +113,7 @@ public class ArticleController extends BaseController {
 		return new ResponseEntity<String>( response.toString() , getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/article/search", method = RequestMethod.GET)
+	@RequestMapping(value = "/article/search", method = RequestMethod.GET)
 	public ResponseEntity<String> getArticleList(@RequestParam(value="query", required=false) String query,@RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
 		JsonObject response = new JsonObject();
 		try {
@@ -128,7 +129,7 @@ public class ArticleController extends BaseController {
 		return new ResponseEntity<String>( response.toString() , getResponseHeader(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/api/article/add_article", method = RequestMethod.POST)
+	@RequestMapping(value = "/article/add_article", method = RequestMethod.POST)
 	public ResponseEntity<String> addArticle(@Valid @RequestBody ArticleRequest articleRequest, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("x-uid");
 		Users user = userRepository.findBy_id(new ObjectId(auth));
@@ -152,7 +153,7 @@ public class ArticleController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/article/update_article", method = RequestMethod.PUT)
+	@RequestMapping(value = "/article/update_article", method = RequestMethod.PUT)
 	public ResponseEntity<String> updateArticle(@Valid @RequestBody ArticleRequest articleRequest, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("x-uid");
 		TimeUtility util = new TimeUtility();
@@ -178,7 +179,7 @@ public class ArticleController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/article/get_article/{slug}", method = RequestMethod.GET)
+	@RequestMapping(value = "/article/get_article/{slug}", method = RequestMethod.GET)
 	public ResponseEntity<String> getArticle(@PathVariable String slug, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		String auth = request.getHeader("x-uid");
@@ -202,7 +203,7 @@ public class ArticleController extends BaseController {
 	}
 	
 	@SuppressWarnings("deprecation")
-	@RequestMapping(value = "/api/article/get_list_user_article/{page}", method = RequestMethod.GET)
+	@RequestMapping(value = "/article/get_list_user_article/{page}", method = RequestMethod.GET)
 	public ResponseEntity<String> getListUserArticle(@PathVariable String page, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("x-uid");
 		Users user = userRepository.findBy_id(new ObjectId(auth));
@@ -226,7 +227,7 @@ public class ArticleController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/article/delete_article/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/article/delete_article/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteArticle(@PathVariable String id, HttpServletRequest request){
 		JsonObject response;
 		try {

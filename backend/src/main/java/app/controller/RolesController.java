@@ -29,11 +29,12 @@ import app.repository.RolesRepository;
 import app.serializer.RolesSerializer;
 
 @RestController
+@RequestMapping("/api")
 public class RolesController extends BaseController {
 	@Autowired
 	private RolesRepository repository;
 
-	@RequestMapping(value = "/api/roles/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/roles/create", method = RequestMethod.POST)
 	public ResponseEntity<String> create(@Valid @RequestBody RolesRequest rolesRequest, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
@@ -49,7 +50,7 @@ public class RolesController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/api/roles/edit", method = RequestMethod.PUT)
+	@RequestMapping(value = "/roles/edit", method = RequestMethod.PUT)
 	public ResponseEntity<String> edit(@Valid @RequestBody RolesRequest roles, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
@@ -65,7 +66,7 @@ public class RolesController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/roles/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/roles/{id}", method = RequestMethod.GET)
 	public ResponseEntity<String> edit(@PathVariable String id, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
@@ -80,7 +81,7 @@ public class RolesController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/roles/delete/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/roles/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> delete(@PathVariable String id, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
@@ -95,7 +96,7 @@ public class RolesController extends BaseController {
 	}
 
 	
-	@RequestMapping(value = "/api/roles/get_roles_list", method = RequestMethod.GET)
+	@RequestMapping(value = "/roles/get_roles_list", method = RequestMethod.GET)
 	public ResponseEntity<String> getRolesList(@RequestParam(value="status", required=true) Boolean status, @RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {

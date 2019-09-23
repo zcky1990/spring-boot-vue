@@ -18,9 +18,10 @@ import app.model.UploadImage;
 import app.util.CloudinaryUtility;
 
 @RestController
+@RequestMapping("/api")
 public class ImageUploaderController extends BaseController{
 	
-	@RequestMapping(value = "/api/upload_image", method = RequestMethod.POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+	@RequestMapping(value = "/upload_image", method = RequestMethod.POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
 	public ResponseEntity<String>  uploadFile(@RequestParam(value = "file") MultipartFile file, @RequestParam(value = "content") String content, HttpServletRequest request) throws Exception {
 		JsonObject response = new JsonObject();
 		CloudinaryUtility util= new CloudinaryUtility();
@@ -28,7 +29,7 @@ public class ImageUploaderController extends BaseController{
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/upload_image_string", method = RequestMethod.POST)
+	@RequestMapping(value = "/upload_image_string", method = RequestMethod.POST)
 	public ResponseEntity<String>  uploadImageFileString(@RequestBody UploadImage image, HttpServletRequest request) throws Exception {
 		JsonObject response = new JsonObject();
 		CloudinaryUtility util= new CloudinaryUtility();

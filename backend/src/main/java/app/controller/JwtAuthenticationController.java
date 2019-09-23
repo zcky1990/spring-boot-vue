@@ -20,6 +20,7 @@ import app.security.JwtUserDetailsService;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/api")
 public class JwtAuthenticationController {
 
 	@Autowired

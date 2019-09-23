@@ -42,6 +42,7 @@ import app.task.AsyncService;
 import app.util.TimeUtility;
 
 @RestController
+@RequestMapping("/api")
 public class UsersController extends BaseController{
 
 	@Autowired
@@ -60,7 +61,7 @@ public class UsersController extends BaseController{
 		return new User(user.getUsername(), user.getPassword(), new ArrayList<>());
 	}
 	
-	@RequestMapping(value = "/api/users/sign_up", method = RequestMethod.POST)
+	@RequestMapping(value = "/users/sign_up", method = RequestMethod.POST)
 	public ResponseEntity<String> signUp(@Valid @RequestBody UsersRequest userRequest, HttpServletRequest request) throws Exception {
 		Users dataUser = repository.findByUserName(userRequest.getUsername());
 		JsonObject response;
@@ -86,7 +87,7 @@ public class UsersController extends BaseController{
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/api/users/sign_in", method = RequestMethod.POST)
+	@RequestMapping(value = "/users/sign_in", method = RequestMethod.POST)
 	public ResponseEntity<String> signIn(@Valid @RequestBody Users user, HttpServletResponse responseHeader) throws Exception {
 		JsonObject response;
 		try {
@@ -121,7 +122,7 @@ public class UsersController extends BaseController{
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/users/sign_in_with_facebook", method = RequestMethod.POST)
+	@RequestMapping(value = "/users/sign_in_with_facebook", method = RequestMethod.POST)
 	public ResponseEntity<String> signInFacebook(@Valid @RequestBody UsersFacebookRequest userFacebookRequest, HttpServletResponse responseHeader) throws Exception {
 		JsonObject response;
 		try {
@@ -167,7 +168,7 @@ public class UsersController extends BaseController{
 		}
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
-	@RequestMapping(value = "/api/users/sign_in_with_google", method = RequestMethod.POST)
+	@RequestMapping(value = "/users/sign_in_with_google", method = RequestMethod.POST)
 	public ResponseEntity<String> signInGoogle(@Valid @RequestBody UsersGoogleRequest userGoogleRequest, HttpServletResponse responseHeader) throws Exception {
 		JsonObject response;
 		try {
@@ -218,7 +219,7 @@ public class UsersController extends BaseController{
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/api/users/edit_user", method = RequestMethod.PUT)
+	@RequestMapping(value = "/users/edit_user", method = RequestMethod.PUT)
 	public ResponseEntity<String> editUsers(@Valid @RequestBody UsersRequest userRequest, HttpServletRequest request){
 		JsonObject response;
 		try {
@@ -236,7 +237,7 @@ public class UsersController extends BaseController{
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/users/validate/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/validate/{id}", method = RequestMethod.GET)
 	public ResponseEntity<String> editUsers(@PathVariable String id, HttpServletRequest request){
 		JsonObject response;
 		try {
@@ -252,7 +253,7 @@ public class UsersController extends BaseController{
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/api/users/find_all_users", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/find_all_users", method = RequestMethod.GET)
 	public ResponseEntity<String> finddAllUsers(HttpServletRequest request){
 		JsonObject response;
 		try {
@@ -266,7 +267,7 @@ public class UsersController extends BaseController{
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/api/users/delete_user/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/users/delete_user/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteUsers(@PathVariable String id, HttpServletRequest request){
 		JsonObject response;
 		try {
@@ -280,7 +281,7 @@ public class UsersController extends BaseController{
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/users/get_user_detail/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/get_user_detail/{id}", method = RequestMethod.GET)
 	public ResponseEntity<String> getUserDetails(@PathVariable String id, HttpServletRequest request){
 		JsonObject response;
 		try {
@@ -297,7 +298,7 @@ public class UsersController extends BaseController{
 	/* user-admin END POINT 
 	 * 
 	 */
-	@RequestMapping(value = "/api/admin/user/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
 	public ResponseEntity<String> create(@Valid @RequestBody UsersRequest userRequest, HttpServletRequest request) throws Exception {
 		Users dataUser = repository.findByUserName(userRequest.getUsername());
 		JsonObject response;
@@ -319,7 +320,7 @@ public class UsersController extends BaseController{
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/admin/user/edit", method = RequestMethod.PUT)
+	@RequestMapping(value = "/admin/user/edit", method = RequestMethod.PUT)
 	public ResponseEntity<String> editAdminUsers(@Valid @RequestBody UsersRequest userRequest, HttpServletRequest request){
 		JsonObject response;
 		try {
@@ -337,7 +338,7 @@ public class UsersController extends BaseController{
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/admin/user/delete/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/admin/user/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteUserAdmin(@PathVariable String id, HttpServletRequest request){
 		JsonObject response;
 		try {
@@ -351,7 +352,7 @@ public class UsersController extends BaseController{
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/admin/user/find_all", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/user/find_all", method = RequestMethod.GET)
 	public ResponseEntity<String> finddAllUsersAdmin(@RequestParam(value="roleId", required=false) String roleId, @RequestParam(value="page", required=false) String page,HttpServletRequest request){
 		JsonObject response;
 		try {
@@ -380,7 +381,7 @@ public class UsersController extends BaseController{
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/admin/user/detail/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/user/detail/{id}", method = RequestMethod.GET)
 	public ResponseEntity<String> getUserDetailsAdmin(@PathVariable String id, HttpServletRequest request){
 		JsonObject response;
 		try {

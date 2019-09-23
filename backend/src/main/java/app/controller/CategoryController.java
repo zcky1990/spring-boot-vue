@@ -29,11 +29,12 @@ import app.repository.CategoryRepository;
 import app.serializer.CategorySerializer;
 
 @RestController
+@RequestMapping("/api")
 public class CategoryController extends BaseController {
 	@Autowired
 	private CategoryRepository repository;
 
-	@RequestMapping(value = "/api/category/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/category/create", method = RequestMethod.POST)
 	public ResponseEntity<String> create(@Valid @RequestBody Category category, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
@@ -47,7 +48,7 @@ public class CategoryController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/api/category/edit", method = RequestMethod.PUT)
+	@RequestMapping(value = "/category/edit", method = RequestMethod.PUT)
 	public ResponseEntity<String> edit(@Valid @RequestBody CategoryRequest categoryReq, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
@@ -63,7 +64,7 @@ public class CategoryController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/category/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/category/{id}", method = RequestMethod.GET)
 	public ResponseEntity<String> edit(@PathVariable String id, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
@@ -78,7 +79,7 @@ public class CategoryController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/category/delete/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/category/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> delete(@PathVariable String id, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
@@ -93,7 +94,7 @@ public class CategoryController extends BaseController {
 	}
 
 	
-	@RequestMapping(value = "/api/category/get_category_list", method = RequestMethod.GET)
+	@RequestMapping(value = "/category/get_category_list", method = RequestMethod.GET)
 	public ResponseEntity<String> getCategoryList(@RequestParam(value="type", required=false) String type,@RequestParam(value="status", required=true) Boolean status, @RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {

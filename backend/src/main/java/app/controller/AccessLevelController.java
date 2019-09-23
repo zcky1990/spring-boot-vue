@@ -30,11 +30,12 @@ import app.repository.AccessLevelRepository;
 import app.serializer.AccessLevelSerializer;
 
 @RestController
+@RequestMapping("/api")
 public class AccessLevelController extends BaseController {
 	@Autowired
 	private AccessLevelRepository repository;
 
-	@RequestMapping(value = "/api/access_level/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/access_level/create", method = RequestMethod.POST)
 	public ResponseEntity<String> create(@Valid @RequestBody AccessLevel accessLevel, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
@@ -48,7 +49,7 @@ public class AccessLevelController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/api/access_level/edit", method = RequestMethod.PUT)
+	@RequestMapping(value = "/access_level/edit", method = RequestMethod.PUT)
 	public ResponseEntity<String> edit(@Valid @RequestBody AccessLevelRequest accessLevelRequest, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
@@ -64,7 +65,7 @@ public class AccessLevelController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/access_level/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/access_level/{id}", method = RequestMethod.GET)
 	public ResponseEntity<String> edit(@PathVariable String id, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
@@ -79,7 +80,7 @@ public class AccessLevelController extends BaseController {
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/access_level/delete/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/access_level/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> delete(@PathVariable String id, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
@@ -94,7 +95,7 @@ public class AccessLevelController extends BaseController {
 	}
 
 	
-	@RequestMapping(value = "/api/access_level/get_access_level_list", method = RequestMethod.GET)
+	@RequestMapping(value = "/access_level/get_access_level_list", method = RequestMethod.GET)
 	public ResponseEntity<String> getRolesList(@RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
 		JsonObject response;
 		try {
