@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
 
-import constants.Constant;
-import model.request.CategoryRequest;
-import mongo.model.Category;
-import repository.CategoryRepository;
-import serializer.CategorySerializer;
+import app.constants.Constant;
+import app.model.request.CategoryRequest;
+import app.mongo.model.Category;
+import app.repository.CategoryRepository;
+import app.serializer.CategorySerializer;
 
 @RestController
 public class CategoryController extends BaseController {

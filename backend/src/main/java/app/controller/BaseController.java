@@ -18,8 +18,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import constants.Constant;
-import model.response.ResponseModel;
+import app.constants.Constant;
+import app.model.response.ResponseModel;
 
 
 @RestController

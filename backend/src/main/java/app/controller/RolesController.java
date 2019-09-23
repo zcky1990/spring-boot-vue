@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
 
-import constants.Constant;
-import model.request.RolesRequest;
-import mongo.model.Roles;
-import repository.RolesRepository;
-import serializer.RolesSerializer;
+import app.constants.Constant;
+import app.model.request.RolesRequest;
+import app.mongo.model.Roles;
+import app.repository.RolesRepository;
+import app.serializer.RolesSerializer;
 
 @RestController
 public class RolesController extends BaseController {

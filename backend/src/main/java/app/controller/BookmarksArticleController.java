@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
 
-import constants.Constant;
-import model.request.BookmarksArticleRequest;
-import mongo.model.BookmarksArticle;
-import mongo.model.Users;
-import repository.ArticleBookmarksRepository;
-import repository.UsersRepository;
-import serializer.BookmarksArticleSerializer;
+import app.constants.Constant;
+import app.model.request.BookmarksArticleRequest;
+import app.mongo.model.BookmarksArticle;
+import app.mongo.model.Users;
+import app.repository.ArticleBookmarksRepository;
+import app.repository.UsersRepository;
+import app.serializer.BookmarksArticleSerializer;
 
 @RestController
 public class BookmarksArticleController extends BaseController {

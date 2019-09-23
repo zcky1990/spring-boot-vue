@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
 
-import constants.Constant;
-import model.request.AccessLevelRequest;
-import mongo.model.AccessLevel;
-import repository.AccessLevelRepository;
-import serializer.AccessLevelSerializer;
+import app.constants.Constant;
+import app.model.request.AccessLevelRequest;
+import app.mongo.model.AccessLevel;
+import app.repository.AccessLevelRepository;
+import app.serializer.AccessLevelSerializer;
 
 @RestController
 public class AccessLevelController extends BaseController {

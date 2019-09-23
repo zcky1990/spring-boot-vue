@@ -22,21 +22,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
 
-import constants.Constant;
-import model.ArticleList;
-import model.request.ArticleRequest;
-import model.response.ArticleResponse;
-import mongo.model.Article;
-import mongo.model.BookmarksArticle;
-import mongo.model.Users;
-import repository.ArticleBookmarksRepository;
-import repository.ArticleRepository;
-import repository.UsersRepository;
-import serializer.ArticleBookmarkSerializer;
-import serializer.ArticleListSerializer;
-import serializer.ArticleSerializer;
-import serializer.PageArticleSerializer;
-import util.TimeUtility;
+import app.constants.Constant;
+import app.model.ArticleList;
+import app.model.request.ArticleRequest;
+import app.model.response.ArticleResponse;
+import app.mongo.model.Article;
+import app.mongo.model.BookmarksArticle;
+import app.mongo.model.Users;
+import app.repository.ArticleBookmarksRepository;
+import app.repository.ArticleRepository;
+import app.repository.UsersRepository;
+import app.serializer.ArticleBookmarkSerializer;
+import app.serializer.ArticleListSerializer;
+import app.serializer.ArticleSerializer;
+import app.serializer.PageArticleSerializer;
+import app.util.TimeUtility;
 
 @RestController
 public class ArticleController extends BaseController {

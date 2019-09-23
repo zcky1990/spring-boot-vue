@@ -26,20 +26,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
 
-import constants.Constant;
-import model.request.UsersFacebookRequest;
-import model.request.UsersGoogleRequest;
-import model.request.UsersRequest;
-import mongo.model.Roles;
-import mongo.model.Users;
-import repository.RolesRepository;
-import repository.UsersRepository;
-import security.JwtTokenUtil;
-import serializer.UsersAdminSerializer;
-import serializer.UsersSerializer;
-import serializer.UsersWithPasswordSerializer;
-import task.AsyncService;
-import util.TimeUtility;
+import app.constants.Constant;
+import app.model.request.UsersFacebookRequest;
+import app.model.request.UsersGoogleRequest;
+import app.model.request.UsersRequest;
+import app.mongo.model.Roles;
+import app.mongo.model.Users;
+import app.repository.RolesRepository;
+import app.repository.UsersRepository;
+import app.security.JwtTokenUtil;
+import app.serializer.UsersAdminSerializer;
+import app.serializer.UsersSerializer;
+import app.serializer.UsersWithPasswordSerializer;
+import app.task.AsyncService;
+import app.util.TimeUtility;
 
 @RestController
 public class UsersController extends BaseController{

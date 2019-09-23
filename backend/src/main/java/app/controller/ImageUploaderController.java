@@ -14,8 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
 
-import model.UploadImage;
-import util.CloudinaryUtility;
+import app.model.UploadImage;
+import app.util.CloudinaryUtility;
 
 @RestController
 public class ImageUploaderController extends BaseController{

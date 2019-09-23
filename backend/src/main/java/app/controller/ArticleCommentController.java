@@ -21,15 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
 
-import constants.Constant;
-import model.request.CommentArticle;
-import mongo.model.Article;
-import mongo.model.ArticleComment;
-import mongo.model.Users;
-import repository.ArticleCommentRepository;
-import repository.UsersRepository;
-import serializer.ArticleCommentSerializer;
-import util.TimeUtility;
+import app.constants.Constant;
+import app.model.request.CommentArticle;
+import app.mongo.model.Article;
+import app.mongo.model.ArticleComment;
+import app.mongo.model.Users;
+import app.repository.ArticleCommentRepository;
+import app.repository.UsersRepository;
+import app.serializer.ArticleCommentSerializer;
+import app.util.TimeUtility;
 
 @RestController
 public class ArticleCommentController extends BaseController {
