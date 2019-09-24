@@ -16,7 +16,9 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-
+	/*
+	 * http://zetcode.com/articles/springbootthymeleafconf/
+	 */
     @Bean
     @Description("Thymeleaf template resolver serving HTML 5")
     public ClassLoaderTemplateResolver templateResolver() {
@@ -53,9 +55,12 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/notFound").setViewName("forward:/");
     }
     
+    /*
+     * https://stackoverflow.com/questions/44692781/configure-spring-boot-to-redirect-404-to-a-single-page-app
+     * https://stackoverflow.com/questions/50959459/spring-boot-custom-error-pages-does-not-work-when-deployed-in-an-external-contai
+     */
     @Bean
     public WebServerFactoryCustomizer<TomcatServletWebServerFactory> sessionManagerCustomizer() {
-        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
         return server -> {
         	server.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,
                     "/notFound"));
