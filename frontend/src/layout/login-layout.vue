@@ -11,11 +11,6 @@
 
     export default   {
         name: 'login-page-layout',
-        data(){
-            return {
-
-            }
-        },
         components: {
             'login-form' : LoginForm,
         }

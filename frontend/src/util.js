@@ -54,7 +54,7 @@ export default {
             });
           },
 
-        /* SESSION UTIL FUNCTION */
+          /* SESSION UTIL FUNCTION */
             checkUserSession : function (session, router) {
               if (!session.exists()) {
                 router.push('/')
@@ -142,6 +142,13 @@ export default {
               }
               return '';
             },
+            getUserAccessLevel: function(){
+              let users =  this.$session.get('users');
+              let roles = users.roles;
+              let accessLevel = roles.access_level;
+              let level = accessLevel.level;
+              return level;
+            }
           }
      })
   }

@@ -23,10 +23,14 @@
             if(!isLogged){
                 this.$router.push("/");
             }
+            let accessLevel = this.getUserAccessLevel();
+            if(accessLevel <20){
+                this.$router.push("/");
+            }
         },
         components: {
-                    'user-nav-menu' : Navbar,
-                    "teacher-list-article" : ListArticle
+            'user-nav-menu' : Navbar,
+            "teacher-list-article" : ListArticle
                    
         }
     }

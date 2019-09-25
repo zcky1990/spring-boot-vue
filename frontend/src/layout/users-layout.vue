@@ -21,10 +21,14 @@
             if(!isLogged){
                 this.$router.push("/");
             }
+            let accessLevel = this.getUserAccessLevel();
+            if(accessLevel >20){
+                this.$router.push("/");
+            }
         },
         components: {
-                    'user-nav-menu' : Navbar,
-                    "tabs-component" : TabsComponents
+            'user-nav-menu' : Navbar,
+            "tabs-component" : TabsComponents
         }
     }
     </script>

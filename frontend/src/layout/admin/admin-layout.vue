@@ -19,6 +19,16 @@ export default {
   name: "admin-page-layout",
   components: {
     "admin-menu-navbar": Navbar
+  },
+  created(){
+    let isLogged = this.isLoggin(this.$session);
+    if(!isLogged){
+      this.$router.push("/");
+    }
+    let accessLevel = this.getUserAccessLevel();
+      if(accessLevel >30){
+        this.$router.push("/");
+      }
   }
 };
 </script>

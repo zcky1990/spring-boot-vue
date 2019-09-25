@@ -20,6 +20,16 @@ export default {
   components: {
     "admin-menu-navbar": Navbar,
     "category-admin-content": CategoryForm,
+  },
+  created(){
+    let isLogged = this.isLoggin(this.$session);
+    if(!isLogged){
+      this.$router.push("/");
+    }
+    let accessLevel = this.getUserAccessLevel();
+      if(accessLevel >30){
+        this.$router.push("/");
+      }
   }
 };
 </script>

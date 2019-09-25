@@ -12,12 +12,8 @@
 
     export default   {
         name: 'sign-up-page-layout',
-        data(){
-            return {
-            }
-        },
         components: {
-                    'sign-up-form' : SignUpForm
+            'sign-up-form' : SignUpForm
         }
     }
     </script>
