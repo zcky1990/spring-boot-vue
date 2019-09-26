@@ -10,8 +10,6 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import java.util.Properties;
-
 import com.google.gson.Gson;
 
 import app.config.Mail;
@@ -32,7 +30,7 @@ public class MailUtility {
 	}
 
 	public void getMailConfig() {
-		String mailConfig = util.getJsonFile(Constant.MAIL_CONFIG_PATH);
+		String mailConfig = util.getStringJsonFile(Constant.MAIL_CONFIG_PATH);
 		Mail mailconfig = gson.fromJson(mailConfig, Mail.class);
 		ArrayList<MailEnvirontment> mailEnvirontment = mailconfig.getMailconfig();
 		for(int i = 0; i < mailEnvirontment.size(); i++) {

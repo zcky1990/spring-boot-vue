@@ -31,7 +31,7 @@ public class CloudinaryUtility {
 	}
 	
 	public void getCloudinaryConfig() {
-		String stringConfig = util.getJsonFile(Constant.CLOUDINARY_CONFIG_PATH);
+		String stringConfig = util.getStringJsonFile(Constant.CLOUDINARY_CONFIG_PATH);
 		CloudinaryModelJson cloudConfig = gson.fromJson(stringConfig, CloudinaryModelJson.class);
 		ArrayList<CloudinaryEnv> environtmentConfig = cloudConfig.getArrayConfig();
 		for(int i = 0; i < environtmentConfig.size(); i++) {
