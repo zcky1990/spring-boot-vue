@@ -32,7 +32,7 @@ export default {
       isOnProgres: false,
       title:"Sign in with Google",
       googleSignInParams: {
-        client_id: "90367855693-4r8nmo9qgktatecgkvn17c7eoh5997bh.apps.googleusercontent.com"
+        client_id: "415445100587-9sngcc2u76124dmi0acd157eo2n48rla.apps.googleusercontent.com"
       },
       data: {}
     }
