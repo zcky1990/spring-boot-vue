@@ -85,7 +85,7 @@ public class MailUtility {
 	}
 
 	public String getEmailTemplate(String url) {
-		String mailBody = util.getJsonFile(url);
+		String mailBody = util.getStringJsonFile(url);
 		return mailBody;
 	}
 
