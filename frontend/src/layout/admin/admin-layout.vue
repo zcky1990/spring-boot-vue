@@ -26,7 +26,7 @@ export default {
       this.$router.push("/");
     }
     let accessLevel = this.getUserAccessLevel();
-      if(accessLevel >30){
+      if(accessLevel <30){
         this.$router.push("/");
       }
   }
