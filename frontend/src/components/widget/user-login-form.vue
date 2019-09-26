@@ -130,7 +130,13 @@ export default {
               self.$session.set("uid", responseData.response.id);
               self.$session.set("username", responseData.response.username);
               self.$session.set("exp_date", responseData.exp_date);
-              router.push("/user");
+              if(responseData.response.roles.access_level > 20 && responseData.response.roles.access_level < 30){
+                  router.push("/teacher");
+              }else if(responseData.response.roles.access_level < 20){
+                  router.push("/user");
+              }else {
+                router.push("/admin");
+              }
             }
           }
       },
