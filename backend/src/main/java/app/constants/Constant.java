@@ -43,6 +43,6 @@ public class Constant {
 	public static String MAIL_TEMPLATE_PATH = "template/verification_mail_template.txt";
 	public static String VERIFICATION_SIGN_UP_MAIL_SUBJECT = "verify your email";
 	public static String BASE_URL_DEV = "http://localhost:8088/";
-	public static String BASE_URL_PROD = "";
+	public static String BASE_URL_PROD = "https://badebelajar.com/";
 
 }

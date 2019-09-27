@@ -6,7 +6,7 @@
   </div>
   <div class="content">
    <p> Hi {{username}}</p>
-   <p>In order to start using maribelaajar, please verify your email</p>
+   <p>In order to start using badebelajar.com, please verify your email with clicking this url below.</p>
   </div>
   
   <div class="link" style="background-color: #00d1b2;
