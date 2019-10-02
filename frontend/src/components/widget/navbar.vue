@@ -71,12 +71,11 @@
      </div>
     </v-navigation-drawer>
 
-
     <div class="toolbar">
       <div class="container toolbar-title">
         <div class="title-container">
           <div class="title-navbar">
-          {{title}}
+                <p>Bad<span class="green-color">&egrave</span>Belajar</p>
           </div>
         <div class="sub-title">
           Knowledge archive
@@ -182,7 +181,6 @@ export default {
         { title: "About", url: "/test" }
       ],
       items2: [{ picture: 28, text: "Joseph" }, { picture: 38, text: "Apple" }],
-      title: "MariBelajar",
       icon: {
         type: String,
         default: "$vuetify.icons.cancel"
