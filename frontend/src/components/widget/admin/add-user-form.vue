@@ -108,6 +108,7 @@
               color="rgb(0, 209, 178)"
             ></v-select>
             <v-select v-model="data.status" :items="status" label="Status"></v-select>
+            <v-select v-model="data.isValidated" :items="status" label="Validated"></v-select>
             <v-flex align-center justify-center>
                 <div class="form-bttm-container">
                   <div class="btn-container">
