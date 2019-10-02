@@ -178,7 +178,6 @@ export default {
       isMobile: false,
       items: [
         { title: "Home", url: {"name": "Index"} },
-        { title: "About", url: "/test" }
       ],
       items2: [{ picture: 28, text: "Joseph" }, { picture: 38, text: "Apple" }],
       icon: {
