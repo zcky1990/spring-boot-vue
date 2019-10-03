@@ -1,27 +1,30 @@
 $material-design-icons-font-path: '~material-design-icons-iconfont/dist/fonts/';
  
 @import '~material-design-icons-iconfont/src/material-design-icons';
-@import url('https://fonts.googleapis.com/css?family=Lato:300,400&display=swap');
 
 @font-face {
     font-family: 'Material Icons';
     font-style: normal;
-    font-weight: 400;
-    src: url(./fonts/MaterialIcons-Regular.eot); /* For IE6-8 */
+    font-display: auto;
     src: local('Material Icons'),
-      local('MaterialIcons-Regular'),
-      url(./fonts/MaterialIcons-Regular.woff2) format('woff2'),
-      url(./fonts/MaterialIcons-Regular.woff) format('woff'),
-      url(./fonts/MaterialIcons-Regular.ttf) format('truetype');
+        local('MaterialIcons-Regular'),
+        url(./fonts/MaterialIcons-Regular.woff2) format('woff2'),
+        url(./fonts/MaterialIcons-Regular.woff) format('woff'),
+        url(./fonts/MaterialIcons-Regular.eot),
+        url(./fonts/MaterialIcons-Regular.ttf) format('truetype');
   }
 
-
-  @font-face {
+@font-face {
     font-family: 'Lato', sans-serif;
     font-style: normal;
-  }
+    font-display: auto;
+    src: local('Lato'),
+        url(./fonts/Lato-Light.woff2) format('woff2'),
+        url(./fonts/Lato-Light.woff) format('woff'),
+        url(./fonts/Lato-Light.ttf) format('truetype');
+}
 
-  .material-icons {
+.material-icons {
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;

@@ -6,7 +6,7 @@ public class Environtment {
 	private String environtment;
 	
 	public Environtment() {
-		environtment = Constant.DEV_ENV;
+		environtment = Constant.PRODUCTION_ENV;
 	}
 
 	public String getEnvirontment() {
