@@ -308,7 +308,7 @@ public class UsersController extends BaseController{
 				user.fromObject(userRequest);
 				repository.save(user);
 				response = getSuccessResponse();
-				response.add(Constant.RESPONSE, toJSONObject(user));
+				response.add(Constant.RESPONSE, toJSONObjectWithSerializer(Users.class, new UsersWithPasswordSerializer(), user) );
 			} catch(Exception e) {
 				response = getFailedResponse();
 				response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());

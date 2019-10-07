@@ -13,7 +13,6 @@ public class UsersRequest {
 	private boolean status;
 	private String image_url;
 	private String modified_date;
-	private boolean isValidated;
 	private String phonenumber;
 	private String address;
 	private String description;
@@ -23,7 +22,14 @@ public class UsersRequest {
 	private String type;
 	private String facebookId;
 	private String googleId;
+	private boolean validated;
 	
+	public boolean isValidated() {
+		return validated;
+	}
+	public void setValidated(boolean validated) {
+		this.validated = validated;
+	}
 	public String getGoogleId() {
 		return googleId;
 	}
@@ -107,12 +113,6 @@ public class UsersRequest {
 	}
 	public void setModified_date(String modified_date) {
 		this.modified_date = modified_date;
-	}
-	public boolean isValidated() {
-		return isValidated;
-	}
-	public void setValidated(boolean isValidated) {
-		this.isValidated = isValidated;
 	}
 	public String getPhonenumber() {
 		return phonenumber;

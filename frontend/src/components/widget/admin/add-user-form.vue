@@ -34,7 +34,7 @@
                     <td class="text-xs-left">{{ props.item.username }}</td>
                     <td class="text-xs-left">{{ props.item.name }}</td>
                     <td class="text-xs-left">{{ props.item.email }}</td>
-                    <td class="text-xs-left">{{ props.item.isValidated }}</td>
+                    <td class="text-xs-left">{{ props.item.validated }}</td>
                     <td class="text-xs-left">{{ props.item.status }}</td>
                     <td class="text-xs-left">{{ props.item.created_date }}</td>
                   <td>
@@ -108,7 +108,7 @@
               color="rgb(0, 209, 178)"
             ></v-select>
             <v-select v-model="data.status" :items="status" label="Status"></v-select>
-            <v-select v-model="data.isValidated" :items="status" label="Validated"></v-select>
+            <v-select v-model="data.validated" :items="status" label="Validated"></v-select>
             <v-flex align-center justify-center>
                 <div class="form-bttm-container">
                   <div class="btn-container">
