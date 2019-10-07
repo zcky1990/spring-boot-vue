@@ -196,7 +196,7 @@ export default {
         phonenumber : "",
         postal_code : "" ,
         birthday: "",
-        isValidated: true,
+        validated: true,
         status: false,
         description :"",
       },
