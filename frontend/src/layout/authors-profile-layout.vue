@@ -4,17 +4,17 @@
    <user-nav-menu></user-nav-menu>
   </section>
   <section class="content-section">
-   <teacher-profile></teacher-profile>
+   <authors-profile></authors-profile>
   </section>
  </div>
 </template>
 
     <script>
 import Navbar from "@/components/widget/navbar";
-import TeacherProfileComponents from "@/components/widget/teacher-tabs-components";
+import TeacherProfileComponents from "@/components/widget/authors-tabs-components";
 
 export default {
- name: "teacher-profile-page-layout",
+ name: "authors-profile-page-layout",
  created() {
   let isLogged = this.isLoggin(this.$session);
   if (!isLogged) {
@@ -27,7 +27,7 @@ export default {
  },
  components: {
   "user-nav-menu": Navbar,
-  "teacher-profile": TeacherProfileComponents
+  "authors-profile": TeacherProfileComponents
  }
 };
 </script>

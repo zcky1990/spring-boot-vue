@@ -135,7 +135,7 @@ export default {
         responseData.response.roles.access_level > 20 &&
         responseData.response.roles.access_level < 30
        ) {
-        router.push("/teacher");
+        router.push("/authors");
        } else if (responseData.response.roles.access_level < 20) {
         router.push("/user");
        } else {

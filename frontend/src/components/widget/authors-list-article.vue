@@ -99,7 +99,7 @@ import { EventBus } from "./../../EventBus.js";
 import Editor from "./editor";
 
 export default {
- name: "teacher-list-article",
+ name: "authors-list-article",
  props: {
   url: {
    type: String,

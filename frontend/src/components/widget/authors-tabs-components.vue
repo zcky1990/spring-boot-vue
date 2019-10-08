@@ -21,10 +21,10 @@
   <v-tabs-items v-model="tab">
    <v-tab-item v-for="item in tabs" :key="item.index">
     <div class="tab-content-container" color="#00d1b2" v-show="item.index == 1">
-     <teacher-profile></teacher-profile>
+     <authors-profile></authors-profile>
     </div>
     <div v-show="item.index == 2">
-     <teacher-article></teacher-article>
+     <authors-article></authors-article>
     </div>
    </v-tab-item>
   </v-tabs-items>
@@ -32,11 +32,11 @@
 </template>
 
 <script>
-import Profile from "./teacher-profile";
-import Article from "./teacher-list-article";
+import Profile from "./authors-profile";
+import Article from "./authors-list-article";
 
 export default {
- name: "teacher-tabs-component",
+ name: "authors-tabs-component",
  data() {
   return {
    tab: null,
@@ -47,8 +47,8 @@ export default {
   };
  },
  components: {
-  "teacher-profile": Profile,
-  "teacher-article": Article
+  "authors-profile": Profile,
+  "authors-article": Article
  }
 };
 </script>

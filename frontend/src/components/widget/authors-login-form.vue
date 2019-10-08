@@ -2,41 +2,11 @@
  <v-container>
   <v-layout class="sign-up-container" align-center justify-center flex fill-height>
    <div class="title-container">
-    <div class="title bulma-color">Sign Up</div>
-    <div class="sub-title bulma-color">Make your Teacher Account</div>
+    <div class="title">Login</div>
+    <div class="sub-title">Masuk ke Akun Anda</div>
    </div>
    <div class="form-container">
     <v-form ref="form" v-model="valid" width="300">
-     <v-text-field
-      v-model="firstname"
-      :rules="nameRules"
-      label="First name"
-      required
-      outline
-      flat
-      color="#00d1b2"
-     ></v-text-field>
-
-     <v-text-field
-      v-model="lastname"
-      :rules="nameRules"
-      label="Last name"
-      required
-      outline
-      flat
-      color="#00d1b2"
-     ></v-text-field>
-
-     <v-text-field
-      v-model="email"
-      :rules="emailRules"
-      label="E-mail"
-      required
-      outline
-      flat
-      color="#00d1b2"
-     ></v-text-field>
-
      <v-text-field
       v-model="username"
       :rules="useranameRules"
@@ -44,32 +14,32 @@
       required
       outline
       flat
-      rounded
-      color="#00d1b2"
+      color="rgb(0, 209, 178)"
      ></v-text-field>
 
      <v-text-field
       v-model="password"
       :rules="passwordRules"
-      label="Password"
-      hint="At least 8 characters"
       :type="show1 ? 'text' : 'password'"
       @click:append="show1 = !show1"
       :append-icon="show1 ? 'visibility' : 'visibility_off'"
+      label="Password"
+      hint="At least 8 characters"
       required
       outline
       flat
-      color="#00d1b2"
+      color="rgb(0, 209, 178)"
      ></v-text-field>
+
      <v-flex align-center justify-center>
       <div class="submit-btn-container">
        <div class="link-not-sign-up">
-        <div class="has-account" @click="goToPage">
-         <span>Sudah punya Akun?</span>
-        </div>
+        <router-link class="sign-up-link" to="/sign_up">
+         <v-btn text flat class="link-btn">Belum terdaftar ?</v-btn>
+        </router-link>
        </div>
        <div class="sign-in-btn-container">
-        <v-btn class="white--text desc" color="#00d1b2" @click="submit">Daftar</v-btn>
+        <v-btn class="white--text desc" color="#00d1b2" @click="submitLogin">Login</v-btn>
        </div>
       </div>
      </v-flex>
@@ -83,24 +53,19 @@
 import { EventBus } from "./../../EventBus.js";
 
 export default {
- name: "teacher-sign-up-form",
+ name: "authors-login-form",
  data() {
   return {
    valid: false,
-   show1: false,
-   firstname: "",
-   lastname: "",
-   password: "",
    username: "",
-   email: "",
-   nameRules: [
-    v => !!v || "Name is required"
-    //v => v.length <= 10 || 'Name must be less than 10 characters'
-   ],
-   emailRules: [
-    v => !!v || "E-mail is required",
-    v => /.+@.+/.test(v) || "E-mail must be valid"
-   ],
+   password: "",
+   show1: false,
+   messageError: "",
+   snackBarConfig: {
+    color: "error",
+    timeout: 6000,
+    top: true
+   },
    useranameRules: [
     v => !!v || "Username is required",
     v => (v && v.length >= 8) || "Username must be or more than 8 characters"
@@ -111,13 +76,29 @@ export default {
    ]
   };
  },
+ created() {
+  let isLogged = this.isLoggin(this.$session);
+  if (isLogged) {
+   this.$router.push("/authors");
+  }
+ },
  methods: {
+  submitLogin: function() {
+   if (this.$refs.form.validate()) {
+    var username = this.username;
+    var password = this.password;
+    var model = {};
+    model.username = username;
+    model.password = password;
+    this.callRestService(model);
+   }
+  },
   callRestService(model) {
    let self = this;
    let router = this.$router;
    let headers = this.getDefaultHeaders(this.getMeta("token"));
    this.post(
-    "users/sign_up",
+    "/users/sign_in",
     model,
     headers,
     function(response) {
@@ -126,14 +107,13 @@ export default {
       if (responseData["error_message"] != undefined) {
        self.setMessage(responseData.error_message, 1);
       } else {
-       self.setMessage("please check your mail to verify your accounts", 0);
        self.$session.start();
        self.$session.set("users", responseData.response);
        self.$session.set("jwt", responseData.token);
        self.$session.set("uid", responseData.response.id);
        self.$session.set("username", responseData.response.username);
        self.$session.set("exp_date", responseData.exp_date);
-       router.push("/user");
+       router.push("/authors");
       }
      }
     },
@@ -147,26 +127,10 @@ export default {
    data.message = message;
    data.type = type;
    EventBus.$emit("SNACKBAR_TRIGGERED", data);
-  },
-  submit() {
-   if (this.$refs.form.validate()) {
-    let model = {};
-    model.username = this.username;
-    model.password = this.password;
-    model.firstname = this.firstname;
-    model.lastname = this.lastname;
-    model.email = this.email;
-    model.type = "Free Member";
-    this.callRestService(model);
-   }
-  },
-  goToPage() {
-   this.$router.push("/login");
   }
  }
 };
 </script>
-
 <style scoped>
 @media only screen and (max-width: 600px) {
  .sign-up-container {
@@ -180,10 +144,10 @@ export default {
   padding-bottom: 16px;
  }
 }
-
 .title-container {
  flex-grow: 1;
  text-align: center;
+ margin-bottom: 16px;
 }
 .form-container {
  flex-grow: 0;
@@ -204,38 +168,37 @@ export default {
 .sign-up-link {
  text-decoration: none;
 }
-.center {
- text-align: center;
- width: 100%;
-}
 .title {
- font-size: 2.8rem !important;
- font-weight: 600;
- color: #444f60;
  text-align: center;
- padding-bottom: 16px;
+ line-height: 1.5 !important;
+ font-size: 3.5rem !important;
+ color: #000;
+ font-weight: 900;
 }
 .sub-title {
- font-size: 1.4rem !important;
- color: #444f60;
  text-align: center;
-}
-input,
-.desc {
- color: #4a4a4a;
+ color: #6c757d;
  font-size: 1rem;
- font-weight: 400;
- line-height: 1.5;
+ font-weight: 300;
 }
-.has-account {
- padding-top: 15px;
+.bulma-color {
+ color: rgb(0, 209, 178);
+}
+.submit-btn-container {
+ display: flex;
+ flex-direction: row;
+}
+.link-not-sign-up {
+ flex-grow: 1;
+}
+.sign-up-link {
+ text-decoration: none;
+}
+.link-btn {
  color: rgb(0, 209, 178);
  font-size: 1rem;
  font-weight: 400;
  line-height: 1.5;
  cursor: pointer;
-}
-.bulma-color {
- color: rgb(0, 209, 178);
 }
 </style>

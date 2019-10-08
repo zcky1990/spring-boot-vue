@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import LoginLayout from '@/layout/teacher-login-layout'
+import LoginLayout from '@/layout/authors-login-layout'
 
 export default {
-    name: 'teacher-login',
+    name: 'authors-login',
     components: {
         'login-layout-page' : LoginLayout
         },

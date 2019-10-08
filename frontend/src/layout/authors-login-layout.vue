@@ -7,10 +7,10 @@
 </template>
 
     <script>
-import LoginForm from "@/components/widget/teacher-login-form";
+import LoginForm from "@/components/widget/authors-login-form";
 
 export default {
- name: "teacher-login-layout-page",
+ name: "authors-login-layout-page",
  components: {
   "login-form": LoginForm
  }

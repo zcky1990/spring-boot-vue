@@ -155,7 +155,7 @@
 import { EventBus } from "./../../EventBus.js";
 
 export default {
- name: "teacher-profile-component",
+ name: "authors-profile-component",
  data() {
   return {
    data: {

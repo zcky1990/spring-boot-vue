@@ -8,8 +8,8 @@ import UserSignUp from '@/pages/user-sign-up'
 import Article from '@/pages/article'
 import Search from '@/pages/search'
 
-import TeacherLogin from '@/pages/teacher-login'
-import TeacherProfile from '@/pages/teacher-profile'
+import TeacherLogin from '@/pages/authors-login'
+import TeacherProfile from '@/pages/authors-profile'
 
 import Admin from '@/pages/admin/admin'
 import Category from '@/pages/admin/category'
@@ -57,12 +57,12 @@ export default new Router({
       component : Search
     },
     {
-      path: '/teacher/login',
+      path: '/authors/login',
       name: 'Teacher Login',
       component: TeacherLogin
     },
     {
-      path: '/teacher',
+      path: '/authors',
       name: 'Teacher Profile',
       component: TeacherProfile
     },

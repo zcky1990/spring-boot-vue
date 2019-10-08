@@ -5,7 +5,7 @@
   </section>
   <section class="article content-section">
    <v-container fill-height align-center justify-center>
-    <teacher-list-article></teacher-list-article>
+    <authors-list-article></authors-list-article>
    </v-container>
   </section>
  </div>
@@ -13,10 +13,10 @@
 
 <script>
 import Navbar from "@/components/widget/navbar";
-import ListArticle from "@/components/widget/teacher-list-article";
+import ListArticle from "@/components/widget/authors-list-article";
 
 export default {
- name: "teacher-article-page-layout",
+ name: "authors-article-page-layout",
  created() {
   let isLogged = this.isLoggin(this.$session);
   if (!isLogged) {
@@ -29,7 +29,7 @@ export default {
  },
  components: {
   "user-nav-menu": Navbar,
-  "teacher-list-article": ListArticle
+  "authors-list-article": ListArticle
  }
 };
 </script>
