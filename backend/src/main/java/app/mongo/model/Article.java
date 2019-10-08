@@ -110,14 +110,14 @@ public class Article {
 		this.imageHeader = imageHeader;
 	}
 	
-	public void setShortContent(String content) {
+	public void setContentShort(String content) {
 		String shortContent = "";
 		if(content.length() > 200) {
 			shortContent = content.substring(0, 200)+"...";
 		}else {
 			shortContent = content;
 		}
-		this.setShortContent(shortContent);
+		this.setArticle_short_content(shortContent);
 	}
 	
 	public void setHeaderImageFromContent(String articleContent) {
@@ -160,7 +160,7 @@ public class Article {
 		this.setStatus(request.getStatus());
 		this.setType(request.getType());
 		this.setReference_list(request.getReference_list());
-		this.setShortContent(request.getArticle_content());
+		this.setContentShort(request.getArticle_content());
 		this.setHeaderImageFromContent(request.getArticle_content());
 	}
 }

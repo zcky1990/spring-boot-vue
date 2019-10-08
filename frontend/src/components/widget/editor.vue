@@ -171,6 +171,7 @@ export default {
             "link","|",
             "undo","redo","|",
             "bulletedList","numberedList","|",
+            "blockQuote","|",
             "imageUpload","imageTextAlternative","|",
             "imageStyle:full","imageStyle:side"
           ]
