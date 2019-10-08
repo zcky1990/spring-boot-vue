@@ -137,7 +137,8 @@ export default {
       title: "",
       data : [],
       article:{},
-      isHasMoreData: true
+      isHasMoreData: true,
+      ishidden : true
     };
   },
   created(){
@@ -161,12 +162,15 @@ export default {
         this.get(this.getUrlRequest() + "page="+this.page,  headers ,
         function(response) {
           if(response.status == 200){
-            self.data = response.data.response
+            self.addData(response.data.response)
           }         
         },
         function(e) {
           self.setMessage(e,1);
         });
+    },
+    showHideLoadBtn : function(value){
+      this.isHasMoreData = value;
     },
     getLoadMoreService: function() {
       let self = this;
@@ -193,6 +197,11 @@ export default {
     addData: function (response){
       this.data = this.data.concat(response);
       this.disableEnableLoadMoreBtn(false);
+      if(response.length < 10 || response.length == 0){
+        this.showHideLoadBtn(false);
+      }else{
+        this.showHideLoadBtn(true);  
+      }
       this.setListCount();
     },
     setListCount : function (){
@@ -319,6 +328,7 @@ export default {
 }
 .desc-article-list {
     padding-left: 16px;
+    padding-right: 16px;
 }
 .read-more-links {
     text-decoration: none;
