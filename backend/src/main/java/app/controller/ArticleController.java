@@ -63,7 +63,7 @@ public class ArticleController extends BaseController {
 				Page<Article> articleList = articleRepository.findAllArticleByUserId(user.get_id(), pageableRequest);
 				response = getSuccessResponse();
 				List<Article> article = articleList.getContent();
-				response.add(Constant.RESPONSE, toJSONArrayWithSerializer(Article.class, new ArticleListSerializer(), article));
+				response.add(Constant.RESPONSE, toJSONArrayWithSerializer(Article.class, new ArticleSerializer(), article));
 			} catch(Exception e) {
 				response = getFailedResponse();
 				response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());

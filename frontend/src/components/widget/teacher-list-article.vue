@@ -165,7 +165,7 @@ export default {
           }         
         },
         function(e) {
-          this.setMessage(e,1);
+          self.setMessage(e,1);
         });
     },
     getLoadMoreService: function() {
