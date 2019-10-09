@@ -57,6 +57,34 @@ export default {
 .app-container {
   background-color: #fff !important;
 }
+.post-date {
+  font-size: 1.7rem;
+  font-style: normal;
+  font-weight: 400;
+  height: auto;
+  letter-spacing: -0.74px;
+  color: #00d1b2;
+}
+.post-title {
+  color: rgb(0, 0, 0);
+  font-size: 1.4rem;
+  font-style: normal;
+  font-weight: 400;
+}
+.post-desc {
+  font-family: Lato;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 1.44px;
+  line-height: 21.6px;
+  text-decoration-color: rgb(176, 176, 176);
+  text-decoration-line: none;
+  text-decoration-style: solid;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /*text-transform: uppercase;*/
+}
 .marker {
   width: 100px;
   border: 1px solid #00d1b2;

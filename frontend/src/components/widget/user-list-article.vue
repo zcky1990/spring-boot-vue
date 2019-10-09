@@ -131,7 +131,7 @@ export default {
         headers,
         function(response) {
           if (response.status == 200) {
-            self.addData(response.data.response.content);
+            self.addData(response.data.response);
           }
         },
         function(e) {
