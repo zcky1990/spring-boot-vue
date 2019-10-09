@@ -3,20 +3,29 @@
     <section class="nav-section">
       <user-nav-menu></user-nav-menu>
     </section>
-    <section class="content-section"></section>
+    <section class="content-section">
+      <detail-profile v-bind:user="userDetails"></detail-profile>
+    </section>
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/widget/navbar";
+import DetailProfile from "@/components/widget/detail-profile";
 
 export default {
   name: "detail-profile-page-layout",
+  data() {
+    return {
+      userDetails: {}
+    };
+  },
   created() {
-    console.log(this.getUser());
+    this.userDetails = { test: this.getUser() };
   },
   components: {
-    "user-nav-menu": Navbar
+    "user-nav-menu": Navbar,
+    "detail-profile": DetailProfile
   },
   methods: {
     getUser: function() {

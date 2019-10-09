@@ -24,6 +24,9 @@
           <user-profile></user-profile>
         </div>
         <div v-show="item.index == 2">
+          <user-article></user-article>
+        </div>
+        <div v-show="item.index == 3">
           <bookmark-list></bookmark-list>
         </div>
       </v-tab-item>
@@ -33,6 +36,7 @@
 
 <script>
 import UserProfile from "./user-profile";
+import Article from "./user-list-article";
 import BookmarkList from "./user-bookmark-list";
 
 export default {
@@ -43,11 +47,16 @@ export default {
       centered: true,
       grow: true,
       currentTab: 0,
-      tabs: [{ name: "Profil", index: "1" }, { name: "Reading", index: "2" }]
+      tabs: [
+        { name: "Profil", index: "1" },
+        { name: "Article", index: "2" },
+        { name: "Reading", index: "3" }
+      ]
     };
   },
   components: {
     "user-profile": UserProfile,
+    "user-article": Article,
     "bookmark-list": BookmarkList
   }
 };
@@ -66,7 +75,6 @@ export default {
     font-weight: 400;
   }
 }
-
 .tabs-container {
   border-bottom: 1px solid #dee2e6 !important;
 }
