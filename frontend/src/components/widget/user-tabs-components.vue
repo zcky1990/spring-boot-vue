@@ -24,10 +24,10 @@
           <user-profile v-bind:user="users"></user-profile>
         </div>
         <div v-show="item.index == 2">
-          <user-article v-bind:article-list="articleList" v-bind:next-page="articlePage" ></user-article>
+          <user-article v-bind:article-list="articleList" v-bind:next-page="articlePage"></user-article>
         </div>
         <div v-show="item.index == 3">
-          <bookmark-list v-bind:bookmark="bookmarkList" v-bind:next-page="bookmarkPage" ></bookmark-list>
+          <bookmark-list v-bind:bookmark-list="bookmarkList" v-bind:next-page="bookmarkPage"></bookmark-list>
         </div>
       </v-tab-item>
     </v-tabs-items>
@@ -131,7 +131,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @media only screen and (max-width: 640px) {
   .tab-content-container {

@@ -108,7 +108,7 @@ export default {
     nextPage: {
       type: Number,
       default: "0"
-    },
+    }
   },
   components: {
     editor: Editor
@@ -283,7 +283,7 @@ export default {
     }
   },
   watch: {
-    nextPage: function(){
+    nextPage: function() {
       this.page = this.nextPage;
     },
     articleList: function() {
@@ -467,8 +467,8 @@ export default {
   top: -25px;
 }
 .action {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 @media only screen and (max-width: 600px) {

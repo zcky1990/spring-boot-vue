@@ -1,14 +1,16 @@
 <template>
   <v-container>
     <div class="bookmark-card-container">
-      <div class="bookmark" v-for="n in 4" :key="n">
-        <div class="bookmark-date">Feb 15</div>
-        <div class="bookmark-post-title">Squarespace</div>
-        <div class="marker"></div>
-        <div class="category">ipa</div>
-        <div
-          class="post-desc"
-        >With Squarespace, you can swiftly set up your own space on the internet that will accelerate your photo works and services. It is clearly a high-end, sophisticated, simply the best website builder ...</div>
+      <div class="bookmark" v-for="bookmark in dataList" :key="bookmark.id">
+        <div @click="goTo(bookmark.article.slug)">
+          <div class="bookmark-date">{{getDate(bookmark.created_date)}}</div>
+          <div class="bookmark-post-title">{{bookmark.article.title}}</div>
+          <div class="marker"></div>
+          <div class="category">
+            <p v-for="category in bookmark.article.category" :key="category">{{category}}</p>
+          </div>
+          <div class="post-desc" v-html="bookmark.article.content"></div>
+        </div>
       </div>
     </div>
   </v-container>
@@ -17,18 +19,100 @@
 <script>
 export default {
   name: "user-bookmark-list-component",
-  components: {},
+  props: {
+    bookmarkList: {
+      type: Array,
+      default: []
+    },
+    nextPage: {
+      type: Number,
+      default: "0"
+    }
+  },
   data() {
     return {
       search: "",
+      page: 1,
+      listBookmarkUrl: "/bookmarks/get_bookmarks_article_list",
+      deleteBookmarkUrl: "bookmarks/delete/",
       selected: [],
       tableHeaderList: [],
       dataList: [],
       singleSelect: true
     };
   },
-  methods: {},
-  computed: {}
+  methods: {
+    addData: function(response) {
+      this.dataList = this.dataList.concat(response);
+    },
+    removeData: function(index) {
+      this.dataList.arr.splice(index, 1);
+    },
+    goTo: function(slug) {
+      let url = "/article/"+slug
+      this.$router.push(url);
+    },
+    getMoreBookmarkList: function() {
+      let self = this;
+      let headers = this.getHeaders(this.$session);
+      this.get(
+        this.listBookmarkUrl + "?page=" + this.page,
+        headers,
+        function(response) {
+          if (response.status == 200) {
+            self.addData(response.data.response);
+            self.page++;
+          }
+        },
+        function(e) {
+          self.setMessage(e, 1);
+        }
+      );
+    },
+    deleteBookmark: function(id, index) {
+      let self = this;
+      let headers = this.getHeaders(this.$session);
+      this.delete(
+        this.deleteBookmark + id,
+        headers,
+        function(response) {
+          if (response.status == 200) {
+            self.removeData(index);
+          }
+        },
+        function(e) {
+          self.setMessage(e, 1);
+        }
+      );
+    },
+    getDate: function(date) {
+      let months = [
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Augustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember"
+      ];
+      let d = new Date(date);
+      return months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+    }
+  },
+  computed: {},
+  watch: {
+    nextPage: function() {
+      this.page = this.nextPage;
+    },
+    bookmarkList: function() {
+      this.addData(this.bookmarkList);
+    }
+  }
 };
 </script>
 
@@ -55,11 +139,6 @@ export default {
   text-size-adjust: 100%;
   text-transform: none;
   -webkit-font-smoothing: subpixel-antialiased;
-}
-.bookmark {
-  margin-right: 5%;
-  margin-bottom: 10%;
-  width: 300px;
 }
 .bookmark-date {
   font-size: 1.7rem;
