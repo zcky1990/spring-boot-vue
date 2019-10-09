@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.JsonObject;
 
 import app.constants.Constant;
-import app.model.ArticleList;
 import app.model.request.ArticleRequest;
 import app.model.response.ArticleResponse;
 import app.mongo.model.Article;
@@ -35,7 +34,6 @@ import app.repository.UsersRepository;
 import app.serializer.ArticleBookmarkSerializer;
 import app.serializer.ArticleListSerializer;
 import app.serializer.ArticleSerializer;
-import app.serializer.PageArticleSerializer;
 import app.util.TimeUtility;
 
 @RestController
@@ -63,7 +61,7 @@ public class ArticleController extends BaseController {
 				Page<Article> articleList = articleRepository.findAllArticleByUserId(user.get_id(), pageableRequest);
 				response = getSuccessResponse();
 				List<Article> article = articleList.getContent();
-				response.add(Constant.RESPONSE, toJSONArrayWithSerializer(Article.class, new ArticleSerializer(), article));
+				response.add(Constant.RESPONSE, toJSONArrayWithSerializer(Article.class, new ArticleListSerializer(), article));
 			} catch(Exception e) {
 				response = getFailedResponse();
 				response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
@@ -104,8 +102,8 @@ public class ArticleController extends BaseController {
 			Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").descending());
 			Page<Article> articleList = articleRepository.findAll(pageableRequest);
 			response = getSuccessResponse();
-			ArticleList article = gson.fromJson(ObjectToJSON(articleList), ArticleList.class);
-			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(ArticleList.class, new PageArticleSerializer(), article));
+			List<Article> article = articleList.getContent();
+			response.add(Constant.RESPONSE, toJSONArrayWithSerializer(Article.class, new ArticleListSerializer(), article));
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
@@ -120,8 +118,8 @@ public class ArticleController extends BaseController {
 			Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").descending());
 			Page<Article> articleList = articleRepository.findArticleByRegexpTitleOrSlug(query,pageableRequest);
 			response = getSuccessResponse();
-			ArticleList article = gson.fromJson(ObjectToJSON(articleList), ArticleList.class);
-			response.add(Constant.RESPONSE, toJSONObjectWithSerializer(ArticleList.class, new PageArticleSerializer(), article));
+			List<Article> article = articleList.getContent();
+			response.add(Constant.RESPONSE, toJSONArrayWithSerializer(Article.class, new ArticleListSerializer(), article));
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());

@@ -25,7 +25,7 @@
               <div class="desc-article-list">
                 <div class="article-list-headline">{{item.article_title}}</div>
                 <div class="article-list-desc">
-                  <div v-html="item.article_content"></div>
+                  <div v-html="item.article_short_content"></div>
                 </div>
                 <router-link class="read-more-links" :to="getUrl(item.slug)">Selengkapnya</router-link>
               </div>
@@ -105,7 +105,7 @@ export default {
         headers,
         function(response) {
           if (response.status == 200) {
-            self.data = response.data.response.content;
+            self.data = response.data.response;
           }
         },
         function(e) {
@@ -121,7 +121,7 @@ export default {
         this.getUrlRequest() + "page=" + this.page,
         headers,
         function(response) {
-          let newData = response.data.response.content;
+          let newData = response.data.response;
           self.addData(newData);
         },
         function(e) {

@@ -22,33 +22,16 @@ public class ArticleListSerializer implements JsonSerializer<Article> {
 		}
 		jsonObj.addProperty("id", id);
 
-
 		if(jsonObj.has("author")) {
 			jsonObj.remove("author");
 		}
-
-		String articleContent = src.getArticle_short_content();
+		if(src.getImageHeader() != null) {
+			String imgSrc = src.getImageHeader();
+			String lazyImage = imgSrc.replace("/upload/", "/upload/f_auto,q_auto,e_blur:300/");
+			jsonObj.addProperty("imageHeaderLazy", lazyImage);
+		}
 		
-		String imgSrc = src.getImageHeader();
-		String lazyImage = imgSrc.replace("/upload/", "/upload/f_auto,q_auto,e_blur:300/");
-		jsonObj.addProperty("imageHeaderLazy", lazyImage);
-
-		if(articleContent.contains("<strong>")) {
-			articleContent.replaceAll("<strong>", "");
-			articleContent.replaceAll("</strong>", "");
-		}
-
-		if(articleContent.contains("<h2")) {
-			int start = articleContent.indexOf("<h2");
-			int end = articleContent.indexOf("</h2>")+5;
-			String subtitle = articleContent.substring(start, end);
-			articleContent = articleContent.replace(subtitle, "");
-		}
 		jsonObj.remove("article_content");
-		jsonObj.remove("article_short_content");
-		if(!articleContent.isEmpty()) {
-			jsonObj.addProperty("article_content", articleContent);
-		}
 
 		if(jsonObj.has("categoryArticle")) {
 			jsonObj.remove("categoryArticle");

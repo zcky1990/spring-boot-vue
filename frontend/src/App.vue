@@ -57,4 +57,10 @@ export default {
 .app-container {
   background-color: #fff !important;
 }
+.marker {
+  width: 100px;
+  border: 1px solid #00d1b2;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
 </style>

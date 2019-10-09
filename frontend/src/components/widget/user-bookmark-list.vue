@@ -154,12 +154,6 @@ export default {
   font-style: normal;
   font-weight: 400;
 }
-.marker {
-  width: 100px;
-  border: 1px solid #00d1b2;
-  margin-bottom: 5px;
-  margin-top: 5px;
-}
 .category {
   font-family: minion-pro;
   font-size: 1rem;
@@ -182,6 +176,6 @@ export default {
   text-decoration-style: solid;
   -moz-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
 }
 </style>

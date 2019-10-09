@@ -17,28 +17,11 @@
           <v-flex class="article-list-container" v-for="item in data" :key="item.slug">
             <div class="article-list">
               <div class="article-container">
-                <div class="image-article-list">
-                  <v-img
-                    :src="item.imageHeader"
-                    :lazy-src="item.imageHeaderLazy"
-                    aspect-ratio="1"
-                    class="grey lighten-2 rounded"
-                    width="50"
-                    min-width="50"
-                    height="50"
-                  >
-                    <template v-slot:placeholder>
-                      <v-layout fill-height align-center justify-center ma-0>
-                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                      </v-layout>
-                    </template>
-                  </v-img>
-                </div>
-
                 <div class="desc-article-list">
                   <div class="article-list-headline">{{item.article_title}}</div>
+                  <div class="marker"></div>
                   <div class="article-list-desc">
-                    <div v-html="item.article_content"></div>
+                    <div v-html="item.article_short_content"></div>
                   </div>
                 </div>
               </div>
@@ -148,7 +131,7 @@ export default {
         headers,
         function(response) {
           if (response.status == 200) {
-            self.addData(response.data.response);
+            self.addData(response.data.response.content);
           }
         },
         function(e) {
