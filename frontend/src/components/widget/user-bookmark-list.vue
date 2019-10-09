@@ -3,8 +3,8 @@
     <div class="bookmark-card-container">
       <div class="bookmark" v-for="bookmark in dataList" :key="bookmark.id">
         <div @click="goTo(bookmark.article.slug)">
-          <div class="bookmark-date">{{getDate(bookmark.created_date)}}</div>
-          <div class="bookmark-post-title">{{bookmark.article.title}}</div>
+          <div class="post-date">{{getDate(bookmark.created_date)}}</div>
+          <div class="post-title">{{bookmark.article.title}}</div>
           <div class="marker"></div>
           <div class="category">
             <p v-for="category in bookmark.article.category" :key="category">{{category}}</p>
@@ -140,20 +140,6 @@ export default {
   text-transform: none;
   -webkit-font-smoothing: subpixel-antialiased;
 }
-.bookmark-date {
-  font-size: 1.7rem;
-  font-style: normal;
-  font-weight: 400;
-  height: auto;
-  letter-spacing: -0.74px;
-  color: #00d1b2;
-}
-.bookmark-post-title {
-  color: rgb(0, 0, 0);
-  font-size: 1.4rem;
-  font-style: normal;
-  font-weight: 400;
-}
 .category {
   font-family: minion-pro;
   font-size: 1rem;
@@ -162,20 +148,5 @@ export default {
   height: auto;
   letter-spacing: normal;
   line-height: 25.5px;
-}
-.post-desc {
-  color: rgb(176, 176, 176);
-  font-family: Lato;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  letter-spacing: 1.44px;
-  line-height: 21.6px;
-  text-decoration-color: rgb(176, 176, 176);
-  text-decoration-line: none;
-  text-decoration-style: solid;
-  -moz-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  /*text-transform: uppercase;*/
 }
 </style>

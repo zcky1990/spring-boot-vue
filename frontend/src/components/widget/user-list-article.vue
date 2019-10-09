@@ -18,9 +18,9 @@
             <div class="article-list">
               <div class="article-container">
                 <div class="desc-article-list">
-                  <div class="article-list-headline">{{item.article_title}}</div>
+                  <div class="post-title">{{item.article_title}}</div>
                   <div class="marker"></div>
-                  <div class="article-list-desc">
+                  <div class="post-desc">
                     <div v-html="item.article_short_content"></div>
                   </div>
                 </div>
@@ -337,16 +337,7 @@ export default {
   font-weight: bold;
   font-weight: 400;
 }
-.article-list-desc {
-  font-size: 1em;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
-  font-weight: 400;
-  color: #666666;
-  overflow: hidden;
-  text-align: justify;
-}
+
 .article-container {
   display: flex;
   flex-direction: row;
