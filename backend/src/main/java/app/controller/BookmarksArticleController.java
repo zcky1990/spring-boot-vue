@@ -39,14 +39,14 @@ public class BookmarksArticleController extends BaseController {
 	private UsersRepository userRepository;
 
 	@RequestMapping(value = "/bookmarks/get_bookmarks_article_list", method = RequestMethod.GET)
-	public ResponseEntity<String> getArticleList(@RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
+	public ResponseEntity<String> getArticleList(@RequestParam(value="page", required=true) String page, HttpServletRequest request) throws Exception {
 		JsonObject response = new JsonObject();
 		String auth = request.getHeader("x-uid");
 		Users user = userRepository.findBy_id(new ObjectId(auth));
 		if(user != null) {
 			try {
 				Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").ascending());
-				List<BookmarksArticle> bookmarksList = repository.findByUserId(user.get_id(), pageableRequest);
+				List<BookmarksArticle> bookmarksList = repository.findBookmarkByUserId(user.get_id(), pageableRequest);
 				response = getSuccessResponse();
 				response.add(Constant.RESPONSE, toJSONArrayWithSerializer(BookmarksArticle.class, new BookmarksArticleSerializer(), bookmarksList));
 			} catch(Exception e) {

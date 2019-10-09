@@ -4,11 +4,14 @@ import com.google.gson.*;
 
 import app.mongo.model.Article;
 import app.mongo.model.BookmarksArticle;
+import app.mongo.model.Category;
 import app.mongo.model.Users;
 import app.util.TimeUtility;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class BookmarksArticleSerializer implements JsonSerializer<BookmarksArticle> {
 
@@ -44,6 +47,13 @@ public class BookmarksArticleSerializer implements JsonSerializer<BookmarksArtic
 			category.addProperty("id", article.getStringId());
 			category.addProperty("title", article.getArticle_title());
 			category.addProperty("slug", article.getSlug());
+			category.addProperty("content", article.getArticle_short_content());
+			JsonArray listCategory = new JsonArray();
+			for(int i = 0; i< article.getCategoryArticle().size(); i++) {
+				Category asd = article.getCategoryArticle().get(i);
+				listCategory.add(asd.getName());
+			}
+			category.add("category",listCategory );
 			jsonObj.add("article", category);
 		}
 

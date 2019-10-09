@@ -13,10 +13,7 @@ public interface ArticleBookmarksRepository extends MongoRepository<BookmarksArt
 	BookmarksArticle findBy_id(ObjectId _id);
 
 	@Query(value = "{'users' : {'$ref' : 'users' , '$id' : ?0} }")
-	List<BookmarksArticle> findByUserId(Object userId, Pageable pageable);
-
-	@Query(value = "{'users' : {'$ref' : 'users' , '$id' : ?0} }")
-	List<BookmarksArticle> findByUserId(Object userId);	
+	List<BookmarksArticle> findBookmarkByUserId(Object userId, Pageable pageable);
 	
 	@Query(value = "{'users' : {'$ref' : 'users' , '$id' : ?0} , 'article' :  {'$ref' : 'article' , '$id' : ?1} }")
 	BookmarksArticle findByUserIdAndArticleId(Object userId, Object articleId);	
