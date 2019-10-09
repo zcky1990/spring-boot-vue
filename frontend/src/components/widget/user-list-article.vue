@@ -20,6 +20,9 @@
                 <div class="desc-article-list">
                   <div class="post-title">{{item.article_title}}</div>
                   <div class="marker"></div>
+                  <div class="post-category">
+                  <p v-for="category in item.categoryArticle" :key="category.id">{{category.name}}</p>
+                </div>
                   <div class="post-desc">
                     <div v-html="item.article_short_content"></div>
                   </div>
