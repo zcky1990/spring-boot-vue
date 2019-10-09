@@ -24,6 +24,7 @@
               </div>
               <div class="desc-article-list">
                 <div class="article-list-headline">{{item.article_title}}</div>
+                <div class="marker"></div>
                 <div class="article-list-desc">
                   <div v-html="item.article_short_content"></div>
                 </div>
