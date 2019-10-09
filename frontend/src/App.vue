@@ -73,7 +73,7 @@ export default {
 }
 .post-desc {
   font-family: Lato;
-  font-size: 12px;
+  font-size: 1em;
   font-style: normal;
   font-weight: 400;
   letter-spacing: 1.44px;
@@ -90,5 +90,14 @@ export default {
   border: 1px solid #00d1b2;
   margin-bottom: 5px;
   margin-top: 5px;
+}
+.post-category {
+  font-family: minion-pro;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 400;
+  height: auto;
+  letter-spacing: normal;
+  line-height: 25.5px;
 }
 </style>

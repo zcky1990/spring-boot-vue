@@ -4,7 +4,7 @@
       <v-container grid-list-xs>
         <v-layout column>
           <v-flex class="article-list-container" v-for="item in data" :key="item.slug">
-            <div class="article-list">
+            <div class="article-list" @click="goTo(item.slug)">
               <div class="image-article-list">
                 <v-img
                   :src="item.imageHeader"
@@ -23,9 +23,12 @@
                 </v-img>
               </div>
               <div class="desc-article-list">
-                <div class="article-list-headline">{{item.article_title}}</div>
+                <div class="post-title headline">{{item.article_title}}</div>
                 <div class="marker"></div>
-                <div class="article-list-desc">
+                <div class="post-category">
+                  <p v-for="category in item.categoryArticle" :key="category.id">{{category.name}}</p>
+                </div>
+                <div class="post-desc">
                   <div v-html="item.article_short_content"></div>
                 </div>
                 <router-link class="read-more-links" :to="getUrl(item.slug)">Selengkapnya</router-link>
@@ -93,6 +96,10 @@ export default {
     getUrl: function(slug) {
       let article = "/article/";
       return article + slug;
+    },
+    goTo: function(slug) {
+      let url = "/article/" + slug;
+      this.$router.push(url);
     },
     disableEnableLoadMoreBtn: function(value) {
       this.isLoadMoreOnProgress = value;
@@ -228,23 +235,12 @@ export default {
   font-style: normal;
   margin-bottom: 0.5em;
 }
-.article-list-headline {
+.headline {
   font-size: 2.2em;
   line-height: 1.5;
   font-weight: bold;
   font-weight: 400;
 }
-.article-list-desc {
-  font-size: 1em;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
-  line-height: 1.8;
-  font-weight: 400;
-  color: #666666;
-  overflow: hidden;
-}
-
 .center {
   margin: 0 auto;
   position: relative;

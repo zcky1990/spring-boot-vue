@@ -6,7 +6,7 @@
           <div class="post-date">{{getDate(bookmark.created_date)}}</div>
           <div class="post-title">{{bookmark.article.title}}</div>
           <div class="marker"></div>
-          <div class="category">
+          <div class="post-category">
             <p v-for="category in bookmark.article.category" :key="category">{{category}}</p>
           </div>
           <div class="post-desc" v-html="bookmark.article.content"></div>
@@ -49,7 +49,7 @@ export default {
       this.dataList.arr.splice(index, 1);
     },
     goTo: function(slug) {
-      let url = "/article/"+slug
+      let url = "/article/" + slug;
       this.$router.push(url);
     },
     getMoreBookmarkList: function() {
@@ -139,14 +139,5 @@ export default {
   text-size-adjust: 100%;
   text-transform: none;
   -webkit-font-smoothing: subpixel-antialiased;
-}
-.category {
-  font-family: minion-pro;
-  font-size: 1rem;
-  font-style: italic;
-  font-weight: 400;
-  height: auto;
-  letter-spacing: normal;
-  line-height: 25.5px;
 }
 </style>
