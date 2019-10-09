@@ -450,7 +450,6 @@ export default {
   font-weight: 400;
   line-height: 1.5;
 }
-
 .title-container {
   display: flex;
   flex-direction: row;
@@ -468,10 +467,9 @@ export default {
   right: 0;
   top: -25px;
 }
-
 .action {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 @media only screen and (max-width: 600px) {

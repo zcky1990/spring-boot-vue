@@ -65,7 +65,7 @@
         <div class="title-container">
           <div class="title-navbar">
             <p>
-              B<span class="green-color">ad&egrave;</span> Belajar
+              <span class="green-color">Bad&egrave;</span> Belajar
             </p>
           </div>
           <div class="sub-title">Knowledge archive</div>
