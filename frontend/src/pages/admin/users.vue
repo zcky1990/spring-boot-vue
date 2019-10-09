@@ -6,15 +6,15 @@
 
     <script>
 //import Navbar from "@/components/widget/Navbar";
-import AddUsersLayout from "@/layout/admin/add-users-layout"
+import AddUsersLayout from "@/layout/admin/add-users-layout";
 
 export default {
   name: "admin-roles",
   components: {
     "add-user-layout": AddUsersLayout
   },
-  created(){
-    this.checkAdminSession(this.$session, this.$router)
+  created() {
+    this.checkAdminSession(this.$session, this.$router);
   }
 };
 </script>

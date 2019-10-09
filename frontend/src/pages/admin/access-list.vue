@@ -6,15 +6,15 @@
 
     <script>
 //import Navbar from "@/components/widget/Navbar";
-import AccessListLayout from "@/layout/admin/access-list-layout"
+import AccessListLayout from "@/layout/admin/access-list-layout";
 
 export default {
   name: "admin-access-list",
   components: {
     "access-list-layout": AccessListLayout
   },
-  created(){
-    this.checkAdminSession(this.$session, this.$router)
+  created() {
+    this.checkAdminSession(this.$session, this.$router);
   }
 };
 </script>

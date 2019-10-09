@@ -5,15 +5,15 @@
 </template>
 
     <script>
-import CategoryLayout from "@/layout/admin/category-layout"
+import CategoryLayout from "@/layout/admin/category-layout";
 
 export default {
   name: "admin-category",
   components: {
     "category-layout": CategoryLayout
   },
-  created(){
-    this.checkAdminSession(this.$session, this.$router)
+  created() {
+    this.checkAdminSession(this.$session, this.$router);
   }
 };
 </script>

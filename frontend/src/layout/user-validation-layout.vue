@@ -1,22 +1,29 @@
 <template>
- <div class="validation-page-container">
-  <user-validation-component :id-user="idUser"></user-validation-component>
- </div>
+  <div class="validation-page-container">
+    <user-validation-component :id-user="idUser"></user-validation-component>
+  </div>
 </template>
-    <script>
+<script>
 import ValidationComponents from "@/components/widget/user-validation-components";
 
 export default {
- name: "user-validation-page-layout",
- props: {
-  idUser: {
-   type: String,
-   default: ""
+  name: "user-validation-page-layout",
+  data() {
+    return {
+      userId: ""
+    };
+  },
+  components: {
+    "user-validation-component": ValidationComponents
+  },
+  created() {
+    this.userId = this.getId();
+  },
+  methods: {
+    getId: function() {
+      return this.$route.params.id;
+    }
   }
- },
- components: {
-  "user-validation-component": ValidationComponents
- }
 };
 </script>
 

@@ -17,6 +17,8 @@ import AccessLevel from '@/pages/admin/access-list'
 import Roles from '@/pages/admin/roles'
 import UsersAdmin from '@/pages/admin/users'
 
+import DetailProfile from '@/pages/detail-profile'
+
 Vue.use(Router)
 export default new Router({
   mode:"history",
@@ -40,6 +42,11 @@ export default new Router({
       path: '/article/:slug',
       name: 'Article',
       component: Article
+    },
+    {
+      path: '/detail/:user',
+      name: 'Detail',
+      component: DetailProfile
     },
     {
       path: '/user/validation/:id',

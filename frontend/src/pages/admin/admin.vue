@@ -5,12 +5,12 @@
 </template>
 
 <script>
-import AdminLayout from "@/layout/admin/admin-layout"
+import AdminLayout from "@/layout/admin/admin-layout";
 
 export default {
   name: "admin",
   components: {
-    "admin-layout-page": AdminLayout,
+    "admin-layout-page": AdminLayout
   }
 };
 </script>

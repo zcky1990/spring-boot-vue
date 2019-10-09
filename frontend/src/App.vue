@@ -14,7 +14,7 @@
 
 <script>
 import SnackBar from "@/components/widget/snack-bar";
-import { EventBus } from './EventBus.js';
+import { EventBus } from "./EventBus.js";
 
 export default {
   name: "app",
@@ -27,24 +27,24 @@ export default {
       }
     };
   },
-  created(){
-    EventBus.$on('SNACKBAR_TRIGGERED', (val) => {
+  created() {
+    EventBus.$on("SNACKBAR_TRIGGERED", val => {
       this.setMessage(val.message, val.type);
-    })
+    });
   },
   components: {
     "snack-bar": SnackBar
   },
   methods: {
     setMessage: function(message, type) {
-      if(type == 0){
-        this.snackBarConfig.color = "success"
-      }else{
-        this.snackBarConfig.color = "error"
+      if (type == 0) {
+        this.snackBarConfig.color = "success";
+      } else {
+        this.snackBarConfig.color = "error";
       }
       this.$refs.snackbar.setConfig(this.snackBarConfig);
       this.$refs.snackbar.showSnackbar(message);
-    },
+    }
   }
 };
 </script>
