@@ -363,6 +363,7 @@ export default {
   font-weight: 400;
   color: #666666;
   overflow: hidden;
+  text-align: justify;
 }
 .article-container {
   display: flex;
@@ -466,6 +467,11 @@ export default {
   position: absolute;
   right: 0;
   top: -25px;
+}
+
+.action {
+    display: flex;
+    align-items: center;
 }
 
 @media only screen and (max-width: 600px) {
