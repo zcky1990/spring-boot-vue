@@ -187,7 +187,8 @@ public class ArticleController extends BaseController {
 			Article article = articleRepository.findBySlug(slug);
 			if(auth != null) {
 				BookmarksArticle articleBookmark = bookmarkRepository.findByUserIdAndArticleId(new ObjectId(auth), article.get_id());
-				ArticleResponse articleResponse = this.gson.fromJson(this.ObjectToJSON(article), ArticleResponse.class);
+				ArticleResponse articleResponse = new ArticleResponse();
+				articleResponse.fromArticle(article);
 				articleResponse.setBookmark(articleBookmark);
 				response = getSuccessResponse();
 				response.add(Constant.RESPONSE, toJSONObjectWithSerializer(ArticleResponse.class, new ArticleBookmarkSerializer(), articleResponse)  );

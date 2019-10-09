@@ -5,6 +5,7 @@ import java.util.List;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
+import app.mongo.model.Article;
 import app.mongo.model.BookmarksArticle;
 import app.mongo.model.Category;
 import app.mongo.model.Users;
@@ -99,5 +100,18 @@ public class ArticleResponse {
 	}
 	public void setBookmark(BookmarksArticle bookmark) {
 		this.bookmark = bookmark;
+	}
+	
+	public void fromArticle(Article article) {
+		this.set_id(article.get_id());
+		this.setArticle_content(article.getArticle_content());
+		this.setArticle_permalink(article.getArticle_permalink());
+		this.setArticle_title(article.getArticle_title());
+		this.setAuthor(article.getAuthor());
+		this.setCategoryArticle(article.getCategoryArticle());
+		this.setReference_list(article.getReference_list());
+		this.setSlug(article.getSlug());
+		this.setStatus(article.getStatus());
+		this.setType(article.getType());
 	}
 }
