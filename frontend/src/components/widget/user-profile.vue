@@ -196,6 +196,9 @@ import { EventBus } from "./../../EventBus.js";
 
 export default {
   name: "profile-component",
+  props: {
+    user: Object
+  },
   data() {
     return {
       data: {
@@ -227,12 +230,8 @@ export default {
       isDisable: true,
       labelBtn: "Edit",
       isSaveBtnDisable: true,
-      getUserProfileUrl: "/users/get_user_detail/",
       saveUserProfileUrl: "/users/edit_user"
     };
-  },
-  created() {
-    this.getUsers();
   },
   methods: {
     editField: function() {
@@ -243,24 +242,6 @@ export default {
       } else {
         this.labelBtn = "Cancel";
       }
-    },
-    getUsers: function() {
-      let self = this;
-      let headers = this.getHeaders(this.$session);
-      let id = this.$session.get("uid");
-      this.get(
-        this.getUserProfileUrl + id,
-        headers,
-        function(response) {
-          if (response.status == 200) {
-            let responseData = response.data.response;
-            self.data = responseData;
-          }
-        },
-        function(e) {
-          self.setMessage(e, 1);
-        }
-      );
     },
     saveUserProfile: function() {
       let self = this;
@@ -336,6 +317,11 @@ export default {
   computed: {
     isHasImage() {
       return this.isImageExists();
+    }
+  },
+  watch: {
+    user: function() {
+      this.data = this.user;
     }
   }
 };

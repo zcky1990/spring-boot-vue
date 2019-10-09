@@ -101,18 +101,14 @@ import Editor from "./editor";
 export default {
   name: "user-list-article",
   props: {
-    url: {
-      type: String,
-      default: ""
+    articleList: {
+      type: Array,
+      default: []
     },
-    mode: {
-      type: String,
-      default: "article"
+    nextPage: {
+      type: Number,
+      default: "0"
     },
-    query: {
-      type: String,
-      default: ""
-    }
   },
   components: {
     editor: Editor
@@ -134,12 +130,6 @@ export default {
       isHasMoreData: true,
       ishidden: true
     };
-  },
-  created() {
-    if (this.url != "") {
-      this.articleUrl = this.url;
-    }
-    this.getArticle();
   },
   methods: {
     getUrl: function(slug) {
@@ -250,6 +240,7 @@ export default {
     },
     refreshData: function() {
       this.data = [];
+      this.page = 0;
       this.getArticle();
     },
     deleteData: function(id) {
@@ -289,6 +280,14 @@ export default {
       } else {
         return false;
       }
+    }
+  },
+  watch: {
+    nextPage: function(){
+      this.page = this.nextPage;
+    },
+    articleList: function() {
+      this.addData(this.articleList);
     }
   }
 };
@@ -468,8 +467,8 @@ export default {
   top: -25px;
 }
 .action {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 @media only screen and (max-width: 600px) {
