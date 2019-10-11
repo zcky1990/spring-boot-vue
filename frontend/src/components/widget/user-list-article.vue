@@ -89,11 +89,11 @@ export default {
   props: {
     articleList: {
       type: Array,
-      default: []
+      default: () => ([])
     },
     nextPage: {
       type: Number,
-      default: "0"
+      default: 0
     }
   },
   components: {

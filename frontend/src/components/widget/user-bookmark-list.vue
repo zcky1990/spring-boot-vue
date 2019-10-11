@@ -22,11 +22,11 @@ export default {
   props: {
     bookmarkList: {
       type: Array,
-      default: []
+      default: () => ([])
     },
     nextPage: {
       type: Number,
-      default: "0"
+      default: 0
     }
   },
   data() {

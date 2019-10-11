@@ -9,8 +9,6 @@
 
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import ButtonView from '@ckeditor/ckeditor5-ui/src/button/buttonview';
-
-import quoteIcon from '../theme/icons/code.svg';
 import '../theme/codeblock.css';
 
 /**
