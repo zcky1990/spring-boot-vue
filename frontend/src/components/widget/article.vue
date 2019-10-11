@@ -69,6 +69,10 @@
   </section>
 </template>
 <script>
+
+import hljs from 'highlight.js/lib/highlight';
+import 'highlight.js/styles/github.css';
+
 export default {
   name: "article-components",
   props: {
@@ -161,6 +165,9 @@ export default {
       this.isHaveReference = true;
     }
     this.setCssSideImage();
+    document.querySelectorAll('pre p').forEach((block) => {
+      hljs.highlightBlock(block);
+    });
   },
   computed: {
     isCategoryExists: function() {
