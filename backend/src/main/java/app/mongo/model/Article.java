@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
@@ -112,10 +114,12 @@ public class Article {
 	
 	public void setContentShort(String content) {
 		String shortContent = "";
-		if(content.length() > 200) {
-			shortContent = content.substring(0, 200)+"...";
-		}else {
-			shortContent = content;
+		int startPre = content.indexOf("<pre>");
+		shortContent = content.substring(0, startPre);
+		Document document = Jsoup.parse(content);
+		shortContent = document.text();
+		if(shortContent.length() > 150) {
+			shortContent = shortContent.substring(0, 150)+"...";
 		}
 		this.setArticle_short_content(shortContent);
 	}
