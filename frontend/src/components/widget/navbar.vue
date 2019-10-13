@@ -63,7 +63,7 @@
     <div class="toolbar">
       <div class="container toolbar-title">
         <div class="title-container">
-          <div class="title-navbar">
+          <div class="title-navbar" @click="goToHome">
             <p>
               <span class="green-color">Bad&egrave;</span> Belajar
             </p>
@@ -223,6 +223,11 @@ export default {
     }
   },
   methods: {
+    goToHome(){
+      if(this.$router.currentRoute.name != 'Index'){
+        this.$router.push("/");
+      }
+    },
     handleFixedNavBar() {
       if (this.isMobile == false) {
         if (this.$refs.navLink) {

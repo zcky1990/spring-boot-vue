@@ -26,12 +26,13 @@
                 <div class="post-title headline">{{item.article_title}}</div>
                 <div class="marker"></div>
                 <div class="post-category">
-                  <p v-for="category in item.categoryArticle" :key="category.id">{{category.name}}</p>
+                  <div class="category-container">
+                    <p v-for="category in item.categoryArticle" :key="category.id">{{category.name}}</p>
+                  </div>
                 </div>
                 <div class="post-desc">
                   <div v-html="item.article_short_content"></div>
                 </div>
-                <div class="read-more-links" @click="goTo(item.slug)">Selengkapnya</div>
               </div>
             </div>
           </v-flex>
@@ -214,6 +215,7 @@ export default {
     0 0 0 0 rgba(0, 0, 0, 0.12) !important;
 }
 .desc-article-list {
+  height: 150px;
   padding-left: 16px;
 }
 .read-more-links {
@@ -270,6 +272,13 @@ export default {
   font-size: 1.8rem;
   font-weight: 400;
   line-height: 1.5;
+}
+.category-container {
+    display: flex;
+    flex-direction: row;
+}
+.category-container > p {
+    padding: 2px;
 }
 
 @media only screen and (max-width: 600px) {
