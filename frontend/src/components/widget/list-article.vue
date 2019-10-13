@@ -31,7 +31,7 @@
                 <div class="post-desc">
                   <div v-html="item.article_short_content"></div>
                 </div>
-                <router-link class="read-more-links" :to="getUrl(item.slug)">Selengkapnya</router-link>
+                <div class="read-more-links" @click="goTo(item.slug)">Selengkapnya</div>
               </div>
             </div>
           </v-flex>
@@ -93,10 +93,6 @@ export default {
     this.getArticle();
   },
   methods: {
-    getUrl: function(slug) {
-      let article = "/article/";
-      return article + slug;
-    },
     goTo: function(slug) {
       let url = "/article/" + slug;
       this.$router.push(url);
@@ -313,5 +309,8 @@ export default {
 .image-article {
   width: 240px;
   height: 128px;
+}
+p{
+  margin-bottom: 0px !important;
 }
 </style>

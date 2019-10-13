@@ -112,6 +112,17 @@ export default {
         }
       }
     },
+    setCssQuote: function() {
+      let elm = document.querySelectorAll("blockquote");
+      if (elm.length > 0) {
+        for (let i = 0; i < elm.length; i++) {
+          let el = elm[i];
+          el.style.background = "aliceblue";
+          el.style.padding = "5px";
+          el.style.borderLeft=  "5px solid #00d1b2";
+        }
+      }
+    },
     bookmarkArticle: function() {
       this.addBookmark(this.data);
     },
@@ -165,7 +176,12 @@ export default {
       this.isHaveReference = true;
     }
     this.setCssSideImage();
+    this.setCssQuote();
     document.querySelectorAll('pre p').forEach((block) => {
+      hljs.highlightBlock(block);
+    });
+
+    document.querySelectorAll('pre ol').forEach((block) => {
       hljs.highlightBlock(block);
     });
   },
@@ -267,5 +283,10 @@ export default {
   font-size: 1.5rem;
   font-weight: 600;
   line-height: 2;
+}
+blockquote {
+    background: aliceblue;
+    padding: 5px;
+    border-left: 5px solid #00d1b2;
 }
 </style>
