@@ -19,16 +19,14 @@
     </v-tabs>
 
     <v-tabs-items v-model="tab">
-      <v-tab-item v-for="item in tabs" :key="item.index">
-        <div class="tab-content-container" v-show="item.index == 1">
-          <user-profile v-bind:user="users"></user-profile>
-        </div>
-        <div v-show="item.index == 2">
-          <user-article v-bind:article-list="articleList" v-bind:next-page="articlePage"></user-article>
-        </div>
-        <div v-show="item.index == 3">
-          <bookmark-list v-bind:bookmark-list="bookmarkList" v-bind:next-page="bookmarkPage"></bookmark-list>
-        </div>
+      <v-tab-item>
+         <user-profile v-bind:user="users"></user-profile>
+      </v-tab-item>
+      <v-tab-item>
+         <user-article v-bind:article-list="articleList" v-bind:next-page="articlePage"></user-article>
+      </v-tab-item>
+      <v-tab-item>
+         <bookmark-list v-bind:bookmark-list="bookmarkList" v-bind:next-page="bookmarkPage"></bookmark-list>
       </v-tab-item>
     </v-tabs-items>
   </div>
