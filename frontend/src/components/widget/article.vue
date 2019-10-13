@@ -69,7 +69,7 @@
   </section>
 </template>
 <script>
-
+import { EventBus } from "./../../EventBus.js";
 import hljs from 'highlight.js/lib/highlight';
 import 'highlight.js/styles/github.css';
 
@@ -139,9 +139,13 @@ export default {
         headers,
         function(response) {
           if (response.status == 200) {
-            let responseData = response.data.response;
-            self.data.id = responseData.id;
-            self.isBookmarked = true;
+            if(response.data.error_message){
+              self.setMessage(response.data.error_message, 1);
+            }else{
+              let responseData = response.data.response;
+              self.data.id = responseData.id;
+              self.isBookmarked = true;
+            }
           }
         },
         function(e) {
@@ -164,6 +168,12 @@ export default {
           self.setMessage(e, 1);
         }
       );
+    },
+    setMessage: function(message, type) {
+      let data = {};
+      data.message = message;
+      data.type = type;
+      EventBus.$emit("SNACKBAR_TRIGGERED", data);
     }
   },
   updated() {

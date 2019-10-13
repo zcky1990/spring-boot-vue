@@ -76,14 +76,14 @@ export default {
   font-size: 1em;
   font-style: normal;
   font-weight: 400;
-  letter-spacing: 1.44px;
   line-height: 21.6px;
   text-decoration-color: rgb(176, 176, 176);
   text-decoration-line: none;
   text-decoration-style: solid;
   -moz-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  /*text-transform: uppercase;*/
+  /*letter-spacing: 1.44px;
+  text-transform: uppercase;*/
 }
 .marker {
   width: 100px;

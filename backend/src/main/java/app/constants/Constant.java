@@ -36,6 +36,7 @@ public class Constant {
 	public static String USER_ALREDY_EXISTS_ERROR_MESSAGE = "User Already Exists";
 	public static String USER_NOT_FOUND_ERROR_MESSAGE = "User Not Found";
 	public static String USER_FOUND_BUT_INACTIVE_ERROR_MESSAGE = "User Found But the account is inactive";
+	public static String BOOKMARKS_ALREADY_EXISTS_ERROR_MESSAGE = "You bookmarked this article";
 	
 	public static String CLOUDINARY_CONFIG_PATH = "json/cloudinary_config.json";
 	

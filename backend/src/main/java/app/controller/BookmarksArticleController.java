@@ -66,12 +66,18 @@ public class BookmarksArticleController extends BaseController {
 		Users user = userRepository.findBy_id(new ObjectId(auth));
 		JsonObject response;
 		if(user != null) {
-			BookmarksArticle bookmarksArticle = new BookmarksArticle();
-			bookmarksArticle.fromObject(bookmarkRequest);
 			try {
-				repository.save(bookmarksArticle);
-				response = getSuccessResponse();
-				response.add(Constant.RESPONSE, toJSONObjectWithSerializer(BookmarksArticle.class, new BookmarksArticleSerializer(), bookmarksArticle)  );
+				BookmarksArticle repo = repository.findByUserIdAndArticleId(new ObjectId(bookmarkRequest.getUserId()), new ObjectId(bookmarkRequest.getArticleId()));
+				if(repo == null) {
+					BookmarksArticle bookmarksArticle = new BookmarksArticle();
+					bookmarksArticle.fromObject(bookmarkRequest);
+					repository.save(bookmarksArticle);
+					response = getSuccessResponse();
+					response.add(Constant.RESPONSE, toJSONObjectWithSerializer(BookmarksArticle.class, new BookmarksArticleSerializer(), bookmarksArticle)  );
+				}else {
+					response = getFailedResponse();
+					response.addProperty(Constant.ERROR_MESSAGE, Constant.BOOKMARKS_ALREADY_EXISTS_ERROR_MESSAGE);
+				}
 			} catch(Exception e) {
 				response = getFailedResponse();
 				response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
