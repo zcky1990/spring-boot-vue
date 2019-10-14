@@ -7,7 +7,7 @@
       <div class="article-title">
         <div class="headline">{{content.article_title}}</div>
       </div>
-      <div class="article-authors">
+      <div class="article-authors" @click="seeAuthorsDetails(content.author.id)">
         <div class="image-authors" v-if="isHasAuthor">
           <v-img
             :src="content.author.image_profile_url"
@@ -101,6 +101,10 @@ export default {
     }
   },
   methods: {
+    seeAuthorsDetails: function(id){
+      let url = "/detail/"+id;
+      this.$router.push(url);
+    },
     setCssSideImage: function() {
       let elm = document.querySelectorAll(".image-style-side");
       if (elm.length > 0) {

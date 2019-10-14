@@ -41,7 +41,7 @@ export default new Router({
       component: Article
     },
     {
-      path: '/detail/:user',
+      path: '/detail/:id',
       name: 'Detail',
       component: DetailProfile
     },

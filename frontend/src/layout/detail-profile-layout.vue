@@ -4,7 +4,7 @@
       <user-nav-menu></user-nav-menu>
     </section>
     <section class="content-section">
-      <detail-profile v-bind:user="userDetails"></detail-profile>
+      <detail-profile v-bind:user="userId"></detail-profile>
     </section>
   </div>
 </template>
@@ -17,19 +17,19 @@ export default {
   name: "detail-profile-page-layout",
   data() {
     return {
-      userDetails: {}
+      userId: {}
     };
   },
   created() {
-    this.userDetails = { test: this.getUser() };
+    this.userId = { "id": this.getId() };
   },
   components: {
     "user-nav-menu": Navbar,
     "detail-profile": DetailProfile
   },
   methods: {
-    getUser: function() {
-      return this.$route.params.user;
+    getId: function() {
+      return this.$route.params.id;
     }
   }
 };
