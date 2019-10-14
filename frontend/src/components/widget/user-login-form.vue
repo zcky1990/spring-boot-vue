@@ -38,6 +38,7 @@
             hint="At least 8 characters"
             required
             color="rgb(0, 209, 178)"
+            @keyup.enter.native="submitLogin" 
           ></v-text-field>
 
           <v-flex align-center justify-center>
