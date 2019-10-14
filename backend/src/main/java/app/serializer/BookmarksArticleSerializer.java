@@ -57,10 +57,10 @@ public class BookmarksArticleSerializer implements JsonSerializer<BookmarksArtic
 				category.addProperty("title", article.getArticle_title());
 			}
 			if(article.getSlug() != null) {
-				category.addProperty("title", article.getSlug());
+				category.addProperty("slug", article.getSlug());
 			}
 			if(article.getArticle_short_content() != null) {
-				category.addProperty("title", article.getArticle_short_content());
+				category.addProperty("content", article.getArticle_short_content());
 			}
 			JsonArray listCategory = new JsonArray();
 			if(article.getCategoryArticle() != null) {

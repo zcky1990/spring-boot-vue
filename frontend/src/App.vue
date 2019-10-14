@@ -100,4 +100,7 @@ export default {
   letter-spacing: normal;
   line-height: 25.5px;
 }
+pre > p {
+  margin-bottom:0px !important;
+}
 </style>

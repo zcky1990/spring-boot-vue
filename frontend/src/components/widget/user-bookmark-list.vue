@@ -2,7 +2,7 @@
   <v-container>
     <div class="bookmark-card-container">
       <div class="bookmark" v-for="bookmark in dataList" :key="bookmark.id">
-        <div @click="goTo(bookmark.article.slug)">
+        <div @click="goToArticle(bookmark.article.slug)">
           <div class="post-date">{{getDate(bookmark.created_date)}}</div>
           <div class="post-title">{{bookmark.article.title}}</div>
           <div class="marker"></div>
@@ -48,7 +48,7 @@ export default {
     removeData: function(index) {
       this.dataList.arr.splice(index, 1);
     },
-    goTo: function(slug) {
+    goToArticle: function(slug) {
       let url = "/article/" + slug;
       this.$router.push(url);
     },
