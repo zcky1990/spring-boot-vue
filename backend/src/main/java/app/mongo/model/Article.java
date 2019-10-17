@@ -114,9 +114,13 @@ public class Article {
 	
 	public void setContentShort(String content) {
 		String shortContent = "";
-		int startPre = content.indexOf("<pre>");
-		shortContent = content.substring(0, startPre);
-		Document document = Jsoup.parse(content);
+		if(content.contains("<pre>")) {
+			int startPre = content.indexOf("<pre>");
+			shortContent = content.substring(0, startPre);
+		}else {
+			shortContent = content;
+		}
+		Document document = Jsoup.parse(shortContent);
 		shortContent = document.text();
 		if(shortContent.length() > 150) {
 			shortContent = shortContent.substring(0, 150)+"...";
