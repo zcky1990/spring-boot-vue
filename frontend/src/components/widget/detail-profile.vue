@@ -1,6 +1,70 @@
 <template>
   <section class="section profile">
-    <v-container>test</v-container>
+    <div class="profile-container">
+      <div class="user-content">
+        <div class="left-profile">
+          <div class="profile-container">
+            <div class="user-profile">
+              <v-card-text>
+                <v-avatar size="150">
+                  <v-img v-if="isHasImage == true" alt="Avatar" :src="data.image_url" cover></v-img>
+                  <v-icon v-else size="150" color="#00d1b2">account_circle</v-icon>
+                </v-avatar>
+              </v-card-text>
+              <div class="user-name">{{data.display_name}}</div>
+              <v-divider></v-divider>
+              <v-container>
+                <div class="desc">Description :</div>
+                <div class="desc-content">{{data.description}}</div>
+              </v-container>
+              <v-divider></v-divider>
+              <v-container>
+                <div class="account-desc">Account Details</div>
+                <input v-model="data.id" type="text" name="id" disabled hidden />
+                <div class="detail-container">
+                  <div class="detail-item">
+                    <div class="detail-title">Display Name :</div>
+                    <div class="detail-form">{{data.display_name}}</div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-title">Phone Number :</div>
+                    <div class="detail-form">{{data.phonenumber}}</div>
+                  </div>
+                </div>
+                <div class="detail-container">
+                  <div class="detail-item">
+                    <div class="detail-title">Firstname :</div>
+                    <div class="detail-form">{{data.firstname}}</div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-title">Lastname :</div>
+                    <div class="detail-form">{{data.lastname}}</div>
+                  </div>
+                </div>
+                <div class="detail-container">
+                  <div class="detail-item">
+                    <div class="detail-title">Email :</div>
+                    <div class="detail-form">{{data.email}}</div>
+                  </div>
+                  <div class="detail-item">
+                    <div class="detail-title">Jenis Kelamin :</div>
+                    <div class="detail-form">{{data.gender}}</div>
+                  </div>
+                </div>
+                <div class="detail-container">
+                  <div class="detail-item">
+                    <div class="detail-title">Birthday :</div>
+                    <div class="detail-form date-picker">
+                      <v-date-picker v-model="data.birthday" :disabled="isDisable" color="#00d1b2"></v-date-picker>
+                    </div>
+                  </div>
+                </div>
+              </v-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -48,4 +112,63 @@ export default {
 };
 </script>
 <style scoped>
+.profile {
+  width: 100%;
+}
+@media only screen and (max-width: 600px) {
+  .profile {
+    width: 100%;
+  }
+}
+.date-picker {
+  align-items: center;
+  text-align: center;
+}
+.upload-file {
+  padding: 20px;
+}
+.profile-container {
+  font-family: lato;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.user-profile {
+  align-items: center;
+  text-align: center;
+}
+.user-name {
+  font-size: 1.7em !important;
+  line-height: 1.2 !important;
+  font-weight: 700;
+  padding-bottom: 20px;
+}
+.desc {
+  text-align: left;
+  font-size: 1.5em;
+  line-height: 1.2;
+  margin-bottom: 5px;
+}
+.desc-content {
+  text-align: justify;
+  line-height: 1.2;
+  font-size: 1em;
+}
+.account-desc {
+  text-align: left;
+  font-size: 1.5em;
+  line-height: 1.2;
+  margin-bottom: 5px;
+}
+.detail-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  text-align: left;
+}
+.detail-item {
+  flex-grow: 1;
+  padding: 10px;
+}
 </style>
