@@ -1,6 +1,8 @@
 <template>
   <section class="section profile">
+    <v-container>
    test
+    </v-container>
   </section>
 </template>
 
@@ -14,15 +16,36 @@ export default {
   },
   data() {
     return {
-      data: {
-        id:""
-      }
+      getUserUrl :"/users/get_user_detail/",
+      data: {}
     };
   },
   created() {
-    console.log(this.user)
+    this.getUsersById(this.user.id)
   },
   methods: {
+    getUsersById: function(id) {
+      let self = this;
+      let headers = this.getDefaultHeaders(this.getMeta("token"));
+      this.get(
+        this.getUserUrl + id,
+        headers,
+        function(response) {
+          if (response.status == 200) {
+            self.data = response.data.response;
+          }
+        },
+        function(e) {
+          self.setMessage(e, 1);
+        }
+      );
+    },
+    setMessage: function (message, type) {
+      let data = {};
+      data.message = message;
+      data.type = type;
+      EventBus.$emit("SNACKBAR_TRIGGERED", data);
+    },
   
   }
 };
