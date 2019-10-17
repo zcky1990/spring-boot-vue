@@ -21,7 +21,7 @@ export default {
     };
   },
   created() {
-    this.userId = { "id": this.getId() };
+    this.userId = { id: this.getId() };
   },
   components: {
     "user-nav-menu": Navbar,

@@ -1,8 +1,6 @@
 <template>
   <section class="section profile">
-    <v-container>
-   test
-    </v-container>
+    <v-container>test</v-container>
   </section>
 </template>
 
@@ -16,12 +14,12 @@ export default {
   },
   data() {
     return {
-      getUserUrl :"/users/get_user_detail/",
+      getUserUrl: "/users/get_user_detail/",
       data: {}
     };
   },
   created() {
-    this.getUsersById(this.user.id)
+    this.getUsersById(this.user.id);
   },
   methods: {
     getUsersById: function(id) {
@@ -40,16 +38,14 @@ export default {
         }
       );
     },
-    setMessage: function (message, type) {
+    setMessage: function(message, type) {
       let data = {};
       data.message = message;
       data.type = type;
       EventBus.$emit("SNACKBAR_TRIGGERED", data);
-    },
-  
+    }
   }
 };
 </script>
 <style scoped>
-
 </style>
