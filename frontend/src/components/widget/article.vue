@@ -70,8 +70,8 @@
 </template>
 <script>
 import { EventBus } from "./../../EventBus.js";
-import hljs from 'highlight.js/lib/highlight';
-import 'highlight.js/styles/github.css';
+import hljs from "highlight.js/lib/highlight";
+import "highlight.js/styles/github.css";
 
 export default {
   name: "article-components",
@@ -101,18 +101,27 @@ export default {
     }
   },
   methods: {
-    seeAuthorsDetails: function(id){
-      let url = "/detail/"+id;
+    seeAuthorsDetails: function(id) {
+      let url = "/detail/" + id;
       this.$router.push(url);
     },
     setCssSideImage: function() {
-      let elm = document.querySelectorAll(".image-style-side");
+      let elm = document.querySelectorAll(".image");
       if (elm.length > 0) {
         for (let i = 0; i < elm.length; i++) {
           let el = elm[i];
-          el.style.float = "right";
+          if(el.className.includes("image-style-side")){
+            el.style.float = "right";
+            el.style.maxWidth = "50%";
+          }
           el.style.padding = "15px";
           el.style.textAlign = "center";
+          el.styleposition = "relative";
+          el.styleoverflow = "hidden";
+          let child = el.children[0];
+          child.style.maxWidth = "100%";
+          child.style.display = "block";
+          child.style.margin = "0 auto";
         }
       }
     },
@@ -123,7 +132,7 @@ export default {
           let el = elm[i];
           el.style.background = "aliceblue";
           el.style.padding = "5px";
-          el.style.borderLeft=  "5px solid #00d1b2";
+          el.style.borderLeft = "5px solid #00d1b2";
         }
       }
     },
@@ -143,9 +152,9 @@ export default {
         headers,
         function(response) {
           if (response.status == 200) {
-            if(response.data.error_message){
+            if (response.data.error_message) {
               self.setMessage(response.data.error_message, 1);
-            }else{
+            } else {
               let responseData = response.data.response;
               self.data.id = responseData.id;
               self.isBookmarked = true;
@@ -191,11 +200,11 @@ export default {
     }
     this.setCssSideImage();
     this.setCssQuote();
-    document.querySelectorAll('pre p').forEach((block) => {
+    document.querySelectorAll("pre p").forEach(block => {
       hljs.highlightBlock(block);
     });
 
-    document.querySelectorAll('pre ol').forEach((block) => {
+    document.querySelectorAll("pre ol").forEach(block => {
       hljs.highlightBlock(block);
     });
   },
@@ -261,7 +270,12 @@ export default {
   padding-bottom: 16px;
 }
 .article-content {
-  display: table;
+  display: block;
+}
+.image > img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
 }
 .categories {
   padding: 5px 15px 5px 15px;
@@ -299,8 +313,8 @@ export default {
   line-height: 2;
 }
 blockquote {
-    background: aliceblue;
-    padding: 5px;
-    border-left: 5px solid #00d1b2;
+  background: aliceblue;
+  padding: 5px;
+  border-left: 5px solid #00d1b2;
 }
 </style>

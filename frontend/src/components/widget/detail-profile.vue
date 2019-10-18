@@ -27,8 +27,8 @@
                     <div class="detail-form">{{data.display_name}}</div>
                   </div>
                   <div class="detail-item">
-                    <div class="detail-title">Phone Number :</div>
-                    <div class="detail-form">{{data.phonenumber}}</div>
+                    <div class="detail-title">Email :</div>
+                    <div class="detail-form">{{data.email}}</div>
                   </div>
                 </div>
                 <div class="detail-container">
@@ -39,24 +39,6 @@
                   <div class="detail-item">
                     <div class="detail-title">Lastname :</div>
                     <div class="detail-form">{{data.lastname}}</div>
-                  </div>
-                </div>
-                <div class="detail-container">
-                  <div class="detail-item">
-                    <div class="detail-title">Email :</div>
-                    <div class="detail-form">{{data.email}}</div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-title">Jenis Kelamin :</div>
-                    <div class="detail-form">{{data.gender}}</div>
-                  </div>
-                </div>
-                <div class="detail-container">
-                  <div class="detail-item">
-                    <div class="detail-title">Birthday :</div>
-                    <div class="detail-form date-picker">
-                      <v-date-picker v-model="data.birthday" :disabled="isDisable" color="#00d1b2"></v-date-picker>
-                    </div>
                   </div>
                 </div>
               </v-container>
@@ -86,6 +68,13 @@ export default {
     this.getUsersById(this.user.id);
   },
   methods: {
+    isImageExists: function() {
+      if (this.data.image_url == "" || this.data.image_url == undefined) {
+        return false;
+      } else {
+        return true;
+      }
+    },
     getUsersById: function(id) {
       let self = this;
       let headers = this.getDefaultHeaders(this.getMeta("token"));
@@ -108,7 +97,12 @@ export default {
       data.type = type;
       EventBus.$emit("SNACKBAR_TRIGGERED", data);
     }
-  }
+  },
+  computed: {
+    isHasImage() {
+      return this.isImageExists();
+    }
+  },
 };
 </script>
 <style scoped>
