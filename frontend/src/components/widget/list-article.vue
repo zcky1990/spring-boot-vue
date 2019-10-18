@@ -5,7 +5,7 @@
         <v-layout column>
           <v-flex class="article-list-container" v-for="item in data" :key="item.slug">
             <div class="article-list" @click="goTo(item.slug)">
-              <div class="image-article-list">
+              <div v-if="isShowImage" class="image-article-list">
                 <v-img
                   :src="item.imageHeader"
                   :lazy-src="item.imageHeaderLazy"
@@ -74,7 +74,8 @@ export default {
     query: {
       type: String,
       default: ""
-    }
+    },
+    user: Object
   },
   data() {
     return {
@@ -156,6 +157,8 @@ export default {
     getUrlRequest: function() {
       if (this.mode == "search") {
         return this.articleUrl + "?query=" + this.query + "&";
+      } else if (this.mode == "getByUserId") {
+        return this.articleUrl + "?userId=" + this.user.id + "&";
       } else {
         return this.articleUrl + "?";
       }
@@ -174,6 +177,13 @@ export default {
         return true;
       } else {
         return false;
+      }
+    },
+    isShowImage: function() {
+      if (this.mode == "getByUserId") {
+        return false;
+      } else {
+        return true;
       }
     }
   }
@@ -274,11 +284,11 @@ export default {
   line-height: 1.5;
 }
 .category-container {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 .category-container > p {
-    padding: 2px;
+  padding: 2px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -319,7 +329,7 @@ export default {
   width: 240px;
   height: 128px;
 }
-p{
+p {
   margin-bottom: 0px !important;
 }
 </style>

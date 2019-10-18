@@ -4,7 +4,15 @@
       <user-nav-menu></user-nav-menu>
     </section>
     <section class="content-section">
-      <detail-profile v-bind:user="userId"></detail-profile>
+      <div class="detail-pofile">
+        <detail-profile v-bind:user="userId"></detail-profile>
+      </div>
+      <div class="author-list-article">
+        <v-container>
+          <div class="title-user-list-article">Users Article List</div>
+          <article-user url="/article/get_by_user_id" mode="getByUserId" v-bind:user="userId"></article-user>
+        </v-container>
+      </div>
     </section>
   </div>
 </template>
@@ -12,6 +20,7 @@
 <script>
 import Navbar from "@/components/widget/navbar";
 import DetailProfile from "@/components/widget/detail-profile";
+import ListArticle from "@/components/widget/list-article";
 
 export default {
   name: "detail-profile-page-layout",
@@ -25,7 +34,8 @@ export default {
   },
   components: {
     "user-nav-menu": Navbar,
-    "detail-profile": DetailProfile
+    "detail-profile": DetailProfile,
+    "article-user": ListArticle
   },
   methods: {
     getId: function() {
@@ -39,5 +49,12 @@ export default {
 <style scoped>
 .detail-page-container {
   background-color: white;
+}
+.title-user-list-article {
+  font-family: "Lato";
+  text-align: left;
+  font-size: 1.5em !important;
+  line-height: 1.2 !important;
+  margin-bottom: 5px;
 }
 </style>
