@@ -31,7 +31,7 @@
                   {{item.users.firstname}} {{item.users.lastname}}
                   <div class="alias">@{{item.users.username}}</div>
                 </div>
-                <div class="authors-comment">{{item.comment}}</div>
+                <div class="authors-comment" v-html="item.comment"></div>
                 <div class="article-create-date">{{item.created_date}}</div>
               </div>
             </div>
@@ -51,12 +51,12 @@
     <div class="submit-comment-container">
       <v-container class="message-add-comment">
         <div class="comment-area">
-          <textarea
-            v-model="postBody.comment"
-            class="textarea"
-            placeholder="Add a comment..."
-            v-on:keyup="validate"
-          ></textarea>
+          <ckeditor
+          :editor="configEditor.editor"
+          v-model="postBody.comment"
+          :config="configEditor.editorConfig"
+          @input="validate"
+        ></ckeditor>
         </div>
         <div class="submit-container">
           <v-btn color="#00d1b2" :disabled="isDisable" @click="submit" class="submit-btn">Submit</v-btn>
@@ -67,6 +67,21 @@
 </template>
 
 <script>
+import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
+import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials";
+import Autoformat from "@ckeditor/ckeditor5-autoformat/src/autoformat";
+import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold";
+import Italic from "@ckeditor/ckeditor5-basic-styles/src/italic";
+import BlockQuote from "@ckeditor/ckeditor5-block-quote/src/blockquote";
+import Heading from "@ckeditor/ckeditor5-heading/src/heading";
+import Link from "@ckeditor/ckeditor5-link/src/link";
+import List from "@ckeditor/ckeditor5-list/src/list";
+import Paragraph from "@ckeditor/ckeditor5-paragraph/src/paragraph";
+import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
+import CodeBlock from "@/lib/ckeditor5-code/src/codeblock"
+import hljs from "highlight.js/lib/highlight";
+import "highlight.js/styles/github.css";
+
 import { EventBus } from "./../../EventBus.js";
 
 export default {
@@ -86,7 +101,45 @@ export default {
       isDisable: true,
       messageList: [],
       hasMoreComment: false,
-      isLoadMoreCommentOnProgress: false
+      isLoadMoreCommentOnProgress: false,
+      configEditor: {
+        editor: ClassicEditor,
+        editorConfig: {
+          plugins: [
+            Essentials,
+            Autoformat,
+            Bold,
+            Italic,
+            BlockQuote,
+            Heading,
+            Link,
+            List,
+            Paragraph,
+            Alignment,
+            CodeBlock
+          ],
+          toolbar: {
+            items: [
+              "heading",
+              "alignment",
+              "|",
+              "bold",
+              "italic",
+              "|",
+              "link",
+              "|",
+              "undo",
+              "redo",
+              "|",
+              "bulletedList",
+              "numberedList",
+              "|",
+              "blockQuote",
+              "pre"
+            ]
+          }
+        }
+      }
     };
   },
   methods: {
@@ -94,6 +147,37 @@ export default {
       if (this.articleId != undefined) {
         this.postBody.articleId = this.articleId;
         this.addCommentService(this.postBody);
+      }
+    },
+    setCssSideImage: function() {
+      let elm = document.querySelectorAll(".image");
+      if (elm.length > 0) {
+        for (let i = 0; i < elm.length; i++) {
+          let el = elm[i];
+          if(el.className.includes("image-style-side")){
+            el.style.float = "right";
+            el.style.maxWidth = "50%";
+          }
+          el.style.padding = "15px";
+          el.style.textAlign = "center";
+          el.styleposition = "relative";
+          el.styleoverflow = "hidden";
+          let child = el.children[0];
+          child.style.maxWidth = "100%";
+          child.style.display = "block";
+          child.style.margin = "0 auto";
+        }
+      }
+    },
+    setCssQuote: function() {
+      let elm = document.querySelectorAll("blockquote");
+      if (elm.length > 0) {
+        for (let i = 0; i < elm.length; i++) {
+          let el = elm[i];
+          el.style.background = "aliceblue";
+          el.style.padding = "5px";
+          el.style.borderLeft = "5px solid #00d1b2";
+        }
       }
     },
     getCommentListService: function() {
@@ -179,6 +263,17 @@ export default {
       data.type = type;
       EventBus.$emit("SNACKBAR_TRIGGERED", data);
     }
+  },
+  updated() {
+    this.setCssSideImage();
+    this.setCssQuote();
+    document.querySelectorAll("pre p").forEach(block => {
+      hljs.highlightBlock(block);
+    });
+
+    document.querySelectorAll("pre ol").forEach(block => {
+      hljs.highlightBlock(block);
+    });
   },
   watch: {
     articleId: function() {
