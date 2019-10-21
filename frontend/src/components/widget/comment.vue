@@ -323,6 +323,9 @@ export default {
   flex-wrap: nowrap;
   padding: 10px;
 }
+.message-content {
+    max-width: 90%;
+}
 .message-add-comment {
   border-top: 1px solid rgba(219, 219, 219, 0.5);
   display: column;
