@@ -4,6 +4,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import app.model.request.CommentArticle;
+
 public class ArticleComment {
 	@Id
 	private ObjectId _id;
@@ -58,5 +60,16 @@ public class ArticleComment {
 
 	public void setModified_date(String modified_date) {
 		this.modified_date = modified_date;
+	}
+	
+	public void fromObject(CommentArticle request) {
+		if(request.getId() != null) {
+			this.set_id(new ObjectId(request.getId()));
+		}
+		this.setComment(request.getComment());
+		Article article = new Article();
+		article.set_id(new ObjectId(request.getArticleId()));
+		this.setArticle(article);
+		this.setModified_date(request.getModified_date());
 	}
 }

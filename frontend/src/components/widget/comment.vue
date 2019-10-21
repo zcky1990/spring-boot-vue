@@ -36,7 +36,7 @@
                 </div>
               </div>
               <div class="bottom-comment">
-                    <div class="article-create-date">{{item.created_date}}</div>
+                    <div class="article-create-date">{{item.created_date}}{{item.modified_date}}</div>
                     <div class="action-btn-container"> 
                       <v-icon @click="editComment(item)" color="rgb(0, 209, 178)" size="20">edit</v-icon>  
                       <v-icon @click="deleteComment(item, index)" color="rgb(0, 209, 178)" size="20">delete</v-icon>
@@ -249,6 +249,7 @@ export default {
     editComment: function(data){
       this.$refs.editor.$el.focus();
       this.postBody = data;
+      this.postBody.modified_date = new Date();
       this.mode = "edit";
     },
     editCommentService: function(data){
@@ -260,9 +261,9 @@ export default {
         headers,
         function(response) {
           if (response.status == 200) {
-            self.postBody.comment = "";
+            self.postBody = {};
             self.mode = "new";
-            self.validate();
+            self.isDisable = true;
           }
         },
         function(e) {

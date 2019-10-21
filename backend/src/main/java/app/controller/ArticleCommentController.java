@@ -23,13 +23,11 @@ import com.google.gson.JsonObject;
 
 import app.constants.Constant;
 import app.model.request.CommentArticle;
-import app.mongo.model.Article;
 import app.mongo.model.ArticleComment;
 import app.mongo.model.Users;
 import app.repository.ArticleCommentRepository;
 import app.repository.UsersRepository;
 import app.serializer.ArticleCommentSerializer;
-import app.util.TimeUtility;
 
 @RestController
 @RequestMapping("/api")
@@ -62,13 +60,11 @@ public class ArticleCommentController extends BaseController {
 	public ResponseEntity<String> addComment(@Valid @RequestBody CommentArticle commentArticle, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("x-uid");
 		JsonObject response;
+		Users user = userRepository.findBy_id(new ObjectId(auth));
+		if(user != null) {
 			ArticleComment articleComment = new ArticleComment();
-			Users user = userRepository.findBy_id(new ObjectId(auth));
-			Article article = new Article();
-			article.set_id(new ObjectId(commentArticle.getArticleId()));
+			articleComment.fromObject(commentArticle);
 			articleComment.setAuthor(user);
-			articleComment.setArticle(article);
-			articleComment.setComment(commentArticle.getComment());
 			try {
 				articleCommentRepository.save(articleComment);
 				response = getSuccessResponse();
@@ -77,23 +73,22 @@ public class ArticleCommentController extends BaseController {
 				response = getFailedResponse();
 				response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
 			}
+		}else {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, Constant.USER_NOT_FOUND_ERROR_MESSAGE);
+		}
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/article/update_article_comment", method = RequestMethod.PUT)
 	public ResponseEntity<String> updateArticlComment(@Valid @RequestBody CommentArticle commentArticle, HttpServletRequest request) throws Exception {
 		String auth = request.getHeader("x-uid");
-		TimeUtility util = new TimeUtility();
 		Users user = userRepository.findBy_id(new ObjectId(auth));
 		JsonObject response;
 		if(user != null) {
 			ArticleComment articleComment = new ArticleComment();
-			Article article = new Article();
-			article.set_id(new ObjectId(commentArticle.getArticleId()));
+			articleComment.fromObject(commentArticle);
 			articleComment.setAuthor(user);
-			articleComment.setArticle(article);
-			articleComment.setComment(commentArticle.getComment());
-			articleComment.setModified_date(util.getCurrentDate("dd/MM/yyyy HH:mm:ss"));
 			try {
 				articleCommentRepository.save(articleComment);
 				response = getSuccessResponse();
