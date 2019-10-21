@@ -9,7 +9,7 @@
               <v-icon color="rgb(0, 209, 178)">chat</v-icon>
             </v-avatar>
           </div>
-          <div class="message" v-for="item in messageList" :key="item.id">
+          <div class="message" v-for="(item,index) in messageList" :key="item.id">
             <div class="image-comment">
               <v-img
                 :src="item.users.image_profile_url"
@@ -25,15 +25,23 @@
                 </template>
               </v-img>
             </div>
-            <div class="message-content">
-              <div class="author">
-                <div class="authors-name">
-                  {{item.users.firstname}} {{item.users.lastname}}
-                  <div class="alias">@{{item.users.username}}</div>
+            <div class="content-message-container">
+              <div class="message-content">
+                <div class="author">
+                  <div class="authors-name">
+                    {{item.users.firstname}} {{item.users.lastname}}
+                    <div class="alias">@{{item.users.username}}</div>
+                  </div>
+                  <div class="authors-comment" v-html="item.comment"></div>
                 </div>
-                <div class="authors-comment" v-html="item.comment"></div>
-                <div class="article-create-date">{{item.created_date}}</div>
               </div>
+              <div class="bottom-comment">
+                    <div class="article-create-date">{{item.created_date}}</div>
+                    <div class="action-btn-container"> 
+                      <v-icon @click="editComment(item)" color="rgb(0, 209, 178)" size="20">edit</v-icon>  
+                      <v-icon @click="deleteComment(item, index)" color="rgb(0, 209, 178)" size="20">delete</v-icon>
+                    </div>
+                  </div>
             </div>
           </div>
           <div v-if="hasMoreComment" class="center">
@@ -52,6 +60,7 @@
       <v-container class="message-add-comment">
         <div class="comment-area">
           <ckeditor
+          ref="editor"
           :editor="configEditor.editor"
           v-model="postBody.comment"
           :config="configEditor.editorConfig"
@@ -93,7 +102,10 @@ export default {
     return {
       getCommentUrl: "article/get_comment",
       addCommentUrl: "article/add_comment",
+      editCommentUrl: "article/update_article_comment",
+      deleteCommentUrl: "article/delete_article_comment/",
       page: 0,
+      mode: "new",
       postBody: {
         articleId: "",
         comment: ""
@@ -146,7 +158,11 @@ export default {
     submit: function() {
       if (this.articleId != undefined) {
         this.postBody.articleId = this.articleId;
-        this.addCommentService(this.postBody);
+        if(this.mode == 'new'){
+          this.addCommentService(this.postBody);
+        }else{
+          this.editCommentService(this.postBody);
+        }
       }
     },
     setCssSideImage: function() {
@@ -229,6 +245,46 @@ export default {
       if (response.length == 0) {
         this.hasMoreComment = false;
       }
+    },
+    editComment: function(data){
+      this.$refs.editor.$el.focus();
+      this.postBody = data;
+      this.mode = "edit";
+    },
+    editCommentService: function(data){
+      let self = this;
+      let headers = this.getHeaders(this.$session);
+      this.put(
+        this.editCommentUrl,
+        data,
+        headers,
+        function(response) {
+          if (response.status == 200) {
+            self.postBody.comment = "";
+            self.mode = "new";
+            self.validate();
+          }
+        },
+        function(e) {
+          self.setMessage(e, 1);
+        }
+      );
+    },
+    deleteComment: function(data, index){
+      let self = this;
+      let headers = this.getHeaders(this.$session);
+      this.delete(
+        this.deleteCommentUrl + data.id,
+        headers,
+        function(response) {
+          if (response.status == 200) {
+            self.messageList.splice(index,1);
+          }
+        },
+        function(e) {
+          self.setMessage(e, 1);
+        }
+      );
     },
     addCommentService: function(data) {
       let self = this;
@@ -332,6 +388,16 @@ export default {
   flex-direction: row;
   flex-wrap: nowrap;
 }
+.content-message-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.bottom-comment {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px;
+}
 .submit-btn {
   color: white;
 }
@@ -387,5 +453,10 @@ export default {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
+}
+@media only screen and (max-width: 640px) {
+  .message-content {
+    max-width: 80%;
+  }
 }
 </style>
