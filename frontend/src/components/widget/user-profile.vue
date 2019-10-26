@@ -1,5 +1,6 @@
 <template>
   <section class="section profile">
+    <v-container>
     <div class="profile-container">
       <div class="user-content">
         <div class="left-profile">
@@ -188,6 +189,7 @@
         </div>
       </div>
     </div>
+    </v-container>
   </section>
 </template>
 

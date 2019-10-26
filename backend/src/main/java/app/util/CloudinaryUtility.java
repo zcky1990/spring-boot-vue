@@ -107,9 +107,12 @@ public class CloudinaryUtility {
 	
 	public JsonObject uploadImage(MultipartFile file, String folder) {
 		JsonObject response = new JsonObject();
-		Map options = ObjectUtils.asMap(
-			    "folder", folder);
-		
+		Map options;
+		if(env.getEnvirontment().endsWith(Constant.DEV_ENV)) {
+			options = ObjectUtils.asMap("folder", folder + "dev");
+		}else {
+			options = ObjectUtils.asMap("folder", folder);
+		}
 		try {
 			Map uploadResult = cloudinary.uploader().upload(file.getBytes(), options);
 			response.addProperty("url", uploadResult.get("secure_url").toString());
