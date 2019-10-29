@@ -1,6 +1,6 @@
 <template>
   <div class="validation-page-container">
-    <user-validation-component :id-user="idUser"></user-validation-component>
+    <user-validation-component :id-user="userId"></user-validation-component>
   </div>
 </template>
 <script>

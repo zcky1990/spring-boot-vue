@@ -197,6 +197,15 @@ export default {
         }
       }
     },
+    setBulletNumberingCss: function(){
+      let bulletElList = document.querySelectorAll("div.authors-comment > ul");
+      if (bulletElList.length > 0) {
+        for (let i = 0; i < bulletElList.length; i++) {
+          let el = bulletElList[i];
+          el.style.marginBottom="16px";
+        }
+      }
+    },
     getCommentListService: function() {
       let self = this;
       let headers = this.getDefaultHeaders(this.getMeta("token"));
@@ -325,6 +334,7 @@ export default {
   updated() {
     this.setCssSideImage();
     this.setCssQuote();
+    this.setBulletNumberingCss();
     document.querySelectorAll("pre p").forEach(block => {
       hljs.highlightBlock(block);
     });
