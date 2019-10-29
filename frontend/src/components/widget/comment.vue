@@ -193,6 +193,7 @@ export default {
           el.style.background = "aliceblue";
           el.style.padding = "5px";
           el.style.borderLeft = "5px solid #00d1b2";
+          el.style.marginBottom="16px";
         }
       }
     },

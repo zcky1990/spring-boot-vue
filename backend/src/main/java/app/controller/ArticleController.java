@@ -73,6 +73,22 @@ public class ArticleController extends BaseController {
 		return new ResponseEntity<String>( response.toString() , getResponseHeader(), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/article/get_by_user_id", method = RequestMethod.GET)
+	public ResponseEntity<String> getListArticleByUserId(@RequestParam(value="userId", required=false) String userId, @RequestParam(value="page", required=false) String page, HttpServletRequest request) throws Exception {
+		JsonObject response = new JsonObject();
+			try {
+				Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").descending());
+				Page<Article> articleList = articleRepository.findAllArticleByUserId(new ObjectId(userId), pageableRequest);
+				response = getSuccessResponse();
+				List<Article> article = articleList.getContent();
+				response.add(Constant.RESPONSE, toJSONArrayWithSerializer(Article.class, new ArticleListSerializer(), article));
+			} catch(Exception e) {
+				response = getFailedResponse();
+				response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+			}
+		return new ResponseEntity<String>( response.toString() , getResponseHeader(), HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/article/get_article_by_id/{id}", method = RequestMethod.GET)
 	public ResponseEntity<String> getArticleDetail(@PathVariable String id, HttpServletRequest request) throws Exception {
 		JsonObject response;

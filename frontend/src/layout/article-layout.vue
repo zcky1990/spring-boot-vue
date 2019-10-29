@@ -7,6 +7,7 @@
       <v-content>
         <v-container fill-height>
           <v-layout class="content-layout">
+            <v-flex class="left-content"></v-flex>
             <v-flex class="main-content-container">
               <article-content v-bind:content="article"></article-content>
               <article-comment v-bind:article-id="article.id"></article-comment>

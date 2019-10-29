@@ -133,6 +133,23 @@ export default {
           el.style.background = "aliceblue";
           el.style.padding = "5px";
           el.style.borderLeft = "5px solid #00d1b2";
+          el.style.marginBottom="16px";
+        }
+      }
+    },
+    setBulletNumberingCss: function(){
+      let bulletElList = document.querySelectorAll("#grid > div.content > div.article-content-container > div.article-content > div > ul");
+      let numberingElList = document.querySelectorAll("#grid > div.content > div.article-content-container > div.article-content > div > ol");
+      if (bulletElList.length > 0) {
+        for (let i = 0; i < bulletElList.length; i++) {
+          let el = bulletElList[i];
+          el.style.marginBottom="16px";
+        }
+      }
+      if (numberingElList.length > 0) {
+        for (let i = 0; i < numberingElList.length; i++) {
+          let el = numberingElList[i];
+          el.style.marginBottom="16px";
         }
       }
     },
@@ -200,6 +217,7 @@ export default {
     }
     this.setCssSideImage();
     this.setCssQuote();
+    this.setBulletNumberingCss();
     document.querySelectorAll("pre p").forEach(block => {
       hljs.highlightBlock(block);
     });
