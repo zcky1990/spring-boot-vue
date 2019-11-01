@@ -130,9 +130,9 @@ public class BookmarksArticleController extends BaseController {
 	public ResponseEntity<String> unFollowAuthors(@PathVariable String id, HttpServletRequest request){
 		JsonObject response;
 		String auth = request.getHeader("x-uid");
-		Users user = userRepository.findBy_id(new ObjectId(auth));
 		try {
-			FollowAuthors fAuthors = followRepository.findByUserIdAndAuhtorsId(user.get_id() , new ObjectId(id));
+			FollowAuthors fAuthors = followRepository.findByUserIdAndAuhtorsId(new ObjectId(auth) , new ObjectId(id));
+			System.out.println(fAuthors.getStringId());
 			followRepository.delete(fAuthors);
 			response = getSuccessResponse();
 			response.addProperty(Constant.RESPONSE, Constant.DELETE_UNFOLLOW_AUHTORS_MESSAGE);

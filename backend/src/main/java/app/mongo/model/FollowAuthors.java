@@ -13,11 +13,11 @@ public class FollowAuthors {
 	private Users author;
 	
 	@DBRef
-	private Users user;
+	private Users users;
 	
 	public FollowAuthors(ObjectId userId, ObjectId authorId) {
-		user = new Users();
-		user.set_id(userId);
+		users = new Users();
+		users.set_id(userId);
 		author = new Users();
 		author.set_id(authorId);
 	}
@@ -42,10 +42,10 @@ public class FollowAuthors {
 	}
 
 	public Users getUser() {
-		return user;
+		return users;
 	}
 	public void setUser(Users user) {
-		this.user = user;
+		this.users = user;
 	}
 
 
