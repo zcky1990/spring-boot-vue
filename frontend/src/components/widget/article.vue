@@ -94,6 +94,11 @@ export default {
         createBookmark: "bookmarks/create",
         deleteBookmark: "bookmarks/delete/"
       },
+      follow: {
+        followUrl: "follow/authors/",
+        unfollowUrl: "unfollow/authors/"
+      },
+      isFollowed: false,
       isBookmarked: false,
       isUserLoggin: false,
       isHaveReference: false
@@ -108,12 +113,52 @@ export default {
   methods: {
     followUnfollowAuthors: function(id) {
       if (this.isUserLoggin) {
-        let self = this;
-        let headers = this.getHeaders(this.$session);
-        this.post();
+        if(!this.isFollowed) {
+          this.followAuthors(id);
+        } else {
+          this.unFollowAuthors(id);
+        }
       } else {
         this.$router.push("/login");
       }
+    },
+    followAuthors: function(id) {
+      let self = this;
+      let headers = this.getHeaders(this.$session);
+      this.post(
+        this.follow.followUrl+id,
+        {},
+        headers,
+        function(response) {
+          if (response.status == 200) {
+            if (response.data.error_message) {
+              self.setMessage(response.data.error_message, 1);
+            } else {
+              let responseData = response.data.response;
+              self.isFollowed = true;
+            }
+          }
+        },
+        function(e) {
+          self.setMessage(e, 1);
+        }
+      );
+    },
+    unFollowAuthors: function(id) {
+      let self = this;
+      let headers = this.getHeaders(this.$session);
+      this.delete(
+        this.follow.unfollowUrl + id,
+        headers,
+        function(response) {
+          if (response.status == 200) {
+            self.isFollowed = false;
+          }
+        },
+        function(e) {
+          self.setMessage(e, 1);
+        }
+      );
     },
     seeAuthorsDetails: function(id) {
       let url = "/detail/" + id;
