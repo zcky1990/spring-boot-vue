@@ -7,26 +7,31 @@
       <div class="article-title">
         <div class="headline">{{content.article_title}}</div>
       </div>
-      <div class="article-authors" @click="seeAuthorsDetails(content.author.id)">
-        <div class="image-authors" v-if="isHasAuthor">
-          <v-img
-            :src="content.author.image_profile_url"
-            lazy-src="https://picsum.photos/10/6?image=11"
-            aspect-ratio="1"
-            class="grey lighten-2 rounded"
-          >
-            <template v-slot:placeholder>
-              <v-layout fill-height align-center justify-center ma-0>
-                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-              </v-layout>
-            </template>
-          </v-img>
-        </div>
-        <div class="author-desc" v-if="isHasAuthor">
-          <div class="author">
-            <div class="authors-name">{{content.author.firstname}} {{content.author.lastname}}</div>
-            <div class="article-create-date">{{content.created_date}}</div>
+      <div class="article-authors">
+        <div class="authors-container" @click="seeAuthorsDetails(content.author.id)">
+          <div class="image-authors" v-if="isHasAuthor">
+            <v-img
+              :src="content.author.image_profile_url"
+              lazy-src="https://picsum.photos/10/6?image=11"
+              aspect-ratio="1"
+              class="grey lighten-2 rounded"
+            >
+              <template v-slot:placeholder>
+                <v-layout fill-height align-center justify-center ma-0>
+                  <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                </v-layout>
+              </template>
+            </v-img>
           </div>
+          <div class="author-desc" v-if="isHasAuthor">
+            <div class="author">
+              <div class="authors-name">{{content.author.firstname}} {{content.author.lastname}}</div>
+              <div class="article-create-date">{{content.created_date}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="follow-btn">
+          <div class="btn-follow" @click="followUnfollowAuthors(content.author.id)">Follow</div>
         </div>
       </div>
 
@@ -101,6 +106,15 @@ export default {
     }
   },
   methods: {
+    followUnfollowAuthors: function(id) {
+      if (this.isUserLoggin) {
+        let self = this;
+        let headers = this.getHeaders(this.$session);
+        this.post();
+      } else {
+        this.$router.push("/login");
+      }
+    },
     seeAuthorsDetails: function(id) {
       let url = "/detail/" + id;
       this.$router.push(url);
@@ -110,7 +124,7 @@ export default {
       if (elm.length > 0) {
         for (let i = 0; i < elm.length; i++) {
           let el = elm[i];
-          if(el.className.includes("image-style-side")){
+          if (el.className.includes("image-style-side")) {
             el.style.float = "right";
             el.style.maxWidth = "50%";
           }
@@ -133,23 +147,27 @@ export default {
           el.style.background = "aliceblue";
           el.style.padding = "5px";
           el.style.borderLeft = "5px solid #00d1b2";
-          el.style.marginBottom="16px";
+          el.style.marginBottom = "16px";
         }
       }
     },
-    setBulletNumberingCss: function(){
-      let bulletElList = document.querySelectorAll("#grid > div.content > div.article-content-container > div.article-content > div > ul");
-      let numberingElList = document.querySelectorAll("#grid > div.content > div.article-content-container > div.article-content > div > ol");
+    setBulletNumberingCss: function() {
+      let bulletElList = document.querySelectorAll(
+        "#grid > div.content > div.article-content-container > div.article-content > div > ul"
+      );
+      let numberingElList = document.querySelectorAll(
+        "#grid > div.content > div.article-content-container > div.article-content > div > ol"
+      );
       if (bulletElList.length > 0) {
         for (let i = 0; i < bulletElList.length; i++) {
           let el = bulletElList[i];
-          el.style.marginBottom="16px";
+          el.style.marginBottom = "16px";
         }
       }
       if (numberingElList.length > 0) {
         for (let i = 0; i < numberingElList.length; i++) {
           let el = numberingElList[i];
-          el.style.marginBottom="16px";
+          el.style.marginBottom = "16px";
         }
       }
     },
@@ -258,6 +276,9 @@ export default {
   flex-wrap: nowrap;
   flex-direction: row;
 }
+.authors-container {
+  display: flex;
+}
 .author {
   padding-left: 20px;
   padding-top: 7px;
@@ -274,6 +295,7 @@ export default {
 }
 .article-create-date {
   color: grey;
+  margin-bottom: 5px;
 }
 .headline {
   font-size: 2.3rem !important;
@@ -291,9 +313,9 @@ export default {
   display: block;
 }
 .image > img {
-    display: block;
-    margin: 0 auto;
-    max-width: 100%;
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
 }
 .categories {
   padding: 5px 15px 5px 15px;
@@ -314,6 +336,21 @@ export default {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
+}
+.follow-btn {
+  color: #00d1b2;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 100;
+  margin-left: 10px;
+}
+.btn-follow {
+  border: 1px solid #00d1b2;
+  border-radius: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-top: 5px;
+  cursor: pointer;
 }
 @media only screen and (max-width: 600px) {
   .article-content-container {

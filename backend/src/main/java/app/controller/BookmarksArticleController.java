@@ -24,8 +24,10 @@ import com.google.gson.JsonObject;
 import app.constants.Constant;
 import app.model.request.BookmarksArticleRequest;
 import app.mongo.model.BookmarksArticle;
+import app.mongo.model.FollowAuthors;
 import app.mongo.model.Users;
 import app.repository.ArticleBookmarksRepository;
+import app.repository.FollowAuthorsRepository;
 import app.repository.UsersRepository;
 import app.serializer.BookmarksArticleSerializer;
 
@@ -37,6 +39,10 @@ public class BookmarksArticleController extends BaseController {
 
 	@Autowired
 	private UsersRepository userRepository;
+	
+	@Autowired
+	private FollowAuthorsRepository followRepository;
+	
 
 	@RequestMapping(value = "/bookmarks/get_bookmarks_article_list", method = RequestMethod.GET)
 	public ResponseEntity<String> getArticleList(@RequestParam(value="page", required=true) String page, HttpServletRequest request) throws Exception {
@@ -96,6 +102,40 @@ public class BookmarksArticleController extends BaseController {
 			repository.delete(repository.findById(id).get());
 			response = getSuccessResponse();
 			response.addProperty(Constant.RESPONSE, Constant.DELETE_BOOKMARK_SUCCESS_MESSAGE);
+		} catch(Exception e) {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+		}
+		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/follow/authors/{id}", method = RequestMethod.POST)
+	public ResponseEntity<String> followAuthors(@PathVariable String id, HttpServletRequest request){
+		JsonObject response;
+		String auth = request.getHeader("x-uid");
+		Users user = userRepository.findBy_id(new ObjectId(auth));
+		try {
+			FollowAuthors fAuthors = new FollowAuthors(user.get_id() , new ObjectId(id));
+			followRepository.save(fAuthors);
+			response = getSuccessResponse();
+			response.addProperty(Constant.RESPONSE, Constant.SUCCESS_FOLLOW_AUHTORS_MESSAGE);
+		} catch(Exception e) {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+		}
+		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/unfollow/authors/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> unFollowAuthors(@PathVariable String id, HttpServletRequest request){
+		JsonObject response;
+		String auth = request.getHeader("x-uid");
+		Users user = userRepository.findBy_id(new ObjectId(auth));
+		try {
+			FollowAuthors fAuthors = followRepository.findByUserIdAndAuhtorsId(user.get_id() , new ObjectId(id));
+			followRepository.delete(fAuthors);
+			response = getSuccessResponse();
+			response.addProperty(Constant.RESPONSE, Constant.DELETE_UNFOLLOW_AUHTORS_MESSAGE);
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());

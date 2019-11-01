@@ -30,6 +30,8 @@ public class Constant {
 	public static String DELETE_BOOKMARK_SUCCESS_MESSAGE = "Success Delete Bookmark";
 	public static String DELETE_CATEGORY_SUCCESS_MESSAGE = "Success Delete Category";
 	public static String DELETE_ROLES_SUCCESS_MESSAGE = "Success Delete Roles";
+	public static String SUCCESS_FOLLOW_AUHTORS_MESSAGE = "Success Follow Authors";
+	public static String DELETE_UNFOLLOW_AUHTORS_MESSAGE = "Success UnFollow Authors";
 	
 	//Error Message
 	public static String USER_NOT_VALIDATED_SUCCESS_MESSAGE = "User not validated please check your mail";
