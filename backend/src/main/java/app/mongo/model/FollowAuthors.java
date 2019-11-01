@@ -14,14 +14,7 @@ public class FollowAuthors {
 	
 	@DBRef
 	private Users users;
-	
-	public FollowAuthors(ObjectId userId, ObjectId authorId) {
-		users = new Users();
-		users.set_id(userId);
-		author = new Users();
-		author.set_id(authorId);
-	}
-	
+		
 	public String getStringId() {
 		return _id.toHexString();
 	}

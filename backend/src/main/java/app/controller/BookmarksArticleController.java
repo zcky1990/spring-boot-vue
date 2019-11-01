@@ -115,7 +115,11 @@ public class BookmarksArticleController extends BaseController {
 		String auth = request.getHeader("x-uid");
 		Users user = userRepository.findBy_id(new ObjectId(auth));
 		try {
-			FollowAuthors fAuthors = new FollowAuthors(user.get_id() , new ObjectId(id));
+			FollowAuthors fAuthors = new FollowAuthors();
+			Users authors = new Users();
+			authors.set_id(new ObjectId(id));
+			fAuthors.setUser(user);
+			fAuthors.setAuthor(authors);
 			followRepository.save(fAuthors);
 			response = getSuccessResponse();
 			response.addProperty(Constant.RESPONSE, Constant.SUCCESS_FOLLOW_AUHTORS_MESSAGE);
@@ -132,7 +136,6 @@ public class BookmarksArticleController extends BaseController {
 		String auth = request.getHeader("x-uid");
 		try {
 			FollowAuthors fAuthors = followRepository.findByUserIdAndAuhtorsId(new ObjectId(auth) , new ObjectId(id));
-			System.out.println(fAuthors.getStringId());
 			followRepository.delete(fAuthors);
 			response = getSuccessResponse();
 			response.addProperty(Constant.RESPONSE, Constant.DELETE_UNFOLLOW_AUHTORS_MESSAGE);
