@@ -68,7 +68,7 @@ export default {
       this.dataList = this.dataList.concat(response);
     },
     removeData: function(index) {
-      this.dataList.arr.splice(index, 1);
+      this.dataList.splice(index, 1);
     },
     getMoreFollowList: function() {
       let self = this;
