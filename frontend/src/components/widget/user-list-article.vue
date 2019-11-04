@@ -113,7 +113,7 @@ export default {
       title: "",
       data: [],
       article: {},
-      isHasMoreData: true,
+      isHasMoreData: false,
       ishidden: true
     };
   },
@@ -275,6 +275,8 @@ export default {
     articleList: function() {
       if(this.articleList.length < 10){
         this.isHasMoreData = false;
+      }else{
+          this.isHasMoreData = true;  
       }
       this.addData(this.articleList);
     }

@@ -2,6 +2,7 @@ package app.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -310,6 +311,20 @@ public class UsersController extends BaseController{
 			List<FollowAuthors> listAuthors = followRepository.findByUserId(new ObjectId(auth), pageableRequest);
 			response = getSuccessResponse();
 			response.add(Constant.RESPONSE, toJSONArrayWithSerializer(FollowAuthors.class, new UserFollowSerializer(), listAuthors) );
+		} catch(Exception e) {
+			response = getFailedResponse();
+			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+		}
+		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
+	}
+	@RequestMapping(value = "/users/unfollow/authors/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> userUnFollowAuthors(@PathVariable String id, HttpServletRequest request){
+		JsonObject response;
+		try {
+			FollowAuthors fAuthors = followRepository.findById(id).get();
+			followRepository.delete(fAuthors);
+			response = getSuccessResponse();
+			response.addProperty(Constant.RESPONSE, Constant.DELETE_UNFOLLOW_AUHTORS_MESSAGE);
 		} catch(Exception e) {
 			response = getFailedResponse();
 			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());

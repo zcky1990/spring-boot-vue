@@ -1,15 +1,27 @@
 <template>
   <v-container>
     <div class="bookmark-card-container">
-      <div class="bookmark" v-for="bookmark in dataList" :key="bookmark.id">
-        <div @click="goToArticle(bookmark.article.slug)">
-          <div class="post-date">{{getDate(bookmark.created_date)}}</div>
-          <div class="post-title">{{bookmark.article.title}}</div>
-          <div class="marker"></div>
-          <div class="post-category">
-            <p v-for="category in bookmark.article.category" :key="category">{{category}}</p>
+      <div class="bookmark" v-for="(bookmark, index) in dataList" :key="bookmark.id">
+        <div class="bookmark-container">
+          <div class="post-date">
+            <div class="date">{{getDate(bookmark.created_date)}}</div>
+            <div class="bookmark-btn" @click="deleteBookmark(bookmark.id, index)">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-icon color="red" v-on="on">bookmark</v-icon>
+                </template>
+                <span>Unbookmark this Article</span>
+              </v-tooltip>
+            </div>
           </div>
-          <div class="post-desc" v-html="bookmark.article.content"></div>
+          <div class="bookmark-detail-container" @click="goToArticle(bookmark.article.slug)">
+            <div class="post-title">{{bookmark.article.title}}</div>
+            <div class="marker"></div>
+            <div class="post-category">
+              <p v-for="category in bookmark.article.category" :key="category">{{category}}</p>
+            </div>
+            <div class="post-desc" v-html="bookmark.article.content"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -27,6 +39,8 @@
 </template>
 
 <script>
+import { EventBus } from "./../../EventBus.js";
+
 export default {
   name: "user-bookmark-list-component",
   props: {
@@ -44,16 +58,12 @@ export default {
       search: "",
       page: 1,
       listBookmarkUrl: "/bookmarks/get_bookmarks_article_list",
-      deleteBookmarkUrl: "bookmarks/delete/",
-      selected: [],
-      tableHeaderList: [],
+      deleteBookmarkUrl: "/bookmarks/delete/",
       dataList: [],
-      singleSelect: true,
       isLoadMoreOnProgress: false,
       dialog: false,
       isDisable: false,
-      isHasMoreData: true
-
+      isHasMoreData: false
     };
   },
   methods: {
@@ -75,14 +85,13 @@ export default {
         headers,
         function(response) {
           if (response.status == 200) {
-             if (response.data.length > 0) {
-                self.addData(response.response);
-                self.page++;
-              } else {
-                self.isHasMoreData = false;
-              }
+            if (response.data.length > 0) {
+              self.addData(response.response);
+              self.page++;
+            } else {
+              self.isHasMoreData = false;
+            }
           }
-         
         },
         function(e) {
           self.setMessage(e, 1);
@@ -91,9 +100,10 @@ export default {
     },
     deleteBookmark: function(id, index) {
       let self = this;
+      console.log(id, index);
       let headers = this.getHeaders(this.$session);
       this.delete(
-        this.deleteBookmark + id,
+        this.deleteBookmarkUrl + id,
         headers,
         function(response) {
           if (response.status == 200) {
@@ -104,6 +114,12 @@ export default {
           self.setMessage(e, 1);
         }
       );
+    },
+    setMessage: function(message, type) {
+      let data = {};
+      data.message = message;
+      data.type = type;
+      EventBus.$emit("SNACKBAR_TRIGGERED", data);
     },
     getDate: function(date) {
       let months = [
@@ -130,8 +146,10 @@ export default {
       this.page = this.nextPage;
     },
     bookmarkList: function() {
-      if(this.bookmarkList.length < 10){
+      if (this.bookmarkList.length < 10) {
         this.isHasMoreData = false;
+      } else {
+        this.isHasMoreData = true;
       }
       this.addData(this.bookmarkList);
     }
@@ -146,6 +164,11 @@ export default {
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
+}
+.post-date {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .bookmark-table-title {
   color: rgb(0, 0, 0);
@@ -186,9 +209,9 @@ export default {
   justify-content: center;
 }
 .load-more-container {
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    margin-top: 15px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-top: 15px;
 }
 </style>

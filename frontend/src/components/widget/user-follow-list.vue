@@ -1,8 +1,40 @@
 <template>
   <v-container>
     <div class="follow-card-container">
-      <div class="follow" v-for="follow in dataList" :key="follow.id">
-        asdasd
+      <div class="follow" v-for="(follow, index) in dataList" :key="follow.id">
+        <v-card class="mx-auto" max-width="400" width="400">
+          <v-img
+            :src="follow.author.image_profile_url"
+            lazy-src="https://picsum.photos/10/6?image=11"
+            aspect-ratio="1"
+            width="400"
+            height="150"
+            class="grey lighten-2 white--text align-end"
+          >
+            <template v-slot:placeholder>
+              <v-layout fill-height align-center justify-center ma-0>
+                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+              </v-layout>
+            </template>
+            <v-card-title>{{follow.author.firstname}} {{follow.author.lastname}}</v-card-title>
+          </v-img>
+          <div class="desc">
+            <div class="email">{{follow.author.email}}</div>
+            <div class="follow-btn">
+              <div class="btn-follow" @click="unFollow(follow.id, index)">Unfollow</div>
+            </div>
+          </div>
+        </v-card>
+      </div>
+      <div class="load-more-container" v-if="isHasMoreData">
+        <v-btn
+          :loading="isLoadMoreOnProgress"
+          :disabled="isDisable"
+          elevation="0"
+          depressed
+          class="load-more-btn"
+          @click="getMoreBookmarkList"
+        >Load More Article</v-btn>
       </div>
     </div>
   </v-container>
@@ -14,7 +46,7 @@ export default {
   props: {
     followList: {
       type: Array,
-      default: () => ([])
+      default: () => []
     },
     nextPage: {
       type: Number,
@@ -26,11 +58,9 @@ export default {
       search: "",
       page: 1,
       listFollowUrl: "/users/get_follewed_author",
-      unfollowUrl: "/unfollow/authors/",
-      selected: [],
-      tableHeaderList: [],
+      unfollowUrl: "/users/unfollow/authors/",
       dataList: [],
-      singleSelect: true
+      isHasMoreData: false
     };
   },
   methods: {
@@ -79,8 +109,10 @@ export default {
       this.page = this.nextPage;
     },
     followList: function() {
-      if(this.followList.length < 10){
+      if (this.followList.length < 10) {
         this.isHasMoreData = false;
+      } else {
+        this.isHasMoreData = true;
       }
       this.addData(this.followList);
     }
@@ -111,5 +143,61 @@ export default {
   text-size-adjust: 100%;
   text-transform: none;
   -webkit-font-smoothing: subpixel-antialiased;
+}
+.author-detail-container,
+.image-author-container {
+  padding: 10px;
+}
+.desc {
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.follow-author-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.follow-btn {
+  color: #00d1b2;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 100;
+}
+.btn-follow {
+  border: 1px solid #00d1b2;
+  border-radius: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  cursor: pointer;
+}
+.load-more-btn {
+  background-color: white !important;
+  border: 1px solid #00d1b2;
+  border-radius: 25px;
+  font-weight: 700;
+  color: #00d1b2;
+  cursor: pointer;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.load-more-btn:hover {
+  background-color: #00d1b2 !important;
+  border: 1px solid #00d1b2;
+  border-radius: 25px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.load-more-container {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-top: 15px;
 }
 </style>
