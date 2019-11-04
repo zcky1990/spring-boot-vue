@@ -273,6 +273,9 @@ export default {
       this.page = this.nextPage;
     },
     articleList: function() {
+      if(this.articleList.length < 5){
+        this.isHasMoreData = false;
+      }
       this.addData(this.articleList);
     }
   }

@@ -13,6 +13,16 @@
         </div>
       </div>
     </div>
+    <div class="load-more-container" v-if="isHasMoreData">
+      <v-btn
+        :loading="isLoadMoreOnProgress"
+        :disabled="isDisable"
+        elevation="0"
+        depressed
+        class="load-more-btn"
+        @click="getMoreBookmarkList"
+      >Load More Article</v-btn>
+    </div>
   </v-container>
 </template>
 
@@ -22,7 +32,7 @@ export default {
   props: {
     bookmarkList: {
       type: Array,
-      default: () => ([])
+      default: () => []
     },
     nextPage: {
       type: Number,
@@ -38,7 +48,12 @@ export default {
       selected: [],
       tableHeaderList: [],
       dataList: [],
-      singleSelect: true
+      singleSelect: true,
+      isLoadMoreOnProgress: false,
+      dialog: false,
+      isDisable: false,
+      isHasMoreData: true
+
     };
   },
   methods: {
@@ -60,9 +75,14 @@ export default {
         headers,
         function(response) {
           if (response.status == 200) {
-            self.addData(response.data.response);
-            self.page++;
+             if (response.data.length > 0) {
+                self.addData(response.response);
+                self.page++;
+              } else {
+                self.isHasMoreData = false;
+              }
           }
+         
         },
         function(e) {
           self.setMessage(e, 1);
@@ -110,6 +130,9 @@ export default {
       this.page = this.nextPage;
     },
     bookmarkList: function() {
+      if(this.bookmarkList.length < 5){
+        this.isHasMoreData = false;
+      }
       this.addData(this.bookmarkList);
     }
   }
@@ -139,5 +162,33 @@ export default {
   text-size-adjust: 100%;
   text-transform: none;
   -webkit-font-smoothing: subpixel-antialiased;
+}
+.load-more-btn {
+  background-color: white !important;
+  border: 1px solid #00d1b2;
+  border-radius: 25px;
+  font-weight: 700;
+  color: #00d1b2;
+  cursor: pointer;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.load-more-btn:hover {
+  background-color: #00d1b2 !important;
+  border: 1px solid #00d1b2;
+  border-radius: 25px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.load-more-container {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-top: 15px;
 }
 </style>

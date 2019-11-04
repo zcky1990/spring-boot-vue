@@ -28,6 +28,9 @@
       <v-tab-item>
          <bookmark-list v-bind:bookmark-list="bookmarkList" v-bind:next-page="bookmarkPage"></bookmark-list>
       </v-tab-item>
+    <v-tab-item>
+      <follow-list v-bind:follow-list="followList" v-bind:next-page="followListPage"></follow-list>
+    </v-tab-item>
     </v-tabs-items>
   </div>
 </template>
@@ -36,7 +39,7 @@
 import UserProfile from "./user-profile";
 import Article from "./user-list-article";
 import BookmarkList from "./user-bookmark-list";
-
+import FollowList from "./user-follow-list";
 export default {
   name: "user-tabs-component",
   data() {
@@ -50,27 +53,52 @@ export default {
       articlePage: 0,
       bookmarkList: [],
       bookmarkPage: 0,
+      followList: [],
+      followListPage: 0,
       getArticleUrl: "/article/get_list_article",
       getUserProfileUrl: "/users/get_user_detail/",
       listBookmarkUrl: "/bookmarks/get_bookmarks_article_list",
+      listFollowUrl: "/users/get_follewed_author",
       tabs: [
         { name: "Profil", index: "1" },
         { name: "Article", index: "2" },
-        { name: "Reading", index: "3" }
+        { name: "Reading", index: "3" },
+        { name: "Following", index: "4" }
       ]
     };
   },
   components: {
     "user-profile": UserProfile,
     "user-article": Article,
-    "bookmark-list": BookmarkList
+    "bookmark-list": BookmarkList,
+    "follow-list" : FollowList
   },
   created() {
     this.getUsers();
     this.getArticle();
     this.getBookmarkList();
+    this.getFollowList();
   },
   methods: {
+    getFollowList: function() {
+      let self = this;
+      let headers = this.getHeaders(this.$session);
+      this.get(
+        this.listFollowUrl + "?page=" + this.followListPage,
+        headers,
+        function(response) {
+          if (response.status == 200) {
+            self.followList = self.followList.concat(
+              response.data.response
+            );
+            self.followListPage++;
+          }
+        },
+        function(e) {
+          self.setMessage(e, 1);
+        }
+      );
+    },
     getBookmarkList: function() {
       let self = this;
       let headers = this.getHeaders(this.$session);
