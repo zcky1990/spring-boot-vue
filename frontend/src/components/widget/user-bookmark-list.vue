@@ -130,7 +130,7 @@ export default {
       this.page = this.nextPage;
     },
     bookmarkList: function() {
-      if(this.bookmarkList.length < 5){
+      if(this.bookmarkList.length < 10){
         this.isHasMoreData = false;
       }
       this.addData(this.bookmarkList);

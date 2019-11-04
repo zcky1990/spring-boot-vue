@@ -79,7 +79,7 @@ export default {
       this.page = this.nextPage;
     },
     followList: function() {
-      if(this.followList.length < 5){
+      if(this.followList.length < 10){
         this.isHasMoreData = false;
       }
       this.addData(this.followList);
