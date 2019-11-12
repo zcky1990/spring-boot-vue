@@ -14,6 +14,7 @@ public class ArticleRequest {
 	private String slug;
 	private String modified_date;
 	private List<String> reference_list;
+	private Boolean isPublish;
 	
 	public String getId() {
 		return id;
@@ -80,5 +81,11 @@ public class ArticleRequest {
 	}
 	public void setReference_list(List<String> reference_list) {
 		this.reference_list = reference_list;
+	}
+	public Boolean getIsPublish() {
+		return isPublish;
+	}
+	public void setIsPublish(Boolean isPublish) {
+		this.isPublish = isPublish;
 	}
 }

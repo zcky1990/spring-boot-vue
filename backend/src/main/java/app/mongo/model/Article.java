@@ -29,6 +29,7 @@ public class Article {
 	private String modified_date;
 	private List<String> reference_list;
 	private String imageHeader;
+	private Boolean isPublish;
 	
 	public String getStringId() {
 		return _id.toHexString();
@@ -110,8 +111,13 @@ public class Article {
 	}
 	public void setImageHeader(String imageHeader) {
 		this.imageHeader = imageHeader;
+	}	
+	public Boolean getIsPublish() {
+		return isPublish;
 	}
-	
+	public void setIsPublish(Boolean isPublish) {
+		this.isPublish = isPublish;
+	}
 	public void setContentShort(String content) {
 		String shortContent = "";
 		if(content.contains("<pre>")) {
@@ -164,6 +170,7 @@ public class Article {
 			}
 			this.setCategoryArticle(listCategory);
 		}		
+		this.setIsPublish(request.getIsPublish());
 		this.setSlug(request.getSlug());
 		this.setStatus(request.getStatus());
 		this.setType(request.getType());

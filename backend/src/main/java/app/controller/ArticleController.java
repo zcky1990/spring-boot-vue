@@ -116,7 +116,7 @@ public class ArticleController extends BaseController {
 		JsonObject response = new JsonObject();
 		try {
 			Pageable pageableRequest = PageRequest.of(Integer.parseInt(page), 10, Sort.by("_id").descending());
-			Page<Article> articleList = articleRepository.findAll(pageableRequest);
+			Page<Article> articleList = articleRepository.findAllPublishArticle(pageableRequest);
 			response = getSuccessResponse();
 			List<Article> article = articleList.getContent();
 			response.add(Constant.RESPONSE, toJSONArrayWithSerializer(Article.class, new ArticleListSerializer(), article));

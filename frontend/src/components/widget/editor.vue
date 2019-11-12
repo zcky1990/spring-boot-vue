@@ -50,6 +50,11 @@
         </div>
       </v-flex>
       <v-flex xs12 d-flex>
+        <v-btn
+          v-bind="btnOptions"
+          class="white--text desc submit-btn"
+          @click="submitAsDraft"
+        >Save As Draft</v-btn>
         <v-btn v-bind="btnOptions" class="white--text desc submit-btn" @click="submit">Save</v-btn>
       </v-flex>
     </v-layout>
@@ -73,7 +78,7 @@ import List from "@ckeditor/ckeditor5-list/src/list";
 import Paragraph from "@ckeditor/ckeditor5-paragraph/src/paragraph";
 import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 
-import CodeBlock from "@/lib/ckeditor5-code/src/codeblock"
+import CodeBlock from "@/lib/ckeditor5-code/src/codeblock";
 
 import Alert from "@/components/widget/alert";
 import { Util } from "@/components/util";
@@ -140,7 +145,8 @@ export default {
         article_content: "",
         article_title: "",
         slug: "",
-        reference_list: [""]
+        reference_list: [""],
+        isPublish: false
       },
       urlData: {
         getListUrl: "/category/get_category_list"
@@ -236,6 +242,16 @@ export default {
       }
     },
     submit: function() {
+      this.data.isPublish = true;
+      if ("id" in this.data && this.data.id != "") {
+        this.callUpdateRestService(this.data, this.updateUrl);
+      } else {
+        delete this.data["id"];
+        this.callAddRestService(this.data, this.addUrl);
+      }
+    },
+    submitAsDraft: function() {
+      this.data.isPublish = false;
       if ("id" in this.data && this.data.id != "") {
         this.callUpdateRestService(this.data, this.updateUrl);
       } else {

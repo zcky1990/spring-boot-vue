@@ -22,7 +22,8 @@ public interface ArticleRepository extends MongoRepository<Article, String> {
 	@Query(value = "{'author' : {'$ref' : 'users' , '$id' : ?0} }")
 	List<Article> findAllArticleByUser(ObjectId uid);
 	
-	Page<Article> findAll(Pageable pageable);
+	@Query(value = "{'isPublish' : true}")
+	Page<Article> findAllPublishArticle(Pageable pageable);
 	
 	@Query("{ '$or': [{'article_title': { $regex: ?0 } }, { 'slug' : { $regex: ?0} }]}")
 	Page<Article> findArticleByRegexpTitleOrSlug(String regexp, Pageable pageable);
