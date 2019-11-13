@@ -23,7 +23,8 @@ public class ArticleResponse {
 	private String slug;
 	private String modified_date;
 	private List<String> reference_list;
-	private BookmarksArticle bookmark;
+	private boolean isBookmarked;
+	private boolean isFollowed;
 	
 	public String getStringId() {
 		return _id.toHexString();
@@ -94,14 +95,18 @@ public class ArticleResponse {
 	public void setReference_list(List<String> reference_list) {
 		this.reference_list = reference_list;
 	}
-	
-	public BookmarksArticle getBookmark() {
-		return bookmark;
+	public boolean getIsFollowed() {
+		return isFollowed;
 	}
-	public void setBookmark(BookmarksArticle bookmark) {
-		this.bookmark = bookmark;
+	public boolean isBookmarked() {
+		return isBookmarked;
 	}
-	
+	public void setBookmarked(boolean isBookmarked) {
+		this.isBookmarked = isBookmarked;
+	}
+	public void setFollowed(boolean isFollowed) {
+		this.isFollowed = isFollowed;
+	}
 	public void fromArticle(Article article) {
 		this.set_id(article.get_id());
 		this.setArticle_content(article.getArticle_content());

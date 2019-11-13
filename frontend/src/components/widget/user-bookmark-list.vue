@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <div class="bookmark-card-container">
+      <div v-if="!isFollowListNotNull" class="no-data">No data</div>
       <div class="bookmark" v-for="(bookmark, index) in dataList" :key="bookmark.id">
         <div class="bookmark-container">
           <div class="post-date">
@@ -140,7 +141,11 @@ export default {
       return months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
     }
   },
-  computed: {},
+  computed: {
+    isFollowListNotNull: function() {
+      return this.bookmarkList.length > 0 ? true : false;
+    }
+  },
   watch: {
     nextPage: function() {
       this.page = this.nextPage;

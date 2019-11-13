@@ -27,9 +27,11 @@ import app.model.request.ArticleRequest;
 import app.model.response.ArticleResponse;
 import app.mongo.model.Article;
 import app.mongo.model.BookmarksArticle;
+import app.mongo.model.FollowAuthors;
 import app.mongo.model.Users;
 import app.repository.ArticleBookmarksRepository;
 import app.repository.ArticleRepository;
+import app.repository.FollowAuthorsRepository;
 import app.repository.UsersRepository;
 import app.serializer.ArticleBookmarkSerializer;
 import app.serializer.ArticleListSerializer;
@@ -48,6 +50,9 @@ public class ArticleController extends BaseController {
 	
 	@Autowired
 	private ArticleBookmarksRepository bookmarkRepository;
+	
+	@Autowired
+	private FollowAuthorsRepository followRepository;
 	
 	/** Authors **/
 	@RequestMapping(value = "/article/get_list_article", method = RequestMethod.GET)
@@ -202,8 +207,14 @@ public class ArticleController extends BaseController {
 			if(auth != null) {
 				BookmarksArticle articleBookmark = bookmarkRepository.findByUserIdAndArticleId(new ObjectId(auth), article.get_id());
 				ArticleResponse articleResponse = new ArticleResponse();
+				FollowAuthors follow = followRepository.findByUserIdAndAuhtorsId(new ObjectId(auth), article.getAuthor().get_id());
+				if(follow != null) {
+					articleResponse.setFollowed(true);
+				}
+				if(articleBookmark != null) {
+					articleResponse.setBookmarked(true);
+				}
 				articleResponse.fromArticle(article);
-				articleResponse.setBookmark(articleBookmark);
 				response = getSuccessResponse();
 				response.add(Constant.RESPONSE, toJSONObjectWithSerializer(ArticleResponse.class, new ArticleBookmarkSerializer(), articleResponse)  );
 			}else {

@@ -1,7 +1,8 @@
 <template>
   <v-container>
     <div class="follow-card-container">
-      <div class="follow" v-for="(follow, index) in dataList" :key="follow.id">
+      <div v-if="!isFollowListNotNull" class="no-data">No data</div>
+      <div v-else class="follow" v-for="(follow, index) in dataList" :key="follow.id">
         <v-card class="mx-auto" max-width="400" width="400">
           <v-img
             :src="follow.author.image_profile_url"
@@ -10,6 +11,7 @@
             width="400"
             height="150"
             class="grey lighten-2 white--text align-end"
+            @click="seeAuthorsDetails(follow.author.id)"
           >
             <template v-slot:placeholder>
               <v-layout fill-height align-center justify-center ma-0>
@@ -70,6 +72,10 @@ export default {
     removeData: function(index) {
       this.dataList.splice(index, 1);
     },
+    seeAuthorsDetails: function(id) {
+      let url = "/detail/" + id;
+      this.$router.push(url);
+    },
     getMoreFollowList: function() {
       let self = this;
       let headers = this.getHeaders(this.$session);
@@ -104,6 +110,11 @@ export default {
       );
     }
   },
+  computed: {
+    isFollowListNotNull: function() {
+      return this.followList.length > 0 ? true : false;
+    }
+  },
   watch: {
     nextPage: function() {
       this.page = this.nextPage;
@@ -122,6 +133,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.follow {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 20px;
+}
 .follow-card-container {
   display: flex;
   flex-direction: row;

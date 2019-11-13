@@ -98,14 +98,21 @@ public class BookmarksArticleController extends BaseController {
 	@RequestMapping(value = "/bookmarks/delete/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> deleteArticle(@PathVariable String id, HttpServletRequest request){
 		JsonObject response;
-		try {
-			repository.delete(repository.findById(id).get());
-			response = getSuccessResponse();
-			response.addProperty(Constant.RESPONSE, Constant.DELETE_BOOKMARK_SUCCESS_MESSAGE);
-		} catch(Exception e) {
+		String auth = request.getHeader("x-uid");
+		if(!auth.equals("") && !auth.isEmpty()) {
+			try {
+				repository.delete(repository.findByUserIdAndArticleId(new ObjectId(auth), new ObjectId(id)));
+				response = getSuccessResponse();
+				response.addProperty(Constant.RESPONSE, Constant.DELETE_BOOKMARK_SUCCESS_MESSAGE);
+			} catch(Exception e) {
+				response = getFailedResponse();
+				response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+			}
+		}else {
 			response = getFailedResponse();
-			response.addProperty(Constant.ERROR_MESSAGE, e.getMessage().toString());
+			response.addProperty(Constant.ERROR_MESSAGE, Constant.USER_NOT_FOUND_ERROR_MESSAGE);
 		}
+		
 		return new ResponseEntity<String>( response.toString(), getResponseHeader(), HttpStatus.OK);
 	}
 	

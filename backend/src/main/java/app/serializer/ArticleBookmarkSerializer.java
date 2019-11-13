@@ -54,17 +54,7 @@ public class ArticleBookmarkSerializer implements JsonSerializer<ArticleResponse
 			}
 			jsonObj.add("categoryArticle", listCategory);
 		}
-				
-		if(jsonObj.has("bookmark")) {
-			jsonObj.remove("bookmark");
-			BookmarksArticle bookmarksArticle = src.getBookmark();
-			JsonObject bookmark = new JsonObject();
-			bookmark.addProperty("id",bookmarksArticle.getStringId());
-			bookmark.addProperty("userId",bookmarksArticle.getUser().getStringId());
-			bookmark.addProperty("articleId",bookmarksArticle.getArticle().getStringId());
-			jsonObj.add("bookmark", bookmark);
-		}
-				
+								
 		Date time = src.get_id().getDate();
 		String createDate = util.getFormatedDate(time, "dd/MM/yyyy HH:mm:ss");
 		jsonObj.addProperty("created_date", createDate);

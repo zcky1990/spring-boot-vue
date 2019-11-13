@@ -31,14 +31,23 @@
           </div>
         </div>
         <div class="follow-btn">
-          <div class="btn-follow" @click="followUnfollowAuthors(content.author.id)">Follow</div>
+          <div
+            v-if="!isFollowed"
+            class="btn-follow"
+            @click="followUnfollowAuthors(content.author.id)"
+          >Follow</div>
+          <div
+            v-else
+            class="btn-follow unfollow-btn"
+            @click="followUnfollowAuthors(content.author.id)"
+          >Unfollow</div>
         </div>
       </div>
 
       <div class="content">
         <div class="article-content-container">
           <div v-if="isUserLoggin" class="bookmark-container">
-            <div v-if="!isBookmarked" class="bookmark-btn" @click="bookmarkArticle">
+            <div v-if="!isUserBookmarkArticle" class="bookmark-btn" @click="bookmarkArticle">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
                   <v-icon color="rgb(0, 209, 178)" v-on="on">bookmark</v-icon>
@@ -47,7 +56,7 @@
               </v-tooltip>
             </div>
 
-            <div v-if="isBookmarked" class="bookmark-btn" @click="removeBookmarkArticle">
+            <div v-else class="bookmark-btn" @click="removeBookmarkArticle">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
                   <v-icon color="red" v-on="on">bookmark</v-icon>
@@ -113,7 +122,7 @@ export default {
   methods: {
     followUnfollowAuthors: function(id) {
       if (this.isUserLoggin) {
-        if(!this.isFollowed) {
+        if (!this.isFollowed) {
           this.followAuthors(id);
         } else {
           this.unFollowAuthors(id);
@@ -126,7 +135,7 @@ export default {
       let self = this;
       let headers = this.getHeaders(this.$session);
       this.post(
-        this.follow.followUrl+id,
+        this.follow.followUrl + id,
         {},
         headers,
         function(response) {
@@ -220,7 +229,7 @@ export default {
       this.addBookmark(this.data);
     },
     removeBookmarkArticle: function() {
-      this.deleteBookmark(this.data.id);
+      this.deleteBookmark(this.data.articleId);
     },
     addBookmark: function(data) {
       let self = this;
@@ -235,8 +244,6 @@ export default {
             if (response.data.error_message) {
               self.setMessage(response.data.error_message, 1);
             } else {
-              let responseData = response.data.response;
-              self.data.id = responseData.id;
               self.isBookmarked = true;
             }
           }
@@ -254,7 +261,11 @@ export default {
         headers,
         function(response) {
           if (response.status == 200) {
-            self.isBookmarked = false;
+            if (response.data.error_message) {
+              self.setMessage(response.data.error_message, 1);
+            } else {
+              self.isBookmarked = false;
+            }
           }
         },
         function(e) {
@@ -271,10 +282,8 @@ export default {
   },
   updated() {
     this.data.articleId = this.content.id;
-    if (this.content.bookmark) {
-      this.data = this.content.bookmark;
-      this.isBookmarked = true;
-    }
+    this.isFollowed = this.content.isFollowed;
+    this.isBookmarked = this.content.isBookmarked;
     if (this.content.reference_list) {
       this.isHaveReference = true;
     }
@@ -290,6 +299,9 @@ export default {
     });
   },
   computed: {
+    isUserBookmarkArticle: function(){
+      return this.isBookmarked
+    },
     isCategoryExists: function() {
       if (this.content.categoryArticle != undefined) {
         if (this.content.categoryArticle.name != null) {
@@ -385,9 +397,13 @@ export default {
 .follow-btn {
   color: #00d1b2;
   text-align: center;
-  font-size: 18px;
+  font-size: 12px;
   font-weight: 100;
   margin-left: 10px;
+}
+.unfollow-btn {
+  color: chartreuse !important;
+  border: 1px solid chartreuse !important;
 }
 .btn-follow {
   border: 1px solid #00d1b2;
@@ -406,6 +422,7 @@ export default {
 }
 .bookmark-container {
   width: 100px;
+  padding-right: 20px;
 }
 .reference-list {
   font-size: 1.5rem;
