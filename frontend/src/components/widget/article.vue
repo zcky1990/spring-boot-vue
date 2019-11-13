@@ -30,7 +30,7 @@
             </div>
           </div>
         </div>
-        <div class="follow-btn">
+        <div v-if="isUserLoggin" class="follow-btn">
           <div
             v-if="!isFollowed"
             class="btn-follow"
