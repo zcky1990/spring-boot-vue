@@ -6,41 +6,15 @@
           <div class="profile-container">
             <div class="user-profile">
               <v-card-text>
-                <v-avatar size="150">
+                <v-avatar size="150" class="image-container">
                   <v-img v-if="isHasImage == true" alt="Avatar" :src="data.image_url" cover></v-img>
                   <v-icon v-else size="150" color="#00d1b2">account_circle</v-icon>
                 </v-avatar>
               </v-card-text>
               <div class="user-name">{{data.display_name}}</div>
-              <v-divider></v-divider>
               <v-container>
                 <div class="desc">Description :</div>
                 <div class="desc-content">{{data.description}}</div>
-              </v-container>
-              <v-divider></v-divider>
-              <v-container>
-                <div class="account-desc">Account Details</div>
-                <input v-model="data.id" type="text" name="id" disabled hidden />
-                <div class="detail-container">
-                  <div class="detail-item">
-                    <div class="detail-title">Display Name :</div>
-                    <div class="detail-form">{{data.display_name}}</div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-title">Email :</div>
-                    <div class="detail-form">{{data.email}}</div>
-                  </div>
-                </div>
-                <div class="detail-container">
-                  <div class="detail-item">
-                    <div class="detail-title">Firstname :</div>
-                    <div class="detail-form">{{data.firstname}}</div>
-                  </div>
-                  <div class="detail-item">
-                    <div class="detail-title">Lastname :</div>
-                    <div class="detail-form">{{data.lastname}}</div>
-                  </div>
-                </div>
               </v-container>
             </div>
           </div>
@@ -102,7 +76,7 @@ export default {
     isHasImage() {
       return this.isImageExists();
     }
-  },
+  }
 };
 </script>
 <style scoped>
@@ -164,5 +138,11 @@ export default {
 .detail-item {
   flex-grow: 1;
   padding: 10px;
+}
+.user-profile {
+  background-color: #dbdfe5;
+}
+.image-container {
+  border: 1px solid #525e74;
 }
 </style>

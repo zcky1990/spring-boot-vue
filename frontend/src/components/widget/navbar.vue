@@ -91,7 +91,7 @@
                 <template v-slot:activator="{ on }">
                   <div class="user-avatar-container">
                     <v-chip class="button-login" v-on="on">
-                      <v-avatar>
+                      <v-avatar class="image-container">
                         <img v-if="isUserImageExits" :src="usersData.image_url" alt />
                         <v-icon v-else>account_circle</v-icon>
                       </v-avatar>
@@ -377,6 +377,9 @@ export default {
   align-items: center;
   text-align: center;
   margin: 0 auto;
+}
+.image-container{
+  border: 1px solid #00d1b2;
 }
 .image-user {
   margin: 0 auto;
