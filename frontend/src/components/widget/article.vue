@@ -299,8 +299,8 @@ export default {
     });
   },
   computed: {
-    isUserBookmarkArticle: function() {
-      return this.isBookmarked;
+    isUserBookmarkArticle: function(){
+      return this.isBookmarked
     },
     isCategoryExists: function() {
       if (this.content.categoryArticle != undefined) {
