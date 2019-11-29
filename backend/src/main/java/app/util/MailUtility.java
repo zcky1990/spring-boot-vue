@@ -16,16 +16,16 @@ import app.config.Mail;
 import app.config.MailConfig;
 import app.config.MailEnvirontment;
 import app.constants.Constant;
-import app.environtment.Environtment;
 import app.mongo.model.Users;
 
 public class MailUtility {
 	private Util util = new Util();
-	private Environtment env = new Environtment();
+	private String env;
 	private MailConfig config;
 	private Gson gson = new Gson();
 
-	public MailUtility() {
+	public MailUtility(String env) {
+		this.env = env;
 		this.getMailConfig();
 	}
 
@@ -35,7 +35,7 @@ public class MailUtility {
 		ArrayList<MailEnvirontment> mailEnvirontment = mailconfig.getMailconfig();
 		for(int i = 0; i < mailEnvirontment.size(); i++) {
 			MailEnvirontment mail = mailEnvirontment.get(i);
-			if(mail.getEnv().equals(env.getEnvirontment())) {
+			if(mail.getEnv().equals(env)) {
 				config = mail.getConfig();
 				break;
 			}
@@ -97,7 +97,7 @@ public class MailUtility {
 	}
 
 	public String getBaseUrl() {
-		if(env.getEnvirontment().equals(Constant.DEV_ENV)){
+		if(env.equals(Constant.DEV_ENV)){
 			return Constant.BASE_URL_DEV;
 		}else {
 			return Constant.BASE_URL_PROD;
