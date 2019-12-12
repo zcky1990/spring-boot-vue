@@ -2,11 +2,13 @@ package app.mongo.model;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import app.model.request.BookmarksArticleRequest;
 
 public class BookmarksArticle {
+	@Indexed
 	@Id
 	private ObjectId _id;
 

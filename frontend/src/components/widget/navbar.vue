@@ -37,15 +37,15 @@
 
       <v-divider></v-divider>
 
-      <v-list-tile class="menu-btn-link" v-for="item in items" :key="item.text">
+      <v-list-item class="menu-btn-link" v-for="item in items" :key="item.text">
         <router-link class="nav-draw-links drawer-links" v-bind:to="item.url">
-          <v-list-tile-content>
+          <v-list-item-content>
             <div class="container">
-              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
             </div>
-          </v-list-tile-content>
+          </v-list-item-content>
         </router-link>
-      </v-list-tile>
+      </v-list-item>
 
       <div class="user-controller" v-if="isLogged">
         <div class="user-container">
@@ -102,16 +102,16 @@
                 <v-card>
                   <v-container>
                     <div class="pop-up-menu-title">User Menu</div>
-                    <v-list-tile>
+                    <v-list-item>
                       <router-link class="pop-up-link" to="/user">
-                        <v-list-tile-action>
+                        <v-list-item-action>
                           <v-icon>account_circle</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                          <v-list-tile-title>User Setting</v-list-tile-title>
-                        </v-list-tile-content>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                          <v-list-item-title>User Setting</v-list-item-title>
+                        </v-list-item-content>
                       </router-link>
-                    </v-list-tile>
+                    </v-list-item>
                     <div class="user-avatar-container" @click="logout">
                       <div class="logout-drawer">
                         <div class="logout-btn logout">Logout</div>

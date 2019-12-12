@@ -2,13 +2,13 @@
   <div class="nav-menu">
     <v-navigation-drawer fixed clipped v-model="drawer" app>
       <v-subheader>Application Menu</v-subheader>
-      <v-list-tile v-for="item in items" :key="item.text">
+      <v-list-item v-for="item in items" :key="item.text">
         <router-link class="nav-draw-links" v-bind:to="item.url">
-          <v-list-tile-content>
-            <v-list-tile-title class="menu-link">{{ item.title }}</v-list-tile-title>
-          </v-list-tile-content>
+          <v-list-item-content>
+            <v-list-item-title class="menu-link">{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
         </router-link>
-      </v-list-tile>
+      </v-list-item>
 
       <div class="user-controller" v-if="isLogged">
         <div class="user-container">

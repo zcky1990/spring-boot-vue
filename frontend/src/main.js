@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuetify from 'vuetify'
+import vuetify from '@/plugins/vuetify' // path to vuetify export
 import VueSession from 'vue-session'
 import 'vuetify/dist/vuetify.min.css' 
 import App from './App.vue'
@@ -12,7 +12,6 @@ import GSignInButton from 'vue-google-signin-button'
 
 require('./assets/sass/main.scss');
 
-Vue.use(Vuetify)
 Vue.config.productionTip = false
 Vue.use(VueSession)
 Vue.use(CKEditor)
@@ -21,6 +20,7 @@ Vue.use(FBSignInButton)
 Vue.use(GSignInButton)
 
 new Vue({
+  vuetify: vuetify,
   icons: {
     iconfont: 'fa',
   },

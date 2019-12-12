@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import app.model.request.ArticleRequest;
@@ -25,6 +26,7 @@ public class Article {
 	private String article_short_content;
 	private String type;
 	private String status;
+	@Indexed
 	private String slug;
 	private String modified_date;
 	private List<String> reference_list;
